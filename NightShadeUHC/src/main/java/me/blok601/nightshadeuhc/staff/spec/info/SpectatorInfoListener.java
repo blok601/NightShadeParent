@@ -1,0 +1,135 @@
+package me.blok601.nightshadeuhc.staff.spec.info;
+
+import me.blok601.nightshadeuhc.GameState;
+import me.blok601.nightshadeuhc.entity.UHCPlayer;
+import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
+import me.blok601.nightshadeuhc.scenario.ScenarioManager;
+import me.blok601.nightshadeuhc.utils.ChatUtils;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Monster;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.UUID;
+
+/**
+ * Created by Blok on 7/10/2018.
+ */
+public class SpectatorInfoListener implements Listener {
+
+    @EventHandler
+    public void onDamage(EntityDamageEvent e) {
+        if (!GameState.gameHasStarted()) return;
+        if (!(e.getEntity() instanceof Player)) return;
+        Player p = (Player) e.getEntity();
+
+        if (e.getFinalDamage() == 0) return;
+        if (p.getHealth() - e.getFinalDamage() <= 0) return; //They died
+
+        if (e.getCause() == EntityDamageEvent.DamageCause.FALL) {
+            UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).forEach(uhcPlayer -> uhcPlayer.msg(SpecInfoData.translate(p, p.getHealth(), null, SpecInfoData.DAMAGE_FALL)));
+        } else if (e.getCause() == EntityDamageEvent.DamageCause.FIRE || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK || e.getCause() == EntityDamageEvent.DamageCause.LAVA || e.getCause() == EntityDamageEvent.DamageCause.MELTING) {
+            if (!ScenarioManager.getScen("Fireless").isEnabled()) {
+                UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).forEach(uhcPlayer -> uhcPlayer.msg(SpecInfoData.translate(p, p.getHealth(), null, SpecInfoData.DAMAGE_BURN)));
+            }
+        } else if (e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK || e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) {
+            return;
+        } else {
+            UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).forEach(uhcPlayer -> uhcPlayer.msg(SpecInfoData.translate(p, p.getHealth(), null, SpecInfoData.DAMAGE_OTHER)));
+        }
+
+    }
+
+    @EventHandler
+    public void onHit(EntityDamageByEntityEvent e) {
+        if (!GameState.gameHasStarted()) return;
+        if (!(e.getEntity() instanceof Player)) return;
+
+        Player p = (Player) e.getEntity();
+        if (e.getFinalDamage() == 0) return;
+        if (p.getHealth() - e.getFinalDamage() <= 0) return; //They died
+
+        if (e.getEntity() instanceof Monster) {
+            UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).filter(UHCPlayer::isReceivingSpectatorInfo).forEach(uhcPlayer -> uhcPlayer.msg(SpecInfoData.translate(p, p.getHealth() - e.getFinalDamage(), null, SpecInfoData.DAMAGE_MOB)));
+        } else if (e.getDamager() instanceof Player) {
+            Player damager = (Player) e.getDamager();
+            UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).filter(UHCPlayer::isReceivingSpectatorInfo).forEach(uhcPlayer -> uhcPlayer.msg(SpecInfoData.translate(p, p.getHealth() - e.getFinalDamage(), damager, SpecInfoData.DAMAGE_PLAYER)));
+        } else if (e.getDamager() instanceof Arrow) {
+            Arrow a = (Arrow) e.getDamager();
+            if (a.getShooter() instanceof Player) {
+                Player damager = (Player) a.getShooter();
+                UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).filter(UHCPlayer::isReceivingSpectatorInfo).forEach(uhcPlayer -> uhcPlayer.msg(SpecInfoData.translate(p, p.getHealth() - e.getFinalDamage(), damager, SpecInfoData.DAMAGE_PLAYER)));
+            }
+        }
+    }
+
+
+    HashMap<UUID, HashSet<Block>> brokenBlocks = new HashMap<>();
+
+    @EventHandler
+    public void onBreak(BlockBreakEvent e) {
+        Player p = e.getPlayer();
+        if (brokenBlocks.containsKey(p.getUniqueId())) {
+            if (brokenBlocks.get(p.getUniqueId()).contains(e.getBlock())) return;
+        }
+
+        if (e.getBlock().getType() == Material.DIAMOND_ORE) {
+            int diamonds = 0;
+            for (int x = -2; x < 2; x++) {
+                for (int y = -2; y < 2; y++) {
+                    for (int z = -2; z < 2; z++) {
+                        Block block = e.getBlock().getLocation().add(x, y, z).getBlock();
+                        if (block.getType() == Material.DIAMOND_ORE) {
+                            diamonds++;
+                            if (brokenBlocks.containsKey(p.getUniqueId())) {
+                                HashSet<Block> blocks = brokenBlocks.get(p.getUniqueId());
+                                blocks.add(block);
+                                brokenBlocks.put(p.getUniqueId(), blocks);
+                            } else {
+                                HashSet<Block> blocks = new HashSet<>();
+                                blocks.add(block);
+                                brokenBlocks.put(p.getUniqueId(), blocks);
+                            }
+                        }
+                    }
+                }
+            }
+
+            ChatUtils.sendMiningMessage(true, p, diamonds);
+
+        } else if (e.getBlock().getType() == Material.GOLD_ORE) {
+            int gold = 0;
+            for (int x = -2; x < 2; x++) {
+                for (int y = -2; y < 2; y++) {
+                    for (int z = -2; z < 2; z++) {
+                        Block block = e.getBlock().getLocation().add(x, y, z).getBlock();
+                        if (block.getType() == Material.GOLD_ORE) {
+                            gold++;
+                            if (brokenBlocks.containsKey(p.getUniqueId())) {
+                                HashSet<Block> blocks = brokenBlocks.get(p.getUniqueId());
+                                blocks.add(block);
+                                brokenBlocks.put(p.getUniqueId(), blocks);
+                            } else {
+                                HashSet<Block> blocks = new HashSet<>();
+                                blocks.add(block);
+                                brokenBlocks.put(p.getUniqueId(), blocks);
+                            }
+                        }
+                    }
+                }
+            }
+
+            ChatUtils.sendMiningMessage(false, p, gold);
+
+        }
+    }
+
+}

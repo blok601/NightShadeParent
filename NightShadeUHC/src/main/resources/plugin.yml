@@ -1,0 +1,115 @@
+name: NightShadeUHC
+version: 3.9.5
+main: me.blok601.nightshadeuhc.UHC
+prefix: UHC
+authors: [blok601]
+depend: [Core, WorldBorder, Multiverse-Core]
+description: NightShadePvP UHC Plugin that runs on the UHC Servers
+website: www.nightshadepvp.com
+commands:
+  suhc:
+    description: Main Start UHC Command
+  spec:
+    description: Spectator Command
+  helpop:
+    description: Helpop Command
+  team:
+    description: Team Base command
+  pm:
+    description: Send a message to your team
+  pmcoords:
+    description: Send your coords to your team
+  scat:
+    description: Scatter command
+  pvp:
+    description: PvP toggler
+  whitelist:
+    description: Whitelist command
+    aliases: [wl, wlist]
+  scenario:
+    description: Scenario command
+    aliases: [scen, sm]
+  staff:
+    description: Staff Command
+  killtop:
+    description: Get the top kills for a game
+    aliases: [kt, ktop]
+  feedall:
+  freezeall:
+  health:
+    aliases: [h, hp]
+  heal:
+  helpop:
+  pvp:
+  lag:
+    description: Get information about the world (lag info)
+  lct:
+  cancelgame:
+  randomd:
+  endgame:
+    aliases: [winner, egame]
+  spc:
+  alerts:
+  locreport:
+    aliases: [lreport, locs, locations, playerlocations, ploc, locationreport]
+    description: Get online player's locations
+  commandspy:
+    aliases: [cmdspy]
+  setticks:
+    description: Set ticks command
+  tpall:
+    aliases: [teleportall, sall]
+    description: Teleport everyone to you
+  manualgame:
+    aliases: [takeovergame, manualmode]
+    description: Teleport everyone to you
+  settings:
+  claimhost:
+    description: Claim the current game
+  setworld:
+  teams:
+  maxplayers:
+  timer:
+  setupdates:
+    description: Command for Circle Integration
+  config:
+  savepreset:
+  loadpreset:
+  respawn:
+  ewl:
+  latestart:
+  killtop:
+    aliases: [kt]
+  pregen:
+  explain:
+    description: View scenario descriptions
+  rates:
+  feed:
+    description: Feed command
+    aliases: [eat]
+  togglehelpop:
+  scenarios:
+    description: Show enabled scenarios
+  resethealth:
+  cleararmor:
+  createworlds:
+  tpworld:
+  worlds:
+  deleteworld:
+  fullbright:
+  rvb:
+  testgen:
+  leaderboards:
+  stats:
+  setspawn:
+  setarenaspawn:
+  arena:
+    aliases: [a]
+  cstop:
+  walls:
+  cancelpregen:
+  power:
+    aliases: [superpower]
+  assignpower:
+  setanonymousname:
+  abrole:
