@@ -6,7 +6,7 @@ jobs:
     working_directory: ~/blok
     steps:
       - checkout
-      - run: mvn clean install
+      - run: mvn clean package
       - run: ls
       - store_artifacts:
           path: NightShadeUHC/target/UHC.jar
@@ -15,6 +15,7 @@ jobs:
           path: NightShadeCore/target/Core.jar
           destination: artifacts
       - add_ssh_keys
+      - run: ls artifacts
       - deploy:
           name: Deploy to servers
           command: |
