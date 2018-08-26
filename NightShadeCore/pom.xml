@@ -77,21 +77,21 @@
             <artifactId>MassiveCore</artifactId>
             <version>LATEST</version>
             <scope>system</scope>
-            <systemPath>${basedir}/../../NightShadeParent/NightShadeCore/src/main/resources/libs/MassiveCore.jar</systemPath>
+            <systemPath>${basedir}/src/main/resources/libs/MassiveCore.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
             <version>1.8.8-R0.1-SNAPSHOT</version>
             <scope>system</scope>
-            <systemPath>${basedir}/../../NightShadeParent/NightShadeCore/src/main/resources/libs/pspigot.jar</systemPath>
+            <systemPath>${basedir}/src/main/resources/libs/pspigot.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>litebans</groupId>
             <artifactId>api</artifactId>
             <version>LATEST</version>
             <scope>system</scope>
-            <systemPath>${basedir}/../../NightShadeParent/NightShadeCore/src/main/resources/libs/LiteBansAPI.jar</systemPath>
+            <systemPath>${basedir}/src/main/resources/libs/LiteBansAPI.jar</systemPath>
         </dependency>
         <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
         <dependency>
