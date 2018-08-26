@@ -9,7 +9,7 @@ jobs:
       - run: mvn clean install
       - run: ls
       - store_artifacts:
-          path: NightShadeUHC/target/NightShadeUHC-1.0-SNAPSHOT.jar
+          path: NightShadeUHC/target/UHC.jar
           destination: artifacts
       - store_artifacts:
           path: NightShadeCore/target/Core.jar
