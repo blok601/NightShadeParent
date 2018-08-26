@@ -35,6 +35,7 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
+                            <finalName>UHC</finalName>
                             <minimizeJar>true</minimizeJar>
                         </configuration>
                     </execution>
