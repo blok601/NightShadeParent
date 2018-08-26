@@ -15,7 +15,6 @@ jobs:
           path: NightShadeCore/target/Core.jar
           destination: artifacts
       - add_ssh_keys
-      - run: ls artifacts
       - deploy:
           name: Deploy to servers
           command: |
