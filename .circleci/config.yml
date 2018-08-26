@@ -20,6 +20,6 @@ jobs:
           name: Deploy to servers
           command: |
             ssh -o BatchMode=yes -o StrictHostKeyChecking=no dhillon@158.69.121.66 "uptime"
-            scp ./target/UHC.jar dhillon@158.69.121.66:~/minecraft/template/UHC.jar
-            scp ./target/Core.jar dhillon@158.69.121.66:~/minecraft/template/Core.jar
+            scp NightShadeUHC/target/UHC.jar dhillon@158.69.121.66:~/minecraft/template/UHC.jar
+            scp NightShadeCore/target/Core.jar dhillon@158.69.121.66:~/minecraft/template/Core.jar
             echo "Finished uploading jars!"
