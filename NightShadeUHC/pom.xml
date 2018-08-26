@@ -97,7 +97,7 @@
             <artifactId>craftbukkit</artifactId>
             <version>1.8.8-R0.1-SNAPSHOT</version>
             <scope>system</scope>
-            <systemPath>${basedir}/src/main/resources/libs/craftbukkit-1.8.8-R0.1-SNAPSHOT-latest.jar</systemPath>
+            <systemPath>${basedir}/../../NightShadeParent/NightShadeUHC/src/main/resources/libs/craftbukkit-1.8.8-R0.1-SNAPSHOT-latest.jar</systemPath>
         </dependency>
 
         <dependency>
@@ -105,14 +105,14 @@
             <artifactId>Core</artifactId>
             <version>LATSEST</version>
             <scope>system</scope>
-            <systemPath>${basedir}/src/main/resources/libs/core-1.0-SNAPSHOT.jar</systemPath>
+            <systemPath>${basedir}/../../NightShadeParent/NightShadeUHC/src/main/resources/libs/core-1.0-SNAPSHOT.jar</systemPath>
         </dependency>
 
         <dependency>
             <groupId>com.wimbli.WorldBorder</groupId>
             <artifactId>WorldBorder</artifactId>
             <scope>system</scope>
-            <systemPath>${basedir}/../NightShadeUHC/src/main/resources/libs/WorldBorder.jar</systemPath>
+            <systemPath>${basedir}/../../NightShadeParent/NightShadeUHC/src/main/resources/libs/WorldBorder.jar</systemPath>
             <version>1.8.4</version>
         </dependency>
 
@@ -143,7 +143,7 @@
             <artifactId>MassiveCore</artifactId>
             <version>LATEST</version>
             <scope>system</scope>
-            <systemPath>${basedir}/../NightShadeUHC/src/main/resources/libs/MassiveCore.jar</systemPath>
+            <systemPath>${basedir}/../../NightShadeParent/NightShadeUHC/src/main/resources/libs/MassiveCore.jar</systemPath>
         </dependency>
 
         <dependency>
@@ -163,7 +163,7 @@
             <artifactId>multiverse-core</artifactId>
             <version>LATEST</version>
             <scope>system</scope>
-            <systemPath>${basedir}/../NightShadeUHC/src/main/resources/libs/Multiverse-Core-2.5.jar</systemPath>
+            <systemPath>${basedir}/../../NightShadeParent/NightShadeUHC/src/main/resources/libs/Multiverse-Core-2.5.jar</systemPath>
         </dependency>
 
         <dependency>
@@ -171,7 +171,7 @@
             <artifactId>viaversion</artifactId>
             <version>LATEST</version>
             <scope>system</scope>
-            <systemPath>${basedir}/../NightShadeUHC/src/main/resources/libs/ViaVersion-1.4.0.jar</systemPath>
+            <systemPath>${basedir}/../../NightShadeParent/NightShadeUHC/src/main/resources/libs/ViaVersion-1.4.0.jar</systemPath>
         </dependency>
 
         <dependency>
