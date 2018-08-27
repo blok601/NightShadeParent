@@ -232,7 +232,7 @@ public class EngineInventory extends Engine {
                     return;
                 }
 
-                AbstractPunishment abstractPunishment = PunishmentHandler.getInstance().getAbstractPunishment(e.getInventory().getName());
+                AbstractPunishment abstractPunishment = PunishmentHandler.getInstance().getAbstractPunishment(stack);
                 if (abstractPunishment == null) {
                     p.closeInventory();
                     p.sendMessage(ChatUtils.message("&cThere was a problem loading that punishment!"));
