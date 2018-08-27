@@ -207,7 +207,8 @@ public class EngineInventory extends Engine {
                 }
             }
 
-            if (inv.getName().contains("Punish")) { //Will prob change this later on
+            if (inv.getName().contains("Punish")) {//Will prob change this later on
+                e.setCancelled(true);
                 if (stack.getType() == Material.AIR) return;
 
                 if (e.getSlot() == 3) {
@@ -228,6 +229,7 @@ public class EngineInventory extends Engine {
             }
 
             if (PunishmentHandler.getInstance().getPunishing().containsKey(p)) {
+                e.setCancelled(true);
                 if (stack.getType() == Material.WOOL) {
                     PunishmentHandler.getInstance().createGUI(p);
                     return;

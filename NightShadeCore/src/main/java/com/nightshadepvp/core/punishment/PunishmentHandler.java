@@ -36,7 +36,6 @@ public class PunishmentHandler {
     }
 
     private ArrayList<AbstractPunishment> punishments;
-    private final ItemStack childStack = new ItemStack(Material.INK_SACK, 1, (short) 8);
 
     public void setup(){
         this.punishing = new HashMap<>();
@@ -52,8 +51,8 @@ public class PunishmentHandler {
 
     }
 
-    public ItemStack getChildStack() {
-        return childStack;
+    public ItemBuilder getChildStack() {
+        return new ItemBuilder( new ItemStack(Material.INK_SACK, 1, (short) 8));
     }
 
     public ItemStack getBackButton(){
@@ -99,7 +98,7 @@ public class PunishmentHandler {
     }
 
     public AbstractPunishment getAbstractPunishment(ItemStack itemStack){
-        return punishments.stream().filter(abstractPunishment -> abstractPunishment.getItemStack().getType() == itemStack.getType()).findAny().orElse(null);
+        return punishments.stream().filter(abstractPunishment -> abstractPunishment.getItemStack().getType() == itemStack.getType()).findFirst().orElse(null);
     }
 
     public AbstractPunishment getAbstractPunishment(String name){
