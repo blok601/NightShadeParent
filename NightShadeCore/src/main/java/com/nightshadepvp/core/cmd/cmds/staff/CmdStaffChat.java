@@ -10,6 +10,7 @@ import com.nightshadepvp.core.Logger;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.cmd.NightShadeCoreCommand;
 import com.nightshadepvp.core.cmd.req.ReqRankHasAtLeast;
+import com.nightshadepvp.core.entity.MConf;
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.nightshadepvp.core.utils.ChatUtils;
 
@@ -46,6 +47,7 @@ public class CmdStaffChat extends NightShadeCoreCommand{
         } else { // They gave a param)
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF(user.getName());
+            out.writeUTF(MConf.get().getServerName());
             out.writeUTF(message.trim());
             user.getPlayer().sendPluginMessage(Core.get(), "staffchat", out.toByteArray());
             Core.get().getLogManager().log(Logger.LogType.DEBUG, "Staff Chat line 61");

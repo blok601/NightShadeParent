@@ -56,7 +56,7 @@ public class AlertsCommand implements CmdInterface{
 
 
 
-        ItemStack specInfo = new ItemBuilder(Material.TORCH).name(ChatUtils.format("&5Mining Alerts")).lore(uhcPlayer.isReceivingSpectatorInfo() ? ChatUtils.format("&aEnabled") : ChatUtils.format("&cDisabled")).make();
+        ItemStack specInfo = new ItemBuilder(Material.TORCH).name(ChatUtils.format("&5Spectator Info")).lore(uhcPlayer.isReceivingSpectatorInfo() ? ChatUtils.format("&aEnabled") : ChatUtils.format("&cDisabled")).make();
         ItemStack toggleSneakAlerts = new ItemBuilder(Material.SIGN).name("&5Toggle Sneak Alerts").lore(nsPlayer.isReceivingToggleSneak() ? "&aEnabled" : "&cDisabled").make();
         ItemStack toggleStaffChat = new ItemBuilder(Material.PAPER).name("&5Toggle Staff Chat").lore(nsPlayer.isReceivingStaffChat() ? "&aEnabled" : "&cDisabled").make();
         ItemStack cmdSpy = new ItemBuilder(Material.COMPASS).name("&5Command Spy").lore(uhcPlayer.isReceivingCommandSpy() ? "&aEnabled" : "&cDisabled").make();
