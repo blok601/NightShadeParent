@@ -224,6 +224,7 @@ public class EngineInventory extends Engine {
                 }
 
                 PunishmentHandler.getInstance().handleClick(stack, e);
+                return;
             }
 
             if (PunishmentHandler.getInstance().getPunishing().containsKey(p)) {
