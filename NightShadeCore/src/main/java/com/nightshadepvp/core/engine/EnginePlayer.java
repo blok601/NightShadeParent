@@ -5,7 +5,6 @@ import com.google.common.io.ByteStreams;
 import com.massivecraft.massivecore.Engine;
 import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Rank;
-import com.nightshadepvp.core.entity.MConf;
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.nightshadepvp.core.entity.NSPlayerColl;
 import com.nightshadepvp.core.utils.ChatUtils;
@@ -29,7 +28,7 @@ public class EnginePlayer extends Engine {
             e.setCancelled(true);
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF(p.getName());
-            out.writeUTF(MConf.get().getServerName());
+            //out.writeUTF(MConf.get().getServerName());
             out.writeUTF(e.getMessage());
             p.sendPluginMessage(Core.get(), "staffchat", out.toByteArray());
         }

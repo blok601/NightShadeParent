@@ -131,10 +131,10 @@ public class Core extends MassivePlugin implements PluginMessageListener {
         if (channel.equalsIgnoreCase("staffchat")) {
             ByteArrayDataInput in = ByteStreams.newDataInput(message);
             String playerName = in.readUTF();
-            String server = in.readUTF();
+            //String server = in.readUTF();
             String msg = in.readUTF();
 
-            NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> nsPlayer.hasRank(Rank.TRIAL)).forEach(nsPlayer -> nsPlayer.msg(ChatUtils.format("&8[&cStaff Chat&8] &8[&c" + server + "&8] &a" + playerName + "&8: &r" + msg)));
+            NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> nsPlayer.hasRank(Rank.TRIAL)).forEach(nsPlayer -> nsPlayer.msg(ChatUtils.format("&8[&cStaff Chat&8] &a" + playerName + "&8: &r" + msg)));
         }
     }
 
