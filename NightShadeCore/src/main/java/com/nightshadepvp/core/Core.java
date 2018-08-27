@@ -7,6 +7,7 @@ import com.massivecraft.massivecore.store.DriverFlatfile;
 import com.massivecraft.massivecore.store.DriverMongo;
 import com.nightshadepvp.core.entity.MConf;
 import com.nightshadepvp.core.entity.NSPlayerColl;
+import com.nightshadepvp.core.punishment.PunishmentHandler;
 import com.nightshadepvp.core.store.NSStore;
 import com.nightshadepvp.core.store.NSStoreConf;
 import com.nightshadepvp.core.utils.ChatUtils;
@@ -57,6 +58,7 @@ public class Core extends MassivePlugin implements PluginMessageListener {
         getConfig().options().copyDefaults(true);
         saveConfig();
 
+        PunishmentHandler.getInstance().setup();
         ServerType.setType(MConf.get().serverType);
 
         new BukkitRunnable(){
@@ -73,12 +75,6 @@ public class Core extends MassivePlugin implements PluginMessageListener {
 
     @Override
     public void onDisable() {
-        if (transferFiles()) {
-            getLogManager().log(Logger.LogType.SERVER, "Transferred all files!");
-        } else {
-            getLogManager().log(Logger.LogType.SEVERE, "Couldn't copy files!");
-        }
-
         i = null;
     }
 

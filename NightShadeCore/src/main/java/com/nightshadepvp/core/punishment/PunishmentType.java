@@ -5,6 +5,6 @@ package com.nightshadepvp.core.punishment;
  */
 public enum PunishmentType {
 
-    WARNING, MUTE, BAN;
+    WARNING, MUTE, BAN, VERBBAL, DQ
 
 }

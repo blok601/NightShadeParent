@@ -1,7 +1,9 @@
 package com.nightshadepvp.core.punishment;
 
-import com.nightshadepvp.core.punishment.type.ban.FlyInSpawnPunishment;
-import com.nightshadepvp.core.punishment.type.ban.HackedClientPunishment;
+import com.nightshadepvp.core.punishment.type.ban.*;
+import com.nightshadepvp.core.punishment.type.dq.CampingPunishment;
+import com.nightshadepvp.core.punishment.type.dq.StalkingPunishment;
+import com.nightshadepvp.core.punishment.type.mute.HackusationPunishment;
 import com.nightshadepvp.core.utils.ChatUtils;
 import com.nightshadepvp.core.utils.ItemBuilder;
 import org.bukkit.Bukkit;
@@ -15,6 +17,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 /**
  * Created by Blok on 8/24/2018.
@@ -39,7 +42,14 @@ public class PunishmentHandler {
         this.punishing = new HashMap<>();
         this.punishments= new ArrayList<>();
         this.punishments.add(new HackedClientPunishment());
-        this.punishments.add(new FlyInSpawnPunishment());
+        this.punishments.add(new CampingPunishment());
+        this.punishments.add(new IllegalMiningPunishment());
+        this.punishments.add(new XrayPunishment());
+        this.punishments.add(new ExploitingBugsPunishment());
+        this.punishments.add(new HostLyingPunishment());
+        this.punishments.add(new HackusationPunishment());
+        this.punishments.add(new StalkingPunishment());
+
     }
 
     public ItemStack getChildStack() {
@@ -60,15 +70,28 @@ public class PunishmentHandler {
         int i = 18;
         ItemStack skullStack = new ItemStack(Material.SKULL_ITEM);
         SkullMeta skullMeta = (SkullMeta) skullStack.getItemMeta();
-        skullMeta.setOwner(Bukkit.getOfflinePlayer(getPunishing().get(player)).getName());
+        skullMeta.setOwner(getPunishing().get(player));
         skullStack.setItemMeta(skullMeta);
 
-        inventory.setItem(5, skullStack);
         inventory.setItem(3, new ItemBuilder(Material.PAPER).lore("&eClick to view player history").name("&5Player History").make());
-        for (AbstractPunishment punishment : this.punishments){
-            inventory.setItem(i, punishment.getItemStack());
+        inventory.setItem(4, skullStack);
+        inventory.setItem(5, new ItemBuilder(Material.PACKED_ICE).name("&5Freeze player").lore("&eClick to freeze player").make());
+        ArrayList<AbstractPunishment> bans = new ArrayList<>(this.punishments.stream().filter(abstractPunishment -> abstractPunishment.getPunishmentType() == PunishmentType.BAN).collect(Collectors.toList()));
+        ArrayList<AbstractPunishment> mutes = new ArrayList<>(this.punishments.stream().filter(abstractPunishment -> abstractPunishment.getPunishmentType() == PunishmentType.MUTE).collect(Collectors.toList()));
+        ArrayList<AbstractPunishment> warns = new ArrayList<>(this.punishments.stream().filter(abstractPunishment -> abstractPunishment.getPunishmentType() == PunishmentType.WARNING).collect(Collectors.toList()));
+        for (AbstractPunishment abstractPunishment : bans) {
+            inventory.setItem(i, abstractPunishment.getItemStack());
             i++;
         }
+
+        for (AbstractPunishment abstractPunishment : mutes) {
+            inventory.setItem(i, abstractPunishment.getItemStack());
+        }
+
+        for (AbstractPunishment abstractPunishment : warns) {
+            inventory.setItem(i, abstractPunishment.getItemStack());
+        }
+
     }
 
     private AbstractPunishment getAbstractPunishment(ItemStack itemStack){

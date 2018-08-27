@@ -1,8 +1,9 @@
 package com.nightshadepvp.core.punishment;
 
+import com.nightshadepvp.core.utils.ItemBuilder;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -13,19 +14,29 @@ import java.util.Map;
 /**
  * Created by Blok on 8/24/2018.
  */
-public abstract class AbstractPunishment implements Listener {
+public abstract class AbstractPunishment {
 
     private String name;
-    private ItemStack itemStack;
+    private Material material;
     private PunishmentType punishmentType;
     private HashMap<Integer, Punishment> children;
+    private ItemStack itemStack;
 
+
+    public AbstractPunishment(String name, Material material, PunishmentType punishmentType) {
+        this.name = name;
+        this.material = material;
+        this.punishmentType = punishmentType;
+        this.children = new HashMap<>();
+        this.itemStack = null;
+    }
 
     public AbstractPunishment(String name, ItemStack itemStack, PunishmentType punishmentType) {
         this.name = name;
         this.itemStack = itemStack;
         this.punishmentType = punishmentType;
         this.children = new HashMap<>();
+        this.material = null;
     }
 
     public String getName() {
@@ -36,7 +47,12 @@ public abstract class AbstractPunishment implements Listener {
         this.name = name;
     }
 
+
     ItemStack getItemStack() {
+        if(this.itemStack == null){
+            return new ItemBuilder(material).name("&5" + this.name).lore("&eClick to view the punishment options for " + this.name).make();
+        }
+
         return itemStack;
     }
 
@@ -73,5 +89,6 @@ public abstract class AbstractPunishment implements Listener {
     public Punishment getChild(ItemStack stack) {
         return this.children.values().stream().filter(punishment -> punishment.getItemStack().equals(stack)).findAny().orElse(null);
     }
+
 
 }

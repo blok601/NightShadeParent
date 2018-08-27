@@ -215,8 +215,12 @@ public class EngineInventory extends Engine {
                     p.closeInventory();
                     p.chat("/history " + PunishmentHandler.getInstance().getPunishing().get(p));
                     return;
-                } else if (e.getSlot() == 5) {
+                } else if (e.getSlot() == 4) {
                     return;
+                }else if(e.getSlot() == 5){
+                    //Freeze
+                    p.closeInventory();
+                    p.chat("/freeze " + PunishmentHandler.getInstance().getPunishing().get(p));
                 }
 
                 PunishmentHandler.getInstance().handleClick(stack, e);
@@ -242,7 +246,6 @@ public class EngineInventory extends Engine {
                 }
 
                 abstractPunishment.getChild(stack).execute(p);
-
             }
         }
     }

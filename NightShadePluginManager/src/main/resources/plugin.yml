@@ -1,0 +1,7 @@
+name: PluginManager
+version: 1.0
+main: com.nightshadepvp.pluginmanager.PluginManager
+description: NightShadePvP's Plugin Manager
+commands:
+  versions:
+    description: Displays the version of all the NightShade plugins on the server

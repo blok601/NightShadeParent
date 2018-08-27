@@ -7,24 +7,34 @@ import com.nightshadepvp.core.punishment.PunishmentType;
 import com.nightshadepvp.core.utils.ItemBuilder;
 import org.bukkit.Material;
 
+import java.util.Collections;
+
 /**
  * Created by Blok on 8/25/2018.
  */
 public class IllegalMiningPunishment extends AbstractPunishment {
 
     public IllegalMiningPunishment() {
-        super("Illegal Mining", new ItemBuilder(Material.DIAMOND_PICKAXE).name("&5Illegal Mining").lore("&eClick to view the punishment options for illegal mining").make(), PunishmentType.WARNING);
+        super("Illegal Mining", Material.DIAMOND_PICKAXE, PunishmentType.WARNING);
 
         this.addChild(new Punishment("Illegal Mining (1st Offense)", new ItemBuilder(PunishmentHandler.getInstance().getChildStack())
                 .name("&5Illegal Mining &8(1st Offense&8)")
-                .lore("&eClick to warn the player for illegal mining").make(),
-                this, "warn %player% Illegal Mining 1/3"
+                .lore("&eClick to warn the player for Illegal Mining").make(),
+                this, Collections.singletonList("warn %player% Illegal Mining 1/3"), PunishmentType.WARNING
         ), 22);
 
         this.addChild(new Punishment("Illegal Mining (2nd Offense)", new ItemBuilder(PunishmentHandler.getInstance().getChildStack())
+                .amount(2)
                 .name("&5Illegal Mining &8(2nd Offense&8)")
-                .lore("&eClick to warn the player for illegal mining").make(),
-                this, "warn %player% Illegal Mining 1/3"
-        ), 22);
+                .lore("&eClick to warn the player for Illegal Mining").make(),
+                this, Collections.singletonList("warn %player% Illegal Mining 2/3"), PunishmentType.WARNING
+        ), 23);
+
+        this.addChild(new Punishment("Illegal Mining (3rd Offense)", new ItemBuilder(PunishmentHandler.getInstance().getChildStack())
+                .amount(3)
+                .name("&5Illegal Mining &8(3rd Offense&8)")
+                .lore("&eClick to ban the player for 3d for Illegal Mining").make(),
+                this, Collections.singletonList("ban %player% Illegal Mining 3d"), PunishmentType.BAN
+        ), 24);
     }
 }

@@ -5,4 +5,4 @@ prefix: Core
 authors: [BL0K, Database]
 description: NightShadePvP Core plugin which include the rank manager and stats manager
 website: www.nightshadepvp.com
-depend: [MassiveCore]
+depend: [MassiveCore, PluginManager]

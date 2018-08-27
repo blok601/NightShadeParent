@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.nightshadepvp</groupId>
-    <artifactId>NightShadeCore</artifactId>
+    <artifactId>NightShadePluginManager</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
 
-    <description>NightShadePvP Core plugin which include the rank manager and stats manager</description>
+    <description>NightShadePvP Plugin Manager that integrates the lateest files into the server</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -40,7 +40,7 @@
                         </goals>
                         <configuration>
                             <minimizeJar>true</minimizeJar>
-                            <finalName>Core</finalName>
+                            <finalName>PluginManager</finalName>
                         </configuration>
                     </execution>
                 </executions>
@@ -67,32 +67,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.massivecraft</groupId>
-            <artifactId>MassiveCore</artifactId>
-            <version>LATEST</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/src/main/resources/libs/MassiveCore.jar</systemPath>
-        </dependency>
-        <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
             <version>1.8.8-R0.1-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/src/main/resources/libs/pspigot.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>litebans</groupId>
-            <artifactId>api</artifactId>
-            <version>LATEST</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/src/main/resources/libs/LiteBansAPI.jar</systemPath>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>2.9.0</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
+
     
 </project>

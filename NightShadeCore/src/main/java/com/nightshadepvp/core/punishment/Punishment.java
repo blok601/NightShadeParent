@@ -5,16 +5,23 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
+
 /**
  * Created by Blok on 8/25/2018.
  */
 public class Punishment extends AbstractPunishment {
 
-    private String command;
+    List<String> commands;
+    AbstractPunishment parent;
+    PunishmentType type;
 
-    public Punishment(String name, ItemStack itemStack,  AbstractPunishment parent, String command){
-        super(name, itemStack, parent.getPunishmentType());
-        this.command = command;
+    public Punishment(String name, ItemStack itemStack, AbstractPunishment parent, List<String> commands, PunishmentType type) {
+        super(name, itemStack, type);
+        this.commands = commands;
+        this.type = type;
+        this.parent = parent;
+
         parent.addChild(this, 1);
     }
 
@@ -27,12 +34,22 @@ public class Punishment extends AbstractPunishment {
         Player target = Bukkit.getPlayer(name);
         if(target == null){
             staff.sendMessage(ChatUtils.message("&eSuccessfully executed punishment."));
-            staff.chat(command.replaceAll("%player%", name));
+            for (String cmd : this.commands) {
+                staff.chat(cmd.replaceAll("%player%", name));
+            }
         }else{
             staff.sendMessage(ChatUtils.message("&eSuccessfully punished&8: " + target.getName()));
-            target.damage(0); //Damage effect
-            target.setHealth(0);
-            staff.chat(command.replaceAll("%player%", target.getName()));
+            if (type == PunishmentType.DQ || type == PunishmentType.BAN) {
+                target.damage(0); //Damage effect
+                target.setHealth(0);
+                if(type == PunishmentType.DQ){
+                    target.sendMessage(ChatUtils.message("&4You have been DQed for " + this.parent.getName()));
+                }
+            }
+
+            for (String cmd : this.commands) {
+                staff.chat(cmd.replaceAll("%player%", name));
+            }
         }
 
         PunishmentHandler.getInstance().getPunishing().remove(staff);
