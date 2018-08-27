@@ -242,7 +242,7 @@ public class EngineInventory extends Engine {
                     return;
                 }
 
-                if(abstractPunishment.getChild(stack) == null){
+                if(abstractPunishment.getChild(e.getSlot()) == null){
                     p.closeInventory();
                     p.sendMessage(ChatUtils.message("&cThere was a problem loading that punishment!"));
                     return;
