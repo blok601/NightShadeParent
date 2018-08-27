@@ -92,6 +92,8 @@ public class PunishmentHandler {
             inventory.setItem(i, abstractPunishment.getItemStack());
         }
 
+        player.openInventory(inventory);
+
     }
 
     private AbstractPunishment getAbstractPunishment(ItemStack itemStack){

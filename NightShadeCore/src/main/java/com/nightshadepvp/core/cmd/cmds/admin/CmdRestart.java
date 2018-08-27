@@ -7,7 +7,6 @@ import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.cmd.NightShadeCoreCommand;
 import com.nightshadepvp.core.cmd.req.ReqRankHasAtLeast;
 import com.nightshadepvp.core.utils.ChatUtils;
-import com.nightshadepvp.core.utils.ProxyUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -33,7 +32,7 @@ public class CmdRestart extends NightShadeCoreCommand{
             @Override
             public void run() {
                 if(counter == 5){
-                    Bukkit.getOnlinePlayers().forEach(o -> ProxyUtil.sendToServer(o, "lobby"));
+                    Bukkit.getOnlinePlayers().forEach(o -> o.kickPlayer("Thank you for flying NightShadePvP. Come back soon"));
                 }
 
                 if(counter == 0){
