@@ -1,9 +1,11 @@
 package com.nightshadepvp.core.punishment;
 
 import com.nightshadepvp.core.punishment.type.ban.*;
+import com.nightshadepvp.core.punishment.type.dq.BenefitingPunishment;
 import com.nightshadepvp.core.punishment.type.dq.CampingPunishment;
 import com.nightshadepvp.core.punishment.type.dq.StalkingPunishment;
 import com.nightshadepvp.core.punishment.type.mute.HackusationPunishment;
+import com.nightshadepvp.core.punishment.type.mute.SpamPunishment;
 import com.nightshadepvp.core.utils.ChatUtils;
 import com.nightshadepvp.core.utils.ItemBuilder;
 import org.bukkit.Bukkit;
@@ -40,14 +42,19 @@ public class PunishmentHandler {
     public void setup(){
         this.punishing = new HashMap<>();
         this.punishments= new ArrayList<>();
-        this.punishments.add(new HackedClientPunishment());
-        this.punishments.add(new CampingPunishment());
-        this.punishments.add(new IllegalMiningPunishment());
-        this.punishments.add(new XrayPunishment());
         this.punishments.add(new ExploitingBugsPunishment());
+        this.punishments.add(new HackedClientPunishment());
         this.punishments.add(new HostLyingPunishment());
-        this.punishments.add(new HackusationPunishment());
+        this.punishments.add(new iPvPPunishment());
+        this.punishments.add(new LagMachinePunishment());
+        this.punishments.add(new SpoilingPunishment());
+        this.punishments.add(new XrayPunishment());
+        this.punishments.add(new BenefitingPunishment());
+        this.punishments.add(new CampingPunishment());
         this.punishments.add(new StalkingPunishment());
+        this.punishments.add(new HackusationPunishment());
+        this.punishments.add(new SpoilingPunishment());
+        this.punishments.add(new SpamPunishment());
 
     }
 
@@ -75,9 +82,10 @@ public class PunishmentHandler {
         inventory.setItem(3, new ItemBuilder(Material.PAPER).lore("&eClick to view player history").name("&5Player History").make());
         inventory.setItem(4, skullStack);
         inventory.setItem(5, new ItemBuilder(Material.PACKED_ICE).name("&5Freeze player").lore("&eClick to freeze player").make());
-        ArrayList<AbstractPunishment> bans = new ArrayList<>(this.punishments.stream().filter(abstractPunishment -> abstractPunishment.getPunishmentType() == PunishmentType.BAN).collect(Collectors.toList()));
-        ArrayList<AbstractPunishment> mutes = new ArrayList<>(this.punishments.stream().filter(abstractPunishment -> abstractPunishment.getPunishmentType() == PunishmentType.MUTE).collect(Collectors.toList()));
-        ArrayList<AbstractPunishment> warns = new ArrayList<>(this.punishments.stream().filter(abstractPunishment -> abstractPunishment.getPunishmentType() == PunishmentType.WARNING).collect(Collectors.toList()));
+        ArrayList<AbstractPunishment> bans = this.punishments.stream().filter(abstractPunishment -> abstractPunishment.getPunishmentType() == PunishmentType.BAN).collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<AbstractPunishment> mutes = this.punishments.stream().filter(abstractPunishment -> abstractPunishment.getPunishmentType() == PunishmentType.MUTE).collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<AbstractPunishment> warns = this.punishments.stream().filter(abstractPunishment -> abstractPunishment.getPunishmentType() == PunishmentType.WARNING).collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<AbstractPunishment> dqs = this.punishments.stream().filter(abstractPunishment -> abstractPunishment.getPunishmentType() == PunishmentType.DQ).collect(Collectors.toCollection(ArrayList::new));
         for (AbstractPunishment abstractPunishment : bans) {
             inventory.setItem(i, abstractPunishment.getItemStack());
             i++;
@@ -93,12 +101,17 @@ public class PunishmentHandler {
             i++;
         }
 
+        for (AbstractPunishment abstractPunishment : dqs) {
+            inventory.setItem(i, abstractPunishment.getItemStack());
+            i++;
+        }
+
         player.openInventory(inventory);
 
     }
 
     public AbstractPunishment getAbstractPunishment(ItemStack itemStack){
-        return punishments.stream().filter(abstractPunishment -> abstractPunishment.getItemStack().getType() == itemStack.getType()).findFirst().orElse(null);
+        return punishments.stream().filter(abstractPunishment -> abstractPunishment.getItemStack().getType() == itemStack.getType()).findAny().orElse(null);
     }
 
     public AbstractPunishment getAbstractPunishment(String name){

@@ -66,11 +66,8 @@ public abstract class AbstractPunishment {
 
     void click(InventoryClickEvent e) {
         Player p = (Player) e.getWhoClicked();
-        int slot = e.getSlot();
-
-        if (!this.children.containsKey(slot)) {
-            return;
-        }
+        if(e.getCurrentItem() == null) return;
+        if(e.getCurrentItem().getType() == Material.AIR) return;
 
         Inventory childInventory = Bukkit.createInventory(null, 54, getName());
         for (Map.Entry<Integer, Punishment> entry : this.children.entrySet()) {

@@ -235,7 +235,7 @@ public class EngineInventory extends Engine {
                     return;
                 }
 
-                AbstractPunishment abstractPunishment = PunishmentHandler.getInstance().getAbstractPunishment(stack);
+                AbstractPunishment abstractPunishment = PunishmentHandler.getInstance().getAbstractPunishment(e.getInventory().getName());
                 if (abstractPunishment == null) {
                     p.closeInventory();
                     p.sendMessage(ChatUtils.message("&cThere was a problem loading that punishment!"));
@@ -248,7 +248,7 @@ public class EngineInventory extends Engine {
                     return;
                 }
 
-                abstractPunishment.getChild(stack).execute(p);
+                abstractPunishment.getChild(e.getSlot()).execute(p);
             }
         }
     }
