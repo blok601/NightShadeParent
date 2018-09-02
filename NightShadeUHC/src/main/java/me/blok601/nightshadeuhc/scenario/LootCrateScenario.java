@@ -18,6 +18,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by Blok on 6/29/2017.
@@ -54,7 +55,8 @@ public class LootCrateScenario extends Scenario{
 
         for (Player player : Bukkit.getOnlinePlayers()){
             Random r = new Random();
-            player.getInventory().addItem(chests.get(r.nextInt(chests.size())));
+            ItemStack stack = chests.get(r.nextInt(chests.size()));
+            player.getInventory().addItem(stack);
             player.sendMessage(ChatUtils.message(getPrefix() + "&eYou have been given your lootcrate!"));
         }
 
@@ -94,15 +96,17 @@ public class LootCrateScenario extends Scenario{
         if(e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR){
             Player p = e.getPlayer();
             if(e.getItem().getType() == Material.CHEST){
-                Random r = new Random();
+                Random r = ThreadLocalRandom.current();
+                ItemStack stack = tier1[r.nextInt(tier1.length)];
                 p.getInventory().remove(e.getItem());
-                p.getInventory().addItem(tier1[r.nextInt(tier1.length)]);
-                p.sendMessage(ChatUtils.message(getPrefix() + "&bYou have been given your lootcrate!"));
+                p.getInventory().addItem(stack);
+                p.sendMessage(ChatUtils.format(getPrefix() + "&eYou have gotten " + stack.getAmount() + " &b" + stack.getType().name() + " &efrom your lootcrate!"));
             }else if(e.getItem().getType() == Material.ENDER_CHEST){
-                Random r = new Random();
+                Random r = ThreadLocalRandom.current();
+                ItemStack stack = tier2[r.nextInt(tier2.length)];
                 p.getInventory().remove(e.getItem());
-                p.getInventory().addItem(tier2[r.nextInt(tier2.length)]);
-                p.sendMessage(ChatUtils.message(getPrefix() + "&bYou have been given your lootcrate!"));
+                p.getInventory().addItem(stack);
+                p.sendMessage(ChatUtils.format(getPrefix() + "&eYou have gotten " + stack.getAmount() + " &b" + stack.getType().name() + " &efrom your lootcrate!"));
             }
         }
     }
