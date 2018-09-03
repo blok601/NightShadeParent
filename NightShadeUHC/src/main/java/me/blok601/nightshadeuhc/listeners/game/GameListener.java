@@ -60,7 +60,7 @@ public class GameListener implements Listener {
             cachedGame.setServer(GameManager.getServerType());
 
             Document document = new Document("matchID", cachedGame.getMatchID());
-            document.append("host", cachedGame.getHost().toString());
+            document.append("host", cachedGame.getHost());
             document.append("winners", cachedGame.getWinners());
             document.append("scenarios", cachedGame.getScenarios());
             document.append("players", cachedGame.getFill());

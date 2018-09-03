@@ -84,9 +84,9 @@ public class EndGameCommand implements CmdInterface{
                 gamePlayer.addPoints(10/targetTeam.getMembers().size());
                 if(user.getRank() == Rank.PLAYER){
                     if(gamePlayer.getGamesWon() >= 10){
-                        user.setPrefix(ChatUtils.format("&8[&cChampion&8]"));
+                        user.setPrefix(ChatUtils.format("&8[&c★&8]"));
                     }else{
-                        user.setPrefix(ChatUtils.format("&8[&cWinner&8]"));
+                        user.setPrefix(ChatUtils.format("&8[&c★&8]"));
                     }
                 }
                 gamePlayer.changed();
@@ -126,9 +126,9 @@ public class EndGameCommand implements CmdInterface{
             gamePlayer.addPoints(10);
             if(user.getRank() == Rank.PLAYER){
                 if(gamePlayer.getGamesWon() >= 10){
-                    user.setPrefix(ChatUtils.format("&8[&cChampion&8]"));
+                    user.setPrefix(ChatUtils.format("&8[&c★&8]"));
                 }else{
-                    user.setPrefix(ChatUtils.format("&8[&cWinner&8]"));
+                    user.setPrefix(ChatUtils.format("&8[&c★&8]"));
                 }
             }
             gamePlayer.changed();
