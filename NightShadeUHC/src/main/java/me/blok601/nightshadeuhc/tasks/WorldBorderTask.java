@@ -43,6 +43,8 @@ public class WorldBorderTask extends BukkitRunnable {
                 Bukkit.getOnlinePlayers().forEach((Consumer<Player>) player -> {
                     ActionBarUtil.sendActionBarMessage(player, "§5Shrink to " + GameManager.getFirstShrink() + "radius in " + get(counter), 1, UHC.get());
                 });
+            }else if(Util.isBetween(10, 0, counter)){
+                ChatUtils.sendAll("The border will shrink to " + GameManager.getFirstShrink() + " radius in " + counter);
             }
         } else if (counter == 0) {
             GameState.setState(GameState.MEETUP);

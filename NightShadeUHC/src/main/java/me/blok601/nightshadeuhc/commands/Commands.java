@@ -16,6 +16,7 @@ import me.blok601.nightshadeuhc.staff.cmd.AlertsCommand;
 import me.blok601.nightshadeuhc.staff.cmd.CommandSpyCmd;
 import me.blok601.nightshadeuhc.staff.cmd.StaffCommand;
 import me.blok601.nightshadeuhc.staff.spec.SpecCommand;
+import me.blok601.nightshadeuhc.staff.spec.SpecsCommand;
 import me.blok601.nightshadeuhc.staff.spec.SpectatorChatCommand;
 import me.blok601.nightshadeuhc.stats.command.LeaderboardsCommand;
 import me.blok601.nightshadeuhc.stats.command.StatsCommand;
@@ -101,7 +102,9 @@ public class Commands {
                 new AssignPowerCommand(),
                 new AnonymousNameCommand(),
                 new AssaultAndBatteryRoleCommand(),
-                new KickSolosCommand()
+                new KickSolosCommand(),
+                new SpecsCommand(),
+                new PermaDayCommand()
         };
     }
 

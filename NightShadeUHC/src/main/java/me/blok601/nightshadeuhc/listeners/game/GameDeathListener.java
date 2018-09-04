@@ -98,6 +98,12 @@ public class GameDeathListener implements Listener {
                     deathMessage = "&5" + (uhcPlayer.isDisguised() ? uhcPlayer.getDisguisedName() : uhcPlayer.getName()) + " &9died.";
                 }
 
+                PlayerRespawnObject inv = new PlayerRespawnObject();
+                inv.setArmor(p.getInventory().getArmorContents());
+                inv.setItems(p.getInventory().getContents());
+                inv.setLocation(p.getLocation());
+                GameManager.getInvs().put(p.getUniqueId(), inv);
+
                 p.setHealth(p.getMaxHealth());
                 p.setFoodLevel(20);
                 p.getInventory().clear();
@@ -116,11 +122,6 @@ public class GameDeathListener implements Listener {
 
             //Calculate points and changes
             UHC.players.remove(p.getUniqueId());
-            PlayerRespawnObject inv = new PlayerRespawnObject();
-            inv.setArmor(p.getInventory().getArmorContents());
-            inv.setItems(p.getInventory().getContents());
-            inv.setLocation(p.getLocation());
-            GameManager.getInvs().put(p.getUniqueId(), inv);
 
             if (damager != null) {
                 gamePlayer1.addKill(1);
@@ -228,6 +229,12 @@ public class GameDeathListener implements Listener {
                 deathMessage = "&5" + p.getName() + " &9was killed by &5" + damager.getName() + "";
             }
 
+            PlayerRespawnObject inv = new PlayerRespawnObject();
+            inv.setArmor(p.getInventory().getArmorContents());
+            inv.setItems(p.getInventory().getContents());
+            inv.setLocation(p.getLocation());
+            GameManager.getInvs().put(p.getUniqueId(), inv);
+
             p.setHealth(p.getMaxHealth());
             p.setFoodLevel(20);
             p.getInventory().clear();
@@ -246,11 +253,6 @@ public class GameDeathListener implements Listener {
 
         //Calculate points and changes
         UHC.players.remove(p.getUniqueId());
-        PlayerRespawnObject inv = new PlayerRespawnObject();
-        inv.setArmor(p.getInventory().getArmorContents());
-        inv.setItems(p.getInventory().getContents());
-        inv.setLocation(p.getLocation());
-        GameManager.getInvs().put(p.getUniqueId(), inv);
 
         if (damager != null) {
             gamePlayer1.addKill(1);

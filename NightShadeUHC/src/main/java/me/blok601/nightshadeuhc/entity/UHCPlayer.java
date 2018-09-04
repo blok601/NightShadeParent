@@ -508,6 +508,9 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         Player p = getPlayer();
         p.getInventory().clear();
         p.getInventory().setArmorContents(null);
+        p.setAllowFlight(false);
+        p.setFlying(false);
+        p.setGameMode(GameMode.SURVIVAL);
 
         setInArena(true);
 
@@ -519,14 +522,12 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         ItemBuilder boots = new ItemBuilder(Material.IRON_BOOTS).enchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
         ItemBuilder bow = new ItemBuilder(Material.BOW).enchantment(Enchantment.ARROW_DAMAGE, 2).enchantment(Enchantment.ARROW_INFINITE);
         ItemStack gapple = new ItemStack(Material.GOLDEN_APPLE, 1);
-        ItemStack steak = new ItemStack(Material.COOKED_BEEF, 64);
         ItemStack arrow = new ItemStack(Material.ARROW, 1);
 
         p.getInventory().addItem(sword.make());
         p.getInventory().addItem(rod);
         p.getInventory().addItem(bow.make());
         p.getInventory().addItem(gapple);
-        p.getInventory().addItem(steak);
         p.getInventory().setItem(8, arrow);
         p.getInventory().setBoots(boots.make());
         p.getInventory().setLeggings(leggings.make());
