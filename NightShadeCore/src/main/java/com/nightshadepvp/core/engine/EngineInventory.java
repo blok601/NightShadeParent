@@ -20,6 +20,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 import java.io.File;
 import java.io.IOException;
@@ -229,6 +230,8 @@ public class EngineInventory extends Engine {
             }
 
             if (PunishmentHandler.getInstance().getPunishing().containsKey(p)) {
+                if(p.getOpenInventory() instanceof PlayerInventory) return;
+                if(inv.getSize() != 54) return;
                 e.setCancelled(true);
                 if (stack.getType() == Material.WOOL) {
                     PunishmentHandler.getInstance().createGUI(p);
