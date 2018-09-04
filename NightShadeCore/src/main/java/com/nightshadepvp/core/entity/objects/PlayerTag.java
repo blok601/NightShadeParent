@@ -27,6 +27,7 @@ public enum PlayerTag {
     CUTIE("&dCutie", new ItemBuilder(Material.NAME_TAG).name("&9Cutie Tag &8(&dCutie&8)").make()),
     SWEAT("&eSweat", new ItemBuilder(Material.NAME_TAG).name("&eSweat Tag &8(&eSweat&8)").make()),
     TRIAL_PLAYER("&bTrial Player", new ItemBuilder(Material.NAME_TAG).name("&eTrial Player Tag &8(&bTrial Player&8)").make()),
+    FURRY("&eFurry", new ItemBuilder(Material.NAME_TAG).name("&3Furry Tag &8(&eFurry&8)").make()),
     EGIRL("&d&nEGirl", new ItemBuilder(Material.NAME_TAG).name("&d&nEGirl Tag &8(&d&nEGirl&8)").make());
 
     private String title;
