@@ -11,7 +11,6 @@ import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.teams.Team;
 import me.blok601.nightshadeuhc.teams.TeamManager;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
-import me.blok601.nightshadeuhc.utils.ProxyUtil;
 import me.blok601.nightshadeuhc.utils.Util;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
@@ -168,8 +167,8 @@ public class EndGameCommand implements CmdInterface{
         new BukkitRunnable(){
             @Override
             public void run() {
-                Bukkit.getOnlinePlayers().stream().filter(o -> !NSPlayer.get(o.getUniqueId()).hasRank(Rank.TRIAL)).forEach(o -> ProxyUtil.sendToServer(o, "lobby"));
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spigot:restart");
+                Bukkit.getOnlinePlayers().stream().filter(o -> !NSPlayer.get(o.getUniqueId()).hasRank(Rank.TRIAL)).forEach(o -> o.kickPlayer("The game has concluded! Thanks for playing! \n Follow us on twitter @NightShadePvPMC \n Join our Discord @ discord.me/NightShadeMC"));
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "restart");
             }
         }.runTaskLater(UHC.get(), 30*20);
     }
