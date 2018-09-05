@@ -2,6 +2,7 @@ package me.blok601.nightshadeuhc.commands.extras;
 
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
+import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.commands.CmdInterface;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.manager.GameManager;
@@ -12,10 +13,14 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.HashSet;
+import java.util.UUID;
 
 public class Helpop implements CmdInterface{
 
-
+	private HashSet<UUID> helpopCooldown = new HashSet<>();
 
 	@Override
 	public String[] getNames() {
@@ -32,6 +37,14 @@ public class Helpop implements CmdInterface{
 			p.sendMessage(ChatColor.DARK_AQUA + "[UHC] " + ChatColor.RED + "Staff members can't speak in helpop! Use /sc!");
 			return;
 		}else{
+
+		    if(helpopCooldown.contains(p.getUniqueId())){
+		        p.sendMessage(ChatUtils.message("&cYou can only use helpop every 3 seconds!"));
+		        return;
+            }
+
+
+
 			if(args.length == 0){
 				p.sendMessage(ChatColor.DARK_AQUA + "[UHC] " + ChatColor.RED + "Usage: /helpop <message>");
 				return;
@@ -60,7 +73,13 @@ public class Helpop implements CmdInterface{
 
 
 				Bukkit.getOnlinePlayers().stream().filter(o -> NSPlayer.get(o.getUniqueId()).hasRank(Rank.TRIAL)).filter(o -> UHCPlayer.get(o.getUniqueId()).isReceiveHelpop()).forEach(o -> o.sendMessage(ChatColor.DARK_AQUA + "[Helpop] "+  p.getName() + ": "+ ChatColor.YELLOW + reason));
-
+                this.helpopCooldown.add(p.getUniqueId());
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        helpopCooldown.remove(p.getUniqueId());
+                    }
+                }.runTaskLater(UHC.get(), 20*5);
 				p.sendMessage(ChatColor.DARK_AQUA + "[UHC] " + ChatColor.YELLOW + "Your message was sent to the online moderators");
 				return;
 			}

@@ -157,7 +157,7 @@ public class CmdTeamBase implements CmdInterface{
                         p.sendMessage(ChatUtils.message("&cYou require the HOST rank to do this command!"));
                     }
                 }else if(args[0].equalsIgnoreCase("color")){
-                    if(user.hasRank(Rank.HOST)){
+                    if(user.hasRank(Rank.TRIALHOST)){
                         ScoreboardManager scoreboardManager = UHC.get().getScoreboardManager();
                         Scoreboard scoreboard;
                         for (Team team : TeamManager.getInstance().getTeams()){

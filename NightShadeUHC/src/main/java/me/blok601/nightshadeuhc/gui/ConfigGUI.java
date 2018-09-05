@@ -23,7 +23,7 @@ public class ConfigGUI {
         ItemStack mining = new ItemBuilder(Material.IRON_PICKAXE).name(ChatUtils.format("&6Mining Information")).lore(ChatUtils.format("&3Stripmining» &eAbove y32 &cONLY")).lore(ChatUtils.format("&3Rollercoastering» &e&aAllowed"))
                 .make();
 
-        ItemStack apples = new ItemBuilder(Material.APPLE).name(ChatUtils.format("&6Apples")).lore(ChatUtils.format("&3Apple rates» &e5%")).make();
+        ItemStack apples = new ItemBuilder(Material.APPLE).name(ChatUtils.format("&6Apples")).lore(ChatUtils.format("&3Apple rates» &e"+ GameManager.getAppleRates() + "%")).make();
 
         ItemStack healing =new ItemBuilder(Material.GOLDEN_APPLE).name(ChatUtils.format("&6Healing")).lore(ChatUtils.format("&3Golden Heads» &eHeal 4 hearts")).lore(ChatUtils.format("&3Health Potions» &aOff")).make();
 
@@ -39,8 +39,10 @@ public class ConfigGUI {
         newSkull.name(ChatUtils.format("&6Host")).lore(ChatUtils.format("&3Host» &e" + GameManager.getHost().getName()));
         newSkull.skullOwner(GameManager.getHost().getName());
 
-        ItemStack server = new ItemBuilder(Material.PAPER).name(ChatUtils.format("&6Server Information")).lore(ChatUtils.format("&3Owners» &eBL0K and CarterAimz_"))
-                .lore(ChatUtils.format("&3Provider» &eOVH")).lore(ChatUtils.format("&3Developers» &eBL0K, Braidenn_, Database and Austin")).lore(ChatUtils.format("&3Website» &ewww.nightshadepvp.com")).lore(ChatUtils.format("&3Twitter» &e@NightShadePVPMC")).make();
+        ItemStack server = new ItemBuilder(Material.PAPER).name(ChatUtils.format("&6Server Information")).lore(ChatUtils.format("&3Owners» &eBL0K, Milan and CarterAimz"))
+                .lore(ChatUtils.format("&3Provider» &eOVH")).lore(ChatUtils.format("&3Developers» &eBL0K, Braidenn_, Database and Austin")).lore(ChatUtils.format("&3Website» &ewww.nightshadepvp.com")).lore(ChatUtils.format("&3Twitter» &e@NightShadePVPMC"))
+                .lore(ChatUtils.format("&3Discord» &5discord.me/NightShadeMC"))
+                .make();
 
         menu.item(1, paper);
         menu.item(4, mining);

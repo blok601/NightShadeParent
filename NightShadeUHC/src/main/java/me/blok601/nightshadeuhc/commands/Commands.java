@@ -104,7 +104,9 @@ public class Commands {
                 new AssaultAndBatteryRoleCommand(),
                 new KickSolosCommand(),
                 new SpecsCommand(),
-                new PermaDayCommand()
+                new PermaDayCommand(),
+                new AliveCommand(),
+                new ClearXPCommand()
         };
     }
 

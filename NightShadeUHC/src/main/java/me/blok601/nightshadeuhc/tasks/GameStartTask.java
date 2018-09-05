@@ -2,6 +2,8 @@ package me.blok601.nightshadeuhc.tasks;
 
 import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Logger;
+import com.nightshadepvp.core.Rank;
+import com.nightshadepvp.core.entity.NSPlayerColl;
 import me.blok601.nightshadeuhc.GameState;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.commands.extras.Freeze;
@@ -11,6 +13,7 @@ import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
 import me.blok601.nightshadeuhc.events.GameStartEvent;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
+import me.blok601.nightshadeuhc.teams.TeamManager;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.utils.Util;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
@@ -39,6 +42,7 @@ public class GameStartTask extends BukkitRunnable {
     private int borderTime;
     private int firstShrink;
     private boolean isTeam;
+    private int counter;
 
     public GameStartTask(Player p, int finalHealTime, int pvpTime, int borderTime, World world, int firstShrink, boolean isTeam) {
         this.p = p;
@@ -48,10 +52,17 @@ public class GameStartTask extends BukkitRunnable {
         this.borderTime = borderTime;
         this.firstShrink = firstShrink;
         this.isTeam = isTeam;
+        this.counter = 120;
+        if (TeamManager.getInstance().isTeamManagement()) TeamManager.getInstance().setTeamManagement(false);
+        if (GameManager.isIsTeam()) {
+            if (GameManager.getHost() == null) {
+                NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> nsPlayer.hasRank(Rank.TRIALHOST)).findFirst().ifPresent(nsPlayer -> nsPlayer.getPlayer().chat("/team color"));
+            } else {
+                GameManager.getHost().chat("/team color");
+            }
+        }
     }
 
-
-    int counter = 120;
 
     @Override
     public void run() {

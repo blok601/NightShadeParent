@@ -73,6 +73,8 @@ commands:
   setupdates:
     description: Command for Circle Integration
   config:
+    aliases: [conf, uhc]
+    description: Show the game config
   savepreset:
   loadpreset:
   respawn:
@@ -89,6 +91,7 @@ commands:
     aliases: [eat]
   togglehelpop:
   scenarios:
+    aliases: [scens]
     description: Show enabled scenarios
   resethealth:
   cleararmor:
@@ -97,6 +100,8 @@ commands:
   worlds:
   deleteworld:
   fullbright:
+    aliases: [nv, nightvision]
+    description: Get night vision / full bright for caving
   rvb:
   testgen:
   leaderboards:
@@ -115,3 +120,7 @@ commands:
   abrole:
   specs:
   permaday:
+  alive:
+  clearxp:
+    aliases: [xpclear]
+    description: Clear everyone's XP
