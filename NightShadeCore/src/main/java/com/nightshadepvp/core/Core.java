@@ -24,6 +24,8 @@ import java.io.IOException;
 
 public class Core extends MassivePlugin implements PluginMessageListener {
 
+    private String matchpost = "uhc.gg";
+
     private static Core i;
 
     public Core() {
@@ -144,5 +146,13 @@ public class Core extends MassivePlugin implements PluginMessageListener {
         }
 
         return jedis;
+    }
+
+    public String getMatchpost() {
+        return matchpost;
+    }
+
+    public void setMatchpost(String matchpost) {
+        this.matchpost = matchpost;
     }
 }
