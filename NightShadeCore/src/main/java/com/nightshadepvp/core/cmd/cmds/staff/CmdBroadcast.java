@@ -19,12 +19,12 @@ public class CmdBroadcast extends NightShadeCoreCommand {
     public CmdBroadcast() {
         this.addAliases("broadcast", "bc", "bcast");
         this.addRequirements(ReqRankHasAtLeast.get(Rank.TRIAL));
-        this.addParameter(TypeString.get());
+        this.addParameter(TypeString.get(), true);
     }
 
     @Override
     public void perform() throws MassiveException {
         String message = this.readArg();
-        Bukkit.broadcastMessage(ChatUtils.message(message));
+        Bukkit.broadcastMessage(ChatUtils.format(ChatUtils.PREFIX + "&e" + message));
     }
 }

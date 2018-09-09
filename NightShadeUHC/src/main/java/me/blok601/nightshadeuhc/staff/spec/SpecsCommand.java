@@ -24,6 +24,10 @@ public class SpecsCommand implements CmdInterface {
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
         StringBuilder stringBuilder = new StringBuilder();
+        if(UHCPlayerColl.get().getAllOnline().stream().noneMatch(UHCPlayer::isSpectator)){
+            p.sendMessage(ChatUtils.message("&cThere are no current spectators!"));
+            return;
+        }
         for (UHCPlayer uhcPlayer : UHCPlayerColl.get().getAllOnline()){
             if(uhcPlayer.isSpectator()){
                 stringBuilder.append("&e").append(uhcPlayer.getName()).append(", ");

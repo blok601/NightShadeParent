@@ -1,6 +1,7 @@
 package me.blok601.nightshadeuhc.commands.extras;
 
 import com.nightshadepvp.core.Rank;
+import me.blok601.nightshadeuhc.GameState;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.commands.CmdInterface;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
@@ -28,6 +29,10 @@ public class AliveCommand implements CmdInterface {
         Player p = (Player) s;
         StringBuilder stringBuilder = new StringBuilder();
         OfflinePlayer offlinePlayer;
+        if(!GameState.gameHasStarted()){
+            p.sendMessage(ChatUtils.message("&cThe game hasn't started!"));
+            return;
+        }
         for (UUID uuid : UHC.players){
             if(Bukkit.getPlayer(uuid) != null){
                 //They are online

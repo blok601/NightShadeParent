@@ -12,9 +12,10 @@ import java.util.ArrayList;
  */
 public class ChatUtils {
 
+    public static final String PREFIX = format("&5NightShade&8» ");
+
     public static String message(String msg){
-        String prefix = ChatColor.DARK_PURPLE + "NightShade" + ChatColor.DARK_GRAY + "» ";
-        return ChatColor.translateAlternateColorCodes('&', prefix + msg);
+        return ChatColor.translateAlternateColorCodes('&', PREFIX + msg);
     }
 
     public static String format(String msg){
