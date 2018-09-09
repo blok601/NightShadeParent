@@ -437,17 +437,9 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
 
         ItemStack vanish = new ItemBuilder(Material.TORCH).name(ChatUtils.format("&cToggle Vanish")).make();
 
-        ItemStack fly = new ItemBuilder(Material.PAPER).name(ChatUtils.format("&cFly Tool")).make();
-
-        ItemStack randomtp = new ItemBuilder(Material.WATCH).name(ChatUtils.format("&cRandom Teleporter")).make();
-
-        ItemStack freeze = new ItemBuilder(Material.PACKED_ICE).name(ChatUtils.format("&cFreeze Player")).make();
-
-        ItemStack chat = new ItemBuilder(Material.SIGN).name(ChatUtils.format("&cChat Control")).make();
+        ItemStack randomtp = new ItemBuilder(Material.WATCH).name(ChatUtils.format("&cRandom Teleport")).make();
 
         ItemStack inspect = new ItemBuilder(Material.BOOK).name(ChatUtils.format("&cPlayer Inventory")).make();
-
-        ItemStack violations = new ItemBuilder(Material.DIAMOND_SWORD).name(ChatUtils.format("&cView Player Violations")).make();
 
         if (!isSpectator()) {
             SpecCommand.setSpec(player);
@@ -462,13 +454,9 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
 
 
         player.getInventory().setItem(0, jump);
-        player.getInventory().setItem(1, vanish);
-        player.getInventory().setItem(2, fly);
-        player.getInventory().setItem(3, randomtp);
-        player.getInventory().setItem(5, freeze);
-        player.getInventory().setItem(6, chat);
-        player.getInventory().setItem(7, inspect);
-        player.getInventory().setItem(8, violations);
+        player.getInventory().setItem(3, vanish);
+        player.getInventory().setItem(5, randomtp);
+        player.getInventory().setItem(8, inspect);
 
         player.setGameMode(GameMode.CREATIVE);
         player.setAllowFlight(true);

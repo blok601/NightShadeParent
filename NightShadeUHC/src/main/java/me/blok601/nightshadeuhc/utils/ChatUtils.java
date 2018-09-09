@@ -1,5 +1,6 @@
 package me.blok601.nightshadeuhc.utils;
 
+import com.nightshadepvp.core.fanciful.FancyMessage;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
@@ -78,9 +79,15 @@ public class ChatUtils {
 
     public static void sendMiningMessage(boolean diamonds, Player player, int amt) {
         if (diamonds) {
-            UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).filter(UHCPlayer::isReceivingMiningAlerts).forEach(uhcPlayer -> uhcPlayer.msg(format("&5Mining&8» &3" + player.getName() + " &7found &6" + amt + " &bdiamonds")));
+            FancyMessage fancyMessage = new FancyMessage(format("&5Mining&8» &3" + player.getName() + " &7found &6" + amt + " &bdiamonds"));
+            fancyMessage.command("/tp " + player.getName());
+            fancyMessage.tooltip(format("&eClick to teleport to the player"));
+            UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).filter(UHCPlayer::isReceivingMiningAlerts).forEach(uhcPlayer -> fancyMessage.send(uhcPlayer.getPlayer()));
         } else {
-            UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).filter(UHCPlayer::isReceivingMiningAlerts).forEach(uhcPlayer -> uhcPlayer.msg(format("&5Mining&8» &3" + player.getName() + " &7found &6" + amt + " &6gold")));
+            FancyMessage fancyMessage = new FancyMessage((format("&5Mining&8» &3" + player.getName() + " &7found &6" + amt + " &6gold")));
+            fancyMessage.command("/tp " + player.getName());
+            fancyMessage.tooltip(format("&eClick to teleport to the player"));
+            UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).filter(UHCPlayer::isReceivingMiningAlerts).forEach(uhcPlayer -> fancyMessage.send(uhcPlayer.getPlayer()));
         }
     }
 

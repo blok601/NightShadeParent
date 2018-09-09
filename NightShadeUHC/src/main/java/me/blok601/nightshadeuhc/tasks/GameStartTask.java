@@ -27,8 +27,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.function.Consumer;
-
 
 /**
  * Created by Blok on 3/16/2017.
@@ -108,7 +106,7 @@ public class GameStartTask extends BukkitRunnable {
                     Bukkit.getServer().getPluginManager().callEvent(new GameStartEvent());
                     StringBuilder builder = new StringBuilder();
                     ScenarioManager.getEnabledScenarios().forEach(scenario -> builder.append(scenario.getName()).append(", "));
-                    Bukkit.getOnlinePlayers().forEach((Consumer<Player>) p ->{
+                    Bukkit.getOnlinePlayers().forEach(p ->{
                         p.sendMessage(ChatUtils.format("&5&m-----------------------------------"));
 
                         p.sendMessage(ChatUtils.format("&e&lHost: &3" + GameManager.getHost().getName()));

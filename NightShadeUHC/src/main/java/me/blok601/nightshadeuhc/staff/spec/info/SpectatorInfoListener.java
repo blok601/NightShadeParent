@@ -1,5 +1,6 @@
 package me.blok601.nightshadeuhc.staff.spec.info;
 
+import com.nightshadepvp.core.fanciful.FancyMessage;
 import me.blok601.nightshadeuhc.GameState;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
@@ -34,16 +35,18 @@ public class SpectatorInfoListener implements Listener {
         if (e.getFinalDamage() == 0) return;
         if (p.getHealth() - e.getFinalDamage() <= 0) return; //They died
 
+        FancyMessage fancyMessage = new FancyMessage();
+        fancyMessage.command("/tp " + p.getName());
         if (e.getCause() == EntityDamageEvent.DamageCause.FALL) {
-            UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).forEach(uhcPlayer -> uhcPlayer.msg(SpecInfoData.translate(p, p.getHealth(), null, SpecInfoData.DAMAGE_FALL)));
+            UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).forEach(uhcPlayer -> fancyMessage.then(SpecInfoData.translate(p, p.getHealth(), null, SpecInfoData.DAMAGE_FALL)).send(uhcPlayer.getPlayer()));
         } else if (e.getCause() == EntityDamageEvent.DamageCause.FIRE || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK || e.getCause() == EntityDamageEvent.DamageCause.LAVA || e.getCause() == EntityDamageEvent.DamageCause.MELTING) {
             if (!ScenarioManager.getScen("Fireless").isEnabled()) {
-                UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).forEach(uhcPlayer -> uhcPlayer.msg(SpecInfoData.translate(p, p.getHealth(), null, SpecInfoData.DAMAGE_BURN)));
+                UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).forEach(uhcPlayer -> fancyMessage.then(SpecInfoData.translate(p, p.getHealth(), null, SpecInfoData.DAMAGE_BURN)).send(uhcPlayer.getPlayer()));
             }
         } else if (e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK || e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) {
             return;
         } else {
-            UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).forEach(uhcPlayer -> uhcPlayer.msg(SpecInfoData.translate(p, p.getHealth(), null, SpecInfoData.DAMAGE_OTHER)));
+            UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).forEach(uhcPlayer -> fancyMessage.then(SpecInfoData.translate(p, p.getHealth(), null, SpecInfoData.DAMAGE_OTHER)).send(uhcPlayer.getPlayer()));
         }
 
     }
@@ -57,16 +60,18 @@ public class SpectatorInfoListener implements Listener {
         if (e.getFinalDamage() == 0) return;
         if (p.getHealth() - e.getFinalDamage() <= 0) return; //They died
 
+        FancyMessage fancyMessage = new FancyMessage();
+        fancyMessage.command("/tp " + p.getName());
         if (e.getEntity() instanceof Monster) {
-            UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).filter(UHCPlayer::isReceivingSpectatorInfo).forEach(uhcPlayer -> uhcPlayer.msg(SpecInfoData.translate(p, p.getHealth() - e.getFinalDamage(), null, SpecInfoData.DAMAGE_MOB)));
+            UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).filter(UHCPlayer::isReceivingSpectatorInfo).forEach(uhcPlayer -> fancyMessage.then(SpecInfoData.translate(p, p.getHealth() - e.getFinalDamage(), null, SpecInfoData.DAMAGE_MOB)).send(uhcPlayer.getPlayer()));
         } else if (e.getDamager() instanceof Player) {
             Player damager = (Player) e.getDamager();
-            UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).filter(UHCPlayer::isReceivingSpectatorInfo).forEach(uhcPlayer -> uhcPlayer.msg(SpecInfoData.translate(p, p.getHealth() - e.getFinalDamage(), damager, SpecInfoData.DAMAGE_PLAYER)));
+            UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).filter(UHCPlayer::isReceivingSpectatorInfo).forEach(uhcPlayer -> fancyMessage.then(SpecInfoData.translate(p, p.getHealth() - e.getFinalDamage(), damager, SpecInfoData.DAMAGE_PLAYER)).send(uhcPlayer.getPlayer()));
         } else if (e.getDamager() instanceof Arrow) {
             Arrow a = (Arrow) e.getDamager();
             if (a.getShooter() instanceof Player) {
                 Player damager = (Player) a.getShooter();
-                UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).filter(UHCPlayer::isReceivingSpectatorInfo).forEach(uhcPlayer -> uhcPlayer.msg(SpecInfoData.translate(p, p.getHealth() - e.getFinalDamage(), damager, SpecInfoData.DAMAGE_PLAYER)));
+                UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).filter(UHCPlayer::isReceivingSpectatorInfo).forEach(uhcPlayer -> fancyMessage.then(SpecInfoData.translate(p, p.getHealth() - e.getFinalDamage(), damager, SpecInfoData.DAMAGE_PLAYER)).send(uhcPlayer.getPlayer()));
             }
         }
     }

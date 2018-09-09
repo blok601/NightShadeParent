@@ -28,11 +28,10 @@ public class ScenariosCommand implements CmdInterface{
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
         ArrayList<Scenario> scenarios = ScenarioManager.getEnabledScenarios();
-        StringBuilder builder = new StringBuilder();
-        FancyMessage fancyMessage = new FancyMessage();
+        FancyMessage fancyMessage = new FancyMessage(ChatUtils.format("&eEnabled Scenarios&8» "));
         for (Scenario scenario : scenarios){
             //builder.append("&3").append(scenario.getName()).append("&8,");
-            fancyMessage.text(ChatUtils.format("&eEnabled Scenarios&8» ")).then(scenario.getName() + ",").color(ChatColor.DARK_AQUA).tooltip(scenario.getDesc());
+            fancyMessage.then(scenario.getName() + ",").color(ChatColor.DARK_AQUA).tooltip(scenario.getDesc());
         }
 
         //p.sendMessage(ChatUtils.format("&eEnabled Scenarios&8» " + builder.toString().substring(0, builder.toString().length())));

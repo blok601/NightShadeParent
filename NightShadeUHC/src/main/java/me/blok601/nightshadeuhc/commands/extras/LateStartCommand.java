@@ -1,13 +1,14 @@
 package me.blok601.nightshadeuhc.commands.extras;
 
 import com.nightshadepvp.core.Rank;
-import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.UHC;
+import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.utils.ScatterUtil;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -44,8 +45,13 @@ public class LateStartCommand implements CmdInterface{
         }
 
         UHC.players.add(target.getUniqueId());
+        target.getInventory().clear();
+        target.getInventory().setArmorContents(null);
+        target.setLevel(0);
+        target.setExp(0F);
         target.getInventory().addItem(new ItemStack(Material.COOKED_BEEF, 10));
         ScatterUtil.scatterPlayer(GameManager.getWorld(), (int) GameManager.getBorderSize(), target);
+        target.playSound(target.getLocation(), Sound.CHICKEN_EGG_POP, 5, 5);
         p.sendMessage(ChatUtils.message("&aYou have scattered &e" + target.getName()));
         target.sendMessage(ChatUtils.message("&eYou were scattered!"));
     }

@@ -1,9 +1,9 @@
 package me.blok601.nightshadeuhc.scenario;
 
-import me.blok601.nightshadeuhc.entity.MConf;
+import me.blok601.nightshadeuhc.events.CustomDeathEvent;
+import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.utils.ItemBuilder;
-import me.blok601.nightshadeuhc.events.CustomDeathEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -35,7 +35,7 @@ public class TimebombScenario extends Scenario{
 
         e.setDropItems(false);
 
-        if(e.getKilled().getLocation().getWorld().getName().equalsIgnoreCase(MConf.get().getSpawnLocation().getWorld(true))){
+        if(GameManager.getWorld() == null || !e.getKilled().getLocation().getWorld().getName().equalsIgnoreCase(GameManager.getWorld().getName())){
             return;
         }
 

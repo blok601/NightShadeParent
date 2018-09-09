@@ -4,6 +4,7 @@ import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
+import me.blok601.nightshadeuhc.staff.spec.SpecCommand;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -14,6 +15,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -60,12 +62,8 @@ public class StaffListener implements Listener {
 
             }
 
-            if(item.getType() == Material.PAPER){
-                p.setAllowFlight(true);
-                p.setFlying(true);
-                p.setFlySpeed(0.2F);
-            }else if(item.getType() == Material.WATCH){
-                if(UHC.players.size() == 0){
+            if (item.getType() == Material.WATCH) {
+                if (UHC.players.size() == 0) {
                     p.sendMessage(ChatUtils.message("&cThere are not enough players online to do this!"));
                     return;
                 }
@@ -75,29 +73,21 @@ public class StaffListener implements Listener {
                 int element = new Random().nextInt(UHC.players.size());
                 int i = 0;
                 Player rand = null;
-                for (UUID uuid : UHC.players){
-                    if(i == element){
+                for (UUID uuid : UHC.players) {
+                    if (i == element) {
                         rand = Bukkit.getPlayer(uuid);
-                        if(rand == null) break;
+                        if (rand == null) break;
                     }
                     i++;
                 }
 
-                if(rand == null){
+                if (rand == null) {
                     p.sendMessage(ChatUtils.message("&cThere was a problem trying to find a random player!"));
                     return;
                 }
 
                 p.teleport(rand.getLocation());
                 p.sendMessage(ChatUtils.message("&aTeleported to " + rand.getName()));
-            }else if(item.getType() == Material.SIGN){
-                if(ChatUtils.isChatFrozen()){
-                   ChatUtils.setChatFrozen(false);
-                   ChatUtils.sendAll("&6The chat has been unfrozen!");
-                }else{
-                    ChatUtils.setChatFrozen(true);
-                    ChatUtils.sendAll("&6The chat has been frozen!");
-                }
             }
         }
     }
@@ -196,7 +186,7 @@ public class StaffListener implements Listener {
                         return;
                     }
 
-                    user.setReceivingToggleSneak(true);
+                    user.setReceivingStaffChat(true);
                     player.sendMessage(ChatUtils.message("&eYou are now receiving staff chat."));
                 } else if (e.getCurrentItem().getType() == Material.COMPASS) {
                     if (uhcPlayer.isReceivingCommandSpy()) {
@@ -217,4 +207,18 @@ public class StaffListener implements Listener {
         }
     }
 
+    @EventHandler
+    public void onLeave(PlayerQuitEvent e) {
+        Player p = e.getPlayer();
+        UHCPlayer uhcPlayer = UHCPlayer.get(p);
+        if (uhcPlayer.isStaffMode()) {
+            SpecCommand.unSpec(p);
+            Bukkit.getOnlinePlayers().forEach(o -> o.showPlayer(p));
+            p.chat("/rea");
+            p.getActivePotionEffects().forEach(potionEffect -> p.removePotionEffect(potionEffect.getType()));
+            uhcPlayer.setStaffMode(false);
+            p.getInventory().clear();
+            p.getInventory().setArmorContents(null);
+        }
+    }
 }

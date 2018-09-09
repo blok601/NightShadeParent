@@ -1,5 +1,6 @@
 package me.blok601.nightshadeuhc.stats.listener;
 
+import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.nightshadepvp.core.utils.LocationUtils;
@@ -12,8 +13,10 @@ import me.blok601.nightshadeuhc.logger.CombatLogger;
 import me.blok601.nightshadeuhc.logger.LoggerHandler;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.manager.Settings;
+import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.scoreboard.ScoreboardManager;
 import me.blok601.nightshadeuhc.server.PlayerTracker;
+import me.blok601.nightshadeuhc.teams.TeamManager;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.utils.PlayerUtils;
 import org.bukkit.Bukkit;
@@ -113,6 +116,30 @@ public class JoinListener implements Listener {
             player.teleport(location);
             Settings.getInstance().getPlayers().set(player.getUniqueId().toString(), null);
             Settings.getInstance().savePlayers();
+        }
+
+
+        if (GameState.gameHasStarted()) {
+            StringBuilder builder = new StringBuilder();
+            ScenarioManager.getEnabledScenarios().forEach(scenario -> builder.append(scenario.getName()).append(", "));
+            String scenarios = builder.toString().trim();
+            player.sendMessage(ChatUtils.format("&5&m-----------------------------------"));
+            player.sendMessage(ChatUtils.format("&e&lHost: &3" + GameManager.getHost().getName()));
+            if (scenarios.length() > 0) {
+                player.sendMessage(ChatUtils.format("&e&lScenarios: &3" + scenarios.substring(0, builder.length() - 1)));
+            } else {
+                player.sendMessage(ChatUtils.format("&e&lScenarios: &3None"));
+            }
+            player.sendMessage(ChatUtils.format("&e&lTeamSize: &3" + (GameManager.isIsTeam() ? TeamManager.getInstance().getTeamSize() : "FFA")));
+
+            player.sendMessage(" ");
+            player.sendMessage(ChatUtils.format("&e&lFinal Heal Time: &3" + GameManager.getFinalHealTime() / 60 + " minutes"));
+            player.sendMessage(ChatUtils.format("&e&lPvP Time: &3" + GameManager.getPvpTime() / 60 + " minutes"));
+            player.sendMessage(ChatUtils.format("&e&lMeetup Time: &3" + GameManager.getBorderTime() / 60 + " minutes"));
+            player.sendMessage(" ");
+            player.sendMessage(ChatUtils.format("&e&lMatchpost: &3" + Core.get().getMatchpost()));
+
+            player.sendMessage(ChatUtils.format("&5&m-----------------------------------"));
         }
     }
 
