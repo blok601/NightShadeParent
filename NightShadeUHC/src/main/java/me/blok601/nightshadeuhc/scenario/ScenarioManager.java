@@ -38,6 +38,7 @@ public class ScenarioManager implements CmdInterface{
         addScen(new BleedingSweetsScenario());
         addScen(new BlockedScenario());
         addScen(new BloodDiamondsScenario());
+        addScen(new BloodStoneScenario());
         addScen(new BomberScenario());
         addScen(new BowlessScenario());
         addScen(new ChickenScenario());
