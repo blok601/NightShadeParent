@@ -111,6 +111,7 @@ commands:
   arena:
     aliases: [a]
   cstop:
+    aliases: [togglechatmute, gmute, globalmute, chattoggle, ozzyisgay]
   walls:
   cancelpregen:
   power:

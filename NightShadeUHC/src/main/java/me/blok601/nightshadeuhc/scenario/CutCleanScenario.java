@@ -69,6 +69,4 @@ public class CutCleanScenario extends Scenario{
             e.getDrops().clear();
             en.getLocation().getWorld().dropItemNaturally(en.getLocation().add(1, 0, 0), new ItemStack(Material.COOKED_CHICKEN, 3));
             en.getLocation().getWorld().dropItemNaturally(en.getLocation().add(1, 0, 0), new ItemStack(Material.FEATHER, 2));
-        }
-    }
-}
+        }v
