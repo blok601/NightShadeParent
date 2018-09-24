@@ -57,7 +57,7 @@ public class WorldBorderTask extends BukkitRunnable {
             ChatUtils.sendAll("&bThe border has shrunk to " + GameManager.getFirstShrink() + " radius!");
             Bukkit.getServer().getPluginManager().callEvent(new MeetupStartEvent());
             counter = -1;
-            new ShrinkTask(world).runTaskTimer(UHC.get(), 300 * Util.TICKS, 300 * Util.TICKS);
+            new ShrinkTask(world).runTaskTimer(UHC.get(), 290 * Util.TICKS, 290 * Util.TICKS);
             this.cancel();
             return;
         }

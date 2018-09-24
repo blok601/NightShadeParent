@@ -31,6 +31,7 @@ public class UHCProvider extends ScoreboardProvider {
      */
     @Override
     public List<ScoreboardText> getLines(Player p) {
+        UHCPlayer uhcPlayer = UHCPlayer.get(p);
         List<ScoreboardText> lines = new ArrayList<>();
 
         lines.add(new ScoreboardText(ChatUtils.format("&5&m--------------------")));
@@ -72,6 +73,10 @@ public class UHCProvider extends ScoreboardProvider {
             lines.add(new ScoreboardText(ChatUtils.format("&6Border&8: &e" + ((int) GameManager.getBorderSize()))));
         }
         lines.add(new ScoreboardText(ChatUtils.format("&5&m--------------------&r")));
+        if(uhcPlayer.isNoClean()){
+            lines.add(new ScoreboardText(ChatUtils.format("&6NoClean: &e" + uhcPlayer.getNoCleanTimer() + "s")));
+            lines.add(new ScoreboardText(ChatUtils.format("&5&m--------------------&r")));
+        }
         lines.add(new ScoreboardText(ChatUtils.format("&ediscord.me/NightShadeMC")));
         return lines;
     }
