@@ -26,7 +26,7 @@ public class TrashOrTreasureScenario extends Scenario{
         }
 
 
-        if(e.getBlock().getType() == Material.DIAMOND_ORE){E){
+        if (e.getBlock().getType() == Material.DIAMOND_ORE) {
           if(Util.getChance(3)){
             e.getPlayer().getInventory().addItem(new ItemStack(Material.DIAMOND));
           }
@@ -58,7 +58,7 @@ public class TrashOrTreasureScenario extends Scenario{
             }
         }
 
-        if(e.getBlock().getType() == Material.REDSTONE_OR
+        if(e.getBlock().getType() == Material.REDSTONE_ORE){
                 e.getPlayer().getInventory().addItem(new ItemStack(Material.DIAMOND));
             }
         }
