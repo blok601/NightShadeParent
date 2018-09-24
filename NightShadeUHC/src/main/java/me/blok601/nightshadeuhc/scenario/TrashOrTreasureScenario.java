@@ -26,7 +26,20 @@ public class TrashOrTreasureScenario extends Scenario{
         }
 
 
-        if(e.getBlock().getType() == Material.DIAMOND_ORE){
+        if(e.getBlock().getType() == Material.DIAMOND_ORE){E){
+          if(Util.getChance(3)){
+            e.getPlayer().getInventory().addItem(new ItemStack(Material.DIAMOND));
+          }
+        }
+
+          if(e.getBlock().getType() == Material.LAPIS_ORE){
+            if(Util.getChance(5)){
+              e.getPlayer().getInventory().addItem(new ItemStack(Material.DIAMOND));
+            }
+          }
+
+          if(e.getBlock().getType() == Material.GOLD_ORE){
+            if(Util.getChance(7)){
             e.setCancelled(true);
             e.getBlock().setType(Material.AIR);
             e.getPlayer().sendMessage(ChatUtils.format(getPrefix() + "&cYou can't mine diamonds in &6Trash or Treasure!"));
@@ -45,20 +58,7 @@ public class TrashOrTreasureScenario extends Scenario{
             }
         }
 
-        if(e.getBlock().getType() == Material.REDSTONE_ORE){
-            if(Util.getChance(3)){
-                e.getPlayer().getInventory().addItem(new ItemStack(Material.DIAMOND));
-            }
-        }
-
-        if(e.getBlock().getType() == Material.LAPIS_ORE){
-            if(Util.getChance(5)){
-                e.getPlayer().getInventory().addItem(new ItemStack(Material.DIAMOND));
-            }
-        }
-
-        if(e.getBlock().getType() == Material.GOLD_ORE){
-            if(Util.getChance(7)){
+        if(e.getBlock().getType() == Material.REDSTONE_OR
                 e.getPlayer().getInventory().addItem(new ItemStack(Material.DIAMOND));
             }
         }

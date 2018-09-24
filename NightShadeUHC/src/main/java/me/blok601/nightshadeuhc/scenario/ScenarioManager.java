@@ -74,6 +74,7 @@ public class ScenarioManager implements CmdInterface{
         addScen(new PermaKillScenario());
         addScen(new PuppyPowerScenario());
         addScen(new PuppyPlusScenario());
+        addScen(new PuppyPowerPlusPlusScenario());
         addScen(new RewardingLongShotsScenario());
         addScen(new RiskyRetrievalScenario());
         addScen(new Scenario("Rush", "The game progresses quicker", new  ItemStack(Material.COMPASS, 1)));
