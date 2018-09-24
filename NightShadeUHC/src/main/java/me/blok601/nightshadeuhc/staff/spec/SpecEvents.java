@@ -116,24 +116,22 @@ public class SpecEvents implements Listener {
         UHC.players.stream().filter(uuid -> Bukkit.getPlayer(uuid) != null).forEach(uuid -> players.add(Bukkit.getPlayer(uuid)));
 
 		if (gamePlayer.isSpectator()) {
-
 			if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
-                if(p.getItemInHand() == null || p.getItemInHand().getType() == Material.AIR){
+                if (p.getItemInHand() == null || p.getItemInHand().getType() == Material.AIR) {
                     //If they have something in their hand
-                    return;
-                }
-			    if(players.size() == 0){
-			        p.sendMessage(ChatUtils.message("&cThere are not enough players in the game to do this!"));
-			        return;
-                }
-				Player loc =  players.get(r.nextInt(players.size()));
-				if(loc == null){
-				    p.sendMessage(ChatUtils.message("&cThere was a problem randomly selecting a player!"));
-				    return;
-                }
+                    if (players.size() == 0) {
+                        p.sendMessage(ChatUtils.message("&cThere are not enough players in the game to do this!"));
+                        return;
+                    }
+                    Player loc = players.get(r.nextInt(players.size()));
+                    if (loc == null) {
+                        p.sendMessage(ChatUtils.message("&cThere was a problem randomly selecting a player!"));
+                        return;
+                    }
 
-				p.teleport(loc);
-				p.sendMessage(ChatUtils.message("&6Teleported to&8: &3" + loc.getName()));
+                    p.teleport(loc);
+                    p.sendMessage(ChatUtils.message("&6Teleported to&8: &3" + loc.getName()));
+                }
 			}
 		}
 	}
