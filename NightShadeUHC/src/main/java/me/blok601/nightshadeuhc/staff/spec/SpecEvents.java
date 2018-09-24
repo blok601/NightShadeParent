@@ -116,6 +116,10 @@ public class SpecEvents implements Listener {
         UHC.players.stream().filter(uuid -> Bukkit.getPlayer(uuid) != null).forEach(uuid -> players.add(Bukkit.getPlayer(uuid)));
 
 		if (gamePlayer.isSpectator()) {
+			if(p.getItemInHand() != null || p.getItemInHand().getType() != Material.AIR){
+				//If they have something in their hand
+				return;
+			}
 			if (e.getAction() == Action.LEFT_CLICK_AIR
 					|| e.getAction() == Action.LEFT_CLICK_BLOCK && p.getItemInHand().getType() == Material.AIR) {
 			    if(players.size() == 0){

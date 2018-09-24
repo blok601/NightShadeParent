@@ -103,6 +103,7 @@ public class StaffListener implements Listener {
                         return;
                     }
                 }
+
                 if(interactCooldown.contains(p.getUniqueId())){
                     p.sendMessage(ChatUtils.message("&cStop spamming me! You can only do this every 1 second!"));
                     return;
@@ -231,6 +232,7 @@ public class StaffListener implements Listener {
                         continue;
                     }
                     playerArmor.setItem(i, stack);
+                    i++;
                 }
 
                 p.sendMessage(ChatUtils.message("&6Viewing " + target.getName() + "'s armor..."));
