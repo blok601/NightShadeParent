@@ -60,5 +60,4 @@ public class BomberScenario extends Scenario {
       p.getInventory().addItem(new ItemStack(Material.FLINT_AND_STEEL));
     }
   }
-
   }

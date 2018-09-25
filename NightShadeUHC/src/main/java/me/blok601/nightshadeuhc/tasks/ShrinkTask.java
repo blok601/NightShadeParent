@@ -1,6 +1,7 @@
 package me.blok601.nightshadeuhc.tasks;
 
 import com.wimbli.WorldBorder.BorderData;
+import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.utils.Util;
@@ -23,24 +24,35 @@ public class ShrinkTask extends BukkitRunnable{
 
     @Override
     public void run() {
-        BorderData bd = com.wimbli.WorldBorder.WorldBorder.plugin.getWorldBorder(world.getName());
-        bd.setRadius(GameManager.getShrinks()[GameManager.getBorderID()]);
-        GameManager.genWalls(GameManager.getShrinks()[GameManager.getBorderID()]);
-        GameManager.setBorderID(GameManager.getBorderID()+1);
+        new BukkitRunnable() {
+            int counter = 10;
+
+            @Override
+            public void run() {
+                if (counter > 0) {
+                    ChatUtils.sendAll("The border will shrink to " + GameManager.getFirstShrink() + " radius in " + counter);
+                } else if (counter == 0) {
+                    BorderData bd = com.wimbli.WorldBorder.WorldBorder.plugin.getWorldBorder(world.getName());
+                    bd.setRadius(GameManager.getShrinks()[GameManager.getBorderID()]);
+                    GameManager.genWalls(GameManager.getShrinks()[GameManager.getBorderID()]);
+                    GameManager.setBorderID(GameManager.getBorderID() + 1);
 
 
-        for (Player player : Bukkit.getOnlinePlayers()){
-            player.playSound(player.getLocation(), Sound.BAT_DEATH, 5, 5);
-        }
-        ChatUtils.sendAll("&bThe border has shrunk to " + bd.getRadiusX() + " radius!");
+                    for (Player player : Bukkit.getOnlinePlayers()) {
+                        player.playSound(player.getLocation(), Sound.BAT_DEATH, 5, 5);
+                    }
+                    ChatUtils.sendAll("&bThe border has shrunk to " + bd.getRadiusX() + " radius!");
 
 
-        if(GameManager.getShrinks()[GameManager.getBorderID()+1] == 0){
-            this.cancel();
-            Util.staffLog(ChatUtils.format("&eThe final shrink has occurred"));
-            return;
-        }
+                    if (GameManager.getShrinks()[GameManager.getBorderID() + 1] == 0) {
+                        this.cancel();
+                        Util.staffLog(ChatUtils.format("&eThe final shrink has occurred"));
+                        return;
+                    }
+                }
 
-
+                counter--;
+            }
+        }.runTaskTimer(UHC.get(), 0, 20);
     }
 }

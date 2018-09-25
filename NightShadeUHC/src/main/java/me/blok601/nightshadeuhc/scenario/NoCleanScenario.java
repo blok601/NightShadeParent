@@ -67,7 +67,7 @@ public class NoCleanScenario extends Scenario{
         if(e.getEntity() instanceof Player){
             Player p = (Player) e.getEntity();
             UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
-            if(gamePlayer.isNoClean()){
+            if(gamePlayer.isNoClean()){ //They have a timer
                 e.setCancelled(true);
             }
         }

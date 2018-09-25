@@ -437,7 +437,8 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
 
         ItemStack vanish = new ItemBuilder(Material.TORCH).name(ChatUtils.format("&cToggle Vanish")).make();
 
-        ItemStack randomtp = new ItemBuilder(Material.WATCH).name(ChatUtils.format("&cRandom Teleport")).make();
+        ItemStack randomHead = new ItemStack(Material.SKULL_ITEM, 1,  (short) 3);
+        ItemStack randomBuilder = new ItemBuilder(randomHead).name("&cRandom Teleport").make();
 
         ItemStack inspect = new ItemBuilder(Material.BOOK).name(ChatUtils.format("&cPlayer Inventory")).make();
 
@@ -455,7 +456,7 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
 
         player.getInventory().setItem(0, jump);
         player.getInventory().setItem(3, vanish);
-        player.getInventory().setItem(5, randomtp);
+        player.getInventory().setItem(5, randomBuilder);
         player.getInventory().setItem(8, inspect);
 
         player.setGameMode(GameMode.CREATIVE);
