@@ -57,7 +57,7 @@ commands:
     aliases: [cmdspy]
   setticks:
     description: Set ticks command
-  sitL
+  sit:
     description: Sit
   tpall:
     aliases: [teleportall, sall]
