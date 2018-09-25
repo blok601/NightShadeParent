@@ -57,6 +57,8 @@ commands:
     aliases: [cmdspy]
   setticks:
     description: Set ticks command
+  sitL
+    description: Sit
   tpall:
     aliases: [teleportall, sall]
     description: Teleport everyone to you
