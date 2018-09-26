@@ -30,7 +30,7 @@ public class ShrinkTask extends BukkitRunnable{
             @Override
             public void run() {
                 if (counter > 0) {
-                    ChatUtils.sendAll("The border will shrink to " + GameManager.getFirstShrink() + " radius in " + counter);
+                    ChatUtils.sendAll("The border will shrink to " + GameManager.getShrinks()[GameManager.getBorderID()] + " radius in " + counter);
                 } else if (counter == 0) {
                     BorderData bd = com.wimbli.WorldBorder.WorldBorder.plugin.getWorldBorder(world.getName());
                     bd.setRadius(GameManager.getShrinks()[GameManager.getBorderID()]);
