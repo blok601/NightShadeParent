@@ -58,6 +58,7 @@ public class Commands {
                 new ManualGameCommand(),
                 new GameSettingsCommand(),
                 new ClaimHostCommand(),
+                new SitCommand(),
                 new SetWorldCommand(),
                 new ScenarioManager(),
                 new CmdTeams(),
