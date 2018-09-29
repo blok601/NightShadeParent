@@ -17,7 +17,7 @@ public class AnonymousScenario extends Scenario {
     private static  String disuigse;
 
     public AnonymousScenario() {
-        super("Anonymous", "Everyone is disguised as the same person", new ItemBuilder(Material.NAME_TAG).name("Anonymous").make());
+        super("Anonymous", "Everyone is disguised as the same person", "Anon", new ItemBuilder(Material.NAME_TAG).name("Anonymous").make());
         disuigse = "Notch";
     }
 

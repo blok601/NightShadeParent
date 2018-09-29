@@ -17,7 +17,7 @@ public class AurophobiaScenario extends Scenario{
 
 
     public AurophobiaScenario() {
-        super("Aurophobia", "Whenever you mine Gold you have a chance of getting damaged by a heart, getting spawned 2 silverfish on you, losing the gold, getting blindness for 10 seconds, or getting a cave spider spawned on you.", new ItemBuilder(Material.GOLD_ORE).name("Aurophobia").make());
+        super("Aurophobia", "Whenever you mine Gold you have a chance of getting damaged by a heart, getting spawned 2 silverfish on you, losing the gold, getting blindness for 10 seconds, or getting a cave spider spawned on you.", "AP", new ItemBuilder(Material.GOLD_ORE).name("Aurophobia").make());
     }
 
     @EventHandler

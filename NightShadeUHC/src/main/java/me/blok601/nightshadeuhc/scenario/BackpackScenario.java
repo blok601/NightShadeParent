@@ -19,7 +19,7 @@ public class BackpackScenario extends Scenario{
     public static HashMap<UUID, Inventory> bps = new HashMap<>();
 
     public BackpackScenario() {
-        super("BackPack", "Each player gets their very own backpack.", new ItemBuilder(Material.WOOD).name("BackPacks").make());
+        super("BackPack", "Each player gets their very own backpack.", "BP", new ItemBuilder(Material.WOOD).name("BackPacks").make());
     }
 
     @EventHandler

@@ -26,7 +26,7 @@ public class AssaultAndBatteryScenario extends Scenario{
 
 
     public AssaultAndBatteryScenario() {
-        super("Assault and Battery", "To2 Where one person can only do meelee damage to players, while the other one can only do ranged attacks. If a teammate dies, you can do both meelee and ranged attacks.", new ItemBuilder(Material.WOOD_SWORD).name("Assault and Battery").make());
+        super("Assault and Battery", "To2 Where one person can only do meelee damage to players, while the other one can only do ranged attacks. If a teammate dies, you can do both meelee and ranged attacks.", "AAB", new ItemBuilder(Material.WOOD_SWORD).name("Assault and Battery").make());
     }
 
     @EventHandler

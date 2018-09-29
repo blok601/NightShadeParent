@@ -17,6 +17,7 @@ public class Scenario implements Listener {
     private String desc;
     private boolean enabled;
     private ItemStack item;
+    private String abbreviation;
 
     private ArrayList<String> commands;
 
@@ -24,6 +25,7 @@ public class Scenario implements Listener {
         this.name = name;
         this.desc = desc;
         this.item = item;
+        this.abbreviation = null;
         enabled = false;
         this.commands = null;
     }
@@ -32,8 +34,18 @@ public class Scenario implements Listener {
         this.name = name;
         this.desc = desc;
         this.item = item;
+        this.abbreviation = null;
         enabled = false;
         this.commands = commands;
+    }
+
+    public Scenario(String name, String desc, String abbreviation, ItemStack item){
+        this.name = name;
+        this.desc = desc;
+        this.item = item;
+        enabled = false;
+        this.abbreviation = abbreviation;
+        this.commands = null;
     }
 
 
@@ -61,5 +73,9 @@ public class Scenario implements Listener {
 
     public String getPrefix(){
         return format("&4" + getName() + "&8» ");
+    }
+
+    public String getAbbreviation() {
+        return abbreviation;
     }
 }

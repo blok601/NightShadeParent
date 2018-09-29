@@ -107,7 +107,8 @@ public class Commands {
                 new SpecsCommand(),
                 new PermaDayCommand(),
                 new AliveCommand(),
-                new ClearXPCommand()
+                new ClearXPCommand(),
+                new TeamInventoryCommand()
         };
     }
 

@@ -127,3 +127,6 @@ commands:
   clearxp:
     aliases: [xpclear]
     description: Clear everyone's XP
+  teaminventory:
+    description: Team inventory command
+    aliases: [ti, tinv, tinventory]

@@ -95,6 +95,7 @@ public class ScenarioManager implements CmdInterface{
         addScen(new VillagerMadnessScenario());
         addScen(new WeakestLinkScenario());
         addScen(new WebCageScenario());
+        addScen(new TeamInventoryScenario());
     }
 
 
