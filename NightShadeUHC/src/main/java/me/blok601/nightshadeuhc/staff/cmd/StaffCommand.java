@@ -36,7 +36,7 @@ public class StaffCommand implements CmdInterface {
             p.getInventory().clear();
             p.getInventory().setArmorContents(null);
             p.chat("/rea");
-            if (!UHC.players.contains(p.getUniqueId())) UHC.players.add(p.getUniqueId());
+            UHC.players.add(p.getUniqueId());
             p.sendMessage(ChatUtils.message("&eYou are no longer in staff mode!"));
         } else {
             uhcPlayer.staffMode();

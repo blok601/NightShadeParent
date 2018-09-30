@@ -70,7 +70,7 @@ public class UHCProvider extends ScoreboardProvider {
             lines.add(new ScoreboardText(ChatUtils.format("&6Border: &eWorld Not Set")));
         } else {
             //Have a world
-            lines.add(new ScoreboardText(ChatUtils.format("&6Border&8: &e" + ((int) GameManager.getBorderSize()))));
+            lines.add(new ScoreboardText(ChatUtils.format("&6Border: &e" + ((int) GameManager.getBorderSize()))));
         }
         lines.add(new ScoreboardText(ChatUtils.format("&5&m--------------------&r")));
         if(uhcPlayer.isNoClean()){

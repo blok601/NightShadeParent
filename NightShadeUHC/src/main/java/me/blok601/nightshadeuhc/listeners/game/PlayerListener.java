@@ -4,7 +4,6 @@ import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.nightshadepvp.core.entity.objects.PlayerTag;
 import me.blok601.nightshadeuhc.GameState;
-import me.blok601.nightshadeuhc.commands.extras.Freeze;
 import me.blok601.nightshadeuhc.entity.MConf;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
@@ -257,10 +256,13 @@ public class PlayerListener implements Listener {
             return;
         }
 
-        if(Freeze.getToFreeze().contains(e.getPlayer().getUniqueId())){
+        if (gamePlayer.isSpectator() || gamePlayer.isStaffMode()) return;
+
+        if (GameState.getState() == GameState.STARTING) {
             e.setTo(e.getFrom());
             return;
         }
+
     }
 
     @EventHandler

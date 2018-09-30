@@ -61,6 +61,8 @@ public class NoCleanScenario extends Scenario{
             return;
         }
 
+        if(!(e.getDamager() instanceof Player)) return;
+        if(!(e.getEntity() instanceof Player)) return;
         if(e.getDamage() == 0) return;
         if(e.isCancelled()) return;
 

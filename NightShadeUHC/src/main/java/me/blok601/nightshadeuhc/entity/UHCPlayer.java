@@ -448,11 +448,8 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         }
 
         player.chat("/van");
-
-        Bukkit.getOnlinePlayers().stream().filter(o -> !UHCPlayer.get(o.getUniqueId()).isSpectator()).forEach(o -> {
-            o.hidePlayer(player);
-        });
-
+        UHCPlayerColl.get().getAllOnline().stream().filter(uhcPlayer -> !uhcPlayer.isSpectator).forEach(uhcPlayer -> uhcPlayer.getPlayer().hidePlayer(player));
+        this.vanish(false);
 
         player.getInventory().setItem(0, jump);
         player.getInventory().setItem(3, vanish);

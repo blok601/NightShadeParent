@@ -159,11 +159,11 @@ public class GameDeathListener implements Listener {
             } else {
                 p.spigot().respawn();
                 p.teleport(MConf.get().getSpawnLocation().asBukkitLocation(true));
+                GameManager.getWhitelist().remove(p.getName().toLowerCase());
                 new BukkitRunnable() {
                     @Override
                     public void run() {
                         if (p.isOnline()) {
-                            GameManager.getWhitelist().remove(p.getName().toLowerCase());
                             p.kickPlayer("You have died! Follow us on twitter @NightShadePvPMC for more!");
                         }
                     }
@@ -290,11 +290,11 @@ public class GameDeathListener implements Listener {
         } else {
             p.spigot().respawn();
             p.teleport(MConf.get().getSpawnLocation().asBukkitLocation(true));
+            GameManager.getWhitelist().remove(p.getName().toLowerCase());
             new BukkitRunnable() {
                 @Override
                 public void run() {
                     if (p.isOnline()) {
-                        GameManager.getWhitelist().remove(p.getName().toLowerCase());
                         p.kickPlayer("You have died! Follow us on twitter @NightShadePvPMC for more!");
                     }
                 }

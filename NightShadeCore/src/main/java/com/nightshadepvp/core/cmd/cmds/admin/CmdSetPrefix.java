@@ -24,7 +24,7 @@ public class CmdSetPrefix extends NightShadeCoreCommand{
         this.addParameter(TypeNSPlayer.get(), "player");
         this.addParameter(TypeString.get(), "prefix");
 
-        this.addRequirements(ReqRankHasAtLeast.get(Rank.HOST));
+        this.addRequirements(ReqRankHasAtLeast.get(Rank.ADMIN));
     }
 
     @Override

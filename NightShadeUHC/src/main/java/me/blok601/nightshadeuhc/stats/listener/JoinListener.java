@@ -145,9 +145,9 @@ public class JoinListener implements Listener {
             if (targetUHCPlayer.isVanished()) targetUHCPlayer.unVanish();
 
             player.setGameMode(GameMode.SURVIVAL);
-
+            UHC.players.add(player.getUniqueId());
             GameManager.getInvs().remove(player.getUniqueId());
-            player.sendMessage(ChatUtils.message(ChatUtils.message("&aYou have been respawned!")));
+            player.sendMessage(ChatUtils.message("&aYou have been respawned!"));
         }
 
 
