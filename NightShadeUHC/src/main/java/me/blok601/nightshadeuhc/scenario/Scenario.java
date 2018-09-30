@@ -78,4 +78,8 @@ public class Scenario implements Listener {
     public String getAbbreviation() {
         return abbreviation;
     }
+
+    public void setAbbreviation(String abbreviation) {
+        this.abbreviation = abbreviation;
+    }
 }

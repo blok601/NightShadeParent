@@ -1,14 +1,10 @@
 package me.blok601.nightshadeuhc.listeners.modules;
 
+import me.blok601.nightshadeuhc.GameState;
 import me.blok601.nightshadeuhc.utils.ItemBuilder;
-import net.minecraft.server.v1_8_R3.MaterialLiquid;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 
 public class CobbleComponent extends Component{
 
@@ -22,6 +18,13 @@ public class CobbleComponent extends Component{
         if(isEnabled()){
             return;
         }
+
+        if(!GameState.gameHasStarted()){
+            e.setCancelled(true);
+            return;
+        }
+
+
 
         if(e.getBlock().getType() == Material.STONE){ //All 1.8 stones are considered stone and have mat data
             e.setCancelled(true);

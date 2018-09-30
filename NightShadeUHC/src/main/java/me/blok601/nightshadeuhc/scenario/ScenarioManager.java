@@ -25,83 +25,92 @@ public class ScenarioManager implements CmdInterface{
     private static ArrayList<Scenario> scenarios = new ArrayList<>();
 
     public void setup(){
-        addScen(new AnonymousScenario());
-        addScen(new AssaultAndBatteryScenario());
-        addScen(new AurophobiaScenario());
-        addScen(new BackpackScenario());
-        addScen(new BarebonesScenario());
-        addScen(new BatsScenario());
+        addScen(new AnonymousScenario(), "Anon");
+        addScen(new AssaultAndBatteryScenario(), "AAB");
+        addScen(new AurophobiaScenario(), "AP");
+        addScen(new BackpackScenario(), "BP");
+        addScen(new BarebonesScenario(), "BB");
+        addScen(new BatsScenario(), "Bats");
         addScen(new BedBombScenario());
         addScen(new BenchBlitzScenario());
-        addScen(new BestPvEScenario());
-        addScen(new BetaZombiesScenario());
-        addScen(new BleedingSweetsScenario());
+        addScen(new BestPvEScenario(), "BPVE");
+        addScen(new BetaZombiesScenario(), "BZ");
+        addScen(new BleedingSweetsScenario(), "BS");
         addScen(new BlockedScenario());
-        addScen(new BloodDiamondsScenario());
+        addScen(new BloodDiamondsScenario(), "BD");
         addScen(new BloodStoneScenario());
         addScen(new BomberScenario());
         addScen(new BowlessScenario());
         addScen(new ChickenScenario());
-        addScen(new ColdWeaponsScenario());
-        addScen(new CreeperPongScenario());
+        addScen(new ColdWeaponsScenario(), "CW");
+        addScen(new CreeperPongScenario(), "CP");
         addScen(new CrippleScenario());
-        addScen(new CutCleanScenario());
+        addScen(new CutCleanScenario(), "CC");
         addScen(new DepthsScenario());
         addScen(new DiamondLessScenario());
         addScen(new DragonRushScenario());
         addScen(new EnchantedDeathScenario());
         addScen(new EntropyScenario());
         addScen(new EveryRoseScenario());
-        addScen(new FastGetawayScenario());
+        addScen(new FastGetawayScenario(), "FG");
         addScen(new FeistyBoysScenario());
         addScen(new FirelessScenario());
         //addScen(new FlowerPowerScenario());
         addScen(new FurnaceDeathScenario());
-        addScen(new GapZapScenario());
-        addScen(new GigadrillScenario());
+        addScen(new GapZapScenario(), "GZ");
+        addScen(new GigadrillScenario(), "GD");
         addScen(new GoldLessScenario());
-        addScen(new GoneFishinScenario());
-        addScen(new HasteyBoysScenario());
+        addScen(new GoneFishinScenario(), "GF");
+        addScen(new HasteyBoysScenario(), "HB");
         addScen(new HobbitScenario());
-        addScen(new InfiniteEnchanterScenario());
+        addScen(new InfiniteEnchanterScenario(), "IE");
         addScen(new KingsScenario());
-        addScen(new LootCrateScenario());
-        addScen(new NoCleanScenario());
+        addScen(new LootCrateScenario(), "LC");
+        addScen(new MysteryScenarios(), "MS");
+        addScen(new NoCleanScenario(), "NC");
         addScen(new NoFurnaceScenario());
-        addScen(new NoFallScenario());
-        addScen(new OneHealScenario());
-        addScen(new OneHundredHeartsScenario());
-        addScen(new PermaKillScenario());
-        addScen(new PuppyPowerScenario());
-        addScen(new PuppyPlusScenario());
-        addScen(new PuppyPowerPlusPlusScenario());
-        addScen(new RewardingLongShotsScenario());
-        addScen(new RiskyRetrievalScenario());
+        addScen(new NoFallScenario(), "NF");
+        addScen(new OneHealScenario(), "OH");
+        addScen(new OneHundredHeartsScenario(), "100H");
+        addScen(new PermaKillScenario(), "PK");
+        addScen(new PuppyPowerScenario(), "PP");
+        addScen(new PuppyPlusScenario(), "PP+");
+        addScen(new PuppyPowerPlusPlusScenario(), "PP++");
+        addScen(new RewardingLongShotsScenario(), "RL");
+        addScen(new RiskyRetrievalScenario(), "RR");
         addScen(new Scenario("Rush", "The game progresses quicker", new  ItemStack(Material.COMPASS, 1)));
         addScen(new SkycleanScenario());
         addScen(new SkyhighScenario());
-        addScen(new SlutCleanScenario());
+        addScen(new SlutCleanScenario(), "SC");
         addScen(new SoupScenario());
         addScen(new SoupPlusScenario());
         addScen(new StockUpScenario());
         addScen(new SuperheroesScenario());
         addScen(new SwitcherooScenario());
+        addScen(new TeamInventoryScenario(), "TI");
         addScen(new TimberScenario());
-        addScen(new TimebombScenario());
-        addScen(new TrashOrTreasureScenario());
+        addScen(new TimebombScenario(), "TB");
+        addScen(new TrashOrTreasureScenario(), "TOT");
         addScen(new UltraParanoidScenario());
         addScen(new UnbreakableBoysScenario());
         addScen(new VeinminerScenario());
         addScen(new VillagerMadnessScenario());
-        addScen(new WeakestLinkScenario());
-        addScen(new WebCageScenario());
-        addScen(new TeamInventoryScenario());
+        addScen(new WeakestLinkScenario(), "WL");
+        addScen(new WebCageScenario(), "WC");
+        addScen(new VanillaPlusScenario());
+        addScen(new VengefulSpiritsScenario(), "VS");
     }
 
 
 
     private void addScen(Scenario s){
         scenarios.add(s);
+        Bukkit.getPluginManager().registerEvents(s, UHC.get());
+    }
+
+    private void addScen(Scenario s, String abbreviation){
+        scenarios.add(s);
+        s.setAbbreviation(abbreviation);
         Bukkit.getPluginManager().registerEvents(s, UHC.get());
     }
 
