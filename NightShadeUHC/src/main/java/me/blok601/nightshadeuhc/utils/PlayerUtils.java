@@ -1,6 +1,7 @@
 package me.blok601.nightshadeuhc.utils;
 
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +30,11 @@ public class PlayerUtils {
         frozen.remove(target.getUniqueId());
 
         target.sendMessage(ChatUtils.message("&aYou have been unfrozen!"));
+    }
 
+    public static boolean wearingArmor(Player player) {
+        ItemStack[] armor = player.getInventory().getArmorContents();
+        return armor[0] != null && armor[1] != null && armor[2] != null && armor[3] != null; //This will return true if any of these fail -> if they fail they are wearing some armor -> returns true
     }
 
 
