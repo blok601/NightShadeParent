@@ -269,6 +269,8 @@ public class JoinListener implements Listener {
 
             if (GameManager.getRespawnQueue().contains(e.getPlayer().getName().toLowerCase())) {
                 e.allow();
+                LoggerHandler.getInstance().getDeadLoggers().remove(p.getUniqueId());
+                return;
             }
 
             if (!GameManager.getWhitelist().contains(e.getPlayer().getName().toLowerCase()) && !LoggerHandler.getInstance().getDeadLoggers().contains(p.getUniqueId())) {
