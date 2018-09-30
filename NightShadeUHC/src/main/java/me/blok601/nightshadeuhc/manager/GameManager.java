@@ -38,6 +38,7 @@ public class GameManager {
     private static int maxPlayers;
 
     private static ArrayList<String> whitelist = new ArrayList<>();
+    private static HashSet<String> respawnQueue = new HashSet<>(); // This saves names like whitelist and will check using ignore case
 
     @Getter
     private static HashMap<UUID, Integer> helpOpMutes = new HashMap<>();
@@ -304,5 +305,9 @@ public class GameManager {
 
     public static HashSet<CachedColor> getColors() {
         return colors;
+    }
+
+    public static HashSet<String> getRespawnQueue() {
+        return respawnQueue;
     }
 }

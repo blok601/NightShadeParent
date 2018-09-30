@@ -9,6 +9,7 @@ import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.commands.extras.Freeze;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.object.CachedColor;
+import me.blok601.nightshadeuhc.entity.object.PlayerRespawnObject;
 import me.blok601.nightshadeuhc.logger.CombatLogger;
 import me.blok601.nightshadeuhc.logger.LoggerHandler;
 import me.blok601.nightshadeuhc.manager.GameManager;
@@ -20,6 +21,7 @@ import me.blok601.nightshadeuhc.teams.TeamManager;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.utils.PlayerUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -118,6 +120,36 @@ public class JoinListener implements Listener {
             Settings.getInstance().savePlayers();
         }
 
+        if (GameManager.getRespawnQueue().contains(player.getName().toLowerCase())) {
+            // They should be respawned
+            //TODO: Stopped here
+            GameManager.getRespawnQueue().remove(player.getName().toLowerCase());
+            PlayerRespawnObject obj = GameManager.getInvs().get(player.getUniqueId());
+            UHCPlayer targetUHCPlayer = UHCPlayer.get(player);
+            player.teleport(obj.getLocation());
+            player.getInventory().setArmorContents(obj.getArmor());
+            player.getInventory().setContents(obj.getItems());
+            if (targetUHCPlayer.isSpectator()) {
+                targetUHCPlayer.unspec();
+            }
+
+            if (targetUHCPlayer.isStaffMode()) {
+                Bukkit.getOnlinePlayers().forEach(o -> o.showPlayer(player));
+                player.getActivePotionEffects().forEach(potionEffect -> player.removePotionEffect(potionEffect.getType()));
+                targetUHCPlayer.setStaffMode(false);
+                player.getInventory().clear();
+                player.getInventory().setArmorContents(null);
+                player.chat("/rea");
+            }
+
+            if (targetUHCPlayer.isVanished()) targetUHCPlayer.unVanish();
+
+            player.setGameMode(GameMode.SURVIVAL);
+
+            GameManager.getInvs().remove(player.getUniqueId());
+            player.sendMessage(ChatUtils.message(ChatUtils.message("&aYou have been respawned!")));
+        }
+
 
         if (GameState.gameHasStarted()) {
             StringBuilder builder = new StringBuilder();
@@ -163,25 +195,23 @@ public class JoinListener implements Listener {
 
         Player p = e.getPlayer();
         UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
-        if (!UHC.players.contains(p.getUniqueId())) {
-            return;
-        }
 
         if (gamePlayer.isSpectator() || gamePlayer.isStaffMode()) {
             return;
         }
 
-        if(gamePlayer.isFrozen()){
+        if (gamePlayer.isFrozen()) {
             Freeze.getToFreeze().add(p.getUniqueId());
         }
 
-        if (GameState.getState() == GameState.INGAME || GameState.getState() == GameState.MEETUP) {
-            CombatLogger logger = LoggerHandler.getInstance().getLogger(e.getPlayer().getName());
-            if (logger == null) { // create a logger, cause its null :D
-                new CombatLogger(e.getPlayer());
+        if (UHC.players.contains(p.getUniqueId())) {
+            if (GameState.getState() == GameState.INGAME || GameState.getState() == GameState.MEETUP) {
+                CombatLogger logger = LoggerHandler.getInstance().getLogger(e.getPlayer().getName());
+                if (logger == null) { // create a logger, cause its null :D
+                    new CombatLogger(e.getPlayer());
+                }
             }
         }
-
     }
 
 
@@ -202,6 +232,27 @@ public class JoinListener implements Listener {
                 }
             }
         }.runTaskLater(UHC.get(), 20 * 5 * 60);
+
+        Player p = e.getPlayer();
+        UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
+
+        if (gamePlayer.isSpectator() || gamePlayer.isStaffMode()) {
+            return;
+        }
+
+        if (gamePlayer.isFrozen()) {
+            Freeze.getToFreeze().add(p.getUniqueId());
+        }
+
+        if (UHC.players.contains(p.getUniqueId())) {
+            if (GameState.getState() == GameState.INGAME || GameState.getState() == GameState.MEETUP) {
+                CombatLogger logger = LoggerHandler.getInstance().getLogger(e.getPlayer().getName());
+                if (logger == null) { // create a logger, cause its null :D
+                    new CombatLogger(e.getPlayer());
+                }
+            }
+        }
+
     }
 
     @EventHandler
@@ -216,8 +267,15 @@ public class JoinListener implements Listener {
                 return;
             }
 
+            if (GameManager.getRespawnQueue().contains(e.getPlayer().getName().toLowerCase())) {
+                e.allow();
+            }
 
             if (!GameManager.getWhitelist().contains(e.getPlayer().getName().toLowerCase()) && !LoggerHandler.getInstance().getDeadLoggers().contains(p.getUniqueId())) {
+                if (GameManager.getRespawnQueue().contains(e.getPlayer().getName().toLowerCase())) {
+                    e.allow();
+                    return;
+                }
                 e.disallow(PlayerLoginEvent.Result.KICK_WHITELIST, "You are not on the whitelist!");
             } else {
                 e.allow();

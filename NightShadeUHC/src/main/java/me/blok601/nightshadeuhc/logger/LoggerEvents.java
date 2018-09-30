@@ -2,6 +2,8 @@ package me.blok601.nightshadeuhc.logger;
 
 import me.blok601.nightshadeuhc.GameState;
 import me.blok601.nightshadeuhc.UHC;
+import me.blok601.nightshadeuhc.entity.object.PlayerRespawnObject;
+import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.commands.extras.PvP;
 import org.bukkit.Bukkit;
@@ -88,6 +90,9 @@ public class LoggerEvents implements Listener {
                     if(offlinePlayer.hasPlayedBefore()) {
                         UHC.players.remove(offlinePlayer.getUniqueId());
                     }
+
+                    PlayerRespawnObject object = new PlayerRespawnObject(logger.getArmor(), logger.getInventory(), logger.getZombie().getLocation());
+                    GameManager.getInvs().put(logger.getUuid(), object);
 
                     Bukkit.broadcastMessage(ChatUtils.format("&5" + name + " (Logger) &9 was killed"));
                     LoggerHandler.getInstance().getDeadLoggers().add(logger.getUuid());

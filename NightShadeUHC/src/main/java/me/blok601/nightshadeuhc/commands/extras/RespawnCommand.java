@@ -1,14 +1,15 @@
 package me.blok601.nightshadeuhc.commands.extras;
 
 import com.nightshadepvp.core.Rank;
-import me.blok601.nightshadeuhc.entity.UHCPlayer;
-import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.object.PlayerRespawnObject;
+import me.blok601.nightshadeuhc.manager.GameManager;
+import me.blok601.nightshadeuhc.utils.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -34,7 +35,26 @@ public class RespawnCommand implements CmdInterface{
 
         Player target = Bukkit.getPlayer(args[0]);
         if(target == null){
-            p.sendMessage(ChatUtils.message("&cThat player couldn't be found!"));
+            String id = args[0].toLowerCase();
+            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(id);
+            if (UHC.players.contains(offlinePlayer.getUniqueId())) {
+                p.sendMessage(ChatUtils.message("&cThat player hasn't died!"));
+                return;
+            }
+
+            if (!GameManager.getInvs().containsKey(offlinePlayer.getUniqueId())) {
+                p.sendMessage(ChatUtils.message("&cThat player hasn't died yet!"));
+                return;
+            }
+
+            if (GameManager.getRespawnQueue().contains(id)) {
+                p.sendMessage(ChatUtils.message("&cThat offline player is already in the respawn queue!"));
+                return;
+            }
+
+            GameManager.getWhitelist().add(id);
+            GameManager.getRespawnQueue().add(id);
+            p.sendMessage(ChatUtils.message("&eThat offline player has been added to the respawn queue! When they join they will be issued a respawn!"));
             return;
         }
 
