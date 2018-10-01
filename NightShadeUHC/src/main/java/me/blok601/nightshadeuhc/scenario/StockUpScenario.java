@@ -21,18 +21,15 @@ public class StockUpScenario extends Scenario{
         super("StockUp", "Every time a player dies, everyone gets one added to their max health", new ItemBuilder(Material.FERMENTED_SPIDER_EYE).name("StockUp").make());
     }
 
-    private int healthIncreased = 0;
-
     @EventHandler
     public void onDeath(CustomDeathEvent e) {
 
         if (!isEnabled()) return;
-        healthIncreased = healthIncreased + 2;
 
         for (UUID uuid : UHC.players) {
             Player p = Bukkit.getPlayer(uuid);
             if (p == null) continue;
-            p.setMaxHealth(p.getMaxHealth() + healthIncreased);
+            p.setMaxHealth(p.getMaxHealth() + 2);
         }
 
     }
