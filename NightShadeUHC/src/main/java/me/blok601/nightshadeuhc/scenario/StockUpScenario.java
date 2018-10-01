@@ -27,7 +27,7 @@ public class StockUpScenario extends Scenario{
     public void onDeath(CustomDeathEvent e) {
 
         if (!isEnabled()) return;
-        healthIncreased = healthIncreased + 1;
+        healthIncreased = healthIncreased + 2;
 
         for (UUID uuid : UHC.players) {
             Player p = Bukkit.getPlayer(uuid);
