@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 /**
@@ -91,6 +92,19 @@ public class NoCleanScenario extends Scenario{
       Player p = (Player) e.getEntity();
       UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
       if (gamePlayer.isNoClean()) { //They have a timer
+        e.setCancelled(true);
+
+      }
+    }
+  }
+  @EventHandler
+  public void onDamage1(EntityDamageEvent e) {
+    if (!isEnabled()) return;
+    if (e.getEntity() instanceof Player) {
+      Player p = (Player) e.getEntity();
+      UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
+      if (gamePlayer.isNoClean()) { //They have a timer
+        if (e.getCause() != EntityDamageEvent.DamageCause.LAVA) return;
         e.setCancelled(true);
       }
     }
