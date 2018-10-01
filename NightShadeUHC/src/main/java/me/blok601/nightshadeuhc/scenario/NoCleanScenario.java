@@ -8,6 +8,7 @@ import me.blok601.nightshadeuhc.utils.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -83,5 +84,15 @@ public class NoCleanScenario extends Scenario{
             }
         }
     }
-
+  @EventHandler
+  public void onCombust(EntityCombustEvent e) {
+    if (!isEnabled()) return;
+    if (e.getEntity() instanceof Player) {
+      Player p = (Player) e.getEntity();
+      UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
+      if (gamePlayer.isNoClean()) { //They have a timer
+        e.setCancelled(true);
+      }
+    }
+  }
 }

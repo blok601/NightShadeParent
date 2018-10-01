@@ -1,5 +1,6 @@
 package me.blok601.nightshadeuhc.scenario;
 
+import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.utils.ItemBuilder;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -35,6 +36,7 @@ public class CutCleanScenario extends Scenario {
         Location clone = new Location(b.getWorld(), b.getLocation().getBlockX() + 0.5D, b.getLocation().getBlockY(), b.getLocation().getBlockZ() + 0.5D); //XP ORB
 
         if (e.getBlock().getType().equals(Material.GOLD_ORE)) {
+            if (ScenarioManager.getScen("Goldless").isEnabled()) return;
             e.setCancelled(true);
             b.setType(Material.AIR);
             e.getPlayer().getInventory().addItem(new ItemStack(Material.GOLD_INGOT, 1));

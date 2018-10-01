@@ -2,6 +2,7 @@ package me.blok601.nightshadeuhc.scenario;
 
 import me.blok601.nightshadeuhc.GameState;
 import me.blok601.nightshadeuhc.UHC;
+import me.blok601.nightshadeuhc.events.CustomDeathEvent;
 import me.blok601.nightshadeuhc.utils.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -17,23 +18,21 @@ import java.util.UUID;
 public class StockUpScenario extends Scenario{
 
     public StockUpScenario(){
-        super("StockUp", "Every time a player dies, they get one added to their max health", new ItemBuilder(Material.FERMENTED_SPIDER_EYE).name("StockUp").make());
+        super("StockUp", "Every time a player dies, everyone gets one added to their max health", new ItemBuilder(Material.FERMENTED_SPIDER_EYE).name("StockUp").make());
     }
 
     private int healthIncreased = 0;
 
     @EventHandler
-    public void onDeath(PlayerDeathEvent event) {
+    public void onDeath(CustomDeathEvent e) {
 
         if (!isEnabled()) return;
-        if (GameState.getState() != GameState.INGAME && GameState.getState() != GameState.MEETUP) return;
-
         healthIncreased = healthIncreased + 1;
 
         for (UUID uuid : UHC.players) {
-            Player pl = Bukkit.getPlayer(uuid);
-            if (pl == null) continue;
-            pl.setMaxHealth(pl.getMaxHealth() + healthIncreased);
+            Player p = Bukkit.getPlayer(uuid);
+            if (p == null) continue;
+            p.setMaxHealth(p.getMaxHealth() + healthIncreased);
         }
 
     }
