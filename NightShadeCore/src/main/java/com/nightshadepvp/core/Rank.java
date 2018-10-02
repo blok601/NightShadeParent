@@ -29,7 +29,7 @@ public enum Rank {
     ADMIN(10, "&7[&cAdmin&7] &c", "&c"),
     DEVELOPER(15, ChatUtils.format("&7[&5Developer&7] &5"), "&5"),
     PLATFORMADMIN(15, "&7[&cPlat-Admin&7] &c", "&c"),
-    HEADADMIN(15, "&7[&bManager&7] &b", "&b"),
+    HEADADMIN(15, "&7[&9Manager&7] &9", "&9"),
     COOWNER(20, "&7[&5Co-Owner&7] &5", "&5"),
     OWNER(100, "&7[&5Owner&7] &5", "&5");
 
