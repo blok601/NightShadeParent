@@ -104,7 +104,7 @@ public class NoCleanScenario extends Scenario{
       Player p = (Player) e.getEntity();
       UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
       if (gamePlayer.isNoClean()) { //They have a timer
-        if (e.getCause().equals(EntityDamageEvent.DamageCause.LAVA)) {
+        if (e.getCause() == DamageCause.LAVA || e.getCause() == DamageCause.FIRE || e.getCause() == DamageCause.FIRE_TICK) {
           e.setCancelled(true);
         }
       }
