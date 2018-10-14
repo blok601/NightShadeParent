@@ -33,7 +33,7 @@ public class TopKillsGUI {
             newSkull = new ItemBuilder(skull);
             newSkull.skullOwner(uhcPlayer.getName());
             newSkull.name("&e" + (index + 1) + ".&5 " + uhcPlayer.getName());
-            newSkull.lore("&eKills&8» &6" + uhcPlayer.getName());
+            newSkull.lore("&eKills&8» &6" + uhcPlayer.getKills());
             builder.item(assign[index], newSkull.make());
             index++;
         }

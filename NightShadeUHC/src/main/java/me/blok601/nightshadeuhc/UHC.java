@@ -93,7 +93,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         scoreboardManager = new ScoreboardManager();
         Bukkit.getScheduler().runTaskTimer(this, () -> {
             scoreboardManager.getPlayerScoreboards().values().forEach(PlayerScoreboard::update);
-        }, 0L, 10L);
+        }, 0L, 35L);
         new ScoreboardHealthTask(scoreboardManager).runTaskTimer(this, 0, 40);
         Commands.setup();
 
