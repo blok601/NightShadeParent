@@ -27,6 +27,7 @@ public class TeamInventoryScenario extends Scenario{
 
     @EventHandler
     public void onStart(GameStartEvent e){
+        if (!isEnabled()) return;
         if(teamInventories == null){
             teamInventories = new HashMap<>();
         }
