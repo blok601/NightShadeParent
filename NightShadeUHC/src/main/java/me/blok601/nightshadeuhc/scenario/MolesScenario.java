@@ -17,7 +17,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by Blok on 6/22/2018.
@@ -28,7 +32,7 @@ public class MolesScenario extends Scenario{
 
 
     public MolesScenario() {
-        super("Moles", "Each team is assigned a mole their job is to eliminate their teammates", new ItemBuilder(Material.DIAMOND_SPADE).name("Moles").make());
+        super("Moles", "Each team is assigned a mole. Their job is to eliminate their teammates", new ItemBuilder(Material.DIAMOND_SPADE).name("Moles").make());
          moles = new HashMap<>();
     }
 
@@ -81,7 +85,7 @@ public class MolesScenario extends Scenario{
 
 
     private void setMoles(){
-        Random random = new Random();
+        Random random = ThreadLocalRandom.current();
         OfflinePlayer offlinePlayer;
         Player online;
         for (Team team : TeamManager.getInstance().getTeams()){
@@ -91,7 +95,8 @@ public class MolesScenario extends Scenario{
 
             if(Bukkit.getPlayer(offlinePlayer.getUniqueId()) != null){
                 online = Bukkit.getPlayer(offlinePlayer.getUniqueId());
-                online.sendMessage(ChatUtils.format(getPrefix() + " &eYou are the mole! Shhh... it's a secret!"));
+                online.sendMessage(ChatUtils.format(getPrefix() + "&eYou are the mole! Shhh... it's a secret!"));
+                online.sendMessage(ChatUtils.format(getPrefix() + "&eYou can now pick a Mole Kit..."));
                 new MoleKitGUI(online);
             }
         }
