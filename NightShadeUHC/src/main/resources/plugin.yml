@@ -1,14 +1,14 @@
 name: NightShadeUHC
 version: 3.9.5
-main: me.blok601.nightshadeuhc.UHC
-prefix: UHC
+main: me.blok601.nightshadeuhc.me.blok601.nightshadeuhc.UHC
+prefix: me.blok601.nightshadeuhc.UHC
 authors: [blok601]
 depend: [Core, WorldBorder, Multiverse-Core]
-description: NightShadePvP UHC Plugin that runs on the UHC Servers
+description: NightShadePvP me.blok601.nightshadeuhc.UHC Plugin that runs on the me.blok601.nightshadeuhc.UHC Servers
 website: www.nightshadepvp.com
 commands:
   suhc:
-    description: Main Start UHC Command
+    description: Main Start me.blok601.nightshadeuhc.UHC Command
   spec:
     description: Spectator Command
   helpop:
@@ -130,3 +130,11 @@ commands:
   teaminventory:
     description: Team inventory command
     aliases: [ti, tinv, tinventory]
+  moles:
+    description: View the moles
+  mcl:
+    description: Send moles locations
+  molekit:
+    description: Get your mole kit
+  mmc:
+    description: Talk in mole chat
