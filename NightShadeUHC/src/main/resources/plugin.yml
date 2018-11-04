@@ -1,10 +1,10 @@
 name: NightShadeUHC
 version: 3.9.5
-main: me.blok601.nightshadeuhc.me.blok601.nightshadeuhc.UHC
-prefix: me.blok601.nightshadeuhc.UHC
+main: me.blok601.nightshadeuhc.UHC
+prefix: UHC
 authors: [blok601]
 depend: [Core, WorldBorder, Multiverse-Core]
-description: NightShadePvP me.blok601.nightshadeuhc.UHC Plugin that runs on the me.blok601.nightshadeuhc.UHC Servers
+description: NightShadePvP UHC Plugin that runs on the UHC Servers
 website: www.nightshadepvp.com
 commands:
   suhc:
