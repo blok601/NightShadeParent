@@ -8,7 +8,7 @@ description: NightShadePvP UHC Plugin that runs on the UHC Servers
 website: www.nightshadepvp.com
 commands:
   suhc:
-    description: Main Start me.blok601.nightshadeuhc.UHC Command
+    description: Main StartUHC Command
   spec:
     description: Spectator Command
   helpop:
