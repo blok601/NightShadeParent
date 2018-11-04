@@ -90,7 +90,7 @@ public class InvClick implements Listener {
 
         }
 
-        if (e.getInventory().getName().equalsIgnoreCase("me.blok601.nightshadeuhc.UHC Game Settings")) {
+        if (e.getInventory().getName().equalsIgnoreCase("UHC Game Settings")) {
             e.setCancelled(true);
             if (user.getRank().getValue() < Rank.HOST.getValue()) return;
 

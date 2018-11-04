@@ -76,10 +76,15 @@ public class MolesScenario extends Scenario{
         if(!isEnabled()) return;
 
         if(moles.containsKey(e.getPlayer().getUniqueId())){
-            e.getPlayer().sendMessage(getPrefix() + "&eYou are a mole! Shh... it's a secret!");
-            if(!moles.get(e.getPlayer().getUniqueId())){
-                e.getPlayer().sendMessage(getPrefix() + "&eYou can still get your mole kit! Type &5/molekit &eto redeem it!");
-            }
+            new BukkitRunnable(){
+                @Override
+                public void run() {
+                    e.getPlayer().sendMessage(getPrefix() + "&eYou are a mole! Shh... it's a secret!");
+                    if(!moles.get(e.getPlayer().getUniqueId())){ //False means they can still get it
+                        e.getPlayer().sendMessage(ChatUtils.format(getPrefix() + "&eYou can still get your mole kit! Type &5/molekit &eto redeem it!"));
+                    }
+                }
+            }.runTaskLater(UHC.get(), 2);
         }
     }
 
