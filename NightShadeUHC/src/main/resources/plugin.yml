@@ -138,3 +138,5 @@ commands:
     description: Get your mole kit
   mmc:
     description: Talk in mole chat
+  spectime:
+    description: View player's spectating time

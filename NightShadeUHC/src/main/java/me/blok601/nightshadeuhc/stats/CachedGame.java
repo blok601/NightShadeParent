@@ -3,41 +3,40 @@ package me.blok601.nightshadeuhc.stats;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Created by Blok on 8/18/2018.
  */
 public class CachedGame {
 
-    private UUID host;
-    private List<UUID> winners;
+    private String host;
+    private List<String> winners;
     private List<String> scenarios;
     private int fill;
-    private HashMap<UUID, Integer> winnerKills;
+    private HashMap<String, Integer> winnerKills;
     private String teamType;
     private Timestamp start;
     private Timestamp end;
     private String server;
     private long matchID;
 
-    public CachedGame(UUID host) {
+    public CachedGame(String host) {
         this.host = host;
     }
 
-    public UUID getHost() {
+    public String getHost() {
         return host;
     }
 
-    public void setHost(UUID host) {
+    public void setHost(String host) {
         this.host = host;
     }
 
-    public List<UUID> getWinners() {
+    public List<String> getWinners() {
         return winners;
     }
 
-    public void setWinners(List<UUID> winners) {
+    public void setWinners(List<String> winners) {
         this.winners = winners;
     }
 
@@ -57,11 +56,11 @@ public class CachedGame {
         this.fill = fill;
     }
 
-    public HashMap<UUID, Integer> getWinnerKills() {
+    public HashMap<String, Integer> getWinnerKills() {
         return winnerKills;
     }
 
-    public void setWinnerKills(HashMap<UUID, Integer> winnerKills) {
+    public void setWinnerKills(HashMap<String, Integer> winnerKills) {
         this.winnerKills = winnerKills;
     }
 

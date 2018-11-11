@@ -45,7 +45,7 @@ public class MoleKitCommand implements CmdInterface{
             return;
         }
 
-        p.sendMessage(ScenarioManager.getScen("Moles").getPrefix() + "&eOpening mole kits...");
+        p.sendMessage(ChatUtils.format(ScenarioManager.getScen("Moles").getPrefix() + "&eOpening mole kits..."));
         new MoleKitGUI(p);
     }
 

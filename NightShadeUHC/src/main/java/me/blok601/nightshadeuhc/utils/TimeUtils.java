@@ -30,10 +30,10 @@ public class TimeUtils {
 		}.runTaskTimerAsynchronously(UHC.get(), 0, 20);
 	}
 
-	public static String ConvertSecondToHHMMString(int secondtTime)
+	public static String formatSecondsToTime(int secondtTime)
 	{
 		TimeZone tz = TimeZone.getTimeZone("UTC");
-		SimpleDateFormat df = new SimpleDateFormat("mm:ss");
+		SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
 		df.setTimeZone(tz);
 		String time = df.format(new Date(secondtTime*1000L));
 
