@@ -38,18 +38,22 @@ public class GameListener implements Listener {
     @EventHandler
     public void onEnd(GameEndEvent e) {
         Bukkit.getServer().getScheduler().runTaskAsynchronously(UHC.get(), () -> {
-            HashMap<UUID, Integer> winnerKills = new HashMap<>();
+            HashMap<String, Integer> winnerKills = new HashMap<>();
             CachedGame cachedGame = StatsHandler.getInstance().getCachedGame();
             ArrayList<String> scenarios = new ArrayList<>();
 
             cachedGame.setEnd(new Timestamp(System.currentTimeMillis()));
-            cachedGame.setHost(GameManager.getHost().getUniqueId());
-            cachedGame.setWinners(e.getWinners());
+            cachedGame.setHost(GameManager.getHost().getUniqueId().toString());
+            ArrayList<String> winners = new ArrayList<>();
+            for (UUID winner : e.getWinners()){
+                winners.add(winner.toString());
+            }
+            cachedGame.setWinners(winners);
             ScenarioManager.getEnabledScenarios().forEach(scenario -> scenarios.add(scenario.getName()));
             cachedGame.setScenarios(scenarios);
 
             for (UUID winner : e.getWinners()) {
-                winnerKills.put(winner, GameManager.getKills().getOrDefault(winner, 0));
+                winnerKills.put(winner.toString(), GameManager.getKills().getOrDefault(winner, 0));
             }
             cachedGame.setWinnerKills(winnerKills);
 

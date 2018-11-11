@@ -27,6 +27,7 @@ import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
 import me.blok601.nightshadeuhc.scoreboard.ScoreboardManager;
 import me.blok601.nightshadeuhc.stats.handler.StatsHandler;
 import me.blok601.nightshadeuhc.tasks.ScoreboardHealthTask;
+import me.blok601.nightshadeuhc.tasks.StaffTrackTask;
 import me.blok601.nightshadeuhc.tasks.WorldLoadTask;
 import me.blok601.nightshadeuhc.teams.CmdSendCoords;
 import me.blok601.nightshadeuhc.teams.CmdTeamChat;
@@ -95,6 +96,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         }, 0L, 35L);
         new ScoreboardHealthTask(scoreboardManager).runTaskTimer(this, 0, 40);
         Commands.setup();
+        new StaffTrackTask().runTaskTimer(this, 0, 100);
 
         ComponentHandler.getInstance().setup();
         StatsHandler.getInstance().setup();

@@ -71,6 +71,20 @@ public class Core extends MassivePlugin implements PluginMessageListener {
             }
         }.runTaskAsynchronously(this);
 
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                NSPlayerColl.get().getAllOnline().forEach(nsPlayer -> {
+                    nsPlayer.setCurrentAFKTime(nsPlayer.getCurrentAFKTime() + 1);
+                    if(nsPlayer.getCurrentAFKTime() >= 10){
+                        nsPlayer.setAFK(true); //If they haven't done shit for 10 seconds they are afk
+                    }
+                });
+            }
+        }.runTaskTimer(this, 0, 20);
+
+
+
         Bukkit.getConsoleSender().sendMessage(ChatUtils.message("&eLoading NightShadeCore version: " + getDescription().getVersion() + ". Server Type: " + ServerType.getType().toString()));
     }
 
