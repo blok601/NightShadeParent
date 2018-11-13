@@ -1,5 +1,6 @@
 package me.blok601.nightshadeuhc.utils;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -33,8 +34,12 @@ public class PlayerUtils {
     }
 
     public static boolean wearingArmor(Player player) {
-        ItemStack[] armor = player.getInventory().getArmorContents();
-        return armor[0] != null && armor[1] != null && armor[2] != null && armor[3] != null; //This will return true if any of these fail -> if they fail they are wearing some armor -> returns true
+        for (ItemStack itemStack : player.getInventory().getArmorContents()) {
+            if (itemStack != null && itemStack.getType() != Material.AIR) {
+                return true;
+            }
+        }
+        return false;
     }
 
 

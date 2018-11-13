@@ -29,9 +29,7 @@ public class GameListener implements Listener {
             StatsHandler.getInstance().getCachedGame().setStart(new Timestamp(System.currentTimeMillis()));
             StatsHandler.getInstance().getCachedGame().setFill(UHC.players.size());
 
-            Bukkit.getServer().getScheduler().runTaskAsynchronously(UHC.get(), () -> {
-                StatsHandler.getInstance().getCachedGame().setMatchID(UHC.get().getGameCollection().count() + 1);
-            });
+            Bukkit.getServer().getScheduler().runTaskAsynchronously(UHC.get(), () -> StatsHandler.getInstance().getCachedGame().setMatchID(UHC.get().getGameCollection().count() + 1));
         }
     }
 

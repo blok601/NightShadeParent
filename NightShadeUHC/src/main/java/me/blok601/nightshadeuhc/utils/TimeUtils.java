@@ -36,21 +36,20 @@ public class TimeUtils {
 		SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
 		df.setTimeZone(tz);
 		String time = df.format(new Date(secondtTime*1000L));
+        // Time example: 12:13:04 --> 2, 5, 6
+        // Time example: 120:13:04 --> 2, 5, 6
 
-        int i = 1;
-        for (Character c : time.toCharArray()) {
-            if (i == 3) {
-                time = time.replace(c, 'h');
-            } else if (i == 6) {
-                time = time.replace(c, 'm');
-            } else if (i == 9) {
-                time = time.replace(c, 's');
-            }
-
-            i++;
+        char[] chars = time.toCharArray();
+        if (chars[2] != ':') {
+            //Spectated over 100 hours
+            chars[3] = 'h';
+            chars[6] = 'm';
+        } else {
+            chars[2] = 'h';
+            chars[5] = 'm';
         }
 
-		return time;
+        return time + "s";
 	}
 
     public static boolean isTime(String input) {
