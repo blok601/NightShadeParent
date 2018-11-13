@@ -34,7 +34,7 @@ public class UHCProvider extends ScoreboardProvider {
         UHCPlayer uhcPlayer = UHCPlayer.get(p);
         List<ScoreboardText> lines = new ArrayList<>();
 
-        lines.add(new ScoreboardText(ChatUtils.format("&3&m--------------------")));
+        lines.add(new ScoreboardText(ChatUtils.format("&f&m--------------------")));
         lines.add(new ScoreboardText(ChatUtils.format("&fGame Clock: &e" + (GameManager.getTimer().isRunning() ? GameManager.getTimer().getTime() : "Waiting..."))));
         lines.add(new ScoreboardText(ChatUtils.format("&fKills: &e" + GameManager.getKills().getOrDefault(p.getUniqueId(), 0))));
         if (GameManager.isIsTeam()) {
@@ -72,10 +72,10 @@ public class UHCProvider extends ScoreboardProvider {
             //Have a world
             lines.add(new ScoreboardText(ChatUtils.format("&fBorder: &e" + ((int) GameManager.getBorderSize()))));
         }
-        lines.add(new ScoreboardText(ChatUtils.format("&3&m--------------------&r")));
+        lines.add(new ScoreboardText(ChatUtils.format("&f&m--------------------&r")));
         if(uhcPlayer.isNoClean()){
             lines.add(new ScoreboardText(ChatUtils.format("&fNoClean: &e" + uhcPlayer.getNoCleanTimer() + "s")));
-            lines.add(new ScoreboardText(ChatUtils.format("&3&m--------------------&r")));
+            lines.add(new ScoreboardText(ChatUtils.format("&f&m--------------------&r")));
         }
         lines.add(new ScoreboardText(ChatUtils.format("&ediscord.me/NightShadeMC")));
         return lines;
