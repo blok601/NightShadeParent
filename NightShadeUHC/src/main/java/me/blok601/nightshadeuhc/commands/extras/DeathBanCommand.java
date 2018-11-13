@@ -42,8 +42,13 @@ public class DeathBanCommand implements CmdInterface{
 
         UHC.players.remove(target.getUniqueId());
         GameManager.getWhitelist().remove(target.getName().toLowerCase());
-        target.kickPlayer("You have been deathbanned!\nReason: " + reason);
-
+        target.damage(target.getMaxHealth());
+        UHC.get().getServer().getScheduler().scheduleSyncDelayedTask(UHC.get(), new Runnable() {
+            @Override
+            public void run() {
+                target.kickPlayer("You have been DQed!\nReason: " + reason);
+            }
+        }, 1);
     }
 
     @Override
