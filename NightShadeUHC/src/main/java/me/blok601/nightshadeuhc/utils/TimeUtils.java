@@ -37,6 +37,19 @@ public class TimeUtils {
 		df.setTimeZone(tz);
 		String time = df.format(new Date(secondtTime*1000L));
 
+        int i = 1;
+        for (Character c : time.toCharArray()) {
+            if (i == 1) {
+                time = time.replace(c, 'h');
+            } else if (i == 2) {
+                time = time.replace(c, 'm');
+            } else if (i == 3) {
+                time = time.replace(c, 's');
+            }
+
+            i++;
+        }
+
 		return time;
 	}
 

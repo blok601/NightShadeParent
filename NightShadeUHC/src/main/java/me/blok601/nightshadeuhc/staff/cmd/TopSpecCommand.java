@@ -14,7 +14,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 
 /**
  * Created by Blok on 11/12/2018.
@@ -44,7 +43,8 @@ public class TopSpecCommand implements CmdInterface {
                 }
 
                 nsPlayers.sort(Comparator.comparing(NSPlayer::getSpectatingTime).reversed());
-                List<NSPlayer> times = nsPlayers.subList(0, 10);
+                ArrayList<NSPlayer> times = new ArrayList<>();
+                nsPlayers.stream().limit(10).forEach(times::add);
                 new BukkitRunnable() {
                     @Override
                     public void run() {
