@@ -141,7 +141,7 @@ commands:
   spectime:
     description: View player's spectating time
   deathban:
-    alias: [dq]
+    aliases: [dq]
     descrpition: Deathban a player for a reason
   topspecs:
     aliases: [topspec, tpsecs]

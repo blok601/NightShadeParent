@@ -49,7 +49,12 @@ public class TimeUtils {
             chars[5] = 'm';
         }
 
-        return time + "s";
+        StringBuilder f = new StringBuilder();
+        for (Character c : chars){
+            f.append(c);
+        }
+
+        return f.toString() + "s";
 	}
 
     public static boolean isTime(String input) {
