@@ -12,10 +12,7 @@ import me.blok601.nightshadeuhc.scenario.cmd.mole.MoleLocationCommand;
 import me.blok601.nightshadeuhc.scenario.cmd.mole.MolesCommand;
 import me.blok601.nightshadeuhc.server.cmd.InfoCommand;
 import me.blok601.nightshadeuhc.server.cmd.PlayerLocationCommand;
-import me.blok601.nightshadeuhc.staff.cmd.AlertsCommand;
-import me.blok601.nightshadeuhc.staff.cmd.CommandSpyCmd;
-import me.blok601.nightshadeuhc.staff.cmd.SpectatingTimeCommand;
-import me.blok601.nightshadeuhc.staff.cmd.StaffCommand;
+import me.blok601.nightshadeuhc.staff.cmd.*;
 import me.blok601.nightshadeuhc.staff.spec.SpecCommand;
 import me.blok601.nightshadeuhc.staff.spec.SpecsCommand;
 import me.blok601.nightshadeuhc.staff.spec.SpectatorChatCommand;
@@ -110,7 +107,8 @@ public class Commands {
                 new AliveCommand(),
                 new ClearXPCommand(),
                 new TeamInventoryCommand(),
-                new SpectatingTimeCommand()
+                new SpectatingTimeCommand(),
+                new TopSpecCommand()
         };
     }
 
