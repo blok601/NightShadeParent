@@ -37,7 +37,7 @@ public class DeathBanCommand implements CmdInterface{
 
         StringBuilder reason = new StringBuilder();
         for (int i = 1; i < args.length; i++){
-            reason.append(args[i]);
+            reason.append(args[i]).append(" ");
         }
 
         UHC.players.remove(target.getUniqueId());
