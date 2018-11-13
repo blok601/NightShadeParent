@@ -140,3 +140,8 @@ commands:
     description: Talk in mole chat
   spectime:
     description: View player's spectating time
+  deathban:
+    descrpition: Deathban a player for a reason
+  topspecs:
+    aliases: [topspec, tpsecs]
+    description: View the top 10 spectators

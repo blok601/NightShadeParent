@@ -2,6 +2,7 @@ package me.blok601.nightshadeuhc.commands.extras;
 
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.UHC;
+import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.commands.CmdInterface;
 import org.bukkit.Bukkit;
@@ -40,6 +41,7 @@ public class DeathBanCommand implements CmdInterface{
         }
 
         UHC.players.remove(target.getUniqueId());
+        GameManager.getWhitelist().remove(target.getName().toLowerCase());
         target.kickPlayer("You have been deathbanned!\nReason: " + reason);
 
     }
