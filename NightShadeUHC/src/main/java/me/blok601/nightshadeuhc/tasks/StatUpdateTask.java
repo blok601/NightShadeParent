@@ -53,8 +53,8 @@ public class StatUpdateTask extends BukkitRunnable {
                 cachedGame.setFill(doc.getInteger("players"));
                 cachedGame.setWinnerKills((Map<String, Integer>) doc.get("winnerKills"));
                 cachedGame.setTeamType(doc.getString("teamType"));
-                cachedGame.setStart(Timestamp.valueOf(doc.getString("startTime")));
-                cachedGame.setStart(Timestamp.valueOf(doc.getString("endTime")));
+                cachedGame.setStart(new Timestamp(doc.getDate("startTime").getTime()));
+                cachedGame.setStart(new Timestamp(doc.getDate("endTime").getTime()));
                 cachedGame.setServer(doc.getString("server"));
                 cachedGames.add(cachedGame);
             }
