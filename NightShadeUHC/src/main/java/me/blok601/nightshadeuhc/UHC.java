@@ -153,8 +153,6 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
     }
 
     public void onDisable() {
-
-
         //LoggerHandler.getInstance().getLoggers().forEach(combatLogger -> LoggerHandler.getInstance().removeLogger(combatLogger));
         LoggerHandler.getInstance().getLoggers().clear();
         Bukkit.getMessenger().unregisterIncomingPluginChannel(this, "BungeeCord", this);

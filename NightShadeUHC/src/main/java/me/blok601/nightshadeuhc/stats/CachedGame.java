@@ -1,8 +1,8 @@
 package me.blok601.nightshadeuhc.stats;
 
 import java.sql.Timestamp;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Blok on 8/18/2018.
@@ -13,7 +13,7 @@ public class CachedGame {
     private List<String> winners;
     private List<String> scenarios;
     private int fill;
-    private HashMap<String, Integer> winnerKills;
+    private Map<String, Integer> winnerKills;
     private String teamType;
     private Timestamp start;
     private Timestamp end;
@@ -56,11 +56,11 @@ public class CachedGame {
         this.fill = fill;
     }
 
-    public HashMap<String, Integer> getWinnerKills() {
+    public Map<String, Integer> getWinnerKills() {
         return winnerKills;
     }
 
-    public void setWinnerKills(HashMap<String, Integer> winnerKills) {
+    public void setWinnerKills(Map<String, Integer> winnerKills) {
         this.winnerKills = winnerKills;
     }
 
