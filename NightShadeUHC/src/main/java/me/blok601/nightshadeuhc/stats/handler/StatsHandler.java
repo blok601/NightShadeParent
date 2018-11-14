@@ -51,7 +51,7 @@ public class StatsHandler {
         this.winners = new ArrayList<>();
         this.kills = new ArrayList<>();
         this.cachedGame = new CachedGame(null);
-        this.hallOfFameInventory = null;
+        this.hallOfFameInventory = new ArrayList<>();
         new StatUpdateTask().runTaskTimerAsynchronously(UHC.get(), 0, 2400); //2 min
     }
 
