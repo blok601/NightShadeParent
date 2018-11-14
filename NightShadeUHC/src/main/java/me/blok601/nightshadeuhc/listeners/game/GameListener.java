@@ -13,7 +13,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -26,7 +25,7 @@ public class GameListener implements Listener {
     @EventHandler
     public void onStart(GameStartEvent e){
         //if(UHC.players.size() >= 15){//Only count if game has 15 player fill or more
-            StatsHandler.getInstance().getCachedGame().setStart(new Timestamp(System.currentTimeMillis()));
+            StatsHandler.getInstance().getCachedGame().setStart(System.currentTimeMillis());
             StatsHandler.getInstance().getCachedGame().setFill(UHC.players.size());
 
             Bukkit.getServer().getScheduler().runTaskAsynchronously(UHC.get(), () -> StatsHandler.getInstance().getCachedGame().setMatchID(UHC.get().getGameCollection().count() + 1));
@@ -40,7 +39,7 @@ public class GameListener implements Listener {
             CachedGame cachedGame = StatsHandler.getInstance().getCachedGame();
             ArrayList<String> scenarios = new ArrayList<>();
 
-            cachedGame.setEnd(new Timestamp(System.currentTimeMillis()));
+            cachedGame.setEnd(System.currentTimeMillis());
             cachedGame.setHost(GameManager.getHost().getUniqueId().toString());
             ArrayList<String> winners = new ArrayList<>();
             for (UUID winner : e.getWinners()){
@@ -75,8 +74,8 @@ public class GameListener implements Listener {
             document.append("players", cachedGame.getFill());
             document.append("winnerKills", cachedGame.getWinnerKills());
             document.append("teamType", cachedGame.getTeamType());
-            document.append("startTime", cachedGame.getStart().toString());
-            document.append("endTime", cachedGame.getEnd().toString());
+            document.append("startTime", cachedGame.getStart());
+            document.append("endTime", cachedGame.getEnd());
             document.append("server", GameManager.getServerType());
 
             UHC.get().getGameCollection().insertOne(document);
