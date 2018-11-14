@@ -34,6 +34,7 @@ import me.blok601.nightshadeuhc.teams.CmdTeamChat;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.utils.Lag;
 import me.blok601.nightshadeuhc.utils.Util;
+import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -68,7 +69,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
     private ScenarioManager sm;
     private ScoreboardManager scoreboardManager;
 
-    private MongoCollection gameCollection;
+    private MongoCollection<Document> gameCollection;
 
     public static HashSet<UUID> players = new HashSet<>();
 
@@ -276,7 +277,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         });
     }
 
-    public MongoCollection getGameCollection() {
+    public MongoCollection<Document> getGameCollection() {
         return gameCollection;
     }
 

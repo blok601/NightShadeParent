@@ -108,7 +108,8 @@ public class Commands {
                 new ClearXPCommand(),
                 new TeamInventoryCommand(),
                 new SpectatingTimeCommand(),
-                new TopSpecCommand()
+                new TopSpecCommand(),
+                new HallOfFameCommand()
         };
     }
 
