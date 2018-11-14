@@ -14,7 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -53,8 +53,8 @@ public class StatUpdateTask extends BukkitRunnable {
                 cachedGame.setFill(doc.getInteger("players"));
                 cachedGame.setWinnerKills((Map<String, Integer>) doc.get("winnerKills"));
                 cachedGame.setTeamType(doc.getString("teamType"));
-                cachedGame.setStart(new Timestamp(doc.getDate("startTime").getTime()));
-                cachedGame.setStart(new Timestamp(doc.getDate("endTime").getTime()));
+                cachedGame.setStart(doc.getLong("startTime"));
+                cachedGame.setStart(doc.getLong("endTime"));
                 cachedGame.setServer(doc.getString("server"));
                 cachedGames.add(cachedGame);
             }
@@ -63,12 +63,13 @@ public class StatUpdateTask extends BukkitRunnable {
         }
 
         //sort the timestamps
-        cachedGames.sort(Comparator.comparing(cachedGame -> cachedGame.getEnd().getTime()));
+        cachedGames.sort(Comparator.comparing(CachedGame::getEnd));
         ArrayList<ItemStack> items = new ArrayList<>();
         SkullMeta skullMeta;
         ItemStack head;
         ItemBuilder itemBuilder;
         UHCPlayer host;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss MM/DD/YYYY");
         for (CachedGame cachedGame : cachedGames) {
             host = UHCPlayer.get(UUID.fromString(cachedGame.getHost()));
             head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
@@ -77,8 +78,8 @@ public class StatUpdateTask extends BukkitRunnable {
             head.setItemMeta(skullMeta);
             itemBuilder = new ItemBuilder(head);
             itemBuilder.name("&6" + host.getName() + "&8»");
-            itemBuilder.lore("&eStart Time&8» &b" + cachedGame.getStart().toString());
-            itemBuilder.lore("&eEnd Time&8» &b" + cachedGame.getEnd().toString());
+            itemBuilder.lore("&eStart Time&8» &b" + simpleDateFormat.format(new Date(cachedGame.getStart())));
+            itemBuilder.lore("&eEnd Time&8» &b" + simpleDateFormat.format(new Date(cachedGame.getEnd())));
             itemBuilder.lore(" ");
             itemBuilder.lore("&eFill&8» &b" + cachedGame.getFill());
             itemBuilder.lore("&eTeam Type8» &b" + cachedGame.getTeamType());

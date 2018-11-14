@@ -1,6 +1,5 @@
 package me.blok601.nightshadeuhc.stats;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -15,8 +14,8 @@ public class CachedGame {
     private int fill;
     private Map<String, Integer> winnerKills;
     private String teamType;
-    private Timestamp start;
-    private Timestamp end;
+    private long start;
+    private long end;
     private String server;
     private long matchID;
 
@@ -72,19 +71,19 @@ public class CachedGame {
         this.teamType = teamType;
     }
 
-    public Timestamp getStart() {
+    public long getStart() {
         return start;
     }
 
-    public void setStart(Timestamp start) {
+    public void setStart(long start) {
         this.start = start;
     }
 
-    public Timestamp getEnd() {
+    public long getEnd() {
         return end;
     }
 
-    public void setEnd(Timestamp end) {
+    public void setEnd(long end) {
         this.end = end;
     }
 
