@@ -75,8 +75,8 @@ public class GameListener implements Listener {
             document.append("players", cachedGame.getFill());
             document.append("winnerKills", cachedGame.getWinnerKills());
             document.append("teamType", cachedGame.getTeamType());
-            document.append("startTime", cachedGame.getStart());
-            document.append("endTime", cachedGame.getEnd());
+            document.append("startTime", cachedGame.getStart().toString());
+            document.append("endTime", cachedGame.getEnd().toString());
             document.append("server", GameManager.getServerType());
 
             UHC.get().getGameCollection().insertOne(document);
