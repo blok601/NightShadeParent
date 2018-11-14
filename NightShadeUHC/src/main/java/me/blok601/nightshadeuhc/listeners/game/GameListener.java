@@ -25,12 +25,12 @@ public class GameListener implements Listener {
 
     @EventHandler
     public void onStart(GameStartEvent e){
-        if(UHC.players.size() >= 15){//Only count if game has 15 player fill or more
+        //if(UHC.players.size() >= 15){//Only count if game has 15 player fill or more
             StatsHandler.getInstance().getCachedGame().setStart(new Timestamp(System.currentTimeMillis()));
             StatsHandler.getInstance().getCachedGame().setFill(UHC.players.size());
 
             Bukkit.getServer().getScheduler().runTaskAsynchronously(UHC.get(), () -> StatsHandler.getInstance().getCachedGame().setMatchID(UHC.get().getGameCollection().count() + 1));
-        }
+        //}
     }
 
     @EventHandler
@@ -55,8 +55,15 @@ public class GameListener implements Listener {
             }
             cachedGame.setWinnerKills(winnerKills);
 
-            if (TeamManager.getInstance().isRandomTeams()) {
-                cachedGame.setTeamType("Random To" + TeamManager.getInstance().getTeamSize());
+            if (GameManager.isIsTeam()) {
+                if (TeamManager.getInstance().isRandomTeams()) {
+                    cachedGame.setTeamType("Random To" + TeamManager.getInstance().getTeamSize());
+                } else {
+                    //Custom
+                    cachedGame.setTeamType("cTo" + TeamManager.getInstance().getTeamSize());
+                }
+            } else {
+                cachedGame.setTeamType("FFA");
             }
 
             cachedGame.setServer(GameManager.getServerType());
