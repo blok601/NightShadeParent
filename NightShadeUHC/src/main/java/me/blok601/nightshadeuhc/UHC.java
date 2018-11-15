@@ -90,6 +90,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         registerCommands();
         registerListeners();
 
+        setupExtraDatabase();
         GameManager.setup();
         scoreboardManager = new ScoreboardManager();
         Bukkit.getScheduler().runTaskTimer(this, () -> {
@@ -141,7 +142,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
             GameManager.setServerType("UHC1");
         }
 
-        setupExtraDatabase();
+
         if(GameManager.getServerType().equalsIgnoreCase("UHC2")){
             hideEnchants();
             new OldEnchanting(this);

@@ -41,6 +41,7 @@ public class StatUpdateTask extends BukkitRunnable {
         StatsHandler.getInstance().getKills().addAll(temp);
 
         //Hall of fame inventory
+
         ArrayList<CachedGame> cachedGames = new ArrayList<>();
         FindIterable<Document> documents = UHC.get().getGameCollection().find();
         MongoCursor<Document> cursor = documents.iterator();
@@ -69,7 +70,7 @@ public class StatUpdateTask extends BukkitRunnable {
         ItemStack head;
         ItemBuilder itemBuilder;
         UHCPlayer host;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss MM/DD/YYYY");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm:ss aa MM/dd/YYYY");
         for (CachedGame cachedGame : cachedGames) {
             host = UHCPlayer.get(UUID.fromString(cachedGame.getHost()));
             head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
@@ -82,14 +83,14 @@ public class StatUpdateTask extends BukkitRunnable {
             itemBuilder.lore("&eEnd Time&8» &b" + simpleDateFormat.format(new Date(cachedGame.getEnd())));
             itemBuilder.lore(" ");
             itemBuilder.lore("&eFill&8» &b" + cachedGame.getFill());
-            itemBuilder.lore("&eTeam Type8» &b" + cachedGame.getTeamType());
+            itemBuilder.lore("&eTeam Type&8» &b" + cachedGame.getTeamType());
             itemBuilder.lore(" ");
             if (cachedGame.getWinners().size() > 1) {
                 //FFA
                 String winnerName = UHCPlayer.get(UUID.fromString(cachedGame.getWinners().get(0))).getName();
-                itemBuilder.lore("&eWinner8» &b" + winnerName + " &8[&3" + cachedGame.getWinnerKills().get(cachedGame.getWinners().get(0)) + "&8]");
+                itemBuilder.lore("&eWinner&8» &b" + winnerName + " &8[&3" + cachedGame.getWinnerKills().get(cachedGame.getWinners().get(0)) + "&8]");
             } else {
-                itemBuilder.lore("&eWinners8»");
+                itemBuilder.lore("&eWinners&8»");
                 String winnerName;
                 for (String winner : cachedGame.getWinners()) {
                     winnerName = UHCPlayer.get(UUID.fromString(winner)).getName();
@@ -103,6 +104,7 @@ public class StatUpdateTask extends BukkitRunnable {
             }
             items.add(itemBuilder.make());
         }
+        StatsHandler.getInstance().getHallOfFameInventory().clear();
         StatsHandler.getInstance().getHallOfFameInventory().addAll(items);
     }
 }
