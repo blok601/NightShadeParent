@@ -601,6 +601,7 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
             public void run() {
                 if (getKillTimer() == 0) {
                     setKillTimer(0);
+                    setKillStreak(0);
                     cancel();
                     return;
                 }
