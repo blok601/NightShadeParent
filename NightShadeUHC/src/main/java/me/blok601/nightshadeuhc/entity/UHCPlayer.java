@@ -594,20 +594,19 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
 
     public void startKillTimerTask() {
         this.killTimer = 10;
-        if (this.killTimerTask == null) {
-            this.killTimerTask = new BukkitRunnable() {
-                @Override
-                public void run() {
-                    if (getKillTimer() == 0) {
-                        setKillTimer(0);
-                        cancel();
-                        return;
-                    }
-
-                    setKillTimer(getKillTimer() - 1);
+        this.killTimerTask = null;
+        this.killTimerTask = new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (getKillTimer() == 0) {
+                    setKillTimer(0);
+                    cancel();
+                    return;
                 }
-            }.runTaskTimer(UHC.get(), 0, 20);
-        }
+
+                setKillTimer(getKillTimer() - 1);
+            }
+        }.runTaskTimer(UHC.get(), 0, 20);
     }
 
     public int getKillStreak() {
