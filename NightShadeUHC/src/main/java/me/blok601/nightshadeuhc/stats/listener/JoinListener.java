@@ -48,6 +48,7 @@ public class JoinListener implements Listener {
 
         gamePlayer.setSpectator(false);
         gamePlayer.setReceiveHelpop(true);
+        gamePlayer.setKillStreak(0);
         if(ViaVersion.getInstance().getPlayerVersion(player) == 47){
             //Deprecated but we don't care cuz we savages!
             gamePlayer.setUsingOldVersion(false);
@@ -172,6 +173,7 @@ public class JoinListener implements Listener {
             player.sendMessage(ChatUtils.format("&e&lMatchpost: &3" + Core.get().getMatchpost()));
 
             player.sendMessage(ChatUtils.format("&5&m-----------------------------------"));
+
         }
     }
 
