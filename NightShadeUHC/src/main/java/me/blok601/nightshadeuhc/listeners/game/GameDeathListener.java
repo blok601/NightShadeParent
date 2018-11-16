@@ -132,6 +132,27 @@ public class GameDeathListener implements Listener {
                 } else {
                     GameManager.getKills().put(damager.getUniqueId(), 1);
                 }
+
+                if (gamePlayer1.getKillTimer() != 0) {
+                    //They got a double, triple, etc
+                    switch (gamePlayer1.getKillTimer()) {
+                        case 2:
+                            Bukkit.broadcastMessage(ChatUtils.message("&6" + gamePlayer1.getName() + " &egot a &bdouble kill!"));
+                            damager.getInventory().addItem(new ItemStack(Material.GOLD_INGOT, 2));
+                            break;
+                        case 3:
+                            Bukkit.broadcastMessage(ChatUtils.message("&6" + gamePlayer1.getName() + " &egot a &btriple kill!"));
+                            damager.getInventory().addItem(new ItemStack(Material.GOLD_INGOT, 3));
+                            break;
+                        case 4:
+                            Bukkit.broadcastMessage(ChatUtils.message("&6" + gamePlayer1.getName() + " &egot a &cquadruple kill!"));
+                            damager.getInventory().addItem(new ItemStack(Material.GOLD_INGOT, 4));
+                        default:
+                            Bukkit.broadcastMessage(ChatUtils.message("&6" + gamePlayer1.getName() + " &has a &b" + gamePlayer1.getKillTimer() + " killstreak!"));
+                            break;
+                    }
+                }
+                gamePlayer1.startKillTimerTask();
             }
 
             uhcPlayer.setDeaths(uhcPlayer.getDeaths() + 1);
