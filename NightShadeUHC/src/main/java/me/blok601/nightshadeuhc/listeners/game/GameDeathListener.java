@@ -135,7 +135,8 @@ public class GameDeathListener implements Listener {
 
                 if (gamePlayer1.getKillTimer() != 0) {
                     //They got a double, triple, etc
-                    switch (gamePlayer1.getKillTimer()) {
+                    gamePlayer1.setKillStreak(gamePlayer1.getKillStreak() + 1);
+                    switch (gamePlayer1.getKillStreak()) {
                         case 2:
                             Bukkit.broadcastMessage(ChatUtils.message("&6" + gamePlayer1.getName() + " &egot a &bdouble kill!"));
                             damager.getInventory().addItem(new ItemStack(Material.GOLD_INGOT, 2));
@@ -148,7 +149,7 @@ public class GameDeathListener implements Listener {
                             Bukkit.broadcastMessage(ChatUtils.message("&6" + gamePlayer1.getName() + " &egot a &cquadruple kill!"));
                             damager.getInventory().addItem(new ItemStack(Material.GOLD_INGOT, 4));
                         default:
-                            Bukkit.broadcastMessage(ChatUtils.message("&6" + gamePlayer1.getName() + " &has a &b" + gamePlayer1.getKillTimer() + " killstreak!"));
+                            Bukkit.broadcastMessage(ChatUtils.message("&6" + gamePlayer1.getName() + " &ehas a &b" + gamePlayer1.getKillTimer() + " killstreak!"));
                             break;
                     }
                 }
