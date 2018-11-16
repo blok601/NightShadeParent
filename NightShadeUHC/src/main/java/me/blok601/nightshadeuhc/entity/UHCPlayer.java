@@ -98,6 +98,7 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
 
 
         this.setLastLocation(that.lastLocation);
+        this.setKillStreak(0);
 
         return this;
     }

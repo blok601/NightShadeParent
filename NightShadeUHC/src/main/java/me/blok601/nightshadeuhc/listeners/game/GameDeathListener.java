@@ -136,22 +136,19 @@ public class GameDeathListener implements Listener {
                 if (gamePlayer1.getKillTimer() != 0) {
                     //They got a double, triple, etc
                     gamePlayer1.setKillStreak(gamePlayer1.getKillStreak() + 1);
-                    switch (gamePlayer1.getKillStreak()) {
-                        case 2:
-                            Bukkit.broadcastMessage(ChatUtils.message("&6" + gamePlayer1.getName() + " &egot a &bdouble kill!"));
-                            damager.getInventory().addItem(new ItemStack(Material.GOLD_INGOT, 2));
-                            break;
-                        case 3:
-                            Bukkit.broadcastMessage(ChatUtils.message("&6" + gamePlayer1.getName() + " &egot a &btriple kill!"));
-                            damager.getInventory().addItem(new ItemStack(Material.GOLD_INGOT, 3));
-                            break;
-                        case 4:
-                            Bukkit.broadcastMessage(ChatUtils.message("&6" + gamePlayer1.getName() + " &egot a &cquadruple kill!"));
-                            damager.getInventory().addItem(new ItemStack(Material.GOLD_INGOT, 4));
-                        default:
-                            Bukkit.broadcastMessage(ChatUtils.message("&6" + gamePlayer1.getName() + " &ehas a &b" + gamePlayer1.getKillTimer() + " killstreak!"));
-                            break;
+                    if (gamePlayer1.getKillStreak() == 2) {
+                        Bukkit.broadcastMessage(ChatUtils.message("&6" + gamePlayer1.getName() + " &egot a &bdouble kill!"));
+                        damager.getInventory().addItem(new ItemStack(Material.GOLD_INGOT, 2));
+                    } else if (gamePlayer1.getKillStreak() == 3) {
+                        Bukkit.broadcastMessage(ChatUtils.message("&6" + gamePlayer1.getName() + " &egot a &btriple kill!"));
+                        damager.getInventory().addItem(new ItemStack(Material.GOLD_INGOT, 3));
+                    } else if (gamePlayer1.getKillStreak() == 4) {
+                        Bukkit.broadcastMessage(ChatUtils.message("&6" + gamePlayer1.getName() + " &egot a &cquadruple kill!"));
+                        damager.getInventory().addItem(new ItemStack(Material.GOLD_INGOT, 4));
+                    } else {
+                        Bukkit.broadcastMessage(ChatUtils.message("&6" + gamePlayer1.getName() + " &ehas a &b" + gamePlayer1.getKillStreak() + " killstreak!"));
                     }
+
                 }
                 gamePlayer1.startKillTimerTask();
             }
