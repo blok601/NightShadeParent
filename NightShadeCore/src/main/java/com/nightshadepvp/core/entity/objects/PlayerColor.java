@@ -16,9 +16,9 @@ public enum PlayerColor {
     BLUE(ChatColor.DARK_AQUA, new ItemBuilder(Material.PAPER).name("&3Blue").make()),
     RED(ChatColor.RED, new ItemBuilder(Material.PAPER).name("&cRed").make()),
     GOLD(ChatColor.GOLD, new ItemBuilder(Material.PAPER).name("&6Gold").make()),
-    BOLD(ChatColor.BOLD, new ItemBuilder(Material.PAPER).name("&lBold").make()),
-    ITALIC(ChatColor.ITALIC, new ItemBuilder(Material.PAPER).name("&oItalic").make()),
-    UNDERLINE(ChatColor.UNDERLINE, new ItemBuilder(Material.PAPER).name("&nUnderline").make()),
+    BOLD(ChatColor.BOLD, new ItemBuilder(Material.PAPER).name("&f&lBold").make()),
+    ITALIC(ChatColor.ITALIC, new ItemBuilder(Material.PAPER).name("&f&oItalic").make()),
+    UNDERLINE(ChatColor.UNDERLINE, new ItemBuilder(Material.PAPER).name("&f&nUnderline").make()),
     GREEN(ChatColor.GREEN, new ItemBuilder(Material.PAPER).name("&2Green").make());
 
     private ChatColor color;
