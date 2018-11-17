@@ -149,3 +149,7 @@ commands:
   halloffame:
     aliases: [hof, games, allgames, hofgames]
     description: View the UHC hall of fame
+  mole:
+    description: Show some useful moles commands
+    aliases: [molehelp, helpmoles, moleshelp]
+  setmole

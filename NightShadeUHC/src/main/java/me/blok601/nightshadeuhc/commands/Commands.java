@@ -6,10 +6,7 @@ import me.blok601.nightshadeuhc.commands.game.run.*;
 import me.blok601.nightshadeuhc.commands.game.setup.*;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.scenario.cmd.*;
-import me.blok601.nightshadeuhc.scenario.cmd.mole.MoleChatCommand;
-import me.blok601.nightshadeuhc.scenario.cmd.mole.MoleKitCommand;
-import me.blok601.nightshadeuhc.scenario.cmd.mole.MoleLocationCommand;
-import me.blok601.nightshadeuhc.scenario.cmd.mole.MolesCommand;
+import me.blok601.nightshadeuhc.scenario.cmd.mole.*;
 import me.blok601.nightshadeuhc.server.cmd.InfoCommand;
 import me.blok601.nightshadeuhc.server.cmd.PlayerLocationCommand;
 import me.blok601.nightshadeuhc.staff.cmd.*;
@@ -109,7 +106,9 @@ public class Commands {
                 new TeamInventoryCommand(),
                 new SpectatingTimeCommand(),
                 new TopSpecCommand(),
-                new HallOfFameCommand()
+                new HallOfFameCommand(),
+                new MoleCommand(),
+                new SetMoleCommand()
         };
     }
 
