@@ -3,6 +3,7 @@ package com.nightshadepvp.core.entity.objects;
 import com.nightshadepvp.core.utils.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 
 /**
