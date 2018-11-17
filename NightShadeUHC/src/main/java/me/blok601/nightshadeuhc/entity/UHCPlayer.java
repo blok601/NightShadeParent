@@ -600,13 +600,13 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
             @Override
             public void run() {
                 if (getKillTimer() == 0) {
-                    setKillTimer(0);
-                    setKillStreak(0);
+                    killTimer = 0;
+                    killStreak = 0;
                     cancel();
                     return;
                 }
 
-                setKillTimer(getKillTimer() - 1);
+                killTimer--;
             }
         }.runTaskTimer(UHC.get(), 0, 20);
     }
