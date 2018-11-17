@@ -152,4 +152,5 @@ commands:
   mole:
     description: Show some useful moles commands
     aliases: [molehelp, helpmoles, moleshelp]
-  setmole
+  setmole:
+    description: Update the mole for the team
