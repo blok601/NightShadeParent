@@ -3,6 +3,7 @@ package com.nightshadepvp.core.entity.objects;
 import com.nightshadepvp.core.utils.ChatUtils;
 import com.nightshadepvp.core.utils.ItemBuilder;
 import org.bukkit.Material;
+import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -28,7 +29,8 @@ public enum PlayerTag {
     SWEAT("&eSweat", new ItemBuilder(Material.NAME_TAG).name("&eSweat Tag &8(&eSweat&8)").make()),
     TRIAL_PLAYER("&bTrial Player", new ItemBuilder(Material.NAME_TAG).name("&eTrial Player Tag &8(&bTrial Player&8)").make()),
     FURRY("&eFurry", new ItemBuilder(Material.NAME_TAG).name("&3Furry Tag &8(&eFurry&8)").make()),
-    EGIRL("&d&nEGirl", new ItemBuilder(Material.NAME_TAG).name("&d&nEGirl Tag &8(&d&nEGirl&8)").make());
+    EGIRL("&d&nEGirl", new ItemBuilder(Material.NAME_TAG).name("&d&nEGirl Tag &8(&d&nEGirl&8)").make()),
+    CTRL_C("&c&lCTRL-C", new ItemBuilder(Material.NAME_TAG).name("&c&lCTRL-C Tag &8(&c&lCTRL-C&8)").make());
 
     private String title;
     private ItemStack stack;
