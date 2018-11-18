@@ -19,6 +19,7 @@ commands:
     description: Send a message to your team
   pmcoords:
     description: Send your coords to your team
+    aliases: [pmc]
   scat:
     description: Scatter command
   pvp:
