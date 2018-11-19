@@ -170,7 +170,7 @@ public class GameDeathListener implements Listener {
 //            p.sendMessage(ChatUtils.format(points >= 0 ? "&a&o+" + points  + " points" : "&c&o-" + points + " points"));
 //            p.sendMessage(ChatUtils.format());
 
-            if (user.hasRank(Rank.YOUTUBE)) { //YouTube and above can spectate the games, otherwise kick
+            if (user.hasRank(Rank.DRAGON)) { //Dragon and above can spectate the games, otherwise kick
                 p.setAllowFlight(true);
                 p.setFlying(true);
                 p.setFlySpeed(0.2F);

@@ -92,5 +92,20 @@ public enum Rank {
         return null;
     }
 
+    public boolean isStaff(Rank rank) {
+        return rank.getValue() >= Rank.TRIAL.getValue();
+    }
+
+    public boolean isPlayerLadder(Rank rank) {
+        return rank.getValue() < Rank.DRAGON.getValue();
+    }
+
+    public boolean isDonorRank(Rank rank) {
+        return rank.getValue() >= Rank.DRAGON.getValue() && rank.getValue() <= Rank.GUARDIAN.getValue();
+    }
+
+    public boolean isDeathSpectate(Rank rank) {
+        return rank.getValue() > PLAYER.getValue();
+    }
 
 }

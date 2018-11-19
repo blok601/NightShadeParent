@@ -1,5 +1,7 @@
 package me.blok601.nightshadeuhc.listeners.game;
 
+import com.nightshadepvp.core.Rank;
+import com.nightshadepvp.core.entity.NSPlayer;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.events.GameEndEvent;
 import me.blok601.nightshadeuhc.events.GameStartEvent;
@@ -42,8 +44,14 @@ public class GameListener implements Listener {
             cachedGame.setEnd(System.currentTimeMillis());
             cachedGame.setHost(GameManager.getHost().getUniqueId().toString());
             ArrayList<String> winners = new ArrayList<>();
+            NSPlayer targetNSPlayer;
             for (UUID winner : e.getWinners()){
                 winners.add(winner.toString());
+                targetNSPlayer = NSPlayer.get(winner); //This is just for now
+                if (targetNSPlayer.getRank().getValue() < Rank.DRAGON.getValue()) {
+                    //If they are less than Dragon
+                    targetNSPlayer.setRank(Rank.DRAGON);
+                }
             }
             cachedGame.setWinners(winners);
             ScenarioManager.getEnabledScenarios().forEach(scenario -> scenarios.add(scenario.getName()));
