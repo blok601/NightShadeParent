@@ -100,9 +100,15 @@ public class CmdTeamBase implements CmdInterface{
                     }
 
                     Team t = TeamManager.getInstance().getTeam(p);
-                    for (String str : t.getMembers()){
-                        p.sendMessage(ChatColor.YELLOW + str + ",");
+                    StringBuilder stringBuilder = new StringBuilder();
+                    for (String str : t.getMembers()) {
+                        stringBuilder.append("&e").append(str).append("&7, ");
                     }
+
+                    String f = stringBuilder.toString().trim();
+                    p.sendMessage(ChatUtils.format("&b---------------------------------"));
+                    p.sendMessage(ChatUtils.format("&aYour Team&8: " + f.substring(0, f.length() - 1)));
+                    p.sendMessage(ChatUtils.format("&b---------------------------------"));
                 }else if(args[0].equalsIgnoreCase("leave")){
                     if(TeamManager.getInstance().isTeamManagement()){
                         if(TeamManager.getInstance().getTeam(p) == null){
@@ -487,18 +493,31 @@ public class CmdTeamBase implements CmdInterface{
                             return;
                         }
 
+                        StringBuilder stringBuilder = new StringBuilder();
                         for (String str : targetTeam.getMembers()) {
-                            p.sendMessage(ChatColor.YELLOW + str + ",");
+                            stringBuilder.append("&e").append(str).append("&7, ");
                         }
+
+                        String f = stringBuilder.toString().trim();
+                        p.sendMessage(ChatUtils.format("&b---------------------------------"));
+                        p.sendMessage(ChatUtils.format("&a" + args[1] + "'s Team&8: " + f.substring(0, f.length() - 1)));
+                        p.sendMessage(ChatUtils.format("&b---------------------------------"));
+
                     } else {
                         Team targetTeam = TeamManager.getInstance().getTeam(target);
                         if (targetTeam == null) {
                             p.sendMessage(ChatUtils.message("&cThat player is not on a team!"));
                             return;
                         }
+                        StringBuilder stringBuilder = new StringBuilder();
                         for (String str : targetTeam.getMembers()) {
-                            p.sendMessage(ChatColor.YELLOW + str + ",");
+                            stringBuilder.append("&e").append(str).append("&7, ");
                         }
+
+                        String f = stringBuilder.toString().trim();
+                        p.sendMessage(ChatUtils.format("&b---------------------------------"));
+                        p.sendMessage(ChatUtils.format("&a" + args[1] + "'s Team&8: " + f.substring(0, f.length() - 1)));
+                        p.sendMessage(ChatUtils.format("&b---------------------------------"));
 
                     }
                 }

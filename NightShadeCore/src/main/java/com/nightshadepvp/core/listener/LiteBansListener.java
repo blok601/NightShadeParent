@@ -10,6 +10,9 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Objects;
+import java.util.UUID;
+
 /**
  * Created by Blok on 11/18/2018.
  */
@@ -18,8 +21,9 @@ public class LiteBansListener extends Events.Listener {
     @Override
     public void entryAdded(Entry entry) {
         if (entry.getType().equalsIgnoreCase("warning")) {
-            Player target = Bukkit.getPlayer(entry.getUuid());
+            Player target = Bukkit.getPlayer(UUID.fromString(Objects.requireNonNull(entry.getUuid())));
             if (target == null) {
+                System.out.println("This was null! " + entry.getUuid());
                 return;
             }
 
@@ -32,7 +36,6 @@ public class LiteBansListener extends Events.Listener {
                     ((CraftPlayer) target).getHandle().playerConnection.sendPacket(subtitle);
                 }
             }.runTask(Core.get());
-
         }
     }
 }
