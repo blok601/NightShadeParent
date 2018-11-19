@@ -162,7 +162,7 @@ public class PlayerListener implements Listener {
 
         if (SpectatorChatCommand.specc.contains(p.getUniqueId())) {
             e.setCancelled(true);
-            UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).forEach(uhcPlayer1 -> uhcPlayer1.msg(ChatUtils.format("&bSpecChat8» &e" + p.getName() + ":&6 " + e.getMessage())));
+            UHCPlayerColl.get().getSpectators().forEach(uhcPlayer1 -> uhcPlayer1.msg(ChatUtils.format("&8[&3SpecChat&8] &e" + p.getName() + ": &6" + e.getMessage())));
             return;
         }
 

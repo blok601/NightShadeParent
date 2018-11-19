@@ -5,6 +5,9 @@ import com.nightshadepvp.core.entity.MConf;
 import com.nightshadepvp.core.store.NSStore;
 import me.blok601.nightshadeuhc.UHC;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 public class UHCPlayerColl extends SenderColl<UHCPlayer> {
     // -------------------------------------------- //
     // INSTANCE & CONSTRUCT
@@ -38,5 +41,16 @@ public class UHCPlayerColl extends SenderColl<UHCPlayer> {
         return MConf.get().cleanInactivityToleranceMillis;
     }
 
+    public Collection<UHCPlayer> getAllPlaying(){
+        ArrayList<UHCPlayer> list = new ArrayList<>();
+        getAllOnline().stream().filter(uhcPlayer -> !uhcPlayer.isSpectator()).filter(uhcPlayer -> UHC.players.contains(uhcPlayer.getUuid())).forEach(list::add);
+        return list;
+    }
+
+    public Collection<UHCPlayer> getSpectators(){
+        ArrayList<UHCPlayer> list = new ArrayList<>();
+        getAllOnline().stream().filter(UHCPlayer::isSpectator).forEach(list::add);
+        return list;
+    }
 
 }

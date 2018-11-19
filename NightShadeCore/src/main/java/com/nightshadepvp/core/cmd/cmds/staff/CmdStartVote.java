@@ -40,11 +40,11 @@ public class CmdStartVote extends NightShadeCoreCommand {
     @Override
     public void perform() throws MassiveException {
         String vote = this.readArg();
-        FancyMessage yes = new FancyMessage("YES").color(ChatColor.GREEN).style(ChatColor.BOLD).command("yes");
-        FancyMessage no = new FancyMessage("NO").color(ChatColor.RED).style(ChatColor.BOLD).command("no");
+        FancyMessage yes = new FancyMessage("YES").color(ChatColor.GREEN).style(ChatColor.BOLD).command("/yes");
+        FancyMessage no = new FancyMessage("NO").color(ChatColor.RED).style(ChatColor.BOLD).command("/no");
         Bukkit.broadcastMessage(ChatUtils.message("&eA new vote has begun!"));
-        FancyMessage fancyMessage = new FancyMessage(ChatUtils.format("&3Vote&8» &e" + vote + "&8["));
-        fancyMessage.then("YES").color(ChatColor.GREEN).command("yes").then(" | ").color(ChatColor.YELLOW).then("NO").command("no").then("]").color(ChatColor.DARK_GRAY);
+        FancyMessage fancyMessage = new FancyMessage(ChatUtils.format("&3Vote&8» &5" + vote + " &8["));
+        fancyMessage.then("YES").color(ChatColor.GREEN).style(ChatColor.BOLD).command("yes").then(" | ").color(ChatColor.YELLOW).then("NO").command("no").color(ChatColor.RED).style(ChatColor.BOLD).then("]").color(ChatColor.DARK_GRAY);
         Bukkit.getOnlinePlayers().forEach(fancyMessage::send);
         voteRunning = true;
         YES_VOTES = 0;

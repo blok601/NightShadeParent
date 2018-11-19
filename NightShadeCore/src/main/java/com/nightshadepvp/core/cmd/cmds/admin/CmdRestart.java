@@ -25,14 +25,15 @@ public class CmdRestart extends NightShadeCoreCommand{
 
     @Override
     public void perform() throws MassiveException {
-        Bukkit.broadcastMessage(ChatUtils.message("&6The Sevrer Will Restart in 5 seconds!"));
+        Bukkit.broadcastMessage(ChatUtils.message("&6The Server Will Restart in 5 seconds!"));
         Core.get().getLogManager().log(Logger.LogType.SERVER, "The server is restarting in ~5 seconds!");
         new BukkitRunnable(){
             int counter = 7;
             @Override
             public void run() {
                 if(counter == 5){
-                    Bukkit.getOnlinePlayers().forEach(o -> o.kickPlayer("Thank you for flying NightShadePvP. Come back soon"));
+                    Bukkit.getOnlinePlayers().forEach(o -> o.kickPlayer("Thank's for playing on NightShadePvP\n Join our Discord @ discord.me/NightShadeMC for updates   \n" +
+                            "Follow us on Twitter @NightShadePvPMC for news and information!"));
                 }
 
                 if(counter == 0){
