@@ -43,7 +43,9 @@ public class CmdStartVote extends NightShadeCoreCommand {
         FancyMessage yes = new FancyMessage("YES").color(ChatColor.GREEN).style(ChatColor.BOLD).command("yes");
         FancyMessage no = new FancyMessage("NO").color(ChatColor.RED).style(ChatColor.BOLD).command("no");
         Bukkit.broadcastMessage(ChatUtils.message("&eA new vote has begun!"));
-        Bukkit.broadcastMessage(ChatUtils.format("&3Vote&8» &e" + vote + "&8[" + yes + "&e| " + no + "&8]"));
+        FancyMessage fancyMessage = new FancyMessage(ChatUtils.format("&3Vote&8» &e" + vote + "&8["));
+        fancyMessage.then("YES").color(ChatColor.GREEN).command("yes").then(" | ").color(ChatColor.YELLOW).then("NO").command("no").then("]").color(ChatColor.DARK_GRAY);
+        Bukkit.getOnlinePlayers().forEach(fancyMessage::send);
         voteRunning = true;
         YES_VOTES = 0;
         NO_VOTES = 0;
@@ -56,7 +58,7 @@ public class CmdStartVote extends NightShadeCoreCommand {
                 } else if (NO_VOTES > YES_VOTES) {
                     Bukkit.broadcastMessage(ChatUtils.format("&&3Vote&8» &cNo &ehas won with &b" + NO_VOTES + " &evotes!"));
                 } else if (YES_VOTES == NO_VOTES) {
-                    Bukkit.broadcastMessage(ChatUtils.format("&3Vote&8» &eYes and No tied with &b" + YES_VOTES + "&evotes!"));
+                    Bukkit.broadcastMessage(ChatUtils.format("&3Vote&8» &eYes and No tied with &b" + YES_VOTES + " &evotes!"));
                 }
 
                 YES_VOTES = 0;
