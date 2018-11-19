@@ -20,7 +20,7 @@ public class LiteBansListener extends Events.Listener {
 
     @Override
     public void entryAdded(Entry entry) {
-        if (entry.getType().equalsIgnoreCase("warning")) {
+        if (entry.getType().equalsIgnoreCase("warn")) {
             Player target = Bukkit.getPlayer(UUID.fromString(Objects.requireNonNull(entry.getUuid())));
             if (target == null) {
                 System.out.println("This was null! " + entry.getUuid());

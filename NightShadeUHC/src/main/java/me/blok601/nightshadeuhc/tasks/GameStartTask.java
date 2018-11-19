@@ -66,7 +66,7 @@ public class GameStartTask extends BukkitRunnable {
     public void run() {
         if (counter >= 0) {
             if (counter % 60 == 0 && counter != 0) {
-                ChatUtils.sendAll("The game will start in " + counter / 60 + " minutes!");
+                ChatUtils.sendAll("The game will start in " + counter / 60 + " minute&8(s&8)&b!");
             } else if (counter <= 10) {
                if (counter > 0) {
                    PacketPlayOutTitle packet = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + counter + "\",\"color\":\"dark_aqua\",\"bold\":true}"), 0, 20, 0);
