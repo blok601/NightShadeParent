@@ -27,7 +27,7 @@ public class CmdStartVote extends NightShadeCoreCommand {
     }
 
     public CmdStartVote() {
-        this.addAliases("starvote");
+        this.addAliases("startvote");
         this.addRequirements(ReqRankHasAtLeast.get(Rank.HOST));
         this.addParameter(TypeString.get(), "Vote Message", true);
     }
@@ -40,8 +40,8 @@ public class CmdStartVote extends NightShadeCoreCommand {
     @Override
     public void perform() throws MassiveException {
         String vote = this.readArg();
-        FancyMessage yes = new FancyMessage("YES").color(ChatColor.GREEN).color(ChatColor.BOLD).command("yes");
-        FancyMessage no = new FancyMessage("NO").color(ChatColor.RED).color(ChatColor.BOLD).command("no");
+        FancyMessage yes = new FancyMessage("YES").color(ChatColor.GREEN).style(ChatColor.BOLD).command("yes");
+        FancyMessage no = new FancyMessage("NO").color(ChatColor.RED).style(ChatColor.BOLD).command("no");
         Bukkit.broadcastMessage(ChatUtils.message("&eA new vote has begun!"));
         Bukkit.broadcastMessage(ChatUtils.format("&3Vote&8» &e" + vote + "&8[" + yes + "&e| " + no + "&8]"));
         voteRunning = true;
