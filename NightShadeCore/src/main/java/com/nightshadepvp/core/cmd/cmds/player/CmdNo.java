@@ -35,6 +35,7 @@ public class CmdNo extends NightShadeCoreCommand {
         }
 
         CmdStartVote.get().NO_VOTES++;
+        CmdStartVote.get().voted.add(nsPlayer.getUuid());
         nsPlayer.msg(ChatUtils.message("&eYou have voted &cno&e!. Thanks for voting!"));
     }
 }

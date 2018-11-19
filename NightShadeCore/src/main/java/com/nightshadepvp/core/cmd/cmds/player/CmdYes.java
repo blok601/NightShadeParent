@@ -32,6 +32,7 @@ public class CmdYes extends NightShadeCoreCommand {
         }
 
         CmdStartVote.get().YES_VOTES++;
+        CmdStartVote.get().voted.add(nsPlayer.getUuid());
         nsPlayer.msg(ChatUtils.message("&eYou have voted &ayes&e!. Thanks for voting!"));
     }
 }
