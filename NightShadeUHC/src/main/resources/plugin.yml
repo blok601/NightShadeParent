@@ -19,6 +19,7 @@ commands:
     description: Send a message to your team
   pmcoords:
     description: Send your coords to your team
+    aliases: [pmc, sendcoords]
   scat:
     description: Scatter command
   pvp:
@@ -122,8 +123,12 @@ commands:
   setanonymousname:
   abrole:
   specs:
+    description: View the spectators
+    aliases: [spectators]
   permaday:
+    description: Set it to permaday
   alive:
+    description: View the alive players
   clearxp:
     aliases: [xpclear]
     description: Clear everyone's XP
@@ -144,7 +149,7 @@ commands:
     aliases: [dq]
     descrpition: Deathban a player for a reason
   topspecs:
-    aliases: [topspec, tpsecs]
+    aliases: [topspec, tpsecs, spectop]
     description: View the top 10 spectators
   halloffame:
     aliases: [hof, games, allgames, hofgames]
@@ -154,3 +159,5 @@ commands:
     aliases: [molehelp, helpmoles, moleshelp]
   setmole:
     description: Update the mole for the team
+  kicksolos:
+    description: Kick the solos for the game

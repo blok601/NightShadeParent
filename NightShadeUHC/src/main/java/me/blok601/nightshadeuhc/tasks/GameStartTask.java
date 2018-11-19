@@ -78,7 +78,7 @@ public class GameStartTask extends BukkitRunnable {
                        ((CraftPlayer) uhcPlayer.getPlayer()).getHandle().playerConnection.sendPacket(packet);
                    }
                 } else {
-                   PacketPlayOutTitle packet = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"Go!\",\"color\":\"dark_aqua\",\"bold\":true}"), 0, 10, 0);
+                   PacketPlayOutTitle packet = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"Go!\",\"color\":\"dark_aqua\",\"bold\":true}"), 0, 20, 0);
                    for (UHCPlayer uhcPlayer : UHCPlayerColl.get().getAllOnline()) {
                        if (uhcPlayer.isUsingOldVersion()) {
                            uhcPlayer.msg(ChatUtils.message("&3The game has started!"));

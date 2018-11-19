@@ -1,10 +1,11 @@
 package me.blok601.nightshadeuhc.commands.extras;
 
 import com.nightshadepvp.core.Rank;
-import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.GameState;
-import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.entity.UHCPlayer;
+import me.blok601.nightshadeuhc.manager.GameManager;
+import me.blok601.nightshadeuhc.utils.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -44,11 +45,17 @@ public class KillTopCommand implements CmdInterface{
 
         HashMap<String, Integer> k1 = new HashMap<>();
 
+        UHCPlayer gamePlayer;
         for (Map.Entry<UUID, Integer> entry : GameManager.getKills().entrySet()){
+            gamePlayer = UHCPlayer.get(entry.getKey());
             if(Bukkit.getPlayer(entry.getKey()) == null){
-                k1.put(Bukkit.getOfflinePlayer(entry.getKey()).getName(), entry.getValue());
+                if(GameManager.getDeathBans().contains(entry.getKey())){
+                    k1.put("&c" + gamePlayer.getName(), entry.getValue());
+                }else{
+                    k1.put("&7" + gamePlayer.getName(), entry.getValue());
+                }
             }else{
-                k1.put(Bukkit.getPlayer(entry.getKey()).getName(), entry.getValue());
+                k1.put("&e" + gamePlayer.getName(), entry.getValue());
             }
         }
 
@@ -65,7 +72,7 @@ public class KillTopCommand implements CmdInterface{
 
         list.stream()
         .sorted(((o1, o2) -> o2.getValue().compareTo(o1.getValue()))).limit(10)
-                .forEach(entry -> p.sendMessage(ChatUtils.format("&e" + entry.getKey() + " - " + entry.getValue())));
+                .forEach(entry -> p.sendMessage(ChatUtils.format( entry.getKey() + " &e- " + entry.getValue())));
 
         p.sendMessage(ChatUtils.format("&5&m-----------------------------------"));
 

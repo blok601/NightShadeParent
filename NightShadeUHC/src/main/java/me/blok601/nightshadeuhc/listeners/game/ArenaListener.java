@@ -30,6 +30,12 @@ public class ArenaListener implements Listener {
         }
 
         Player p = e.getEntity();
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                p.spigot().respawn();
+            }
+        }.runTaskLater(UHC.get(), 2);
         UHCPlayer uhcPlayer = UHCPlayer.get(p);
         if(uhcPlayer.isInArena()){
             if(p.getKiller() != null){

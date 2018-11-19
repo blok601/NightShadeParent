@@ -478,6 +478,29 @@ public class CmdTeamBase implements CmdInterface{
                     p.sendMessage(ChatUtils.message("&eYou have added &a" + target.getName() + " &eto &a" + args[2] + "'s &eteam!"));
                     target.sendMessage(ChatUtils.message("&eYou were added to &a" + args[2] + "'s &eteam!"));
                     targetTeam.message("&a" + target.getName() + " &ehas joined your team!");
+                } else if (args[0].equalsIgnoreCase("list")) {
+                    Player target = Bukkit.getPlayer(args[1]);
+                    if (target == null) {
+                        Team targetTeam = TeamManager.getInstance().getTeambyPlayerOnTeam(args[1]);
+                        if (targetTeam == null) {
+                            p.sendMessage(ChatUtils.message("&cThat player is not on a team!"));
+                            return;
+                        }
+
+                        for (String str : targetTeam.getMembers()) {
+                            p.sendMessage(ChatColor.YELLOW + str + ",");
+                        }
+                    } else {
+                        Team targetTeam = TeamManager.getInstance().getTeam(target);
+                        if (targetTeam == null) {
+                            p.sendMessage(ChatUtils.message("&cThat player is not on a team!"));
+                            return;
+                        }
+                        for (String str : targetTeam.getMembers()) {
+                            p.sendMessage(ChatColor.YELLOW + str + ",");
+                        }
+
+                    }
                 }
             }
         }else{
