@@ -3,6 +3,7 @@ package me.blok601.nightshadeuhc.commands.extras;
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.commands.CmdInterface;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -15,7 +16,7 @@ public class ChatStopCommand implements CmdInterface{
     @Override
     public String[] getNames() {
         return new String[]{
-                "cstop"
+                "chatstop"
         };
     }
 
@@ -25,11 +26,13 @@ public class ChatStopCommand implements CmdInterface{
         if(ChatUtils.isChatFrozen()){
             ChatUtils.setChatFrozen(false);
             p.sendMessage(ChatUtils.message("&eThe chat is now &aunfrozen"));
+            Bukkit.broadcastMessage(ChatUtils.message("&eThe chat is now &aunfrozen"));
             return;
         }
 
         ChatUtils.setChatFrozen(true);
         p.sendMessage(ChatUtils.message("&eThe chat is now &cfrozen"));
+        Bukkit.broadcastMessage(ChatUtils.message("&eThe chat is now &cfrozen"));
     }
 
     @Override

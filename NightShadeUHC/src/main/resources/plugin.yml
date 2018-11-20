@@ -113,7 +113,7 @@ commands:
   setarenaspawn:
   arena:
     aliases: [a]
-  cstop:
+  chatstop:
     aliases: [togglechatmute, gmute, globalmute, chattoggle, ozzyisgay]
   walls:
     aliases: [setborder, shrink]
@@ -163,3 +163,6 @@ commands:
     description: Update the mole for the team
   kicksolos:
     description: Kick the solos for the game
+  togglemobs:
+    description: Butcher and stop mobs spawning in that world
+    aliases: [removemobs, nomobs]

@@ -146,7 +146,7 @@ public class SpecEvents implements Listener {
         if (!uhcPlayer.isSpectator()) {
             return;
         }
-        
+
         Rank rank = NSPlayer.get(p).getRank();
         if (rank.isDonorRank(rank)) {
 

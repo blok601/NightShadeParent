@@ -108,7 +108,8 @@ public class Commands {
                 new TopSpecCommand(),
                 new HallOfFameCommand(),
                 new MoleCommand(),
-                new SetMoleCommand()
+                new SetMoleCommand(),
+                new ToggleMobsCommand()
         };
     }
 

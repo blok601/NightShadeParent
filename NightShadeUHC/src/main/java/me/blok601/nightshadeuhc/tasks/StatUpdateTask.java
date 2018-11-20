@@ -80,7 +80,7 @@ public class StatUpdateTask extends BukkitRunnable {
             itemBuilder = new ItemBuilder(head);
             itemBuilder.name("&6" + host.getName() + "&8»");
             itemBuilder.lore("&eStart Time&8» &b" + simpleDateFormat.format(new Date(cachedGame.getStart())));
-            itemBuilder.lore("&eEnd Time&8» &b" + simpleDateFormat.format(new Date(cachedGame.getEnd())));
+            //itemBuilder.lore("&eEnd Time&8» &b" + simpleDateFormat.format(new Date(cachedGame.getEnd())));
             itemBuilder.lore(" ");
             itemBuilder.lore("&eFill&8» &b" + cachedGame.getFill());
             itemBuilder.lore("&eTeam Type&8» &b" + cachedGame.getTeamType());
