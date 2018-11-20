@@ -2,14 +2,13 @@ package com.nightshadepvp.core.cmd.cmds.player;
 
 import com.massivecraft.massivecore.MassiveException;
 import com.massivecraft.massivecore.command.type.primitive.TypeString;
+import com.massivecraft.massivecore.command.type.sender.TypePlayer;
 import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.cmd.NightShadeCoreCommand;
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.nightshadepvp.core.entity.NSPlayerColl;
 import com.nightshadepvp.core.utils.ChatUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -29,7 +28,7 @@ public class CmdReport extends NightShadeCoreCommand {
 
     public CmdReport() {
         this.addAliases("report");
-        this.addParameter(TypeString.get(), "player");
+        this.addParameter(TypePlayer.get(), "player");
         this.addParameter(TypeString.get(), "reason", true);
     }
 
@@ -43,15 +42,14 @@ public class CmdReport extends NightShadeCoreCommand {
             return;
         }
 
-        String reported = this.readArg();
-        Player target = Bukkit.getPlayer(reported);
-        if (target == null) {
+        Player target = this.readArg();
+        if(target == null || !target.isOnline()){
             nsPlayer.msg(ChatUtils.message("&cThat player couldn't be found!"));
             return;
         }
         String reason = this.readArg();
         NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer1 -> nsPlayer1.hasRank(Rank.TRIAL)).forEach(nsPlayer1 -> {
-            nsPlayer1.getPlayer().playSound(nsPlayer1.getPlayer().getLocation(), Sound.NOTE_PLING, 5F, 5F);
+            //nsPlayer1.getPlayer().playSound(nsPlayer1.getPlayer().getLocation(), Sound.NOTE_PLING, 5F, 5F);
             nsPlayer1.msg(ChatUtils.format("&7&m--&8&m+&7&m--------------------------------&8&m+&7&m--"));
             nsPlayer1.msg("&7 ► New Report from &5" + nsPlayer.getName());
             nsPlayer1.msg("&7 ► Reported&8: &5" + target.getName());
