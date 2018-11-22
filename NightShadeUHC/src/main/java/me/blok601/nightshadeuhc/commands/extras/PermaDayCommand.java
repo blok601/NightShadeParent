@@ -37,6 +37,7 @@ public class PermaDayCommand implements CmdInterface {
         World world = GameManager.getWorld();
         world.setTime(100);
         world.setGameRuleValue("doDaylightCycle", "false");
+        world.setGameRuleValue("doWeatherCycle", "false");
         p.sendMessage(ChatUtils.message("&ePermaday has been enabled!"));
     }
 

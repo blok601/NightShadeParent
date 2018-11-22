@@ -8,6 +8,8 @@ import me.blok601.nightshadeuhc.entity.MConf;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.events.GameEndEvent;
 import me.blok601.nightshadeuhc.manager.GameManager;
+import me.blok601.nightshadeuhc.scenario.MolesScenario;
+import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.teams.Team;
 import me.blok601.nightshadeuhc.teams.TeamManager;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
@@ -41,7 +43,7 @@ public class EndGameCommand implements CmdInterface{
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
         if (args.length != 1){
-            p.sendMessage(ChatUtils.message("&cUsage: /endgame <player/player on team>"));
+            p.sendMessage(ChatUtils.message("&cUsage: /endgame <player/player on team/moles>"));
             return;
         }
 
@@ -55,67 +57,117 @@ public class EndGameCommand implements CmdInterface{
 
         if (isTeam){
 
-            if(TeamManager.getInstance().getTeam(target) == null){
-                p.sendMessage(ChatUtils.message("&cThat player doesn't have a team!"));
-                return;
-            }
-
-            Player pl;
-
-            StringBuilder sb = new StringBuilder();
-
-            ArrayList<UUID> winners = new ArrayList<>();
-            NSPlayer user;
-            UHCPlayer gamePlayer;
-            Team targetTeam = TeamManager.getInstance().getTeam(target);
-            for (String uuid : targetTeam.getMembers()){
-                pl = Bukkit.getPlayer(uuid);
-                if(pl == null){
-                    continue;
+            if (args[0].equalsIgnoreCase("moles")) {
+                //The moles won
+                if (!ScenarioManager.getScen("Moles").isEnabled()) {
+                    p.sendMessage(ChatUtils.message("&cMoles must be enabled to do this!"));
+                    return;
                 }
 
-                user = NSPlayer.get(pl.getUniqueId());
-                gamePlayer = UHCPlayer.get(pl.getUniqueId());
-                winners.add(pl.getUniqueId());
+                StringBuilder sb = new StringBuilder();
+                Player pl;
+                ArrayList<UUID> winners = new ArrayList<>();
+                UHCPlayer gamePlayer;
+                ArrayList<Player> onlineMoles = new ArrayList<>();
+                for (UUID uuid : MolesScenario.moles.keySet()) {
+                    pl = Bukkit.getPlayer(uuid);
+                    gamePlayer = UHCPlayer.get(uuid);
+                    winners.add(uuid);
+                    if (pl == null) {
+                        gamePlayer.addPoints(10 / TeamManager.getInstance().getTeamSize());
+                        continue;
+                    }
+
+                    onlineMoles.add(pl);
+                    gamePlayer.changed();
+                    gamePlayer.msg(ChatUtils.message("&eYour stats have been updated! Do /stats to check them."));
+                    sb.append(pl.getName()).append(", ");
+
+                }
+
+                Bukkit.getPluginManager().callEvent(new GameEndEvent(winners));
+
+                String f = sb.toString().trim();
+
+                PacketPlayOutTitle title = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"Congratulations!\",\"color\":\"dark_aqua\",\"bold\":true}"), 0, 60, 0);
+                onlineMoles.forEach(player -> {
+                    ((CraftPlayer) player).getHandle().playerConnection.sendPacket(title);
+                });
+
+
+                PacketPlayOutTitle subtitle = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + f.substring(0, f.length() - 1) + " has won!\",\"color\":\"dark_red\"}"), 0, 60, 0);
+                PacketPlayOutTitle newTitle = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"Game Over!\",\"color\":\"dark_aqua\",\"bold\":true}"), 0, 60, 0);
+
+
+                Bukkit.getOnlinePlayers().forEach((Consumer<Player>) lamba -> {
+                    ((CraftPlayer) lamba).getHandle().playerConnection.sendPacket(subtitle);
+                    if (!MolesScenario.moles.containsKey(lamba.getUniqueId())) {
+                        ((CraftPlayer) lamba).getHandle().playerConnection.sendPacket(newTitle);
+                    }
+                });
+            } else {
+
+                if (TeamManager.getInstance().getTeam(target) == null) {
+                    p.sendMessage(ChatUtils.message("&cThat player doesn't have a team!"));
+                    return;
+                }
+
+                Player pl;
+
+                StringBuilder sb = new StringBuilder();
+
+                ArrayList<UUID> winners = new ArrayList<>();
+                NSPlayer user;
+                UHCPlayer gamePlayer;
+                Team targetTeam = TeamManager.getInstance().getTeam(target);
+                for (String uuid : targetTeam.getMembers()) {
+                    pl = Bukkit.getPlayer(uuid);
+                    if (pl == null) {
+                        continue;
+                    }
+
+                    user = NSPlayer.get(pl.getUniqueId());
+                    gamePlayer = UHCPlayer.get(pl.getUniqueId());
+                    winners.add(pl.getUniqueId());
 
 //                user.setPrefix(ChatColor.RED + "[Winner] ");
-                gamePlayer.setGamesWon(gamePlayer.getGamesWon()+1);
-                gamePlayer.addPoints(10/targetTeam.getMembers().size());
-                if(user.getRank() == Rank.PLAYER){
-                    if(gamePlayer.getGamesWon() >= 10){
-                        user.setPrefix(ChatUtils.format("&8[&c★&8]"));
-                    }else{
-                        user.setPrefix(ChatUtils.format("&8[&c★&8]"));
+                    gamePlayer.setGamesWon(gamePlayer.getGamesWon() + 1);
+                    gamePlayer.addPoints(10 / targetTeam.getMembers().size());
+                    if (user.getRank() == Rank.PLAYER) {
+                        if (gamePlayer.getGamesWon() >= 10) {
+                            user.setPrefix(ChatUtils.format("&8[&c★&8]"));
+                        } else {
+                            user.setPrefix(ChatUtils.format("&8[&c★&8]"));
+                        }
                     }
+                    gamePlayer.changed();
+                    gamePlayer.msg(ChatUtils.message("&eYour stats have been updated! Do /stats to check them."));
+                    sb.append(pl.getName()).append(", ");
                 }
-                gamePlayer.changed();
-                gamePlayer.msg(ChatUtils.message("&eYour stats have been updated! Do /stats to check them."));
-                sb.append(pl.getName()).append(", ");
-            }
 
-            Bukkit.getPluginManager().callEvent(new GameEndEvent(winners));
+                Bukkit.getPluginManager().callEvent(new GameEndEvent(winners));
 
-            String f = sb.toString().trim();
+                String f = sb.toString().trim();
 
-            PacketPlayOutTitle title = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"Congratulations!\",\"color\":\"dark_aqua\",\"bold\":true}"), 0, 60, 0);
-            ((CraftPlayer) target).getHandle().playerConnection.sendPacket(title);
-            targetTeam.getMembers().stream().filter(s1 -> Bukkit.getPlayer(s1) != null).forEach(s1 ->{
+                PacketPlayOutTitle title = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"Congratulations!\",\"color\":\"dark_aqua\",\"bold\":true}"), 0, 60, 0);
+                ((CraftPlayer) target).getHandle().playerConnection.sendPacket(title);
+                targetTeam.getMembers().stream().filter(s1 -> Bukkit.getPlayer(s1) != null).forEach(s1 -> {
                     ((CraftPlayer) Bukkit.getPlayer(s1)).getHandle().playerConnection.sendPacket(title);
-            });
+                });
 
 
-            PacketPlayOutTitle subtitle = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + f.substring(0, f.length()-1) + " has won!\",\"color\":\"dark_red\"}"), 0, 60 ,0);
-            PacketPlayOutTitle newTitle = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"Game Over!\",\"color\":\"dark_aqua\",\"bold\":true}"), 0, 60, 0);
+                PacketPlayOutTitle subtitle = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + f.substring(0, f.length() - 1) + " has won!\",\"color\":\"dark_red\"}"), 0, 60, 0);
+                PacketPlayOutTitle newTitle = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"Game Over!\",\"color\":\"dark_aqua\",\"bold\":true}"), 0, 60, 0);
 
 
-            Bukkit.getOnlinePlayers().forEach((Consumer<Player>) lamba ->{
-                ((CraftPlayer) lamba).getHandle().playerConnection.sendPacket(subtitle);
-                if(!targetTeam.getMembers().contains(lamba.getName())){
-                    ((CraftPlayer) lamba).getHandle().playerConnection.sendPacket(newTitle);
-                }
+                Bukkit.getOnlinePlayers().forEach((Consumer<Player>) lamba -> {
+                    ((CraftPlayer) lamba).getHandle().playerConnection.sendPacket(subtitle);
+                    if (!targetTeam.getMembers().contains(lamba.getName())) {
+                        ((CraftPlayer) lamba).getHandle().playerConnection.sendPacket(newTitle);
+                    }
 
-            });
-
+                });
+            }
         }else{
             NSPlayer user = NSPlayer.get(target.getUniqueId());
             UHCPlayer gamePlayer = UHCPlayer.get(target.getUniqueId());

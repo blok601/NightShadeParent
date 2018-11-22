@@ -38,11 +38,16 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
 
     private long discordID = -1;
 
-
-
     private transient boolean frozen = false;
     private transient boolean receivingPMs = true;
     private transient NSPlayer lastMessaged = null;
+
+    // 10 second threshold for being AFK
+    private transient boolean afk = false;
+    private transient int totalAFKTime = 0;
+    private transient int currentAFKTime = 0;
+
+    private int spectatingTime = 0;
 
     // ----------------------------------
     //         Staff Toggles
@@ -73,6 +78,8 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
         this.setDiscordID(that.discordID);
 
         this.setMessageSounds(that.messageSounds);
+
+        this.setSpectatingTime(that.spectatingTime);
 
         return this;
     }
@@ -267,5 +274,41 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
 
     public void setReceivingStaffChat(boolean receivingStaffChat) {
         this.receivingStaffChat = receivingStaffChat;
+    }
+
+    public boolean isAFK() {
+        return afk;
+    }
+
+    public void setAFK(boolean afk) {
+        this.afk = afk;
+    }
+
+    public int getTotalAFKTime() {
+        return totalAFKTime;
+    }
+
+    public void setTotalAFKTime(int afkTime) {
+        this.totalAFKTime = afkTime;
+    }
+
+    public int getCurrentAFKTime() {
+        return currentAFKTime;
+    }
+
+    public void setCurrentAFKTime(int currentAFKTime) {
+        this.currentAFKTime = currentAFKTime;
+    }
+
+    public void incrementTotalAFKTime(int input){
+        this.totalAFKTime += input;
+    }
+
+    public int getSpectatingTime() {
+        return spectatingTime;
+    }
+
+    public void setSpectatingTime(int spectatingTime) {
+        this.spectatingTime = spectatingTime;
     }
 }

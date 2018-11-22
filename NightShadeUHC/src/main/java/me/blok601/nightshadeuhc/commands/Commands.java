@@ -6,15 +6,10 @@ import me.blok601.nightshadeuhc.commands.game.run.*;
 import me.blok601.nightshadeuhc.commands.game.setup.*;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.scenario.cmd.*;
-import me.blok601.nightshadeuhc.scenario.cmd.mole.MoleChatCommand;
-import me.blok601.nightshadeuhc.scenario.cmd.mole.MoleKitCommand;
-import me.blok601.nightshadeuhc.scenario.cmd.mole.MoleLocationCommand;
-import me.blok601.nightshadeuhc.scenario.cmd.mole.MolesCommand;
+import me.blok601.nightshadeuhc.scenario.cmd.mole.*;
 import me.blok601.nightshadeuhc.server.cmd.InfoCommand;
 import me.blok601.nightshadeuhc.server.cmd.PlayerLocationCommand;
-import me.blok601.nightshadeuhc.staff.cmd.AlertsCommand;
-import me.blok601.nightshadeuhc.staff.cmd.CommandSpyCmd;
-import me.blok601.nightshadeuhc.staff.cmd.StaffCommand;
+import me.blok601.nightshadeuhc.staff.cmd.*;
 import me.blok601.nightshadeuhc.staff.spec.SpecCommand;
 import me.blok601.nightshadeuhc.staff.spec.SpecsCommand;
 import me.blok601.nightshadeuhc.staff.spec.SpectatorChatCommand;
@@ -108,7 +103,13 @@ public class Commands {
                 new PermaDayCommand(),
                 new AliveCommand(),
                 new ClearXPCommand(),
-                new TeamInventoryCommand()
+                new TeamInventoryCommand(),
+                new SpectatingTimeCommand(),
+                new TopSpecCommand(),
+                new HallOfFameCommand(),
+                new MoleCommand(),
+                new SetMoleCommand(),
+                new ToggleMobsCommand()
         };
     }
 

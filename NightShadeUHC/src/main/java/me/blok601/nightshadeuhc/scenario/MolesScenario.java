@@ -17,7 +17,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by Blok on 6/22/2018.
@@ -28,7 +32,7 @@ public class MolesScenario extends Scenario{
 
 
     public MolesScenario() {
-        super("Moles", "Each team is assigned a mole their job is to eliminate their teammates", new ItemBuilder(Material.DIAMOND_SPADE).name("Moles").make());
+        super("Moles", "Each team is assigned a mole. Their job is to eliminate their teammates", new ItemBuilder(Material.DIAMOND_SPADE).name("Moles").make());
          moles = new HashMap<>();
     }
 
@@ -72,16 +76,21 @@ public class MolesScenario extends Scenario{
         if(!isEnabled()) return;
 
         if(moles.containsKey(e.getPlayer().getUniqueId())){
-            e.getPlayer().sendMessage(getPrefix() + "&eYou are a mole! Shh... it's a secret!");
-            if(!moles.get(e.getPlayer().getUniqueId())){
-                e.getPlayer().sendMessage(getPrefix() + "&eYou can still get your mole kit! Type &5/molekit &eto redeem it!");
-            }
+            new BukkitRunnable(){
+                @Override
+                public void run() {
+                    e.getPlayer().sendMessage(ChatUtils.format(getPrefix() + "&eYou are a mole! Shh... it's a secret!"));
+                    if(!moles.get(e.getPlayer().getUniqueId())){ //False means they can still get it
+                        e.getPlayer().sendMessage(ChatUtils.format(getPrefix() + "&eYou can still get your mole kit! Type &5/molekit &eto redeem it!"));
+                    }
+                }
+            }.runTaskLater(UHC.get(), 2);
         }
     }
 
 
     private void setMoles(){
-        Random random = new Random();
+        Random random = ThreadLocalRandom.current();
         OfflinePlayer offlinePlayer;
         Player online;
         for (Team team : TeamManager.getInstance().getTeams()){
@@ -91,7 +100,8 @@ public class MolesScenario extends Scenario{
 
             if(Bukkit.getPlayer(offlinePlayer.getUniqueId()) != null){
                 online = Bukkit.getPlayer(offlinePlayer.getUniqueId());
-                online.sendMessage(ChatUtils.format(getPrefix() + " &eYou are the mole! Shhh... it's a secret!"));
+                online.sendMessage(ChatUtils.format(getPrefix() + "&eYou are the mole! Shhh... it's a secret!"));
+                online.sendMessage(ChatUtils.format(getPrefix() + "&eYou can now pick a Mole Kit..."));
                 new MoleKitGUI(online);
             }
         }

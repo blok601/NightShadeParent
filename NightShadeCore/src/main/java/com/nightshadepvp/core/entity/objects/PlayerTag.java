@@ -28,7 +28,10 @@ public enum PlayerTag {
     SWEAT("&eSweat", new ItemBuilder(Material.NAME_TAG).name("&eSweat Tag &8(&eSweat&8)").make()),
     TRIAL_PLAYER("&bTrial Player", new ItemBuilder(Material.NAME_TAG).name("&eTrial Player Tag &8(&bTrial Player&8)").make()),
     FURRY("&eFurry", new ItemBuilder(Material.NAME_TAG).name("&3Furry Tag &8(&eFurry&8)").make()),
-    EGIRL("&d&nEGirl", new ItemBuilder(Material.NAME_TAG).name("&d&nEGirl Tag &8(&d&nEGirl&8)").make());
+    EGIRL("&d&nEGirl", new ItemBuilder(Material.NAME_TAG).name("&d&nEGirl Tag &8(&d&nEGirl&8)").make()),
+    OG("&bOG", new ItemBuilder(Material.NAME_TAG).name("&bOG Tag &8(&bOG&8)").make()),
+//    DISCOVER_CARD("&fDisc&6o&fver&6Card", new ItemBuilder(Material.NAME_TAG).name("&&fDisc&6o&fver&6Card &fTag &8(&fDisc&6o&fver&6Card&8)").make()),
+    CTRL_C("&c&lCTRL-C", new ItemBuilder(Material.NAME_TAG).name("&c&lCTRL-C Tag &8(&c&lCTRL-C&8)").make());
 
     private String title;
     private ItemStack stack;

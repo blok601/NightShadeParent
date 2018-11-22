@@ -4,6 +4,7 @@ import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.stats.CachedGame;
 import me.blok601.nightshadeuhc.tasks.StatUpdateTask;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.TreeMap;
@@ -28,6 +29,7 @@ public class StatsHandler {
 
     private ArrayList<UHCPlayer> winners;
     private ArrayList<UHCPlayer> kills;
+    private ArrayList<ItemStack> hallOfFameInventory;
 
     private StatsHandler() {
         rating = new TreeMap<>();
@@ -49,6 +51,7 @@ public class StatsHandler {
         this.winners = new ArrayList<>();
         this.kills = new ArrayList<>();
         this.cachedGame = new CachedGame(null);
+        this.hallOfFameInventory = new ArrayList<>();
         new StatUpdateTask().runTaskTimerAsynchronously(UHC.get(), 0, 2400); //2 min
     }
 
@@ -62,5 +65,9 @@ public class StatsHandler {
 
     public CachedGame getCachedGame() {
         return cachedGame;
+    }
+
+    public ArrayList<ItemStack> getHallOfFameInventory() {
+        return hallOfFameInventory;
     }
 }

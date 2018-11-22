@@ -73,6 +73,4 @@ public class EnginePunish extends Engine {
             if (user.isFrozen()) e.setCancelled(true);
         }
     }
-
-
 }

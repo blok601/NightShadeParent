@@ -1,6 +1,5 @@
 package me.blok601.nightshadeuhc;
 
-
 import com.comphenix.protocol.ProtocolLibrary;
 import com.earth2me.essentials.Essentials;
 import com.massivecraft.massivecore.MassivePlugin;
@@ -28,12 +27,14 @@ import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
 import me.blok601.nightshadeuhc.scoreboard.ScoreboardManager;
 import me.blok601.nightshadeuhc.stats.handler.StatsHandler;
 import me.blok601.nightshadeuhc.tasks.ScoreboardHealthTask;
+import me.blok601.nightshadeuhc.tasks.StaffTrackTask;
 import me.blok601.nightshadeuhc.tasks.WorldLoadTask;
 import me.blok601.nightshadeuhc.teams.CmdSendCoords;
 import me.blok601.nightshadeuhc.teams.CmdTeamChat;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.utils.Lag;
 import me.blok601.nightshadeuhc.utils.Util;
+import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -68,7 +69,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
     private ScenarioManager sm;
     private ScoreboardManager scoreboardManager;
 
-    private MongoCollection gameCollection;
+    private MongoCollection<Document> gameCollection;
 
     public static HashSet<UUID> players = new HashSet<>();
 
@@ -89,13 +90,15 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         registerCommands();
         registerListeners();
 
+        setupExtraDatabase();
         GameManager.setup();
         scoreboardManager = new ScoreboardManager();
         Bukkit.getScheduler().runTaskTimer(this, () -> {
             scoreboardManager.getPlayerScoreboards().values().forEach(PlayerScoreboard::update);
-        }, 0L, 10L);
-        new ScoreboardHealthTask(scoreboardManager).runTaskTimer(this, 0, 40);
+        }, 0L, 35L);
+        new ScoreboardHealthTask(scoreboardManager).runTaskTimerAsynchronously(this, 0, 60);
         Commands.setup();
+        new StaffTrackTask().runTaskTimer(this, 0, 100);
 
         ComponentHandler.getInstance().setup();
         StatsHandler.getInstance().setup();
@@ -139,7 +142,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
             GameManager.setServerType("UHC1");
         }
 
-        setupExtraDatabase();
+
         if(GameManager.getServerType().equalsIgnoreCase("UHC2")){
             hideEnchants();
             new OldEnchanting(this);
@@ -151,8 +154,6 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
     }
 
     public void onDisable() {
-
-
         //LoggerHandler.getInstance().getLoggers().forEach(combatLogger -> LoggerHandler.getInstance().removeLogger(combatLogger));
         LoggerHandler.getInstance().getLoggers().clear();
         Bukkit.getMessenger().unregisterIncomingPluginChannel(this, "BungeeCord", this);
@@ -275,7 +276,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         });
     }
 
-    public MongoCollection getGameCollection() {
+    public MongoCollection<Document> getGameCollection() {
         return gameCollection;
     }
 

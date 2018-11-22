@@ -7,10 +7,12 @@ import com.massivecraft.massivecore.store.DriverFlatfile;
 import com.massivecraft.massivecore.store.DriverMongo;
 import com.nightshadepvp.core.entity.MConf;
 import com.nightshadepvp.core.entity.NSPlayerColl;
+import com.nightshadepvp.core.listener.LiteBansListener;
 import com.nightshadepvp.core.punishment.PunishmentHandler;
 import com.nightshadepvp.core.store.NSStore;
 import com.nightshadepvp.core.store.NSStoreConf;
 import com.nightshadepvp.core.utils.ChatUtils;
+import litebans.api.Events;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -59,6 +61,7 @@ public class Core extends MassivePlugin implements PluginMessageListener {
 
         getConfig().options().copyDefaults(true);
         saveConfig();
+        Events.get().register(new LiteBansListener());
 
         PunishmentHandler.getInstance().setup();
         ServerType.setType(MConf.get().serverType);
@@ -70,6 +73,20 @@ public class Core extends MassivePlugin implements PluginMessageListener {
                 //It will be set by: key: random code generator value: discord unique ID
             }
         }.runTaskAsynchronously(this);
+
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                NSPlayerColl.get().getAllOnline().forEach(nsPlayer -> {
+                    nsPlayer.setCurrentAFKTime(nsPlayer.getCurrentAFKTime() + 1);
+                    if(nsPlayer.getCurrentAFKTime() >= 10){
+                        nsPlayer.setAFK(true); //If they haven't done shit for 10 seconds they are afk
+                    }
+                });
+            }
+        }.runTaskTimer(this, 0, 20);
+
+
 
         Bukkit.getConsoleSender().sendMessage(ChatUtils.message("&eLoading NightShadeCore version: " + getDescription().getVersion() + ". Server Type: " + ServerType.getType().toString()));
     }

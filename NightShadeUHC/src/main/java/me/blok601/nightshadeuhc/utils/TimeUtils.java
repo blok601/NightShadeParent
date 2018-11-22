@@ -30,14 +30,31 @@ public class TimeUtils {
 		}.runTaskTimerAsynchronously(UHC.get(), 0, 20);
 	}
 
-	public static String ConvertSecondToHHMMString(int secondtTime)
+	public static String formatSecondsToTime(int secondtTime)
 	{
 		TimeZone tz = TimeZone.getTimeZone("UTC");
-		SimpleDateFormat df = new SimpleDateFormat("mm:ss");
+		SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
 		df.setTimeZone(tz);
 		String time = df.format(new Date(secondtTime*1000L));
+        // Time example: 12:13:04 --> 2, 5, 6
+        // Time example: 120:13:04 --> 2, 5, 6
 
-		return time;
+        char[] chars = time.toCharArray();
+        if (chars[2] != ':') {
+            //Spectated over 100 hours
+            chars[3] = 'h';
+            chars[6] = 'm';
+        } else {
+            chars[2] = 'h';
+            chars[5] = 'm';
+        }
+
+        StringBuilder f = new StringBuilder();
+        for (Character c : chars){
+            f.append(c);
+        }
+
+        return f.toString() + "s";
 	}
 
     public static boolean isTime(String input) {

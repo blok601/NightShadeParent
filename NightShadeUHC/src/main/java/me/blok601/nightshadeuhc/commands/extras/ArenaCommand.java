@@ -31,7 +31,7 @@ public class ArenaCommand implements CmdInterface {
 
         if (uhcPlayer.isInArena()) {
             uhcPlayer.leaveArena();
-            p.sendMessage(ChatUtils.message("&&eYou have left the arena!"));
+            p.sendMessage(ChatUtils.message("&eYou have left the arena!"));
         } else {
             uhcPlayer.joinArena();
             p.sendMessage(ChatUtils.message("&eYou have joined the arena!"));

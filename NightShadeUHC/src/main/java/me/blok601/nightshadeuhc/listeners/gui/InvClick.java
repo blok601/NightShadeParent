@@ -299,7 +299,12 @@ public class InvClick implements Listener {
             }
 
             if(!MolesScenario.moles.containsKey(p.getUniqueId())){
-                p.sendMessage(scenario.getPrefix() + "&cYou are not a mole!");
+                p.sendMessage(ChatUtils.format(scenario.getPrefix() + "&cYou are not a mole!"));
+            }
+            
+            if(MolesScenario.moles.get(p.getUniqueId())){
+                p.sendMessage(ChatUtils.format(ScenarioManager.getScen("Moles").getPrefix() + "&cYou have already gotten your mole kit!"));
+                return;
             }
 
             e.setCancelled(true);
@@ -309,7 +314,7 @@ public class InvClick implements Listener {
                 p.getInventory().addItem(new ItemStack(Material.WEB, 16));
                 p.getInventory().addItem(new ItemStack(Material.TNT, 5));
                 p.getInventory().addItem(new ItemStack(Material.FLINT_AND_STEEL, 1));
-                p.sendMessage(scenario.getPrefix() + "&eYou selected the &6Troll Kit&e!");
+                p.sendMessage(ChatUtils.format(scenario.getPrefix() + "&eYou selected the &6Troll Kit&e!"));
 
                 MolesScenario.moles.replace(p.getUniqueId(), true);
             }else if(slot == 1) {
@@ -325,42 +330,42 @@ public class InvClick implements Listener {
                 poison.setLevel(2);
 
                 p.getInventory().addItem(speed.toItemStack(1), weakness.toItemStack(1), poison.toItemStack(1));
-                p.sendMessage(scenario.getPrefix() + "&eYou selected the &6Potter Kit&e!");
+                p.sendMessage(ChatUtils.format(scenario.getPrefix() + "&eYou selected the &6Potter Kit&e!"));
 
                 MolesScenario.moles.replace(p.getUniqueId(), true);
             }else if(slot == 2){
                 p.getInventory().addItem(new ItemStack(Material.DIAMOND_SWORD, 1));
                 p.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE));
                 p.getInventory().addItem(new ItemStack(Material.FISHING_ROD, 1));
-                p.sendMessage(scenario.getPrefix() + "&eYou selected the &6Fighter Kit&e!");
+                p.sendMessage(ChatUtils.format(scenario.getPrefix() + "&eYou selected the &6Fighter Kit&e!"));
 
                 MolesScenario.moles.replace(p.getUniqueId(), true);
             }else if(slot == 3){
                 p.getInventory().addItem(new ItemStack(Material.TNT, 16));
                 p.getInventory().addItem(new ItemStack(Material.PISTON_STICKY_BASE), new ItemStack(Material.PISTON_BASE));
                 p.getInventory().addItem(new ItemStack(Material.FLINT_AND_STEEL, 1));
-                p.sendMessage(scenario.getPrefix() + "&eYou selected the &6Trapper Kit&e!");
+                p.sendMessage(ChatUtils.format(scenario.getPrefix() + "&eYou selected the &6Trapper Kit&e!"));
 
                 MolesScenario.moles.replace(p.getUniqueId(), true);
             }else if(slot == 4){
-                ItemBuilder helmet = new ItemBuilder(Material.DIAMOND_HELMET).durability(5);
-                ItemBuilder chestplate = new ItemBuilder(Material.DIAMOND_CHESTPLATE).durability(5);
-                ItemBuilder leggings = new ItemBuilder(Material.DIAMOND_LEGGINGS).durability(5);
-                ItemBuilder boots = new ItemBuilder(Material.DIAMOND_BOOTS).durability(5);
+                ItemBuilder helmet = new ItemBuilder(Material.DIAMOND_HELMET).durability(358);
+                ItemBuilder chestplate = new ItemBuilder(Material.DIAMOND_CHESTPLATE).durability(523);
+                ItemBuilder leggings = new ItemBuilder(Material.DIAMOND_LEGGINGS).durability(490);
+                ItemBuilder boots = new ItemBuilder(Material.DIAMOND_BOOTS).durability(424);
 
                 p.getInventory().setHelmet(helmet.make());
                 p.getInventory().setChestplate(chestplate.make());
                 p.getInventory().setLeggings(leggings.make());
                 p.getInventory().setBoots(boots.make());
 
-                p.sendMessage(scenario.getPrefix() + "&eYou selected the &6Fighter Kit&e!");
+                p.sendMessage(ChatUtils.format(scenario.getPrefix() + "&eYou selected the &6Tank Kit&e!"));
 
                 MolesScenario.moles.replace(p.getUniqueId(), true);
             }else if(slot == 5){
                 p.getInventory().addItem(new ItemStack(Material.ENCHANTMENT_TABLE));
                 p.getInventory().addItem(new ItemStack(Material.EXP_BOTTLE, 64));
                 p.getInventory().addItem(new ItemStack(Material.LAPIS_BLOCK, 8));
-                p.sendMessage(scenario.getPrefix() + "&eYou selected the &6Enchanter Kit&e!");
+                p.sendMessage(ChatUtils.format(scenario.getPrefix() + "&eYou selected the &6Enchanter Kit&e!"));
 
                 MolesScenario.moles.replace(p.getUniqueId(), true);
             }else if(slot == 6){
@@ -369,14 +374,14 @@ public class InvClick implements Listener {
                 potion.setSplash(true);
                 p.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 2));
                 p.getInventory().addItem(new ItemStack(potion.toItemStack(1)));
-                p.sendMessage(scenario.getPrefix() + "&eYou selected the &6Healer Kit&e!");
+                p.sendMessage(ChatUtils.format(scenario.getPrefix() + "&eYou selected the &6Healer Kit&e!"));
 
                 MolesScenario.moles.replace(p.getUniqueId(), true);
             }else if(slot == 7){
                 p.getInventory().addItem(new ItemStack(Material.BOW));
                 p.getInventory().addItem(new ItemStack(Material.ARROW, 64));
                 p.getInventory().addItem(new ItemStack(Material.FISHING_ROD));
-                p.sendMessage(scenario.getPrefix() + "&eYou selected the &6Projectile Kit&e!");
+                p.sendMessage(ChatUtils.format(scenario.getPrefix() + "&eYou selected the &6Projectile Kit&e!"));
 
                 MolesScenario.moles.replace(p.getUniqueId(), true);
             }

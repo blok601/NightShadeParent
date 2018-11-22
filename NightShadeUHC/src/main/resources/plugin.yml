@@ -8,7 +8,7 @@ description: NightShadePvP UHC Plugin that runs on the UHC Servers
 website: www.nightshadepvp.com
 commands:
   suhc:
-    description: Main Start UHC Command
+    description: Main StartUHC Command
   spec:
     description: Spectator Command
   helpop:
@@ -19,6 +19,7 @@ commands:
     description: Send a message to your team
   pmcoords:
     description: Send your coords to your team
+    aliases: [pmc, sendcoords]
   scat:
     description: Scatter command
   pvp:
@@ -112,9 +113,11 @@ commands:
   setarenaspawn:
   arena:
     aliases: [a]
-  cstop:
+  chatstop:
     aliases: [togglechatmute, gmute, globalmute, chattoggle, ozzyisgay]
   walls:
+    aliases: [setborder, shrink]
+    description: Set and generate the border for the given radius
   cancelpregen:
   power:
     aliases: [superpower]
@@ -122,11 +125,44 @@ commands:
   setanonymousname:
   abrole:
   specs:
+    description: View the spectators
+    aliases: [spectators]
   permaday:
+    description: Set it to permaday
   alive:
+    description: View the alive players
   clearxp:
     aliases: [xpclear]
     description: Clear everyone's XP
   teaminventory:
     description: Team inventory command
     aliases: [ti, tinv, tinventory]
+  moles:
+    description: View the moles
+  mcl:
+    description: Send moles locations
+  molekit:
+    description: Get your mole kit
+  mmc:
+    description: Talk in mole chat
+  spectime:
+    description: View player's spectating time
+  deathban:
+    aliases: [dq]
+    descrpition: Deathban a player for a reason
+  topspecs:
+    aliases: [topspec, tpsecs, spectop]
+    description: View the top 10 spectators
+  halloffame:
+    aliases: [hof, games, allgames, hofgames]
+    description: View the UHC hall of fame
+  mole:
+    description: Show some useful moles commands
+    aliases: [molehelp, helpmoles, moleshelp]
+  setmole:
+    description: Update the mole for the team
+  kicksolos:
+    description: Kick the solos for the game
+  togglemobs:
+    description: Butcher and stop mobs spawning in that world
+    aliases: [removemobs, nomobs]

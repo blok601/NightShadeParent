@@ -16,6 +16,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 
 public class EnginePlayer extends Engine {
 
@@ -27,6 +28,12 @@ public class EnginePlayer extends Engine {
     public void onChat(AsyncPlayerChatEvent e){
         Player p = e.getPlayer();
         NSPlayer user = NSPlayer.get(p.getUniqueId());
+        user.setCurrentAFKTime(0);
+        if(user.isAFK()){
+            user.incrementTotalAFKTime(user.getCurrentAFKTime());
+            user.setCurrentAFKTime(0);
+            user.setAFK(false);
+        }
         if(user.isInStaffChat()){
             e.setCancelled(true);
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
@@ -50,8 +57,13 @@ public class EnginePlayer extends Engine {
 
         if(!p.isSneaking()) return;
         if(p.getGameMode() != GameMode.SURVIVAL) return;
-
         NSPlayer nsPlayer = NSPlayer.get(p);
+        nsPlayer.setCurrentAFKTime(0);
+        if(nsPlayer.isAFK()){
+            nsPlayer.incrementTotalAFKTime(nsPlayer.getCurrentAFKTime());
+            nsPlayer.setCurrentAFKTime(0);
+            nsPlayer.setAFK(false);
+        }
         nsPlayer.incrementToggleSneak();
         FancyMessage fancyMessage = new FancyMessage();
         fancyMessage.command("/tp " + p.getName());
@@ -77,6 +89,12 @@ public class EnginePlayer extends Engine {
         if(p.getGameMode() != GameMode.SURVIVAL) return;
 
         NSPlayer nsPlayer = NSPlayer.get(p);
+        nsPlayer.setCurrentAFKTime(0);
+        if(nsPlayer.isAFK()){
+            nsPlayer.incrementTotalAFKTime(nsPlayer.getCurrentAFKTime());
+            nsPlayer.setCurrentAFKTime(0);
+            nsPlayer.setAFK(false);
+        }
         nsPlayer.incrementToggleSneak();
         NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer1 -> nsPlayer1.hasRank(Rank.TRIAL)).filter(NSPlayer::isReceivingToggleSneak).forEach(nsPlayer1 -> {
             if(nsPlayer.getToggleSneakVL() >= 15){
@@ -102,6 +120,12 @@ public class EnginePlayer extends Engine {
         if(!p.isSneaking()) return;
 
         NSPlayer nsPlayer = NSPlayer.get(p);
+        nsPlayer.setCurrentAFKTime(0);
+        if(nsPlayer.isAFK()){
+            nsPlayer.incrementTotalAFKTime(nsPlayer.getCurrentAFKTime());
+            nsPlayer.setCurrentAFKTime(0);
+            nsPlayer.setAFK(false);
+        }
         nsPlayer.incrementToggleSneak();
         NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer1 -> nsPlayer1.hasRank(Rank.TRIAL)).filter(NSPlayer::isReceivingToggleSneak).forEach(nsPlayer1 -> {
             if(nsPlayer.getToggleSneakVL() >= 15){
@@ -118,6 +142,13 @@ public class EnginePlayer extends Engine {
 
     @EventHandler
     public void onDisabledCommand(PlayerCommandPreprocessEvent e) {
+        NSPlayer user = NSPlayer.get(e.getPlayer());
+        user.setCurrentAFKTime(0);
+        if(user.isAFK()){
+            user.incrementTotalAFKTime(user.getCurrentAFKTime());
+            user.setCurrentAFKTime(0);
+            user.setAFK(false);
+        }
         if (e.getMessage().startsWith("//calc") || e.getMessage().startsWith("//calculate")) {
             NSPlayer nsPlayer = NSPlayer.get(e.getPlayer());
             if (nsPlayer.hasRank(Rank.ADMIN)) {
@@ -127,6 +158,22 @@ public class EnginePlayer extends Engine {
                     nsPlayer1.msg(ChatUtils.message("&e" + nsPlayer.getName() + " &4tried to exploit the //calc bug!"));
                 });
             }
+        }
+    }
+
+    @EventHandler
+    public void onMove(PlayerMoveEvent e) {
+
+        Player p = e.getPlayer();
+
+        if (e.getFrom().getX() == e.getTo().getX() && e.getFrom().getZ() == e.getTo().getZ()) return;
+
+        NSPlayer user = NSPlayer.get(p);
+        user.setCurrentAFKTime(0);
+        if(user.isAFK()){
+            user.incrementTotalAFKTime(user.getCurrentAFKTime());
+            user.setCurrentAFKTime(0);
+            user.setAFK(false);
         }
     }
 }

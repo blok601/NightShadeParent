@@ -100,6 +100,8 @@ public class ScenarioManager implements CmdInterface{
         addScen(new WebCageScenario(), "WC");
         addScen(new VanillaPlusScenario());
         addScen(new VengefulSpiritsScenario(), "VS");
+        addScen(new MolesScenario());
+        addScen(new GoldenRetrieverScenario());
     }
 
 

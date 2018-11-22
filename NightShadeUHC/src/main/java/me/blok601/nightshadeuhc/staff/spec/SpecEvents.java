@@ -1,5 +1,7 @@
 package me.blok601.nightshadeuhc.staff.spec;
 
+import com.nightshadepvp.core.Rank;
+import com.nightshadepvp.core.entity.NSPlayer;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
@@ -12,10 +14,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -136,5 +135,52 @@ public class SpecEvents implements Listener {
 		}
 	}
 
+    @EventHandler
+    public void onMove(PlayerMoveEvent e) {
+        if (e.getFrom().getX() == e.getTo().getX() && e.getFrom().getZ() == e.getTo().getZ()) {
+            return;
+        }
+
+        Player p = e.getPlayer();
+        UHCPlayer uhcPlayer = UHCPlayer.get(p);
+        if (!uhcPlayer.isSpectator()) {
+            return;
+        }
+
+        Rank rank = NSPlayer.get(p).getRank();
+        if (rank.isDonorRank(rank)) {
+
+            if (e.getTo().getY() < 40) {
+                e.setTo(e.getFrom());
+                p.sendMessage(ChatUtils.message("&cYou can not go this low with your current rank!"));
+                return;
+            }
+
+            double newX = Math.abs(e.getTo().getX());
+            double newZ = Math.abs(e.getTo().getZ());
+            if (rank == Rank.DRAGON) { // 100 x 100
+                if (newX > 100 || newZ > 100) {
+                    e.setTo(e.getFrom());
+                    p.sendMessage(ChatUtils.message(rank.getPrefix() + " &cranks must stay within &b100 &8x&b 100&c!"));
+                    return;
+                }
+            } else if (rank == Rank.COMET) {
+                if (newX > 300 || newZ > 300) {
+                    e.setTo(e.getFrom());
+                    p.sendMessage(ChatUtils.message(rank.getPrefix() + " &cranks must stay within &b300 &8x&b 300&c!"));
+                    return;
+                }
+            } else if (rank == Rank.GUARDIAN) {
+                if (newX > 500 || newZ > 500) {
+                    e.setTo(e.getFrom());
+                    p.sendMessage(ChatUtils.message(rank.getPrefix() + " &cranks must stay within &b500 &8x&b 500&c!"));
+                    return;
+                }
+            }
+
+
+        }
+
+    }
 
 }

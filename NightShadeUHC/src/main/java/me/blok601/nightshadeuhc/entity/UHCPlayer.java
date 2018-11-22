@@ -18,6 +18,8 @@ import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.text.DecimalFormat;
 
@@ -69,6 +71,9 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
     private transient boolean receivingCommandSpy;
     private transient double changedLevel;
     private transient boolean usingOldVersion;
+    private transient int killTimer;
+    private transient BukkitTask killTimerTask;
+    private transient int killStreak;
 
     @Override
     public UHCPlayer load(UHCPlayer that) {
@@ -93,6 +98,7 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
 
 
         this.setLastLocation(that.lastLocation);
+        this.setKillStreak(0);
 
         return this;
     }
@@ -569,5 +575,47 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
 
     public void setChangedLevel(double changedLevel) {
         this.changedLevel = changedLevel;
+    }
+
+    public int getKillTimer() {
+        return killTimer;
+    }
+
+    public void setKillTimer(int killTimer) {
+        this.killTimer = killTimer;
+    }
+
+    public BukkitTask getKillTimerTask() {
+        return killTimerTask;
+    }
+
+    public void setKillTimerTask(BukkitTask killTimerTask) {
+        this.killTimerTask = killTimerTask;
+    }
+
+    public void startKillTimerTask() {
+        this.killTimer = 10;
+        this.killTimerTask = null;
+        this.killTimerTask = new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (getKillTimer() == 0) {
+                    killTimer = 0;
+                    killStreak = 0;
+                    cancel();
+                    return;
+                }
+
+                killTimer--;
+            }
+        }.runTaskTimer(UHC.get(), 0, 20);
+    }
+
+    public int getKillStreak() {
+        return killStreak;
+    }
+
+    public void setKillStreak(int killStreak) {
+        this.killStreak = killStreak;
     }
 }

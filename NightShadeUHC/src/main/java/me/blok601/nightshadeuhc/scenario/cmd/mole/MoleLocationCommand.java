@@ -28,7 +28,7 @@ public class MoleLocationCommand implements CmdInterface{
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
         if(!MolesScenario.moles.containsKey(p.getUniqueId())){
-            p.sendMessage(ScenarioManager.getScen("Moles").getPrefix() + "&cYou are not a mole!");
+            p.sendMessage(ChatUtils.format(ScenarioManager.getScen("Moles").getPrefix() + "&cYou are not a mole!"));
             return;
         }
 

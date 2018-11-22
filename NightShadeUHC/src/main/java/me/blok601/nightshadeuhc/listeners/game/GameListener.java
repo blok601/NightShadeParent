@@ -1,5 +1,7 @@
 package me.blok601.nightshadeuhc.listeners.game;
 
+import com.nightshadepvp.core.Rank;
+import com.nightshadepvp.core.entity.NSPlayer;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.events.GameEndEvent;
 import me.blok601.nightshadeuhc.events.GameStartEvent;
@@ -13,7 +15,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -25,36 +26,51 @@ public class GameListener implements Listener {
 
     @EventHandler
     public void onStart(GameStartEvent e){
-        if(UHC.players.size() >= 15){//Only count if game has 15 player fill or more
-            StatsHandler.getInstance().getCachedGame().setStart(new Timestamp(System.currentTimeMillis()));
+        //if(UHC.players.size() >= 15){//Only count if game has 15 player fill or more
+            StatsHandler.getInstance().getCachedGame().setStart(System.currentTimeMillis());
             StatsHandler.getInstance().getCachedGame().setFill(UHC.players.size());
 
-            Bukkit.getServer().getScheduler().runTaskAsynchronously(UHC.get(), () -> {
-                StatsHandler.getInstance().getCachedGame().setMatchID(UHC.get().getGameCollection().count() + 1);
-            });
-        }
+            Bukkit.getServer().getScheduler().runTaskAsynchronously(UHC.get(), () -> StatsHandler.getInstance().getCachedGame().setMatchID(UHC.get().getGameCollection().count() + 1));
+        //}
     }
 
     @EventHandler
     public void onEnd(GameEndEvent e) {
         Bukkit.getServer().getScheduler().runTaskAsynchronously(UHC.get(), () -> {
-            HashMap<UUID, Integer> winnerKills = new HashMap<>();
+            HashMap<String, Integer> winnerKills = new HashMap<>();
             CachedGame cachedGame = StatsHandler.getInstance().getCachedGame();
             ArrayList<String> scenarios = new ArrayList<>();
 
-            cachedGame.setEnd(new Timestamp(System.currentTimeMillis()));
-            cachedGame.setHost(GameManager.getHost().getUniqueId());
-            cachedGame.setWinners(e.getWinners());
+            cachedGame.setEnd(System.currentTimeMillis());
+            cachedGame.setHost(GameManager.getHost().getUniqueId().toString());
+            ArrayList<String> winners = new ArrayList<>();
+            NSPlayer targetNSPlayer;
+            for (UUID winner : e.getWinners()){
+                winners.add(winner.toString());
+                targetNSPlayer = NSPlayer.get(winner); //This is just for now
+                if (targetNSPlayer.getRank().getValue() < Rank.DRAGON.getValue()) {
+                    //If they are less than Dragon
+                    targetNSPlayer.setRank(Rank.DRAGON);
+                }
+            }
+            cachedGame.setWinners(winners);
             ScenarioManager.getEnabledScenarios().forEach(scenario -> scenarios.add(scenario.getName()));
             cachedGame.setScenarios(scenarios);
 
             for (UUID winner : e.getWinners()) {
-                winnerKills.put(winner, GameManager.getKills().getOrDefault(winner, 0));
+                winnerKills.put(winner.toString(), GameManager.getKills().getOrDefault(winner, 0));
             }
             cachedGame.setWinnerKills(winnerKills);
 
-            if (TeamManager.getInstance().isRandomTeams()) {
-                cachedGame.setTeamType("Random To" + TeamManager.getInstance().getTeamSize());
+            if (GameManager.isIsTeam()) {
+                if (TeamManager.getInstance().isRandomTeams()) {
+                    cachedGame.setTeamType("Random To" + TeamManager.getInstance().getTeamSize());
+                } else {
+                    //Custom
+                    cachedGame.setTeamType("cTo" + TeamManager.getInstance().getTeamSize());
+                }
+            } else {
+                cachedGame.setTeamType("FFA");
             }
 
             cachedGame.setServer(GameManager.getServerType());

@@ -27,7 +27,7 @@ public class LootCrateTimeCommand implements CmdInterface{
             }
 
             int i = LootCrateScenario.getTimer()/60;
-            s.sendMessage(ChatUtils.message("&eLootcrates will be given out in about &a" + i + " &eminutes."));
+            s.sendMessage(ChatUtils.message("&eLootcrates will be given out in about &a" + i + " &eminute&8(s&8)&e."));
     }
 
     @Override

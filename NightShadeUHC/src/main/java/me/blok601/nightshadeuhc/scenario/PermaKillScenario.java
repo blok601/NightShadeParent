@@ -50,6 +50,7 @@ public class PermaKillScenario extends Scenario{
 
         GameManager.getWorld().setTime(6000);
         GameManager.getWorld().setGameRuleValue("doDaylightCycle", "false");
+        GameManager.getWorld().setGameRuleValue("doWeatherCycle", "false");
         day = true;
         Bukkit.broadcastMessage(ChatUtils.format(getPrefix() + " &ePermaKill has started!"));
     }

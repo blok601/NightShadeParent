@@ -1,43 +1,41 @@
 package me.blok601.nightshadeuhc.stats;
 
-import java.sql.Timestamp;
-import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 
 /**
  * Created by Blok on 8/18/2018.
  */
 public class CachedGame {
 
-    private UUID host;
-    private List<UUID> winners;
+    private String host;
+    private List<String> winners;
     private List<String> scenarios;
     private int fill;
-    private HashMap<UUID, Integer> winnerKills;
+    private Map<String, Integer> winnerKills;
     private String teamType;
-    private Timestamp start;
-    private Timestamp end;
+    private long start;
+    private long end;
     private String server;
     private long matchID;
 
-    public CachedGame(UUID host) {
+    public CachedGame(String host) {
         this.host = host;
     }
 
-    public UUID getHost() {
+    public String getHost() {
         return host;
     }
 
-    public void setHost(UUID host) {
+    public void setHost(String host) {
         this.host = host;
     }
 
-    public List<UUID> getWinners() {
+    public List<String> getWinners() {
         return winners;
     }
 
-    public void setWinners(List<UUID> winners) {
+    public void setWinners(List<String> winners) {
         this.winners = winners;
     }
 
@@ -57,11 +55,11 @@ public class CachedGame {
         this.fill = fill;
     }
 
-    public HashMap<UUID, Integer> getWinnerKills() {
+    public Map<String, Integer> getWinnerKills() {
         return winnerKills;
     }
 
-    public void setWinnerKills(HashMap<UUID, Integer> winnerKills) {
+    public void setWinnerKills(Map<String, Integer> winnerKills) {
         this.winnerKills = winnerKills;
     }
 
@@ -73,19 +71,19 @@ public class CachedGame {
         this.teamType = teamType;
     }
 
-    public Timestamp getStart() {
+    public long getStart() {
         return start;
     }
 
-    public void setStart(Timestamp start) {
+    public void setStart(long start) {
         this.start = start;
     }
 
-    public Timestamp getEnd() {
+    public long getEnd() {
         return end;
     }
 
-    public void setEnd(Timestamp end) {
+    public void setEnd(long end) {
         this.end = end;
     }
 

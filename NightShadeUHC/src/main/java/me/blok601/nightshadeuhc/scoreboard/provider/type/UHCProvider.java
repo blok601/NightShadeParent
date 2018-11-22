@@ -34,16 +34,16 @@ public class UHCProvider extends ScoreboardProvider {
         UHCPlayer uhcPlayer = UHCPlayer.get(p);
         List<ScoreboardText> lines = new ArrayList<>();
 
-        lines.add(new ScoreboardText(ChatUtils.format("&5&m--------------------")));
-        lines.add(new ScoreboardText(ChatUtils.format("&6Game Clock: &e" + (GameManager.getTimer().isRunning() ? GameManager.getTimer().getTime() : "Waiting..."))));
-        lines.add(new ScoreboardText(ChatUtils.format("&6Kills: &e" + GameManager.getKills().getOrDefault(p.getUniqueId(), 0))));
+        lines.add(new ScoreboardText(ChatUtils.format("&f&m--------------------")));
+        lines.add(new ScoreboardText(ChatUtils.format("&fGame Clock: &b" + (GameManager.getTimer().isRunning() ? GameManager.getTimer().getTime() : "Waiting..."))));
+        lines.add(new ScoreboardText(ChatUtils.format("&fKills: &b" + GameManager.getKills().getOrDefault(p.getUniqueId(), 0))));
         if (GameManager.isIsTeam()) {
             //Team game
             Team team = TeamManager.getInstance().getTeam(p);
 
 
             if (team == null) {
-                lines.add(new ScoreboardText(ChatUtils.format("&6Team Kills: &e0")));
+                lines.add(new ScoreboardText(ChatUtils.format("&fTeam Kills: &b0")));
             } else {
                 //They have a team now
                 int teamKills = 0;
@@ -56,28 +56,28 @@ public class UHCProvider extends ScoreboardProvider {
                         teamKills += GameManager.getKills().getOrDefault(Bukkit.getPlayer(member).getUniqueId(), 0);
                     }
                 }
-                lines.add(new ScoreboardText(ChatUtils.format("&6Team Kills: &e" + teamKills)));
+                lines.add(new ScoreboardText(ChatUtils.format("&fTeam Kills: &b" + teamKills)));
             }
         }
         if(GameState.gameHasStarted()){
-            lines.add(new ScoreboardText(ChatUtils.format("&6Players: &e") + UHC.players.size() + "/" + GameManager.getMaxPlayers()));
+            lines.add(new ScoreboardText(ChatUtils.format("&fPlayers: &b") + UHC.players.size() + "/" + GameManager.getMaxPlayers()));
         }else{
-            lines.add(new ScoreboardText(ChatUtils.format("&6Players: &e" + (Bukkit.getOnlinePlayers().size() - UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).count()))));
+            lines.add(new ScoreboardText(ChatUtils.format("&fPlayers: &b" + (Bukkit.getOnlinePlayers().size() - UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).count()))));
         }
 
-        lines.add(new ScoreboardText(ChatUtils.format("&6Spectators: &e" + UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).count())));
+        lines.add(new ScoreboardText(ChatUtils.format("&fSpectators: &b" + UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).count())));
         if (GameManager.getWorld() == null) {
-            lines.add(new ScoreboardText(ChatUtils.format("&6Border: &eWorld Not Set")));
+            lines.add(new ScoreboardText(ChatUtils.format("&fBorder: &bWorld Not Set")));
         } else {
             //Have a world
-            lines.add(new ScoreboardText(ChatUtils.format("&6Border: &e" + ((int) GameManager.getBorderSize()))));
+            lines.add(new ScoreboardText(ChatUtils.format("&fBorder: &b" + ((int) GameManager.getBorderSize()))));
         }
-        lines.add(new ScoreboardText(ChatUtils.format("&5&m--------------------&r")));
+        lines.add(new ScoreboardText(ChatUtils.format("&f&m--------------------&r")));
         if(uhcPlayer.isNoClean()){
-            lines.add(new ScoreboardText(ChatUtils.format("&6NoClean: &e" + uhcPlayer.getNoCleanTimer() + "s")));
-            lines.add(new ScoreboardText(ChatUtils.format("&5&m--------------------&r")));
+            lines.add(new ScoreboardText(ChatUtils.format("&fNoClean: &b" + uhcPlayer.getNoCleanTimer() + "s")));
+            lines.add(new ScoreboardText(ChatUtils.format("&f&m--------------------&r")));
         }
-        lines.add(new ScoreboardText(ChatUtils.format("&ediscord.me/NightShadeMC")));
+        lines.add(new ScoreboardText(ChatUtils.format("&bdiscord.me/NightShadeMC")));
         return lines;
     }
 
