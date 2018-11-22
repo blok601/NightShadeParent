@@ -49,6 +49,7 @@ public class ScenarioManager implements CmdInterface{
         addScen(new DepthsScenario());
         addScen(new DiamondLessScenario());
         addScen(new DragonRushScenario());
+        addScen(new EggsScenario());
         addScen(new EnchantedDeathScenario());
         addScen(new EntropyScenario());
         addScen(new EveryRoseScenario());
