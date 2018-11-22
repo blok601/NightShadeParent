@@ -48,8 +48,8 @@ public class EggsScenario extends Scenario {
    }
    @EventHandler
    public void onDeath (EntityDeathEvent e) {
+    if (!isEnabled()) return;
 
-       // check if the entity was a chicken, if not return.
        if (!(e.getEntity() instanceof Chicken)) {
          return;
        }
@@ -57,12 +57,10 @@ public class EggsScenario extends Scenario {
        Random rand = new Random();
        double chance = 0.05;
 
-       // check if the random value is more than the chance, if so return.
        if (rand.nextDouble() > chance) {
          return;
        }
 
-       // add an egg to the drops of the chicken.
        e.getDrops().add(new ItemStack(Material.EGG));
 
    }
