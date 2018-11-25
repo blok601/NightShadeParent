@@ -42,7 +42,7 @@ public class StaffListener implements Listener {
         Player p = e.getPlayer();
         UHCPlayer uhcPlayer = UHCPlayer.get(p);
         if(uhcPlayer.isStaffMode()){
-
+            e.setCancelled(true);
             if(e.getItem() == null){
                 return;
             }

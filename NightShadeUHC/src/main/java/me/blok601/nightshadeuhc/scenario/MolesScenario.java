@@ -3,7 +3,6 @@ package me.blok601.nightshadeuhc.scenario;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.events.PvPEnableEvent;
 import me.blok601.nightshadeuhc.events.ScenarioEnableEvent;
-import me.blok601.nightshadeuhc.gui.MoleKitGUI;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.teams.Team;
 import me.blok601.nightshadeuhc.teams.TeamManager;
@@ -101,8 +100,8 @@ public class MolesScenario extends Scenario{
             if(Bukkit.getPlayer(offlinePlayer.getUniqueId()) != null){
                 online = Bukkit.getPlayer(offlinePlayer.getUniqueId());
                 online.sendMessage(ChatUtils.format(getPrefix() + "&eYou are the mole! Shhh... it's a secret!"));
-                online.sendMessage(ChatUtils.format(getPrefix() + "&eYou can now pick a Mole Kit..."));
-                new MoleKitGUI(online);
+                online.sendMessage(ChatUtils.format(getPrefix() + "&eYou can now pick a Mole Kit by doing /molekit"));
+                //new MoleKitGUI(online);
             }
         }
     }

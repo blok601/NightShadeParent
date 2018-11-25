@@ -8,7 +8,10 @@ import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.cmd.NightShadeCoreCommand;
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.nightshadepvp.core.entity.NSPlayerColl;
+import com.nightshadepvp.core.fanciful.FancyMessage;
 import com.nightshadepvp.core.utils.ChatUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -50,12 +53,23 @@ public class CmdReport extends NightShadeCoreCommand {
         }
         String reason = this.readArg();
         NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer1 -> nsPlayer1.hasRank(Rank.TRIAL)).forEach(nsPlayer1 -> {
-            Player player = nsPlayer1.getPlayer();
+            Player player = Bukkit.getPlayer(nsPlayer1.getUuid());
             player.playSound(player.getLocation(), Sound.NOTE_BASS, 5, 5);
+            FancyMessage reported = new FancyMessage(ChatUtils.format("&7 ► New Report from "))
+                    .then(nsPlayer.getName()).color(ChatColor.DARK_PURPLE).tooltip(ChatUtils.format("&6Click to teleport to " + nsPlayer.getName())).command("/tp " + nsPlayer.getName());
+            FancyMessage reporter = new FancyMessage(ChatUtils.format("&7 ► Reported&8: "))
+                    .then(target.getName()).color(ChatColor.DARK_PURPLE).tooltip(ChatUtils.format("&6Click to teleport to " + target.getName())).command("/tp " + target.getName());
+            FancyMessage r = new FancyMessage(ChatUtils.format("&7 ► Reason&8: "))
+                    .then(reason).color(ChatColor.DARK_PURPLE);
+            FancyMessage warnAbuse = new FancyMessage(ChatUtils.format("&7&oClick to warn &5&o" + nsPlayer.getName() + " &7&ofor 'Report Abuse'")).command("/warn " + nsPlayer.getName() + " Report Abuse -s");
             nsPlayer1.msg(ChatUtils.format("&7&m--&8&m+&7&m--------------------------------&8&m+&7&m--"));
-            nsPlayer1.msg("&7 ► New Report from &5" + nsPlayer.getName());
-            nsPlayer1.msg("&7 ► Reported&8: &5" + target.getName());
-            nsPlayer1.msg("&7 ► Reason&8: &5" + reason);
+            reported.send(player);
+            reporter.send(player);
+            r.send(player);
+            warnAbuse.send(player);
+            //nsPlayer1.msg("&7 ► New Report from &5" + nsPlayer.getName());
+            //nsPlayer1.msg("&7 ► Reported&8: &5" + target.getName());
+            //nsPlayer1.msg("&7 ► Reason&8: &5" + reason);
             nsPlayer1.msg(ChatUtils.format("&7&m--&8&m+&7&m--------------------------------&8&m+&7&m--"));
         });
         nsPlayer.msg(ChatUtils.message("&aThank you for your report. It will be handled by the moderators shortly."));
