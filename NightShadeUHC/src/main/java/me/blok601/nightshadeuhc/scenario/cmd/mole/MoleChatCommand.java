@@ -19,7 +19,7 @@ public class MoleChatCommand implements CmdInterface{
     @Override
     public String[] getNames() {
         return new String[]{
-                "mmc"
+                "mcc"
         };
     }
 

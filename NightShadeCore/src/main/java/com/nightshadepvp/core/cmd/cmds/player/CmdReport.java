@@ -7,7 +7,6 @@ import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.cmd.NightShadeCoreCommand;
 import com.nightshadepvp.core.entity.NSPlayer;
-import com.nightshadepvp.core.entity.NSPlayerColl;
 import com.nightshadepvp.core.fanciful.FancyMessage;
 import com.nightshadepvp.core.utils.ChatUtils;
 import org.bukkit.Bukkit;
@@ -52,9 +51,14 @@ public class CmdReport extends NightShadeCoreCommand {
             return;
         }
         String reason = this.readArg();
-        NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer1 -> nsPlayer1.hasRank(Rank.TRIAL)).forEach(nsPlayer1 -> {
-            Player player = Bukkit.getPlayer(nsPlayer1.getUuid());
-            player.playSound(player.getLocation(), Sound.NOTE_BASS, 5, 5);
+        NSPlayer nsPlayer1;
+        for (Player pls : Bukkit.getOnlinePlayers()) {
+            nsPlayer1 = NSPlayer.get(pls);
+            if (!nsPlayer1.hasRank(Rank.TRIAL)) {
+                continue;
+            }
+
+            pls.playSound(pls.getLocation(), Sound.NOTE_BASS, 5, 5);
             FancyMessage reported = new FancyMessage(ChatUtils.format("&7 ► New Report from "))
                     .then(nsPlayer.getName()).color(ChatColor.DARK_PURPLE).tooltip(ChatUtils.format("&6Click to teleport to " + nsPlayer.getName())).command("/tp " + nsPlayer.getName());
             FancyMessage reporter = new FancyMessage(ChatUtils.format("&7 ► Reported&8: "))
@@ -63,15 +67,17 @@ public class CmdReport extends NightShadeCoreCommand {
                     .then(reason).color(ChatColor.DARK_PURPLE);
             FancyMessage warnAbuse = new FancyMessage(ChatUtils.format("&7&oClick to warn &5&o" + nsPlayer.getName() + " &7&ofor 'Report Abuse'")).command("/warn " + nsPlayer.getName() + " Report Abuse -s");
             nsPlayer1.msg(ChatUtils.format("&7&m--&8&m+&7&m--------------------------------&8&m+&7&m--"));
-            reported.send(player);
-            reporter.send(player);
-            r.send(player);
-            warnAbuse.send(player);
+            reported.send(pls);
+            reporter.send(pls);
+            r.send(pls);
+            warnAbuse.send(pls);
             //nsPlayer1.msg("&7 ► New Report from &5" + nsPlayer.getName());
             //nsPlayer1.msg("&7 ► Reported&8: &5" + target.getName());
             //nsPlayer1.msg("&7 ► Reason&8: &5" + reason);
             nsPlayer1.msg(ChatUtils.format("&7&m--&8&m+&7&m--------------------------------&8&m+&7&m--"));
-        });
+
+        }
+
         nsPlayer.msg(ChatUtils.message("&aThank you for your report. It will be handled by the moderators shortly."));
         reportCooldown.add(nsPlayer.getUuid());
         new BukkitRunnable() {

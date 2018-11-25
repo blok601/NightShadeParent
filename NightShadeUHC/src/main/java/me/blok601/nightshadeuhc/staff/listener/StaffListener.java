@@ -42,7 +42,6 @@ public class StaffListener implements Listener {
         Player p = e.getPlayer();
         UHCPlayer uhcPlayer = UHCPlayer.get(p);
         if(uhcPlayer.isStaffMode()){
-            e.setCancelled(true);
             if(e.getItem() == null){
                 return;
             }
@@ -81,6 +80,10 @@ public class StaffListener implements Listener {
             }
 
             if(item.getType() == Material.DIAMOND_CHESTPLATE){
+                if(e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR){
+                    e.setCancelled(true);
+                    p.updateInventory();
+                }
                 if(e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK){
                     p.setItemInHand(new ItemBuilder(Material.BOOK).name("&cPlayer Inventory").make());
                     return;
@@ -224,6 +227,8 @@ public class StaffListener implements Listener {
                 p.openInventory(inv);
 
             }else if(item.getType() == Material.DIAMOND_CHESTPLATE){
+                e.setCancelled(true);
+                p.updateInventory();
                 Inventory playerArmor = Bukkit.createInventory(null, 9, target.getName() + "'s Armor");
                 int i = 0;
                 for (ItemStack stack : target.getInventory().getArmorContents()){

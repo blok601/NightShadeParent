@@ -6,6 +6,7 @@ import litebans.api.Events;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -30,6 +31,7 @@ public class LiteBansListener extends Events.Listener {
             new BukkitRunnable() {
                 @Override
                 public void run() {
+                    target.playSound(target.getLocation(), Sound.ANVIL_BREAK, 5, 5);
                     PacketPlayOutTitle title = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"Warning!\",\"color\":\"dark_red\",\"bold\":true}"), 0, 40, 0);
                     PacketPlayOutTitle subtitle = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + entry.getReason() + "\",\"color\":\"white\"}"), 0, 40, 0);
                     ((CraftPlayer) target).getHandle().playerConnection.sendPacket(title);
