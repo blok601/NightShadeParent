@@ -1,7 +1,7 @@
 package me.blok601.nightshadeuhc.commands.extras;
 
 import com.nightshadepvp.core.Rank;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -9,7 +9,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class PvP implements CmdInterface{
+public class PvP implements UHCCommand{
 
 	@Override
 	public String[] getNames() {

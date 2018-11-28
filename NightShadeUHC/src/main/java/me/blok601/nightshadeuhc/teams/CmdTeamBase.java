@@ -3,7 +3,7 @@ package me.blok601.nightshadeuhc.teams;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
 import me.blok601.nightshadeuhc.entity.object.CachedColor;
@@ -22,7 +22,7 @@ import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.*;
 
-public class CmdTeamBase implements CmdInterface{
+public class CmdTeamBase implements UHCCommand{
 	
 	public static HashMap<String, String> invites = new HashMap<>();
 

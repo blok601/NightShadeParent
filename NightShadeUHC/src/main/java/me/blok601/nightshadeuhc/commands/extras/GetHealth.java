@@ -2,7 +2,7 @@ package me.blok601.nightshadeuhc.commands.extras;
 
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 
 import java.text.DecimalFormat;
 
-public class GetHealth implements CmdInterface {
+public class GetHealth implements UHCCommand {
 
 	@Override
 	public String[] getNames() {

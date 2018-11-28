@@ -25,10 +25,10 @@ import me.blok601.nightshadeuhc.teams.RvBCommand;
 public class Commands {
 
 
-    private static CmdInterface[] commands;
+    private static UHCCommand[] commands;
 
     public static void setup(){
-        commands = new CmdInterface[]{
+        commands = new UHCCommand[]{
                 new FeedAll(),
                 new FreezeAll(),
                 new GetHealth(),
@@ -109,11 +109,12 @@ public class Commands {
                 new HallOfFameCommand(),
                 new MoleCommand(),
                 new SetMoleCommand(),
-                new ToggleMobsCommand()
+                new ToggleMobsCommand(),
+                new ClearTreesCommand()
         };
     }
 
-    public static CmdInterface[] getCommands() {
+    public static UHCCommand[] getCommands() {
         return commands;
     }
 

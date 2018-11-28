@@ -5,7 +5,7 @@ import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.utils.Util;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 /**
  * Created by Blok on 9/10/2017.
  */
-public class ClaimHostCommand implements CmdInterface {
+public class ClaimHostCommand implements UHCCommand {
     @Override
     public String[] getNames() {
         return new String[]{

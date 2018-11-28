@@ -3,7 +3,7 @@ package me.blok601.nightshadeuhc.commands.game.setup;
 
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import org.bukkit.Bukkit;
@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 /**
  * Created by Blok on 9/21/2017.
  */
-public class WhitelistCommand implements CmdInterface {
+public class WhitelistCommand implements UHCCommand {
 
     @Override
     public String[] getNames() {

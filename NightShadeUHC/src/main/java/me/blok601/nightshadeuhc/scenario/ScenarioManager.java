@@ -2,7 +2,7 @@ package me.blok601.nightshadeuhc.scenario;
 
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.utils.ItemBuilder;
 import me.blok601.nightshadeuhc.utils.PagedInventory;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 /**
  * Created by Blok on 3/28/2017.
  */
-public class ScenarioManager implements CmdInterface{
+public class ScenarioManager implements UHCCommand{
 
 
     private static ArrayList<Scenario> scenarios = new ArrayList<>();

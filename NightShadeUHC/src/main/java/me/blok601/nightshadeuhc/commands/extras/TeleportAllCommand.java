@@ -3,7 +3,7 @@ package me.blok601.nightshadeuhc.commands.extras;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.utils.ChatUtils;
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 /**
  * Created by Blok on 9/10/2017.
  */
-public class TeleportAllCommand implements CmdInterface {
+public class TeleportAllCommand implements UHCCommand {
     @Override
     public String[] getNames() {
         return new String[]{

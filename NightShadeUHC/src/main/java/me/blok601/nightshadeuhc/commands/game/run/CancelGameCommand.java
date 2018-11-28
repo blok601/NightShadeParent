@@ -2,7 +2,7 @@ package me.blok601.nightshadeuhc.commands.game.run;
 
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 /**
  * Created by Blok on 7/20/2017.
  */
-public class CancelGameCommand implements CmdInterface {
+public class CancelGameCommand implements UHCCommand {
 
     @Override
     public String[] getNames() {

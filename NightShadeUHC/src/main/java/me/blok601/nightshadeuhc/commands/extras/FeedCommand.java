@@ -2,7 +2,7 @@ package me.blok601.nightshadeuhc.commands.extras;
 
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 /**
  * Created by Blok on 2/16/2018.
  */
-public class FeedCommand implements CmdInterface{
+public class FeedCommand implements UHCCommand{
     @Override
     public String[] getNames() {
         return new String[]{

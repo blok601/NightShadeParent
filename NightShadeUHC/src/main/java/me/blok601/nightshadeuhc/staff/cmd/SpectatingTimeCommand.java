@@ -2,7 +2,7 @@ package me.blok601.nightshadeuhc.staff.cmd;
 
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.utils.TimeUtils;
 import org.bukkit.Bukkit;
@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 /**
  * Created by Blok on 11/11/2018.
  */
-public class SpectatingTimeCommand implements CmdInterface {
+public class SpectatingTimeCommand implements UHCCommand {
     @Override
     public String[] getNames() {
         return new String[]{

@@ -3,7 +3,7 @@ package me.blok601.nightshadeuhc.commands.game.setup;
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.utils.Util;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 /**
  * Created by Master on 8/29/2017.
  */
-public class SetTickCommand implements CmdInterface{
+public class SetTickCommand implements UHCCommand{
     @Override
     public String[] getNames() {
         return new String[]{

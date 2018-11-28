@@ -3,7 +3,7 @@ package me.blok601.nightshadeuhc.commands.extras;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
@@ -18,7 +18,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.HashSet;
 import java.util.UUID;
 
-public class Helpop implements CmdInterface{
+public class Helpop implements UHCCommand{
 
 	private HashSet<UUID> helpopCooldown = new HashSet<>();
 

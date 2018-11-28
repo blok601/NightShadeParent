@@ -5,7 +5,7 @@ import com.wimbli.WorldBorder.Config;
 import com.wimbli.WorldBorder.WorldBorder;
 import com.wimbli.WorldBorder.WorldFillTask;
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.utils.Util;
 import org.bukkit.Bukkit;
@@ -24,7 +24,7 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * Created by Blok on 3/23/2018.
  */
-public class CreateWorldCommand implements CmdInterface{
+public class CreateWorldCommand implements UHCCommand{
 
     @Override
     public String[] getNames() {

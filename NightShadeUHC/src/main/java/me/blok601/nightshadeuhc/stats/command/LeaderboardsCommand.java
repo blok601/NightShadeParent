@@ -1,7 +1,7 @@
 package me.blok601.nightshadeuhc.stats.command;
 
 import com.nightshadepvp.core.Rank;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.gui.leaderboards.LeaderBoardMainGUI;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 /**
  * Created by Blok on 7/4/2018.
  */
-public class LeaderboardsCommand implements CmdInterface{
+public class LeaderboardsCommand implements UHCCommand{
     @Override
     public String[] getNames() {
         return new String[]{

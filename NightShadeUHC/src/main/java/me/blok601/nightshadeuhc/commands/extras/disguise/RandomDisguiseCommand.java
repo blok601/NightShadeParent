@@ -7,7 +7,7 @@ import de.robingrether.idisguise.disguise.PlayerDisguise;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -17,7 +17,7 @@ import java.util.*;
 /**
  * Created by Blok on 7/20/2017.
  */
-public class RandomDisguiseCommand implements CmdInterface{
+public class RandomDisguiseCommand implements UHCCommand{
 
 
     private static HashMap<UUID, DisguiseObject> dis = new HashMap<>();

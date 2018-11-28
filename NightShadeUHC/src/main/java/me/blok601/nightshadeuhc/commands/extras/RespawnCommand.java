@@ -2,7 +2,7 @@ package me.blok601.nightshadeuhc.commands.extras;
 
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.object.PlayerRespawnObject;
 import me.blok601.nightshadeuhc.manager.GameManager;
@@ -17,7 +17,7 @@ import org.bukkit.entity.Player;
 /**
  * Created by Blok on 12/2/2017.
  */
-public class RespawnCommand implements CmdInterface{
+public class RespawnCommand implements UHCCommand{
     @Override
     public String[] getNames() {
         return new String[]{

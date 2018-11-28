@@ -1,13 +1,13 @@
 package me.blok601.nightshadeuhc.tasks;
 
 import com.wimbli.WorldBorder.BorderData;
-import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.GameState;
 import me.blok601.nightshadeuhc.UHC;
+import me.blok601.nightshadeuhc.events.MeetupStartEvent;
+import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.utils.ActionBarUtil;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.utils.Util;
-import me.blok601.nightshadeuhc.events.MeetupStartEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.World;

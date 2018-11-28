@@ -1,7 +1,7 @@
 package me.blok601.nightshadeuhc.scenario.cmd.mole;
 
 import com.nightshadepvp.core.Rank;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 /**
  * Created by Blok on 11/17/2018.
  */
-public class MoleCommand implements CmdInterface {
+public class MoleCommand implements UHCCommand {
     @Override
     public String[] getNames() {
         return new String[]{

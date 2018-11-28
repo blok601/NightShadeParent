@@ -4,7 +4,7 @@ package me.blok601.nightshadeuhc.commands.game.run;
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.GameState;
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.commands.extras.Freeze;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
@@ -21,7 +21,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 
-public class CmdStartUHC implements CmdInterface {
+public class CmdStartUHC implements UHCCommand {
 
 	public static ArrayList<String> arrayList = new ArrayList<>();
 

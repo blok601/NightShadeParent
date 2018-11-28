@@ -1,14 +1,14 @@
 package me.blok601.nightshadeuhc.teams;
 
 import com.nightshadepvp.core.Rank;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 /**
  * Created by Blok on 5/28/2018.
  */
-public class RvBCommand implements CmdInterface{
+public class RvBCommand implements UHCCommand{
     @Override
     public String[] getNames() {
         return new String[]{

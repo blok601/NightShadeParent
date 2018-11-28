@@ -5,7 +5,7 @@ import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.entity.MConf;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.utils.Util;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 /**
  * Created by Blok on 3/23/2018.
  */
-public class DeleteWorldCommand implements CmdInterface{
+public class DeleteWorldCommand implements UHCCommand{
     @Override
     public String[] getNames() {
         return new String[]{

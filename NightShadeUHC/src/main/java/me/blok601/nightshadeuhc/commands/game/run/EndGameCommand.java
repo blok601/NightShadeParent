@@ -3,7 +3,7 @@ package me.blok601.nightshadeuhc.commands.game.run;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.entity.MConf;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.events.GameEndEvent;
@@ -31,7 +31,7 @@ import java.util.function.Consumer;
 /**
  * Created by Blok on 7/20/2017.
  */
-public class EndGameCommand implements CmdInterface{
+public class EndGameCommand implements UHCCommand{
     @Override
     public String[] getNames() {
         return new String[]{
@@ -126,9 +126,9 @@ public class EndGameCommand implements CmdInterface{
                         continue;
                     }
 
-                    user = NSPlayer.get(pl.getUniqueId());
-                    gamePlayer = UHCPlayer.get(pl.getUniqueId());
-                    winners.add(pl.getUniqueId());
+                    user = NSPlayer.get(pl);
+                    gamePlayer = UHCPlayer.get(pl);
+                    winners.add(UUID.fromString(uuid));
 
 //                user.setPrefix(ChatColor.RED + "[Winner] ");
                     gamePlayer.setGamesWon(gamePlayer.getGamesWon() + 1);

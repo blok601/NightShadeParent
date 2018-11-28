@@ -1,7 +1,7 @@
 package me.blok601.nightshadeuhc.commands.game.run;
 
 import com.nightshadepvp.core.Rank;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.teams.TeamManager;
@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 /**
  * Created by Blok on 8/22/2018.
  */
-public class KickSolosCommand implements CmdInterface {
+public class KickSolosCommand implements UHCCommand {
 
     @Override
     public String[] getNames() {

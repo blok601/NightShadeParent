@@ -1,7 +1,7 @@
 package me.blok601.nightshadeuhc.staff.cmd;
 
 import com.nightshadepvp.core.Rank;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import org.bukkit.command.Command;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by Blok on 8/4/2017.
  */
-public class CommandSpyCmd implements CmdInterface{
+public class CommandSpyCmd implements UHCCommand{
 
     public static ArrayList<Player> cmdspy = new ArrayList<>();
 

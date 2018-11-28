@@ -48,9 +48,6 @@ public class StatUpdateTask extends BukkitRunnable {
         try {
             while (cursor.hasNext()) {
                 Document doc = cursor.next();
-                if (doc.getInteger("players") < 10) {
-                    cursor.next();
-                }
                 CachedGame cachedGame = new CachedGame(doc.getString("host"));
                 cachedGame.setWinners((List<String>) doc.get("winners"));
                 cachedGame.setScenarios((List<String>) doc.get("scenarios"));
@@ -60,7 +57,8 @@ public class StatUpdateTask extends BukkitRunnable {
                 cachedGame.setStart(doc.getLong("startTime"));
                 cachedGame.setStart(doc.getLong("endTime"));
                 cachedGame.setServer(doc.getString("server"));
-                cachedGames.add(cachedGame);
+                if (cachedGame.getFill() > 10)
+                    cachedGames.add(cachedGame);
             }
         } finally {
             cursor.close();

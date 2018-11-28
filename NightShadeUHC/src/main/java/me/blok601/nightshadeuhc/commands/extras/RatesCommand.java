@@ -4,7 +4,7 @@ import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.utils.Util;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -19,7 +19,7 @@ import org.bukkit.inventory.ItemStack;
 /**
  * Created by Blok on 2/10/2018.
  */
-public class RatesCommand implements CmdInterface, Listener{
+public class RatesCommand implements UHCCommand, Listener{
     @Override
     public String[] getNames() {
         return new String[]{

@@ -1,7 +1,7 @@
 package me.blok601.nightshadeuhc.commands.extras;
 
 import com.nightshadepvp.core.Rank;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import org.bukkit.Chunk;
@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
 /**
  * Created by Blok on 11/19/2018.
  */
-public class ToggleMobsCommand implements CmdInterface {
+public class ToggleMobsCommand implements UHCCommand {
     @Override
     public String[] getNames() {
         return new String[]{

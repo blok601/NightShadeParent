@@ -19,11 +19,11 @@ public class SpecInfoData {
 
     }
 
-    public static final String DAMAGE_FALL = "&5PvE&8»&c%player%&8<-&bFall &8[&a%health% &c❤&8]";
-    public static final String DAMAGE_BURN = "&5PvE&8»&c%player%&8<-&bBurn &8[&a%health%&c❤&8]";
-    public static final String DAMAGE_OTHER = "&5PvE&8»&c%player%&8<-&bPvE &8[&a%health% &c❤&8]";
-    public static final String DAMAGE_MOB = "&5PvE&8»&c%player%&8<-&bMob &8[&a%health% &c❤&8]";
-    public static final String DAMAGE_PLAYER = "&5PvP&8»&c%player%&8<-&b%damager% &8[&a%health% &c❤&8]";
+    static final String DAMAGE_FALL = "&5PvE&8»&c%player%&8<-&bFall &8[&a%health% &c❤&8]";
+    static final String DAMAGE_BURN = "&5PvE&8»&c%player%&8<-&bBurn &8[&a%health%&c❤&8]";
+    static final String DAMAGE_OTHER = "&5PvE&8»&c%player%&8<-&bPvE &8[&a%health% &c❤&8]";
+    static final String DAMAGE_MOB = "&5PvE&8»&c%player%&8<-&bMob &8[&a%health% &c❤&8]";
+    static final String DAMAGE_PLAYER = "&5PvP&8»&c%player%&8<-&b%damager% &8[&a%health% &c❤&8]";
     private static final DecimalFormat format = new DecimalFormat("##.##");
 
 }

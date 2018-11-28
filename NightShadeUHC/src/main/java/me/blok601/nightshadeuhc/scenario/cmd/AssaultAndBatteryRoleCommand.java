@@ -2,7 +2,7 @@ package me.blok601.nightshadeuhc.scenario.cmd;
 
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.GameState;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.teams.Team;
 import me.blok601.nightshadeuhc.teams.TeamManager;
@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 /**
  * Created by Blok on 8/4/2018.
  */
-public class AssaultAndBatteryRoleCommand implements CmdInterface {
+public class AssaultAndBatteryRoleCommand implements UHCCommand {
     @Override
     public String[] getNames() {
         return new String[]{

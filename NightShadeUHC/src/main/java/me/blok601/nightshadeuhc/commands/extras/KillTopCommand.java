@@ -2,7 +2,7 @@ package me.blok601.nightshadeuhc.commands.extras;
 
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.GameState;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
@@ -16,7 +16,7 @@ import java.util.*;
 /**
  * Created by Blok on 12/25/2017.
  */
-public class KillTopCommand implements CmdInterface{
+public class KillTopCommand implements UHCCommand{
 
     @Override
     public String[] getNames() {

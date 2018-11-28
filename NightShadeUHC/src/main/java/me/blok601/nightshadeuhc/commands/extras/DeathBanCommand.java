@@ -4,7 +4,7 @@ import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 /**
  * Created by Blok on 1/28/2018.
  */
-public class DeathBanCommand implements CmdInterface{
+public class DeathBanCommand implements UHCCommand{
     @Override
     public String[] getNames() {
         return new String[]{

@@ -2,7 +2,7 @@ package me.blok601.nightshadeuhc.scenario.cmd;
 
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.scenario.BackpackScenario;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 /**
  * Created by Master on 7/14/2017.
  */
-public class BackpackCommand implements CmdInterface{
+public class BackpackCommand implements UHCCommand{
 
     @Override
     public String[] getNames() {

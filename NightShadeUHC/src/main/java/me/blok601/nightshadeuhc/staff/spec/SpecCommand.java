@@ -2,13 +2,13 @@ package me.blok601.nightshadeuhc.staff.spec;
 
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class SpecCommand implements CmdInterface {
+public class SpecCommand implements UHCCommand {
 
     @Override
     public String[] getNames() {
@@ -39,7 +39,7 @@ public class SpecCommand implements CmdInterface {
 
     @Override
     public Rank getRequiredRank() {
-        return Rank.DRAGON;
+        return Rank.TRIAL;
     }
 
     @Override

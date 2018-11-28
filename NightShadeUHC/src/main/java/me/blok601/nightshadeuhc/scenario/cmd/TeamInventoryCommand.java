@@ -2,7 +2,7 @@ package me.blok601.nightshadeuhc.scenario.cmd;
 
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.GameState;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.scenario.TeamInventoryScenario;
 import me.blok601.nightshadeuhc.teams.Team;
@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
 /**
  * Created by Blok on 9/28/2018.
  */
-public class TeamInventoryCommand implements CmdInterface {
+public class TeamInventoryCommand implements UHCCommand {
     @Override
     public String[] getNames() {
         return new String[]{

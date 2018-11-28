@@ -3,7 +3,7 @@ package me.blok601.nightshadeuhc.commands.game.run;
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.tasks.TimerTask;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -12,7 +12,7 @@ import org.bukkit.command.CommandSender;
 /**
  * Created by Blok on 10/1/2017.
  */
-public class TimerCommand implements CmdInterface{
+public class TimerCommand implements UHCCommand{
     @Override
     public String[] getNames() {
         return new String[]{

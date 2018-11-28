@@ -12,7 +12,7 @@ import com.nightshadepvp.core.Logger;
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import de.robingrether.idisguise.api.DisguiseAPI;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.commands.Commands;
 import me.blok601.nightshadeuhc.listeners.gui.EnchantHider;
 import me.blok601.nightshadeuhc.listeners.modules.ComponentHandler;
@@ -89,7 +89,6 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
 
         registerCommands();
         registerListeners();
-
         setupExtraDatabase();
         GameManager.setup();
         scoreboardManager = new ScoreboardManager();
@@ -178,7 +177,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
             Commands.setup();
         }
 
-        for (CmdInterface ci : Commands.getCommands()) {
+        for (UHCCommand ci : Commands.getCommands()) {
             List<String> cmds = new ArrayList<String>();
             if (ci.getNames() != null) {
                 for (String name : ci.getNames()) {

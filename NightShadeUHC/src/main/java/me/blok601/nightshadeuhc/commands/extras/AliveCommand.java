@@ -3,7 +3,7 @@ package me.blok601.nightshadeuhc.commands.extras;
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.GameState;
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -16,7 +16,7 @@ import java.util.UUID;
 /**
  * Created by Blok on 9/4/2018.
  */
-public class AliveCommand implements CmdInterface {
+public class AliveCommand implements UHCCommand {
     @Override
     public String[] getNames() {
         return new String[]{

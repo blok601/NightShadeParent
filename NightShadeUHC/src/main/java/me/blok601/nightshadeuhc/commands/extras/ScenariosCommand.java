@@ -2,7 +2,7 @@ package me.blok601.nightshadeuhc.commands.extras;
 
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.fanciful.FancyMessage;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.scenario.Scenario;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 /**
  * Created by Blok on 3/7/2018.
  */
-public class ScenariosCommand implements CmdInterface{
+public class ScenariosCommand implements UHCCommand{
     @Override
     public String[] getNames() {
         return new String[]{

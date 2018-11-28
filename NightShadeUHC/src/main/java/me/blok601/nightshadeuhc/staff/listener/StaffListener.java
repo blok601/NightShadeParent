@@ -15,6 +15,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -329,7 +330,7 @@ public class StaffListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler (priority = EventPriority.NORMAL)
     public void onLeave(PlayerQuitEvent e) {
         Player p = e.getPlayer();
         UHCPlayer uhcPlayer = UHCPlayer.get(p);

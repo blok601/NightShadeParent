@@ -1,14 +1,14 @@
 package me.blok601.nightshadeuhc.utils;
 
 import com.nightshadepvp.core.Rank;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 
-public class PlayerReset implements CmdInterface{
+public class PlayerReset implements UHCCommand{
 
 
 	@Override

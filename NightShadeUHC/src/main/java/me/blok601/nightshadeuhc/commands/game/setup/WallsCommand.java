@@ -1,7 +1,7 @@
 package me.blok601.nightshadeuhc.commands.game.setup;
 
 import com.nightshadepvp.core.Rank;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.utils.Util;
@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 /**
  * Created by Blok on 7/16/2018.
  */
-public class WallsCommand implements CmdInterface{
+public class WallsCommand implements UHCCommand{
     @Override
     public String[] getNames() {
         return new String[]{

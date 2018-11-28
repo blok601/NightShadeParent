@@ -2,7 +2,7 @@ package me.blok601.nightshadeuhc.staff.cmd;
 
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.staff.spec.SpecCommand;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 /**
  * Created by Blok on 6/19/2017.
  */
-public class StaffCommand implements CmdInterface {
+public class StaffCommand implements UHCCommand {
 
 
     @Override

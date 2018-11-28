@@ -1,7 +1,7 @@
 package me.blok601.nightshadeuhc.scenario.cmd.mole;
 
 import com.nightshadepvp.core.Rank;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.scenario.MolesScenario;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
@@ -15,7 +15,7 @@ import java.util.UUID;
 /**
  * Created by Blok on 7/6/2018.
  */
-public class MoleLocationCommand implements CmdInterface{
+public class MoleLocationCommand implements UHCCommand{
     @Override
     public String[] getNames() {
         return new String[]{

@@ -11,7 +11,6 @@ import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.utils.ItemBuilder;
 import me.blok601.nightshadeuhc.utils.Util;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -403,6 +402,7 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
             }
         }
 
+        p.setGameMode(GameMode.CREATIVE);
         p.setAllowFlight(true);
         p.setFlying(true);
         p.setFlySpeed(0.2F);
@@ -419,13 +419,13 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         for (Player pl : Bukkit.getOnlinePlayers()){
             pl.showPlayer(p);
         }
-
-        p.setGameMode(GameMode.SURVIVAL);
         p.setFlying(false);
+        p.setAllowFlight(false);
+        p.setGameMode(GameMode.SURVIVAL);
         p.getInventory().clear();
         p.getInventory().setArmorContents(null);
+        p.sendMessage(ChatUtils.message("&5You are no longer a spectator!"));
         Util.staffLog("&2" + p.getName()+ " is no longer a spectator!");
-        p.sendMessage(ChatColor.DARK_AQUA + "[UHC] " + ChatColor.GOLD + "You are no longer a spectator!");
     }
 
     public boolean isStaffMode() {

@@ -1,7 +1,7 @@
 package me.blok601.nightshadeuhc.scenario.cmd.mole;
 
 import com.nightshadepvp.core.Rank;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.scenario.MolesScenario;
@@ -17,7 +17,7 @@ import java.util.UUID;
 /**
  * Created by Blok on 7/6/2018.
  */
-public class MolesCommand implements CmdInterface{
+public class MolesCommand implements UHCCommand{
     @Override
     public String[] getNames() {
         return new String[]{

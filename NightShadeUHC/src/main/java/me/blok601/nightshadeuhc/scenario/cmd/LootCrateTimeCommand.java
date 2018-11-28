@@ -2,7 +2,7 @@ package me.blok601.nightshadeuhc.scenario.cmd;
 
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.scenario.LootCrateScenario;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import org.bukkit.command.Command;
@@ -11,7 +11,7 @@ import org.bukkit.command.CommandSender;
 /**
  * Created by Blok on 6/29/2017.
  */
-public class LootCrateTimeCommand implements CmdInterface{
+public class LootCrateTimeCommand implements UHCCommand{
     @Override
     public String[] getNames() {
         return new String[]{

@@ -2,7 +2,7 @@ package me.blok601.nightshadeuhc.commands.extras;
 
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.utils.ScatterUtil;
@@ -17,7 +17,7 @@ import org.bukkit.inventory.ItemStack;
 /**
  * Created by Blok on 12/9/2017.
  */
-public class LateStartCommand implements CmdInterface{
+public class LateStartCommand implements UHCCommand{
     @Override
     public String[] getNames() {
         return new String[]{

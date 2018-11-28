@@ -3,7 +3,7 @@ package me.blok601.nightshadeuhc.server.cmd;
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.utils.PlayerUtils;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 /**
  * Created by Blok on 8/4/2017.
  */
-public class PlayerLocationCommand implements CmdInterface{
+public class PlayerLocationCommand implements UHCCommand{
 
     @Override
     public String[] getNames() {

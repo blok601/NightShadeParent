@@ -4,7 +4,7 @@ import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.nightshadepvp.core.entity.NSPlayerColl;
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.utils.TimeUtils;
 import org.bukkit.command.Command;
@@ -18,7 +18,7 @@ import java.util.Comparator;
 /**
  * Created by Blok on 11/12/2018.
  */
-public class TopSpecCommand implements CmdInterface {
+public class TopSpecCommand implements UHCCommand {
 
     @Override
     public String[] getNames() {

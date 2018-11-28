@@ -2,7 +2,7 @@ package me.blok601.nightshadeuhc.staff.cmd;
 
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.utils.ItemBuilder;
@@ -17,7 +17,7 @@ import org.bukkit.inventory.ItemStack;
 /**
  * Created by Blok on 7/28/2017.
  */
-public class AlertsCommand implements CmdInterface{
+public class AlertsCommand implements UHCCommand{
 
 
     @Override

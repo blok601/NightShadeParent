@@ -12,6 +12,7 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -26,7 +27,7 @@ import java.util.UUID;
  */
 public class SpectatorInfoListener implements Listener {
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onDamage(EntityDamageEvent e) {
         if (!GameState.gameHasStarted()) return;
         if (!(e.getEntity() instanceof Player)) return;
@@ -51,7 +52,7 @@ public class SpectatorInfoListener implements Listener {
 
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onHit(EntityDamageByEntityEvent e) {
         if (!GameState.gameHasStarted()) return;
         if (!(e.getEntity() instanceof Player)) return;
@@ -64,7 +65,10 @@ public class SpectatorInfoListener implements Listener {
         fancyMessage.command("/tp " + p.getName());
         if (e.getEntity() instanceof Monster) {
             UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).filter(UHCPlayer::isReceivingSpectatorInfo).forEach(uhcPlayer -> fancyMessage.text(SpecInfoData.translate(p, p.getHealth() - e.getFinalDamage(), null, SpecInfoData.DAMAGE_MOB)).send(uhcPlayer.getPlayer()));
-        } else if (e.getDamager() instanceof Player) {
+        }
+
+
+        if (e.getDamager() instanceof Player) {
             Player damager = (Player) e.getDamager();
             UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).filter(UHCPlayer::isReceivingSpectatorInfo).forEach(uhcPlayer -> fancyMessage.text(SpecInfoData.translate(p, p.getHealth() - e.getFinalDamage(), damager, SpecInfoData.DAMAGE_PLAYER)).send(uhcPlayer.getPlayer()));
         } else if (e.getDamager() instanceof Arrow) {
@@ -79,7 +83,7 @@ public class SpectatorInfoListener implements Listener {
 
     HashMap<UUID, HashSet<Block>> brokenBlocks = new HashMap<>();
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onBreak(BlockBreakEvent e) {
         Player p = e.getPlayer();
         if (brokenBlocks.containsKey(p.getUniqueId())) {

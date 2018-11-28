@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 /**
  * Created by Blok on 6/26/2017.
  */
-public interface CmdInterface {
+public interface UHCCommand {
 
     public String[] getNames();
     public void onCommand(CommandSender s, Command cmd, String l, String[] args);

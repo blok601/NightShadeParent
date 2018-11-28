@@ -2,7 +2,7 @@ package me.blok601.nightshadeuhc.scenario.cmd;
 
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.GameState;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.scenario.SuperheroesScenario;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 /**
  * Created by Blok on 7/17/2018.
  */
-public class PowerCommand implements CmdInterface{
+public class PowerCommand implements UHCCommand{
     @Override
     public String[] getNames() {
         return new String[]{

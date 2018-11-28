@@ -1,44 +1,49 @@
-package me.blok601.nightshadeuhc.commands.extras;
+package me.blok601.nightshadeuhc.commands.game.setup;
 
 import com.nightshadepvp.core.Rank;
-import me.blok601.nightshadeuhc.GameState;
+import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 /**
- * Created by Blok on 9/3/2018.
+ * Created by Blok on 11/27/2018.
  */
-public class PermaDayCommand implements UHCCommand {
+public class ClearTreesCommand implements UHCCommand {
     @Override
     public String[] getNames() {
         return new String[]{
-                "permaday"
+                "cleartrees"
         };
     }
 
     @Override
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
-        if(!GameState.gameHasStarted()){
-            p.sendMessage(ChatUtils.message("&cThe game hasn't started yet!"));
-            return;
-        }
 
-        if(GameManager.getWorld() == null){
+        World world = GameManager.getWorld();
+        if (world == null) {
             p.sendMessage(ChatUtils.message("&cThe world has not been set yet!"));
             return;
         }
 
-        World world = GameManager.getWorld();
-        world.setTime(100);
-        world.setGameRuleValue("doDaylightCycle", "false");
-        world.setGameRuleValue("doWeatherCycle", "false");
-        p.sendMessage(ChatUtils.message("&ePermaday has been enabled!"));
+        p.setGameMode(GameMode.CREATIVE);
+        p.teleport(new Location(world, 0, 80, 0));
+        p.chat("//replacenear {@Radius} 78,99,100,17,18,161,162 air");
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                p.sendMessage(ChatUtils.message("&eTrees have been cleared around 0, 0!"));
+            }
+        }.runTaskLater(UHC.get(), 12);
+
     }
 
     @Override
@@ -48,7 +53,7 @@ public class PermaDayCommand implements UHCCommand {
 
     @Override
     public Rank getRequiredRank() {
-        return Rank.TRIAL;
+        return Rank.TRIALHOST;
     }
 
     @Override

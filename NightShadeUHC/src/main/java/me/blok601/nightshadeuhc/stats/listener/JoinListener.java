@@ -177,23 +177,23 @@ public class JoinListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler (priority = EventPriority.LOWEST)
     public void onLeave(PlayerQuitEvent e) {
-        Settings.getInstance().getPlayers().set(e.getPlayer().getUniqueId().toString(), LocationUtils.locationToString(e.getPlayer()));
-        Settings.getInstance().savePlayers();
+//        Settings.getInstance().getPlayers().set(e.getPlayer().getUniqueId().toString(), LocationUtils.locationToString(e.getPlayer()));
+//        Settings.getInstance().savePlayers();
         UHC.get().getScoreboardManager().removeFromPlayerCache(e.getPlayer());
 
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                if (Settings.getInstance().getPlayers().contains(e.getPlayer().getUniqueId().toString())) {
-                    Location location = LocationUtils.locationFromString(Settings.getInstance().getPlayers().getString(e.getPlayer().getUniqueId().toString()));
-                    e.getPlayer().teleport(location);
-                    Settings.getInstance().getPlayers().set(e.getPlayer().getUniqueId().toString(), null);
-                    Settings.getInstance().savePlayers();
-                }
-            }
-        }.runTaskLater(UHC.get(), (20 * 5 * 60) + 1);
+//        new BukkitRunnable() {
+//            @Override
+//            public void run() {
+//                if (Settings.getInstance().getPlayers().contains(e.getPlayer().getUniqueId().toString())) {
+//                    Location location = LocationUtils.locationFromString(Settings.getInstance().getPlayers().getString(e.getPlayer().getUniqueId().toString()));
+//                    e.getPlayer().teleport(location);
+//                    Settings.getInstance().getPlayers().set(e.getPlayer().getUniqueId().toString(), null);
+//                    Settings.getInstance().savePlayers();
+//                }
+//            }
+//        }.runTaskLater(UHC.get(), (20 * 5 * 60) + 1);
 
         Player p = e.getPlayer();
         UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
@@ -219,8 +219,8 @@ public class JoinListener implements Listener {
 
     @EventHandler
     public void onKick(PlayerKickEvent e) {
-        Settings.getInstance().getPlayers().set(e.getPlayer().getUniqueId().toString(), LocationUtils.locationToString(e.getPlayer()));
-        Settings.getInstance().savePlayers();
+//        Settings.getInstance().getPlayers().set(e.getPlayer().getUniqueId().toString(), LocationUtils.locationToString(e.getPlayer()));
+//        Settings.getInstance().savePlayers();
         UHC.get().getScoreboardManager().removeFromPlayerCache(e.getPlayer());
 
         new BukkitRunnable() {

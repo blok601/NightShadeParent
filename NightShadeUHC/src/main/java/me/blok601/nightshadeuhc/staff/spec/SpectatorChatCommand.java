@@ -1,8 +1,7 @@
 package me.blok601.nightshadeuhc.staff.spec;
 
 import com.nightshadepvp.core.Rank;
-import com.nightshadepvp.core.entity.NSPlayer;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
@@ -16,7 +15,7 @@ import java.util.UUID;
 /**
  * Created by Blok on 7/22/2017.
  */
-public class SpectatorChatCommand implements CmdInterface{
+public class SpectatorChatCommand implements UHCCommand{
 
     public static ArrayList<UUID> specc = new ArrayList<>();
 
@@ -31,8 +30,7 @@ public class SpectatorChatCommand implements CmdInterface{
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
         UHCPlayer gamePlayer = UHCPlayer.get(p);
-        NSPlayer nsPlayer = NSPlayer.get(p);
-        if (!gamePlayer.isSpectator() && !nsPlayer.hasRank(Rank.TRIALHOST)) {
+        if (!gamePlayer.isSpectator()) {
             p.sendMessage(ChatUtils.message("&cYou have to be a spectator to join spectator chat!"));
             return;
         }
@@ -69,7 +67,7 @@ public class SpectatorChatCommand implements CmdInterface{
 
     @Override
     public Rank getRequiredRank() {
-        return Rank.YOUTUBE;
+        return Rank.DRAGON;
     }
 
     @Override
