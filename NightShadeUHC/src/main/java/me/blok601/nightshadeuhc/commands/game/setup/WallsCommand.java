@@ -23,6 +23,11 @@ public class WallsCommand implements UHCCommand{
     @Override
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
+        if (args.length != 1) {
+            p.sendMessage(ChatUtils.message("&cUsage: /walls <radius>"));
+            return;
+        }
+
         int radius = Integer.parseInt(args[0]);
         if(GameManager.getWorld() == null){
             p.sendMessage(ChatUtils.message("&cThe world hasn't been set yet!"));

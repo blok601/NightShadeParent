@@ -116,7 +116,7 @@ commands:
   chatstop:
     aliases: [togglechatmute, gmute, globalmute, chattoggle, ozzyisgay]
   walls:
-    aliases: [setborder, shrink]
+    aliases: [setborder, shrink, setwalls]
     description: Set and generate the border for the given radius
   cancelpregen:
   power:
