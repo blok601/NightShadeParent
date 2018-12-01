@@ -16,15 +16,15 @@ import org.bukkit.inventory.ItemStack;
 /**
  * Created by Blok on 11/27/2018.
  */
-public class CmdGiveAll extends NightShadeCoreCommand {
+public class CmdGiveall extends NightShadeCoreCommand {
 
-    private static CmdGiveAll i = new CmdGiveAll();
+    private static CmdGiveall i = new CmdGiveall();
 
-    public static CmdGiveAll get() {
+    public static CmdGiveall get() {
         return i;
     }
 
-    public CmdGiveAll() {
+    public CmdGiveall() {
         this.addAliases("giveall");
         this.setDesc("Gives everyone the item in your hand, with the amount specified");
         this.addRequirements(ReqRankHasAtLeast.get(Rank.TRIALHOST));

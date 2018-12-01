@@ -166,3 +166,6 @@ commands:
   togglemobs:
     description: Butcher and stop mobs spawning in that world
     aliases: [removemobs, nomobs]
+  cleartrees:
+    description: Clear trees around 0 0
+    aliases: [removetrees]
