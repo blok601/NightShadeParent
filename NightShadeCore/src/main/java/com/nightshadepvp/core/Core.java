@@ -11,7 +11,6 @@ import com.nightshadepvp.core.listener.LiteBansListener;
 import com.nightshadepvp.core.punishment.PunishmentHandler;
 import com.nightshadepvp.core.store.NSStore;
 import com.nightshadepvp.core.store.NSStoreConf;
-import com.nightshadepvp.core.ubl.UBLManager;
 import com.nightshadepvp.core.utils.ChatUtils;
 import litebans.api.Events;
 import org.apache.commons.io.FileUtils;
@@ -89,7 +88,6 @@ public class Core extends MassivePlugin implements PluginMessageListener {
 
 
         getLogManager().log(Logger.LogType.INFO, "Starting UBL Tasks...");
-        UBLManager.get().setup();
         Bukkit.getConsoleSender().sendMessage(ChatUtils.message("&eLoading NightShadeCore version: " + getDescription().getVersion() + ". Server Type: " + ServerType.getType().toString()));
     }
 
