@@ -20,9 +20,8 @@ import me.blok601.nightshadeuhc.server.PlayerTracker;
 import me.blok601.nightshadeuhc.teams.TeamManager;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.utils.PlayerUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
+import me.blok601.nightshadeuhc.utils.ScatterUtil;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -31,6 +30,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
@@ -149,6 +149,21 @@ public class JoinListener implements Listener {
             UHC.players.add(player.getUniqueId());
             GameManager.getInvs().remove(player.getUniqueId());
             player.sendMessage(ChatUtils.message("&aYou have been respawned!"));
+        }
+
+        if (GameManager.getLateScatter().contains(player.getName().toLowerCase())) {
+            //They should be late started
+            ScatterUtil.scatterPlayer(GameManager.getWorld(), (int) GameManager.getBorderSize(), player);
+            UHC.players.add(player.getUniqueId());
+            player.getInventory().clear();
+            player.getInventory().setArmorContents(null);
+            player.setLevel(0);
+            player.setExp(0F);
+            player.getInventory().addItem(new ItemStack(Material.COOKED_BEEF, 10));
+            ScatterUtil.scatterPlayer(GameManager.getWorld(), (int) GameManager.getBorderSize(), player);
+            player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 5, 5);
+            player.sendMessage(ChatUtils.message("&eYou were scattered!"));
+            GameManager.getLateScatter().remove(player.getName().toLowerCase());
         }
 
 

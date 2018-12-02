@@ -44,8 +44,11 @@ public class GameManager {
     private static HashMap<UUID, Integer> helpOpMutes = new HashMap<>();
     @Getter
     public static HashMap<UUID, String> helpopMuteReasons = new HashMap<>();
+    @Getter
+    public static HashSet<String> lateScatter = new HashSet<>();
 
     public static boolean IS_SCATTERING = false;
+
 
     private static TimerTask timer;
 
@@ -61,8 +64,6 @@ public class GameManager {
 
     private static Player host;
     private static int radius = 0;
-
-
     private static int appleRates = 5;
     private static int flintRates = 50;
 

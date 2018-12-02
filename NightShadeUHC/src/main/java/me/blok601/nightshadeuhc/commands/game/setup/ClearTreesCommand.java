@@ -35,8 +35,10 @@ public class ClearTreesCommand implements UHCCommand {
         }
 
         p.setGameMode(GameMode.CREATIVE);
+        p.setAllowFlight(true);
+        p.setFlying(true);
         p.teleport(new Location(world, 0, 80, 0));
-        p.chat("//replacenear {@Radius} 78,99,100,17,18,161,162 air");
+        p.chat("//replacenear 100 78,99,100,17,18,161,162 air");
         new BukkitRunnable() {
             @Override
             public void run() {

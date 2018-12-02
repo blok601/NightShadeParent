@@ -63,7 +63,7 @@ public class Team {
             player = Bukkit.getPlayer(string);
             if(player == null) continue;
 
-            player.sendMessage(ChatUtils.format(msg));
+            player.sendMessage(ChatUtils.format("&3Team&8» &e" + msg));
         }
     }
 

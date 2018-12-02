@@ -2,6 +2,7 @@ package me.blok601.nightshadeuhc.teams;
 
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
+import com.nightshadepvp.core.fanciful.FancyMessage;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
@@ -272,7 +273,9 @@ public class CmdTeamBase implements UHCCommand{
                     //Check if their team size is less than the limit
                     if(TeamManager.getInstance().isTeamManagement()){
                         if(TeamManager.getInstance().getTeam(p) == null){
-                            p.sendMessage(ChatUtils.message("&cYou don't have a team! &eDo /team create to make one!"));
+                            FancyMessage fancyMessage = new FancyMessage(ChatUtils.message("&cYou don't have a team! &eDo "))
+                                    .then("/team create to make one!").color(ChatColor.YELLOW).command("/team create");
+                            fancyMessage.send(p);
                             return;
                         }
 
@@ -293,7 +296,9 @@ public class CmdTeamBase implements UHCCommand{
                             }else{
                                 invites.put(target.getName(), TeamManager.getInstance().getTeam(p).getName());
                                 p.sendMessage(ChatUtils.message("&eYou have invited &6" + target.getName() + " &eto your team!"));
-                                target.sendMessage(ChatUtils.message("&eYou have been invited to &6" + p.getName()+ "'s &eteam. Do /team join " + p.getName() + " to join!"));
+                                FancyMessage fancyMessage = new FancyMessage(ChatUtils.message("&eYou have been invited to &6" + p.getName() + "'s &eteam. Do "))
+                                        .then("/team join " + p.getName() + " to join!").color(ChatColor.YELLOW).command("/team join " + p.getName());
+                                fancyMessage.send(target);
                                 new BukkitRunnable(){
 
                                     @Override
@@ -303,9 +308,7 @@ public class CmdTeamBase implements UHCCommand{
                                             target.sendMessage(ChatUtils.message("&cYour team invite from &6" + p.getName() + " &chas expired!"));
 
                                         }
-
                                     }
-
                                 }.runTaskLater(UHC.get(), 20*60);
                                 return;
                             }

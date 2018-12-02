@@ -17,6 +17,7 @@ import me.blok601.nightshadeuhc.stats.command.LeaderboardsCommand;
 import me.blok601.nightshadeuhc.stats.command.StatsCommand;
 import me.blok601.nightshadeuhc.teams.CmdTeamBase;
 import me.blok601.nightshadeuhc.teams.CmdTeams;
+import me.blok601.nightshadeuhc.teams.PMOresCommand;
 import me.blok601.nightshadeuhc.teams.RvBCommand;
 
 /**
@@ -110,7 +111,8 @@ public class Commands {
                 new MoleCommand(),
                 new SetMoleCommand(),
                 new ToggleMobsCommand(),
-                new ClearTreesCommand()
+                new ClearTreesCommand(),
+                new PMOresCommand()
         };
     }
 

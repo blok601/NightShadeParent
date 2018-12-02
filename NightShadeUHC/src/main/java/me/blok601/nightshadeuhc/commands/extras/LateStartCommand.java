@@ -35,7 +35,15 @@ public class LateStartCommand implements UHCCommand{
 
         Player target = Bukkit.getPlayer(args[0]);
         if(target == null){
-            p.sendMessage(ChatUtils.message("&cThat player couldn't be found!"));
+            if (GameManager.getLateScatter().contains(args[0].toLowerCase())) {
+                p.sendMessage(ChatUtils.message("&cThat player is already in the late scatter queue!"));
+                return;
+            }
+
+            String name = args[0];
+            GameManager.getLateScatter().add(name.toLowerCase());
+            GameManager.getWhitelist().add(name.toLowerCase());
+            p.sendMessage(ChatUtils.message("&a" + name + " &ehas been whitelisted and added to the late scatter queue!"));
             return;
         }
 

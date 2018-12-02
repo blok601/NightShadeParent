@@ -387,9 +387,8 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         UHCPlayer gamePlayer1;
         NSPlayer user;
         for (Player pl : Bukkit.getOnlinePlayers()){
-            user = NSPlayer.get(pl.getUniqueId());
             gamePlayer1 = UHCPlayer.get(pl.getUniqueId());
-            if(!user.hasRank(Rank.TRIAL) && !gamePlayer1.isSpectator()){
+            if(!gamePlayer1.isSpectator()){
                 pl.hidePlayer(p);
             }
         }

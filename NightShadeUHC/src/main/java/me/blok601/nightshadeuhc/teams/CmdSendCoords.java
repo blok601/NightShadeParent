@@ -1,6 +1,5 @@
 package me.blok601.nightshadeuhc.teams;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -23,10 +22,7 @@ public class CmdSendCoords implements CommandExecutor{
 			Double  x = Math.ceil(l.getX());
 			Double y = Math.ceil(l.getY());
 			Double z =  Math.ceil(l.getZ());
-			for (String str : TeamManager.getInstance().getTeam(p).getMembers()){
-				if(Bukkit.getPlayer(str) == null) continue;
-				Bukkit.getPlayer(str).sendMessage(ChatColor.DARK_AQUA + "[Team] " + ChatColor.GOLD + p.getName() + ChatColor.AQUA + " " + x + "X " + y + "Y " + z + "Z");
-			}
+			TeamManager.getInstance().getTeam(p).message("&6" + p.getName() + " &b" + x + "X " + y + "Y " + z + "Z");
 		}else{
 			return false;
 		}

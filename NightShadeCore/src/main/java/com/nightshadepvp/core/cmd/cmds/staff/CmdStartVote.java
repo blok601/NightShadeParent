@@ -59,7 +59,7 @@ public class CmdStartVote extends NightShadeCoreCommand {
                 if (YES_VOTES > NO_VOTES) {
                     Bukkit.broadcastMessage(ChatUtils.format("&3Vote&8» &aYes &ehas won with &b" + YES_VOTES + " &evote&8(&es&8)&e!"));
                 } else if (NO_VOTES > YES_VOTES) {
-                    Bukkit.broadcastMessage(ChatUtils.format("&&3Vote&8» &cNo &ehas won with &b" + NO_VOTES + " &evote&8(&es&8)&e!"));
+                    Bukkit.broadcastMessage(ChatUtils.format("&3Vote&8» &cNo &ehas won with &b" + NO_VOTES + " &evote&8(&es&8)&e!"));
                 } else if (YES_VOTES == NO_VOTES) {
                     Bukkit.broadcastMessage(ChatUtils.format("&3Vote&8» &eYes and No tied with &b" + YES_VOTES + " &evote&8(&es&8)&e!"));
                 }

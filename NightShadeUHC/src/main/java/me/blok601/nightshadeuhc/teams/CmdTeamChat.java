@@ -1,8 +1,6 @@
 package me.blok601.nightshadeuhc.teams;
 
 import me.blok601.nightshadeuhc.utils.ChatUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -32,11 +30,7 @@ public class CmdTeamChat implements CommandExecutor{
 				}
 				
 				String r = message.toString().trim();
-				
-				for (String string : TeamManager.getInstance().getTeam(p).getMembers()){
-					if(Bukkit.getPlayer(string) == null) continue;
-					Bukkit.getPlayer(string).sendMessage(ChatColor.DARK_AQUA + "[Team] " + ChatColor.GOLD + p.getName() + ": " + ChatColor.AQUA + r);
-				}
+				TeamManager.getInstance().getTeam(p).message("&6" + p.getName() + ": &b" + r);
 				
 				
 			}else{
