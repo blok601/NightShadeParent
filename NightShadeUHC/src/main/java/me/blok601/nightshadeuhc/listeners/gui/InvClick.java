@@ -68,6 +68,7 @@ public class InvClick implements Listener {
 
             if (slot == 26) {
                 new SettingsGUI("UHC Game Settings", 2, p);
+                return;
             }
 
             int cBorder = GameManager.getShrinks()[slot];
