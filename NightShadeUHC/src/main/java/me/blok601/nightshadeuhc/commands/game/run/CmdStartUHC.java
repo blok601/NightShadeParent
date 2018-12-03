@@ -88,7 +88,7 @@ public class CmdStartUHC implements UHCCommand {
 							Freeze.start();
 							UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isInArena).forEach(UHCPlayer::leaveArena);
 							GameState.setState(GameState.STARTING);
-							new ScatterTask(valid, GameManager.getWorld(), GameManager.getRadius(), GameManager.getHost(), GameManager.getFinalHealTime(), GameManager.getPvpTime(), GameManager.getBorderTime(), GameManager.isIsTeam(), GameManager.getFirstShrink()).runTaskTimer(UHC.get(), 0, 4);
+							new ScatterTask(valid, GameManager.getWorld(), GameManager.getRadius(), GameManager.getHost(), GameManager.getFinalHealTime(), GameManager.getPvpTime(), GameManager.getBorderTime(), GameManager.isIsTeam(), GameManager.getFirstShrink(), GameManager.getMeetupTime()).runTaskTimer(UHC.get(), 0, 4);
 						}else{
 							arrayList.remove(p.getName());
 						}

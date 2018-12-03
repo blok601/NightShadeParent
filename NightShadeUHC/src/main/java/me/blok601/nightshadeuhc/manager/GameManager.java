@@ -5,13 +5,12 @@ import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Logger;
 import com.wimbli.WorldBorder.BorderData;
 import lombok.Getter;
+import lombok.Setter;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.entity.object.CachedColor;
 import me.blok601.nightshadeuhc.entity.object.PlayerRespawnObject;
-import me.blok601.nightshadeuhc.tasks.FinalHealTask;
-import me.blok601.nightshadeuhc.tasks.PvPTask;
+import me.blok601.nightshadeuhc.tasks.*;
 import me.blok601.nightshadeuhc.tasks.TimerTask;
-import me.blok601.nightshadeuhc.tasks.WorldBorderTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -60,6 +59,10 @@ public class GameManager {
 
     private static int borderTime = 0;
 
+    @Getter
+    @Setter
+    private static int meetupTime = 0;
+
     private static boolean isTeam;
 
     private static Player host;
@@ -70,6 +73,9 @@ public class GameManager {
     private static FinalHealTask finalHealTask;
     private static PvPTask pvpTask;
     private static WorldBorderTask worldBorderTask;
+    @Getter
+    @Setter
+    private static MeetupTask meetupTask;
 
     private static int[] shrinks;
     private static int borderID;

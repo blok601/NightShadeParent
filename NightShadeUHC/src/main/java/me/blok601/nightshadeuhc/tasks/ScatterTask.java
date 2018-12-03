@@ -36,9 +36,10 @@ public class ScatterTask extends BukkitRunnable {
     private int borderTime;
     private boolean isTeam;
     private int firstShrink;
+    private int meetupTime;
 
 
-    public ScatterTask(ArrayList<Player> players, World world, int radius, Player host, int finalHealTime, int pvpTime, int borderTime, boolean isTeam, int firstShrink){
+    public ScatterTask(ArrayList<Player> players, World world, int radius, Player host, int finalHealTime, int pvpTime, int borderTime, boolean isTeam, int firstShrink, int meeutpTime){
         this.world = world;
         this.players = players;
         this.radius = radius;
@@ -48,6 +49,7 @@ public class ScatterTask extends BukkitRunnable {
         this.borderTime = borderTime;
         this.isTeam = isTeam;
         this.firstShrink = firstShrink;
+        this.meetupTime = meeutpTime;
         GameManager.IS_SCATTERING = true;
         Bukkit.getOnlinePlayers().stream().filter(o -> !GameManager.getWhitelist().contains(o.getName().toLowerCase())).forEach(o -> GameManager.getWhitelist().add(o.getName().toLowerCase()));
         GameManager.setWhitelistEnabled(true);
@@ -73,7 +75,7 @@ public class ScatterTask extends BukkitRunnable {
                         GameManager.IS_SCATTERING  = false;
                         Bukkit.getOnlinePlayers().stream().filter(o -> !NSPlayer.get(o.getUniqueId()).hasRank(Rank.TRIAL)).forEach(o -> o.setGameMode(GameMode.SURVIVAL));
 
-                        new GameStartTask(host, finalHealTime, pvpTime, borderTime, world, firstShrink, isTeam).runTaskTimer(UHC.get(), 0, Util.TICKS);
+                        new GameStartTask(host, finalHealTime, pvpTime, borderTime, world, firstShrink, meetupTime).runTaskTimer(UHC.get(), 0, Util.TICKS);
                         this.cancel();
                         return;
                     }else{
@@ -126,7 +128,7 @@ public class ScatterTask extends BukkitRunnable {
                     Bukkit.getOnlinePlayers().forEach(o -> o.removePotionEffect(PotionEffectType.WATER_BREATHING));
                     Bukkit.getOnlinePlayers().forEach(o -> o.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE));
                     GameManager.IS_SCATTERING  = false;
-                    new GameStartTask(host, finalHealTime, pvpTime, borderTime, world, firstShrink, isTeam).runTaskTimer(UHC.get(), 0, Util.TICKS);
+                    new GameStartTask(host, finalHealTime, pvpTime, borderTime, world, firstShrink, meetupTime).runTaskTimer(UHC.get(), 0, Util.TICKS);
                     this.cancel();
                 }
             }else{
@@ -173,7 +175,7 @@ public class ScatterTask extends BukkitRunnable {
                 Bukkit.getOnlinePlayers().forEach(o -> o.removePotionEffect(PotionEffectType.WATER_BREATHING));
                 Bukkit.getOnlinePlayers().forEach(o -> o.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE));
                 GameManager.IS_SCATTERING  = false;
-                new GameStartTask(host, finalHealTime, pvpTime, borderTime, world, firstShrink, isTeam).runTaskTimer(UHC.get(), 0, Util.TICKS);
+                new GameStartTask(host, finalHealTime, pvpTime, borderTime, world, firstShrink, meetupTime).runTaskTimer(UHC.get(), 0, Util.TICKS);
                 this.cancel();
             }
 
@@ -193,7 +195,7 @@ public class ScatterTask extends BukkitRunnable {
                 GameManager.IS_SCATTERING  = false;
                 Bukkit.getOnlinePlayers().stream().filter(o -> !NSPlayer.get(o.getUniqueId()).hasRank(Rank.TRIAL)).forEach(o -> o.setGameMode(GameMode.SURVIVAL));
 
-                new GameStartTask(host, finalHealTime, pvpTime, borderTime, world, firstShrink, isTeam).runTaskTimer(UHC.get(), 0, Util.TICKS);
+                new GameStartTask(host, finalHealTime, pvpTime, borderTime, world, firstShrink, meetupTime).runTaskTimer(UHC.get(), 0, Util.TICKS);
                 this.cancel();
                 return;
             }else{

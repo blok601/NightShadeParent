@@ -28,6 +28,7 @@ public class SettingsGUI {
         } else {
             fHeal.lore(ChatUtils.format("&6" + GameManager.getFinalHealTime() / 60 + " minutes"));
         }
+        fHeal.lore("&7(&6oi&r&7) &6&oTime until Final Heal is given");
 
         ItemBuilder pTime = new ItemBuilder(Material.PAPER).name(ChatUtils.format("&ePvP Time"));
         int pvpTime = GameManager.getPvpTime();
@@ -36,6 +37,7 @@ public class SettingsGUI {
         } else {
             pTime.lore(ChatUtils.format("&6" + GameManager.getPvpTime() / 60 + " minutes"));
         }
+        pTime.lore("&7(&6oi&r&7) &6&oTime until PvP is enabled");
 
         ItemBuilder bTime = new ItemBuilder(Material.PAPER).name(ChatUtils.format("&eBorder Shrink Time"));
         int borderTime = GameManager.getBorderTime();
@@ -44,15 +46,16 @@ public class SettingsGUI {
         } else {
             bTime.lore(ChatUtils.format("&6" + GameManager.getBorderTime() / 60 + " minutes"));
         }
+        bTime.lore("&7(&6oi&r&7) &6&oTime until first border shrink");
 
-//        ItemBuilder pearlTime = new ItemBuilder(Material.ENDER_PEARL).name(ChatUtils.format("&eEnderpearl Damage"));
-//        //pearlTime.lore(GameManager.isPearlDamage() ? ChatUtils.format("&aTrue") : ChatUtils.format("&cFalse"));
-//        pearlTime.lore(ComponentHandler.get().getComponent("Enderpearl Damage").isEnabled() ? ChatUtils.format("&aEnabled") : ChatUtils.format("&aDisabled"));
-//
-//        ItemBuilder abs = new ItemBuilder(Material.GOLDEN_APPLE).name(ChatUtils.format("&eAbsorption"));
-//        //abs.lore(GameManager.isAbsorption() ? ChatUtils.format("&aTrue") : ChatUtils.format("&cFalse"));
-//        abs.lore(ComponentHandler.get().getComponent("Absorption").isEnabled() ? ChatUtils.format("&aEnabled") : ChatUtils.format("&aDisabled"));
-
+        ItemBuilder mTime = new ItemBuilder(Material.PAPER).name("&eMeetup Time");
+        int meetup = GameManager.getMeetupTime();
+        if (meetup == 0 && GameState.getState() == GameState.WAITING) {
+            mTime.lore("&6Not Set");
+        } else {
+            mTime.lore("&6" + borderTime / 60 + " minutes");
+        }
+        bTime.lore("&7(&6oi&r&7) &6&oTime until \"Meetup\" begins");
 
         ItemBuilder isTeam = new ItemBuilder(Material.SIGN).name(ChatUtils.format("&eTeam Game"));
         isTeam.lore(GameManager.isIsTeam() ? ChatUtils.format("&aYes") : ChatUtils.format("&cNo"));
@@ -82,6 +85,7 @@ public class SettingsGUI {
         guiBuilder.item(0, fHeal.make());
         guiBuilder.item(1, pTime.make());
         guiBuilder.item(2, bTime.make());
+        guiBuilder.item(3, mTime.make());
         guiBuilder.item(5, isTeam.make());
         guiBuilder.item(8, newSkull.make());
         guiBuilder.item(7, scenarios.make());

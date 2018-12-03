@@ -167,6 +167,7 @@ public class InvClick implements Listener {
                 } else {
                     builder.lore(ChatUtils.format("&6" + GameManager.getFinalHealTime() / 60 + " minutes"), true);
                 }
+                builder.lore("&7(&6oi&r&7) &6&oTime until Final Heal is given");
 
                 e.getInventory().setItem(0, builder.make());
                 p.updateInventory();
@@ -197,6 +198,7 @@ public class InvClick implements Listener {
                 } else {
                     builder.lore(ChatUtils.format("&6" + GameManager.getPvpTime() / 60 + " minutes"), true);
                 }
+                builder.lore("&7(&6oi&r&7) &6&oTime until PvP is enabled");
 
                 e.getInventory().setItem(e.getSlot(), builder.make());
                 p.updateInventory();
@@ -228,9 +230,43 @@ public class InvClick implements Listener {
                 } else {
                     builder.lore(ChatUtils.format("&6" + GameManager.getBorderTime() / 60 + " minutes"), true);
                 }
+                builder.lore("&7(&6oi&r&7) &6&oTime until First Border Shrink");
 
                 e.getInventory().setItem(e.getSlot(), builder.make());
                 p.updateInventory();
+            } else if (e.getSlot() == 3) {
+                //Meetup Time
+
+                if (GameState.getState() == GameState.INGAME) {
+                    p.sendMessage(ChatUtils.message("&cYou can't change this setting while the game is running!"));
+                    return;
+                }
+
+                if (e.getClick() == ClickType.LEFT) {
+                    GameManager.setMeetupTime(GameManager.getMeetupTime() + 300); // Add 5 mins
+                } else if (e.getClick() == ClickType.RIGHT) {
+                    if (GameManager.getMeetupTime() - 300 < 0) {
+                        return;
+                    }
+                    GameManager.setMeetupTime(GameManager.getMeetupTime() - 300); // remove 5 mins
+                } else {
+                    return;
+                }
+
+                ItemStack itemStack = e.getCurrentItem(); // Know its the final heal one
+                ItemBuilder builder = new ItemBuilder(itemStack);
+                builder.removeLore(0);
+                int borderTime = GameManager.getMeetupTime();
+                if (borderTime == 0 && GameState.getState() != GameState.WAITING) {
+                    builder.lore(ChatUtils.format("&6Not set or already passed!"), true);
+                } else {
+                    builder.lore(ChatUtils.format("&6" + GameManager.getMeetupTime() / 60 + " minutes"), true);
+                }
+                builder.lore("&7(&6oi&r&7) &6&oTime until \"Meetup\" begins");
+
+                e.getInventory().setItem(e.getSlot(), builder.make());
+                p.updateInventory();
+
             }
         }
 

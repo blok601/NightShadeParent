@@ -89,6 +89,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
 
         registerCommands();
         registerListeners();
+
         setupExtraDatabase();
         GameManager.setup();
         scoreboardManager = new ScoreboardManager();

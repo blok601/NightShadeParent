@@ -41,15 +41,16 @@ public class GameStartTask extends BukkitRunnable {
     private int firstShrink;
     private boolean isTeam;
     private int counter;
+    private int meetupTime;
 
-    public GameStartTask(Player p, int finalHealTime, int pvpTime, int borderTime, World world, int firstShrink, boolean isTeam) {
+    public GameStartTask(Player p, int finalHealTime, int pvpTime, int borderTime, World world, int firstShrink, int meetupTime) {
         this.p = p;
         this.finalHealTime = finalHealTime;
         this.pvpTime = pvpTime;
         this.world = world;
         this.borderTime = borderTime;
         this.firstShrink = firstShrink;
-        this.isTeam = isTeam;
+        this.meetupTime = meetupTime;
         this.counter = 120;
         if (TeamManager.getInstance().isTeamManagement()) TeamManager.getInstance().setTeamManagement(false);
         if (GameManager.isIsTeam()) {
@@ -144,6 +145,12 @@ public class GameStartTask extends BukkitRunnable {
                        worldBorderTask.runTaskTimer(UHC.get(), 0, Util.TICKS);
                    }
                    GameManager.setWorldBorderTask(worldBorderTask);
+
+                   MeetupTask meetupTask = new MeetupTask(meetupTime);
+                   if (meetupTime > 0) {
+                       meetupTask.runTaskTimer(UHC.get(), 0, Util.TICKS);
+                   }
+                   GameManager.setMeetupTask(meetupTask);
 
 
                    GameState.setState(GameState.INGAME);
