@@ -28,7 +28,7 @@ public class SettingsGUI {
         } else {
             fHeal.lore(ChatUtils.format("&6" + GameManager.getFinalHealTime() / 60 + " minutes"));
         }
-        fHeal.lore("&7(&6oi&r&7) &6&oTime until Final Heal is given");
+        fHeal.lore("&7(&6&oi&r&7) &6&oTime until Final Heal is given");
 
         ItemBuilder pTime = new ItemBuilder(Material.PAPER).name(ChatUtils.format("&ePvP Time"));
         int pvpTime = GameManager.getPvpTime();
@@ -37,7 +37,7 @@ public class SettingsGUI {
         } else {
             pTime.lore(ChatUtils.format("&6" + GameManager.getPvpTime() / 60 + " minutes"));
         }
-        pTime.lore("&7(&6oi&r&7) &6&oTime until PvP is enabled");
+        pTime.lore("&7(&6&oi&r&7) &6&oTime until PvP is enabled");
 
         ItemBuilder bTime = new ItemBuilder(Material.PAPER).name(ChatUtils.format("&eBorder Shrink Time"));
         int borderTime = GameManager.getBorderTime();
@@ -46,7 +46,7 @@ public class SettingsGUI {
         } else {
             bTime.lore(ChatUtils.format("&6" + GameManager.getBorderTime() / 60 + " minutes"));
         }
-        bTime.lore("&7(&6oi&r&7) &6&oTime until first border shrink");
+        bTime.lore("&7(&6&oi&r&7) &6&oTime until first border shrink");
 
         ItemBuilder mTime = new ItemBuilder(Material.PAPER).name("&eMeetup Time");
         int meetup = GameManager.getMeetupTime();
@@ -55,7 +55,7 @@ public class SettingsGUI {
         } else {
             mTime.lore("&6" + borderTime / 60 + " minutes");
         }
-        bTime.lore("&7(&6oi&r&7) &6&oTime until \"Meetup\" begins");
+        bTime.lore("&7(&6&oi&r&7) &6&oTime until \"Meetup\" begins");
 
         ItemBuilder isTeam = new ItemBuilder(Material.SIGN).name(ChatUtils.format("&eTeam Game"));
         isTeam.lore(GameManager.isIsTeam() ? ChatUtils.format("&aYes") : ChatUtils.format("&cNo"));

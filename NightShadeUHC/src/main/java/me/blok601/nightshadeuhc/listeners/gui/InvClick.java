@@ -6,6 +6,7 @@ import me.blok601.nightshadeuhc.GameState;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.gui.BorderConfigGUI;
 import me.blok601.nightshadeuhc.gui.ComponentGUI;
+import me.blok601.nightshadeuhc.gui.SettingsGUI;
 import me.blok601.nightshadeuhc.gui.leaderboards.StatsGUI;
 import me.blok601.nightshadeuhc.gui.leaderboards.TopKillsGUI;
 import me.blok601.nightshadeuhc.gui.leaderboards.TopWinnersGUI;
@@ -64,6 +65,11 @@ public class InvClick implements Listener {
             }
 
             int slot = e.getSlot();
+
+            if (slot == 26) {
+                new SettingsGUI("UHC Game Settings", 2, p);
+            }
+
             int cBorder = GameManager.getShrinks()[slot];
 
             if(e.getClick() == ClickType.LEFT){
@@ -167,7 +173,7 @@ public class InvClick implements Listener {
                 } else {
                     builder.lore(ChatUtils.format("&6" + GameManager.getFinalHealTime() / 60 + " minutes"), true);
                 }
-                builder.lore("&7(&6oi&r&7) &6&oTime until Final Heal is given");
+                builder.lore("&7(&6&oi&r&7) &6&oTime until Final Heal is given");
 
                 e.getInventory().setItem(0, builder.make());
                 p.updateInventory();
@@ -198,7 +204,7 @@ public class InvClick implements Listener {
                 } else {
                     builder.lore(ChatUtils.format("&6" + GameManager.getPvpTime() / 60 + " minutes"), true);
                 }
-                builder.lore("&7(&6oi&r&7) &6&oTime until PvP is enabled");
+                builder.lore("&7(&6&oi&r&7) &6&oTime until PvP is enabled");
 
                 e.getInventory().setItem(e.getSlot(), builder.make());
                 p.updateInventory();
@@ -230,7 +236,7 @@ public class InvClick implements Listener {
                 } else {
                     builder.lore(ChatUtils.format("&6" + GameManager.getBorderTime() / 60 + " minutes"), true);
                 }
-                builder.lore("&7(&6oi&r&7) &6&oTime until First Border Shrink");
+                builder.lore("&7(&6&oi&r&7) &6&oTime until First Border Shrink");
 
                 e.getInventory().setItem(e.getSlot(), builder.make());
                 p.updateInventory();
@@ -262,7 +268,7 @@ public class InvClick implements Listener {
                 } else {
                     builder.lore(ChatUtils.format("&6" + GameManager.getMeetupTime() / 60 + " minutes"), true);
                 }
-                builder.lore("&7(&6oi&r&7) &6&oTime until \"Meetup\" begins");
+                builder.lore("&7(&6&oi&r&7) &6&oTime until \"Meetup\" begins");
 
                 e.getInventory().setItem(e.getSlot(), builder.make());
                 p.updateInventory();

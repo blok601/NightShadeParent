@@ -14,7 +14,7 @@ public class BorderConfigGUI {
     public BorderConfigGUI(Player player){
         GuiBuilder builder = new GuiBuilder();
         builder.name("&eBorder Config");
-        builder.rows(1);
+        builder.rows(3);
 
         ItemBuilder item;
         for (int i = 0; i < 9; i++){
@@ -25,6 +25,8 @@ public class BorderConfigGUI {
             }
             builder.item(i, item.make());
         }
+
+        builder.item(26, new ItemBuilder(Material.ARROW).name("&cBack").lore("&eClick to go back to the main menu").make());
 
         player.openInventory(builder.make());
     }

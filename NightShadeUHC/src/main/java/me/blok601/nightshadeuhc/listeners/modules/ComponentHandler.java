@@ -1,7 +1,9 @@
 package me.blok601.nightshadeuhc.listeners.modules;
 
 import me.blok601.nightshadeuhc.UHC;
+import me.blok601.nightshadeuhc.gui.SettingsGUI;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -60,6 +62,10 @@ public class ComponentHandler {
     }
 
     public boolean handleClick(ItemStack stack, InventoryClickEvent e, int slot){
+
+        if (slot == 26) { //main menu slot
+            new SettingsGUI("UHC Game Settings", 2, (Player) e.getWhoClicked());
+        }
 
         if(getComponent(stack) != null){
             Component c  = getComponent(stack);
