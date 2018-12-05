@@ -2,10 +2,10 @@ package me.blok601.nightshadeuhc.commands.game.run;
 
 
 import com.nightshadepvp.core.Rank;
-import com.nightshadepvp.core.utils.ChatUtils;
 import me.blok601.nightshadeuhc.GameState;
-import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.commands.UHCCommand;
+import me.blok601.nightshadeuhc.manager.GameManager;
+import me.blok601.nightshadeuhc.utils.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -31,7 +31,24 @@ public class ManualGameCommand implements UHCCommand {
             return;
         }
 
-        Bukkit.getScheduler().cancelTasks(UHC.get());
+        GameManager manager = GameManager.get();
+
+        if(manager.getFinalHealTask() != null){
+            Bukkit.getScheduler().cancelTask(GameManager.get().getFinalHealTask().getTaskId());
+        }
+
+        if(manager.getPvpTask() != null){
+            Bukkit.getScheduler().cancelTask(GameManager.get().getPvpTask().getTaskId());
+        }
+
+        if (manager.getMeetupTask() != null) {
+            Bukkit.getScheduler().cancelTask(manager.getMeetupTask().getTaskId());
+        }
+
+        if(manager.getWorldBorderTask() != null){
+            Bukkit.getScheduler().cancelTask(GameManager.get().getWorldBorderTask().getTaskId());
+        }
+
         p.sendMessage(ChatUtils.message("&eSuccessfully canceled all game tasks! You are now in manual mode!"));
         p.sendMessage(ChatUtils.message("&eYou are now in manual mode!"));
     }
