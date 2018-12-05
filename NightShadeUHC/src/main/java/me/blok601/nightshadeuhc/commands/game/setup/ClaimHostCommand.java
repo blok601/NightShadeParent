@@ -25,14 +25,14 @@ public class ClaimHostCommand implements UHCCommand {
     public void onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         Player p = (Player) commandSender;
 
-        if(GameManager.getHost() != null){
-            if(GameManager.getHost().getName().equalsIgnoreCase(p.getName())){
+        if(GameManager.get().getHost() != null){
+            if(GameManager.get().getHost().getName().equalsIgnoreCase(p.getName())){
                 p.sendMessage(ChatUtils.message("&cYou are already the host for this game!"));
                 return;
             }
         }
 
-        GameManager.setHost(p);
+        GameManager.get().setHost(p);
         p.sendMessage(ChatUtils.message("&cYou are now the host!"));
         Util.staffLog(ChatUtils.format("&b" + p.getName() + " is now the host!"));
 

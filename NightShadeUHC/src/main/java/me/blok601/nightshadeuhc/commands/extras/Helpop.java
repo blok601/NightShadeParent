@@ -50,16 +50,16 @@ public class Helpop implements UHCCommand{
 				return;
 			}else{
 
-				if(GameManager.getHelpOpMutes().containsKey(p.getUniqueId())){
-					if(!GameManager.getHelpopMuteReasons().containsKey(p.getUniqueId())){
+				if(GameManager.get().getHelpOpMutes().containsKey(p.getUniqueId())){
+					if(!GameManager.get().getHelpopMuteReasons().containsKey(p.getUniqueId())){
 						//Check if they both have it
-						GameManager.getHelpopMuteReasons().remove(p.getUniqueId());
-						GameManager.getHelpOpMutes().remove(p.getUniqueId());
+						GameManager.get().getHelpopMuteReasons().remove(p.getUniqueId());
+						GameManager.get().getHelpOpMutes().remove(p.getUniqueId());
 						return;
 					}
 
 					//They both have
-					p.sendMessage(ChatUtils.message("&cYou are currently helpop muted for&8: &3" + TimeUtils.formatSeconds(GameManager.getHelpOpMutes().get(p.getUniqueId())) + " &efor&8: &3" + GameManager.getHelpopMuteReasons().get(p.getUniqueId())));
+					p.sendMessage(ChatUtils.message("&cYou are currently helpop muted for&8: &3" + TimeUtils.formatSeconds(GameManager.get().getHelpOpMutes().get(p.getUniqueId())) + " &efor&8: &3" + GameManager.get().getHelpopMuteReasons().get(p.getUniqueId())));
 					return;
 				}
 

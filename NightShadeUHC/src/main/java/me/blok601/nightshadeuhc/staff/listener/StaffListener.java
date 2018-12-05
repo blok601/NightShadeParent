@@ -150,7 +150,7 @@ public class StaffListener implements Listener {
                     //Miners
                     Random random = ThreadLocalRandom.current();
                     ArrayList<Player> players = new ArrayList<>();
-                    UHCPlayerColl.get().getAllOnline().stream().filter(up -> !up.isSpectator()).filter(up -> up.getPlayer().getWorld().getName().equalsIgnoreCase(GameManager.getWorld().getName())).filter(up -> up.getPlayer().getLocation().getY() <= 40).forEach(up -> players.add(up.getPlayer()));
+                    UHCPlayerColl.get().getAllOnline().stream().filter(up -> !up.isSpectator()).filter(up -> up.getPlayer().getWorld().getName().equalsIgnoreCase(GameManager.get().getWorld().getName())).filter(up -> up.getPlayer().getLocation().getY() <= 40).forEach(up -> players.add(up.getPlayer()));
                     if(players.size() == 0){
                         p.sendMessage(ChatUtils.message("&cThere are no players mining right now!"));
                         return;

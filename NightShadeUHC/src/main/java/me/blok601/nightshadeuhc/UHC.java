@@ -91,7 +91,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         registerListeners();
 
         setupExtraDatabase();
-        GameManager.setup();
+        GameManager.get().setup();
         scoreboardManager = new ScoreboardManager();
         Bukkit.getScheduler().runTaskTimer(this, () -> {
             scoreboardManager.getPlayerScoreboards().values().forEach(PlayerScoreboard::update);
@@ -137,19 +137,19 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
 
         if (Bukkit.getPluginManager().getPlugin("ViaRewind") != null) {
             //UHC2
-            GameManager.setServerType("UHC2");
+            GameManager.get().setServerType("UHC2");
         } else {
-            GameManager.setServerType("UHC1");
+            GameManager.get().setServerType("UHC1");
         }
 
 
-        if(GameManager.getServerType().equalsIgnoreCase("UHC2")){
+        if(GameManager.get().getServerType().equalsIgnoreCase("UHC2")){
             hideEnchants();
             new OldEnchanting(this);
         }
 
         Bukkit.getConsoleSender().sendMessage(ChatUtils.message("&aNightShadePvPUHC " + getDescription().getVersion() + " has been successfully enabled!"));
-        Bukkit.getConsoleSender().sendMessage(ChatUtils.message("&eDetected Server&8: &3" + GameManager.getServerType()));
+        Bukkit.getConsoleSender().sendMessage(ChatUtils.message("&eDetected Server&8: &3" + GameManager.get().getServerType()));
 
     }
 

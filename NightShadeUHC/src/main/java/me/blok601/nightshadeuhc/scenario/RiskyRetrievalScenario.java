@@ -37,7 +37,7 @@ public class RiskyRetrievalScenario extends Scenario {
     if(!isEnabled()) {
       return;
     }
-    Block block = GameManager.getWorld().getHighestBlockAt(0, 0);
+    Block block = GameManager.get().getWorld().getHighestBlockAt(0, 0);
     block.setType(Material.ENDER_CHEST);
   }
 }

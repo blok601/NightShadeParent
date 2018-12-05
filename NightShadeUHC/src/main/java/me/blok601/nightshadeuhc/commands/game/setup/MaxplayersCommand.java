@@ -40,7 +40,7 @@ public class MaxplayersCommand implements UHCCommand {
             amt = Bukkit.getMaxPlayers();
         }
 
-        GameManager.setMaxPlayers(amt);
+        GameManager.get().setMaxPlayers(amt);
         p.sendMessage(ChatUtils.message("&eUpdated max players to &a" + args[0]));
     }
 

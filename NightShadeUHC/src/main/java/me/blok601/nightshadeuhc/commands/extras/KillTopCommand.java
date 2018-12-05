@@ -34,7 +34,7 @@ public class KillTopCommand implements UHCCommand{
             return;
         }
 
-        if(!GameManager.getWorld().getPVP()){
+        if(!GameManager.get().getWorld().getPVP()){
             p.sendMessage(ChatUtils.message("&cPvP has not yet been enabled!"));
             return;
         }
@@ -46,10 +46,10 @@ public class KillTopCommand implements UHCCommand{
         HashMap<String, Integer> k1 = new HashMap<>();
 
         UHCPlayer gamePlayer;
-        for (Map.Entry<UUID, Integer> entry : GameManager.getKills().entrySet()){
+        for (Map.Entry<UUID, Integer> entry : GameManager.get().getKills().entrySet()){
             gamePlayer = UHCPlayer.get(entry.getKey());
             if(Bukkit.getPlayer(entry.getKey()) == null){
-                if(GameManager.getDeathBans().contains(entry.getKey())){
+                if(GameManager.get().getDeathBans().contains(entry.getKey())){
                     k1.put("&c" + gamePlayer.getName(), entry.getValue());
                 }else{
                     k1.put("&7" + gamePlayer.getName(), entry.getValue());

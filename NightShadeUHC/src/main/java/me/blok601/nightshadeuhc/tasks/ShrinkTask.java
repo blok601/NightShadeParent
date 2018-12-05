@@ -30,12 +30,12 @@ public class ShrinkTask extends BukkitRunnable{
             @Override
             public void run() {
                 if (counter > 0) {
-                    ChatUtils.sendAll("The border will shrink to " + GameManager.getShrinks()[GameManager.getBorderID()] + " radius in " + counter);
+                    ChatUtils.sendAll("The border will shrink to " + GameManager.get().getShrinks()[GameManager.get().getBorderID()] + " radius in " + counter);
                 } else if (counter == 0) {
                     BorderData bd = com.wimbli.WorldBorder.WorldBorder.plugin.getWorldBorder(world.getName());
-                    bd.setRadius(GameManager.getShrinks()[GameManager.getBorderID()]);
-                    GameManager.genWalls(GameManager.getShrinks()[GameManager.getBorderID()]);
-                    GameManager.setBorderID(GameManager.getBorderID() + 1);
+                    bd.setRadius(GameManager.get().getShrinks()[GameManager.get().getBorderID()]);
+                    GameManager.get().genWalls(GameManager.get().getShrinks()[GameManager.get().getBorderID()]);
+                    GameManager.get().setBorderID(GameManager.get().getBorderID() + 1);
 
 
                     for (Player player : Bukkit.getOnlinePlayers()) {
@@ -44,7 +44,7 @@ public class ShrinkTask extends BukkitRunnable{
                     ChatUtils.sendAll("&bThe border has shrunk to " + bd.getRadiusX() + " radius!");
 
 
-                    if (GameManager.getShrinks()[GameManager.getBorderID() + 1] == 0) {
+                    if (GameManager.get().getShrinks()[GameManager.get().getBorderID() + 1] == 0) {
                         this.cancel();
                         Util.staffLog(ChatUtils.format("&eThe final shrink has occurred"));
                         return;

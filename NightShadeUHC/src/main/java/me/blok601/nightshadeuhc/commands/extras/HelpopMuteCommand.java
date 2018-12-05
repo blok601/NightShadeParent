@@ -65,8 +65,8 @@ public class HelpopMuteCommand implements UHCCommand {
         }
 
         String reason = stringBuilder.toString().trim();
-        GameManager.getHelpOpMutes().put(target.getUniqueId(), seconds);
-        GameManager.getHelpopMuteReasons().put(target.getUniqueId(), reason);
+        GameManager.get().getHelpOpMutes().put(target.getUniqueId(), seconds);
+        GameManager.get().getHelpopMuteReasons().put(target.getUniqueId(), reason);
         target.sendMessage(ChatUtils.message("&eYou have been &4HelpOP Muted&e for a period of&8: &3" + args[1] + " &efor&8: &3" + reason));
         p.sendMessage(ChatUtils.message("&eYou have helpop muted " + targetName));
 
@@ -74,18 +74,18 @@ public class HelpopMuteCommand implements UHCCommand {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (GameManager.getHelpOpMutes().get(uuid) <= 0) {
+                if (GameManager.get().getHelpOpMutes().get(uuid) <= 0) {
                     //Could go negative if not multiple of 5
                     if(Bukkit.getPlayer(uuid).isOnline()){
                         Bukkit.getPlayer(uuid).sendMessage(ChatUtils.message("&eYou are no longer helpop muted!"));
-                        GameManager.getHelpOpMutes().remove(uuid);
-                        GameManager.getHelpopMuteReasons().remove(uuid);
+                        GameManager.get().getHelpOpMutes().remove(uuid);
+                        GameManager.get().getHelpopMuteReasons().remove(uuid);
                         return;
                     }
                     cancel();
                     return;
                 }
-                GameManager.getHelpOpMutes().replace(uuid, GameManager.getHelpOpMutes().get(uuid) - 5);
+                GameManager.get().getHelpOpMutes().replace(uuid, GameManager.get().getHelpOpMutes().get(uuid) - 5);
 
             }
         }.runTaskTimer(UHC.get(), 0, 100L); //Update every 5 seconds - no strain

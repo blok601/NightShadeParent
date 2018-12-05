@@ -38,10 +38,10 @@ public class MolesScenario extends Scenario{
     @EventHandler
     public void onEnable(ScenarioEnableEvent e){
         if(e.getScenario().getName().equalsIgnoreCase("Moles")){
-            if(!GameManager.isIsTeam()){
+            if(!GameManager.get().isIsTeam()){
                 e.setCancelled(true);
-                if(GameManager.getHost() != null){
-                    GameManager.getHost().sendMessage(ChatUtils.format("&4Moles» &cI can't be enabled in a non-teams game! Enable teams first!"));
+                if(GameManager.get().getHost() != null){
+                    GameManager.get().getHost().sendMessage(ChatUtils.format("&4Moles» &cI can't be enabled in a non-teams game! Enable teams first!"));
                     return;
                 }
             }

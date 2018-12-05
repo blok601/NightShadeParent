@@ -29,11 +29,11 @@ public class PermaKillScenario extends Scenario{
 
         if(day){
             day = false;
-            GameManager.getWorld().setTime(14000);
+            GameManager.get().getWorld().setTime(14000);
             Bukkit.broadcastMessage(ChatUtils.format(getPrefix() + " &eIt is now night!"));
         }else{
             day = true;
-            GameManager.getWorld().setTime(6000);
+            GameManager.get().getWorld().setTime(6000);
             Bukkit.broadcastMessage(ChatUtils.format(getPrefix() + " &eIt is now day!"));
 
         }
@@ -48,9 +48,9 @@ public class PermaKillScenario extends Scenario{
         }
 
 
-        GameManager.getWorld().setTime(6000);
-        GameManager.getWorld().setGameRuleValue("doDaylightCycle", "false");
-        GameManager.getWorld().setGameRuleValue("doWeatherCycle", "false");
+        GameManager.get().getWorld().setTime(6000);
+        GameManager.get().getWorld().setGameRuleValue("doDaylightCycle", "false");
+        GameManager.get().getWorld().setGameRuleValue("doWeatherCycle", "false");
         day = true;
         Bukkit.broadcastMessage(ChatUtils.format(getPrefix() + " &ePermaKill has started!"));
     }

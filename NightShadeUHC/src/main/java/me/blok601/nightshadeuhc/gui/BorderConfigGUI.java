@@ -18,10 +18,10 @@ public class BorderConfigGUI {
 
         ItemBuilder item;
         for (int i = 0; i < 9; i++){
-            if(GameManager.getShrinks()[i] == 0){
+            if(GameManager.get().getShrinks()[i] == 0){
                 item = new ItemBuilder(Material.EMERALD_BLOCK).lore(ChatUtils.format("&6Not Set"));
             }else{
-                item = new ItemBuilder(Material.EMERALD_BLOCK).lore(ChatUtils.format("&6" + GameManager.getShrinks()[i]));
+                item = new ItemBuilder(Material.EMERALD_BLOCK).lore(ChatUtils.format("&6" + GameManager.get().getShrinks()[i]));
             }
             builder.item(i, item.make());
         }

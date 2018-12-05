@@ -17,13 +17,13 @@ public class ConfigGUI {
         menu.name(ChatUtils.format("&5Game Settings"));
         menu.rows(5);
 
-        ItemStack paper = new ItemBuilder(Material.PAPER).name(ChatUtils.format("&6Time Left")).lore(ChatUtils.format("&3Final Heal» &e" + GameManager.getFinalHealTime() / 60  + " minutes"))
-                .lore(ChatUtils.format("&3PvP Enabled» &e" + GameManager.getPvpTime() / 60  + " minutes")).lore(ChatUtils.format("&3Meetup» &e" + GameManager.getBorderTime() / 60 + " minutes")).make();
+        ItemStack paper = new ItemBuilder(Material.PAPER).name(ChatUtils.format("&6Time Left")).lore(ChatUtils.format("&3Final Heal» &e" + GameManager.get().getFinalHealTime() / 60  + " minutes"))
+                .lore(ChatUtils.format("&3PvP Enabled» &e" + GameManager.get().getPvpTime() / 60  + " minutes")).lore(ChatUtils.format("&3Meetup» &e" + GameManager.get().getBorderTime() / 60 + " minutes")).make();
 
         ItemStack mining = new ItemBuilder(Material.IRON_PICKAXE).name(ChatUtils.format("&6Mining Information")).lore(ChatUtils.format("&3Stripmining» &eAbove y32 &cONLY")).lore(ChatUtils.format("&3Rollercoastering» &e&aAllowed"))
                 .make();
 
-        ItemStack apples = new ItemBuilder(Material.APPLE).name(ChatUtils.format("&6Apples")).lore(ChatUtils.format("&3Apple rates» &e"+ GameManager.getAppleRates() + "%")).make();
+        ItemStack apples = new ItemBuilder(Material.APPLE).name(ChatUtils.format("&6Apples")).lore(ChatUtils.format("&3Apple rates» &e"+ GameManager.get().getAppleRates() + "%")).make();
 
         ItemStack healing =new ItemBuilder(Material.GOLDEN_APPLE).name(ChatUtils.format("&6Healing")).lore(ChatUtils.format("&3Golden Heads» &eHeal 4 hearts")).lore(ChatUtils.format("&3Health Potions» &aOff")).make();
 
@@ -36,8 +36,8 @@ public class ConfigGUI {
 
         ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
         me.blok601.nightshadeuhc.utils.ItemBuilder newSkull = new me.blok601.nightshadeuhc.utils.ItemBuilder(skull);
-        newSkull.name(ChatUtils.format("&6Host")).lore(ChatUtils.format("&3Host» &e" + GameManager.getHost().getName()));
-        newSkull.skullOwner(GameManager.getHost().getName());
+        newSkull.name(ChatUtils.format("&6Host")).lore(ChatUtils.format("&3Host» &e" + GameManager.get().getHost().getName()));
+        newSkull.skullOwner(GameManager.get().getHost().getName());
 
         ItemStack server = new ItemBuilder(Material.PAPER).name(ChatUtils.format("&6Server Information")).lore(ChatUtils.format("&3Owners» &eBL0K, Milan and CarterAimz"))
                 .lore(ChatUtils.format("&3Provider» &eOVH")).lore(ChatUtils.format("&3Developers» &eBL0K, Braidenn_, Database and Austin")).lore(ChatUtils.format("&3Website» &ewww.nightshadepvp.com")).lore(ChatUtils.format("&3Twitter» &e@NightShadePVPMC"))

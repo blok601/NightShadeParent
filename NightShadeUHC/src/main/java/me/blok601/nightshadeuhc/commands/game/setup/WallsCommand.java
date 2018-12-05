@@ -29,7 +29,7 @@ public class WallsCommand implements UHCCommand{
         }
 
         int radius = Integer.parseInt(args[0]);
-        if(GameManager.getWorld() == null){
+        if(GameManager.get().getWorld() == null){
             p.sendMessage(ChatUtils.message("&cThe world hasn't been set yet!"));
             return;
         }
@@ -39,8 +39,8 @@ public class WallsCommand implements UHCCommand{
             return;
         }
 
-        GameManager.genWalls(radius);
-        p.sendMessage(ChatUtils.message("&eThe walls have been set to &3" + radius + " &ex &3" + radius + " &ein world&8: &3" + GameManager.getWorld().getName()));
+        GameManager.get().genWalls(radius);
+        p.sendMessage(ChatUtils.message("&eThe walls have been set to &3" + radius + " &ex &3" + radius + " &ein world&8: &3" + GameManager.get().getWorld().getName()));
     }
 
     @Override

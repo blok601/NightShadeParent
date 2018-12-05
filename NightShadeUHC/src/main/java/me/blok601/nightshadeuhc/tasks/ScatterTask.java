@@ -50,9 +50,9 @@ public class ScatterTask extends BukkitRunnable {
         this.isTeam = isTeam;
         this.firstShrink = firstShrink;
         this.meetupTime = meeutpTime;
-        GameManager.IS_SCATTERING = true;
-        Bukkit.getOnlinePlayers().stream().filter(o -> !GameManager.getWhitelist().contains(o.getName().toLowerCase())).forEach(o -> GameManager.getWhitelist().add(o.getName().toLowerCase()));
-        GameManager.setWhitelistEnabled(true);
+        GameManager.get().IS_SCATTERING = true;
+        Bukkit.getOnlinePlayers().stream().filter(o -> !GameManager.get().getWhitelist().contains(o.getName().toLowerCase())).forEach(o -> GameManager.get().getWhitelist().add(o.getName().toLowerCase()));
+        GameManager.get().setWhitelistEnabled(true);
         Util.staffLog("Everyone has been added to the whitelist and whitelist has been enabled!");
     }
 
@@ -72,7 +72,7 @@ public class ScatterTask extends BukkitRunnable {
                         Bukkit.getOnlinePlayers().forEach(o -> ActionBarUtil.sendActionBarMessage(o, "§5The scatter has finished!", 1, UHC.get()));
                         Bukkit.getOnlinePlayers().forEach(o -> o.removePotionEffect(PotionEffectType.WATER_BREATHING));
                         Bukkit.getOnlinePlayers().forEach(o -> o.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE));
-                        GameManager.IS_SCATTERING  = false;
+                        GameManager.get().IS_SCATTERING  = false;
                         Bukkit.getOnlinePlayers().stream().filter(o -> !NSPlayer.get(o.getUniqueId()).hasRank(Rank.TRIAL)).forEach(o -> o.setGameMode(GameMode.SURVIVAL));
 
                         new GameStartTask(host, finalHealTime, pvpTime, borderTime, world, firstShrink, meetupTime).runTaskTimer(UHC.get(), 0, Util.TICKS);
@@ -127,7 +127,7 @@ public class ScatterTask extends BukkitRunnable {
                     Bukkit.getOnlinePlayers().forEach(o -> ActionBarUtil.sendActionBarMessage(o, "§5The scatter has finished!", 1, UHC.get()));
                     Bukkit.getOnlinePlayers().forEach(o -> o.removePotionEffect(PotionEffectType.WATER_BREATHING));
                     Bukkit.getOnlinePlayers().forEach(o -> o.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE));
-                    GameManager.IS_SCATTERING  = false;
+                    GameManager.get().IS_SCATTERING  = false;
                     new GameStartTask(host, finalHealTime, pvpTime, borderTime, world, firstShrink, meetupTime).runTaskTimer(UHC.get(), 0, Util.TICKS);
                     this.cancel();
                 }
@@ -174,7 +174,7 @@ public class ScatterTask extends BukkitRunnable {
                 Bukkit.getOnlinePlayers().forEach(o -> ActionBarUtil.sendActionBarMessage(o, "§5The scatter has finished!", 1, UHC.get()));
                 Bukkit.getOnlinePlayers().forEach(o -> o.removePotionEffect(PotionEffectType.WATER_BREATHING));
                 Bukkit.getOnlinePlayers().forEach(o -> o.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE));
-                GameManager.IS_SCATTERING  = false;
+                GameManager.get().IS_SCATTERING  = false;
                 new GameStartTask(host, finalHealTime, pvpTime, borderTime, world, firstShrink, meetupTime).runTaskTimer(UHC.get(), 0, Util.TICKS);
                 this.cancel();
             }
@@ -192,7 +192,7 @@ public class ScatterTask extends BukkitRunnable {
                 Bukkit.getOnlinePlayers().forEach(o -> ActionBarUtil.sendActionBarMessage(o, "§5The scatter has finished!", 1, UHC.get()));
                 Bukkit.getOnlinePlayers().forEach(o -> o.removePotionEffect(PotionEffectType.WATER_BREATHING));
                 Bukkit.getOnlinePlayers().forEach(o -> o.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE));
-                GameManager.IS_SCATTERING  = false;
+                GameManager.get().IS_SCATTERING  = false;
                 Bukkit.getOnlinePlayers().stream().filter(o -> !NSPlayer.get(o.getUniqueId()).hasRank(Rank.TRIAL)).forEach(o -> o.setGameMode(GameMode.SURVIVAL));
 
                 new GameStartTask(host, finalHealTime, pvpTime, borderTime, world, firstShrink, meetupTime).runTaskTimer(UHC.get(), 0, Util.TICKS);

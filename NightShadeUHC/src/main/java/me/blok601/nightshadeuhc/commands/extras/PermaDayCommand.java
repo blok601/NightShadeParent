@@ -28,13 +28,13 @@ public class PermaDayCommand implements UHCCommand {
             p.sendMessage(ChatUtils.message("&cThe game hasn't started yet!"));
             return;
         }
-
-        if(GameManager.getWorld() == null){
+        World world = GameManager.get().getWorld();
+        if (world == null) {
             p.sendMessage(ChatUtils.message("&cThe world has not been set yet!"));
             return;
         }
 
-        World world = GameManager.getWorld();
+
         world.setTime(100);
         world.setGameRuleValue("doDaylightCycle", "false");
         world.setGameRuleValue("doWeatherCycle", "false");

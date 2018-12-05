@@ -23,7 +23,7 @@ public class ConfigCommand implements UHCCommand{
     @Override
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
-        if(GameManager.getHost() == null) {
+        if(GameManager.get().getHost() == null) {
             p.sendMessage(ChatUtils.message("&cThe game hasn't been set up yet!"));
             return;
         }

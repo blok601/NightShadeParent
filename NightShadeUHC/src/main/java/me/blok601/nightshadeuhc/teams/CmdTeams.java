@@ -24,7 +24,7 @@ public class CmdTeams implements UHCCommand{
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
 
-        if(!GameManager.isIsTeam()){
+        if(!GameManager.get().isIsTeam()){
             p.sendMessage(ChatUtils.message("&cIt is not a teams game!"));
             return;
         }

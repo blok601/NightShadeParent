@@ -22,34 +22,34 @@ public class SettingsGUI {
         guiBuilder.rows(rows);
 
         ItemBuilder fHeal = new ItemBuilder(Material.PAPER).name(ChatUtils.format("&eFinal Heal"));
-        int finalHeal = GameManager.getFinalHealTime();
+        int finalHeal = GameManager.get().getFinalHealTime();
         if (finalHeal == 0 && GameState.getState() == GameState.WAITING) {
             fHeal.lore(ChatUtils.format("&6Not set"));
         } else {
-            fHeal.lore(ChatUtils.format("&6" + GameManager.getFinalHealTime() / 60 + " minutes"));
+            fHeal.lore(ChatUtils.format("&6" + GameManager.get().getFinalHealTime() / 60 + " minutes"));
         }
         fHeal.lore("&7(&6&oi&r&7) &6&oTime until Final Heal is given");
 
         ItemBuilder pTime = new ItemBuilder(Material.PAPER).name(ChatUtils.format("&ePvP Time"));
-        int pvpTime = GameManager.getPvpTime();
+        int pvpTime = GameManager.get().getPvpTime();
         if (pvpTime == 0 && GameState.getState() == GameState.WAITING) {
             pTime.lore(ChatUtils.format("&6Not set"));
         } else {
-            pTime.lore(ChatUtils.format("&6" + GameManager.getPvpTime() / 60 + " minutes"));
+            pTime.lore(ChatUtils.format("&6" + GameManager.get().getPvpTime() / 60 + " minutes"));
         }
         pTime.lore("&7(&6&oi&r&7) &6&oTime until PvP is enabled");
 
         ItemBuilder bTime = new ItemBuilder(Material.PAPER).name(ChatUtils.format("&eBorder Shrink Time"));
-        int borderTime = GameManager.getBorderTime();
+        int borderTime = GameManager.get().getBorderTime();
         if (borderTime == 0 && GameState.getState() == GameState.WAITING) {
             bTime.lore(ChatUtils.format("&6Not set"));
         } else {
-            bTime.lore(ChatUtils.format("&6" + GameManager.getBorderTime() / 60 + " minutes"));
+            bTime.lore(ChatUtils.format("&6" + GameManager.get().getBorderTime() / 60 + " minutes"));
         }
         bTime.lore("&7(&6&oi&r&7) &6&oTime until first border shrink");
 
         ItemBuilder mTime = new ItemBuilder(Material.PAPER).name("&eMeetup Time");
-        int meetup = GameManager.getMeetupTime();
+        int meetup = GameManager.get().getMeetupTime();
         if (meetup == 0 && GameState.getState() == GameState.WAITING) {
             mTime.lore("&6Not Set");
         } else {
@@ -58,7 +58,7 @@ public class SettingsGUI {
         bTime.lore("&7(&6&oi&r&7) &6&oTime until \"Meetup\" begins");
 
         ItemBuilder isTeam = new ItemBuilder(Material.SIGN).name(ChatUtils.format("&eTeam Game"));
-        isTeam.lore(GameManager.isIsTeam() ? ChatUtils.format("&aYes") : ChatUtils.format("&cNo"));
+        isTeam.lore(GameManager.get().isIsTeam() ? ChatUtils.format("&aYes") : ChatUtils.format("&cNo"));
 
         ItemBuilder scenarios = new ItemBuilder(Material.WATCH).name(ChatUtils.format("&eScenarios"));
         for (Scenario scenario : ScenarioManager.getEnabledScenarios()){
@@ -71,11 +71,11 @@ public class SettingsGUI {
 
         ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
         ItemBuilder newSkull = new ItemBuilder(skull);
-        if (GameManager.getHost() == null) {
+        if (GameManager.get().getHost() == null) {
             newSkull.lore(ChatUtils.format("&6Not set"));
         } else {
-            newSkull.skullOwner(GameManager.getHost().getName());
-            newSkull.lore(ChatUtils.format("&6" + GameManager.getHost().getName()));
+            newSkull.skullOwner(GameManager.get().getHost().getName());
+            newSkull.lore(ChatUtils.format("&6" + GameManager.get().getHost().getName()));
         }
 
         ItemBuilder arrow = new ItemBuilder(Material.ARROW);

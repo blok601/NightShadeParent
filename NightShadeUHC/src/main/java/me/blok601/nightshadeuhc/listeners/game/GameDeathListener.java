@@ -102,7 +102,7 @@ public class GameDeathListener implements Listener {
                 inv.setArmor(p.getInventory().getArmorContents());
                 inv.setItems(p.getInventory().getContents());
                 inv.setLocation(p.getLocation());
-                GameManager.getInvs().put(p.getUniqueId(), inv);
+                GameManager.get().getInvs().put(p.getUniqueId(), inv);
 
                 p.setHealth(p.getMaxHealth());
                 p.setFoodLevel(20);
@@ -127,10 +127,10 @@ public class GameDeathListener implements Listener {
                 gamePlayer1.addKill(1);
                 gamePlayer1.addPoints(1);
 
-                if (GameManager.getKills().containsKey(damager.getUniqueId())) {
-                    GameManager.getKills().replace(damager.getUniqueId(), GameManager.getKills().get(damager.getUniqueId()) + 1);
+                if (GameManager.get().getKills().containsKey(damager.getUniqueId())) {
+                    GameManager.get().getKills().replace(damager.getUniqueId(), GameManager.get().getKills().get(damager.getUniqueId()) + 1);
                 } else {
-                    GameManager.getKills().put(damager.getUniqueId(), 1);
+                    GameManager.get().getKills().put(damager.getUniqueId(), 1);
                 }
 
 //                if (gamePlayer1.getKillTimer() != 0) {
@@ -156,8 +156,8 @@ public class GameDeathListener implements Listener {
             uhcPlayer.setDeaths(uhcPlayer.getDeaths() + 1);
             uhcPlayer.setGamesPlayed(uhcPlayer.getGamesPlayed() + 1);
             double points = -0.25;
-            if (GameManager.getKills().containsKey(p.getUniqueId())) {
-                points += GameManager.getKills().get(p.getUniqueId());
+            if (GameManager.get().getKills().containsKey(p.getUniqueId())) {
+                points += GameManager.get().getKills().get(p.getUniqueId());
             }
             points += uhcPlayer.getChangedLevel();
             uhcPlayer.addPoints(points);
@@ -178,7 +178,7 @@ public class GameDeathListener implements Listener {
             } else {
                 p.spigot().respawn();
                 p.teleport(MConf.get().getSpawnLocation().asBukkitLocation(true));
-                GameManager.getWhitelist().remove(p.getName().toLowerCase());
+                GameManager.get().getWhitelist().remove(p.getName().toLowerCase());
                 new BukkitRunnable() {
                     @Override
                     public void run() {
@@ -252,7 +252,7 @@ public class GameDeathListener implements Listener {
             inv.setArmor(p.getInventory().getArmorContents());
             inv.setItems(p.getInventory().getContents());
             inv.setLocation(p.getLocation());
-            GameManager.getInvs().put(p.getUniqueId(), inv);
+            GameManager.get().getInvs().put(p.getUniqueId(), inv);
 
             p.setHealth(p.getMaxHealth());
             p.setFoodLevel(20);
@@ -277,18 +277,18 @@ public class GameDeathListener implements Listener {
             gamePlayer1.addKill(1);
             gamePlayer1.addPoints(1);
 
-            if (GameManager.getKills().containsKey(damager.getUniqueId())) {
-                GameManager.getKills().replace(damager.getUniqueId(), GameManager.getKills().get(damager.getUniqueId()) + 1);
+            if (GameManager.get().getKills().containsKey(damager.getUniqueId())) {
+                GameManager.get().getKills().replace(damager.getUniqueId(), GameManager.get().getKills().get(damager.getUniqueId()) + 1);
             } else {
-                GameManager.getKills().put(damager.getUniqueId(), 1);
+                GameManager.get().getKills().put(damager.getUniqueId(), 1);
             }
         }
 
         uhcPlayer.setDeaths(uhcPlayer.getDeaths() + 1);
         uhcPlayer.setGamesPlayed(uhcPlayer.getGamesPlayed() + 1);
         double points = -0.25;
-        if (GameManager.getKills().containsKey(p.getUniqueId())) {
-            points += GameManager.getKills().get(p.getUniqueId());
+        if (GameManager.get().getKills().containsKey(p.getUniqueId())) {
+            points += GameManager.get().getKills().get(p.getUniqueId());
         }
         points += uhcPlayer.getChangedLevel();
         uhcPlayer.addPoints(points);
@@ -309,7 +309,7 @@ public class GameDeathListener implements Listener {
         } else {
             p.spigot().respawn();
             p.teleport(MConf.get().getSpawnLocation().asBukkitLocation(true));
-            GameManager.getWhitelist().remove(p.getName().toLowerCase());
+            GameManager.get().getWhitelist().remove(p.getName().toLowerCase());
             new BukkitRunnable() {
                 @Override
                 public void run() {

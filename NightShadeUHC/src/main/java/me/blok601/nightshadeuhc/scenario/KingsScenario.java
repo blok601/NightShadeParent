@@ -44,7 +44,7 @@ public class KingsScenario extends Scenario {
             return;
         }
 
-        if (!GameManager.isIsTeam()) return;
+        if (!GameManager.get().isIsTeam()) return;
         assignKings();
         new BukkitRunnable() {
             int count = 5;

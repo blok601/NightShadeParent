@@ -59,7 +59,7 @@ public class SkyhighScenario extends Scenario{
                     return;
                 }
 
-                GameManager.getWorld().getPlayers().stream().filter(player -> UHC.players.contains(player.getUniqueId())).filter(u -> u.getWorld().getName().equalsIgnoreCase(GameManager.getWorld().getName())).filter(o -> o.getLocation().getY() < 100).forEach((Consumer<Player>) uuid -> {
+                GameManager.get().getWorld().getPlayers().stream().filter(player -> UHC.players.contains(player.getUniqueId())).filter(u -> u.getWorld().getName().equalsIgnoreCase(GameManager.get().getWorld().getName())).filter(o -> o.getLocation().getY() < 100).forEach((Consumer<Player>) uuid -> {
                     uuid.damage(0.5);
                     uuid.sendMessage(ChatUtils.format(getPrefix()+ " &eYou have lost 0.5 hearts for being under y:100!"));
                 });

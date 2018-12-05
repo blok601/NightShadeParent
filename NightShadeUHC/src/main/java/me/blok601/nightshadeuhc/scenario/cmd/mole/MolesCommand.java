@@ -49,7 +49,7 @@ public class MolesCommand implements UHCCommand{
             return;
         }
 
-        if (gamePlayer.isSpectator() && GameManager.getHost().getUniqueId() != p.getUniqueId()) {
+        if (gamePlayer.isSpectator() && GameManager.get().getHost().getUniqueId() != p.getUniqueId()) {
             p.sendMessage(ChatUtils.message("&cYou must be the host to view the moles!"));
             return;
         }

@@ -23,9 +23,9 @@ public class SetWorldCommand implements UHCCommand {
     public void onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         Player p = (Player) commandSender;
 
-        GameManager.setWorld(p.getWorld());
+        GameManager.get().setWorld(p.getWorld());
 
-        p.sendMessage(ChatUtils.message("&eYou have set the world to &a" + GameManager.getWorld().getName()));
+        p.sendMessage(ChatUtils.message("&eYou have set the world to &a" + GameManager.get().getWorld().getName()));
 
     }
 

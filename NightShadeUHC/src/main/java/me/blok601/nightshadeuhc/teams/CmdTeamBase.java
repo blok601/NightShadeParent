@@ -189,7 +189,7 @@ public class CmdTeamBase implements UHCCommand{
                                     cachedColor.setColor(color);
                                     t.addEntry(mem);
                                     cachedColor.setPlayer(mem);
-                                    GameManager.getColors().add(cachedColor);
+                                    GameManager.get().getColors().add(cachedColor);
                                 }
 
                             }
@@ -221,7 +221,7 @@ public class CmdTeamBase implements UHCCommand{
                                 CachedColor cachedColor = new CachedColor(name);
                                 cachedColor.setColor(color);
                                 cachedColor.setPlayer(player.getName());
-                                GameManager.getColors().add(cachedColor);
+                                GameManager.get().getColors().add(cachedColor);
                             }
                         }
 

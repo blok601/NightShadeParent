@@ -42,18 +42,18 @@ public class RespawnCommand implements UHCCommand{
                 return;
             }
 
-            if (!GameManager.getInvs().containsKey(offlinePlayer.getUniqueId())) {
+            if (!GameManager.get().getInvs().containsKey(offlinePlayer.getUniqueId())) {
                 p.sendMessage(ChatUtils.message("&cThat player hasn't died yet!"));
                 return;
             }
 
-            if (GameManager.getRespawnQueue().contains(id)) {
+            if (GameManager.get().getRespawnQueue().contains(id)) {
                 p.sendMessage(ChatUtils.message("&cThat offline player is already in the respawn queue!"));
                 return;
             }
 
-            GameManager.getWhitelist().add(id);
-            GameManager.getRespawnQueue().add(id);
+            GameManager.get().getWhitelist().add(id);
+            GameManager.get().getRespawnQueue().add(id);
             p.sendMessage(ChatUtils.message("&eThat offline player has been added to the respawn queue! When they join they will be issued a respawn!"));
             return;
         }
@@ -63,12 +63,12 @@ public class RespawnCommand implements UHCCommand{
             return;
         }
 
-        if(!GameManager.getInvs().containsKey(target.getUniqueId())){
+        if(!GameManager.get().getInvs().containsKey(target.getUniqueId())){
             p.sendMessage(ChatUtils.message("&cThat player hasn't died yet!"));
             return;
         }
 
-        PlayerRespawnObject obj = GameManager.getInvs().get(target.getUniqueId());
+        PlayerRespawnObject obj = GameManager.get().getInvs().get(target.getUniqueId());
         UHCPlayer targetUHCPlayer = UHCPlayer.get(target);
         target.teleport(obj.getLocation());
         target.getInventory().setArmorContents(obj.getArmor());
@@ -90,7 +90,7 @@ public class RespawnCommand implements UHCCommand{
 
         target.setGameMode(GameMode.SURVIVAL);
 
-        GameManager.getInvs().remove(target.getUniqueId());
+        GameManager.get().getInvs().remove(target.getUniqueId());
         UHC.players.add(target.getUniqueId());
         target.sendMessage(ChatUtils.message("&eYou have been respawned by &a" + p.getName()));
         p.sendMessage(ChatUtils.message("&eYou have respawned &a" + target.getName()));

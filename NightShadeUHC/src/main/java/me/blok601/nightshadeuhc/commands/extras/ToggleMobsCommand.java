@@ -27,12 +27,12 @@ public class ToggleMobsCommand implements UHCCommand {
     @Override
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
-        if (GameManager.getWorld() == null) {
+        if (GameManager.get().getWorld() == null) {
             p.sendMessage(ChatUtils.message("&cThe world has not been set yet!"));
             return;
         }
 
-        World world = GameManager.getWorld();
+        World world = GameManager.get().getWorld();
         //butcher mobs first
         int removed = 0;
         for (Chunk chunk : world.getLoadedChunks()) {

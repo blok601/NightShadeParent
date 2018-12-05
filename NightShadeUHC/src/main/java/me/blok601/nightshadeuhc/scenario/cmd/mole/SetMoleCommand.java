@@ -32,7 +32,7 @@ public class SetMoleCommand implements UHCCommand {
             p.sendMessage(ChatUtils.message("&cOnly the host can do that command!"));
         }
 
-        if(!GameManager.getHost().getName().equalsIgnoreCase(p.getName())){
+        if(!GameManager.get().getHost().getName().equalsIgnoreCase(p.getName())){
             p.sendMessage(ChatUtils.message("&cOnly the host can do that command!"));
         }
 
@@ -43,7 +43,7 @@ public class SetMoleCommand implements UHCCommand {
         }
 
         Team team = TeamManager.getInstance().getTeam(target);
-        if(!GameManager.isIsTeam() || team == null){
+        if(!GameManager.get().isIsTeam() || team == null){
             p.sendMessage(ChatUtils.message("&cTeams must be enabled and that player must be on a team!"));
             return;
         }

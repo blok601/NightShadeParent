@@ -42,7 +42,7 @@ public class GameListener implements Listener {
             ArrayList<String> scenarios = new ArrayList<>();
 
             cachedGame.setEnd(System.currentTimeMillis());
-            cachedGame.setHost(GameManager.getHost().getUniqueId().toString());
+            cachedGame.setHost(GameManager.get().getHost().getUniqueId().toString());
             ArrayList<String> winners = new ArrayList<>();
             NSPlayer targetNSPlayer;
             for (UUID winner : e.getWinners()){
@@ -58,11 +58,11 @@ public class GameListener implements Listener {
             cachedGame.setScenarios(scenarios);
 
             for (UUID winner : e.getWinners()) {
-                winnerKills.put(winner.toString(), GameManager.getKills().getOrDefault(winner, 0));
+                winnerKills.put(winner.toString(), GameManager.get().getKills().getOrDefault(winner, 0));
             }
             cachedGame.setWinnerKills(winnerKills);
 
-            if (GameManager.isIsTeam()) {
+            if (GameManager.get().isIsTeam()) {
                 if (TeamManager.getInstance().isRandomTeams()) {
                     cachedGame.setTeamType("Random To" + TeamManager.getInstance().getTeamSize());
                 } else {
@@ -73,7 +73,7 @@ public class GameListener implements Listener {
                 cachedGame.setTeamType("FFA");
             }
 
-            cachedGame.setServer(GameManager.getServerType());
+            cachedGame.setServer(GameManager.get().getServerType());
 
             Document document = new Document("matchID", cachedGame.getMatchID());
             document.append("host", cachedGame.getHost());
@@ -84,7 +84,7 @@ public class GameListener implements Listener {
             document.append("teamType", cachedGame.getTeamType());
             document.append("startTime", cachedGame.getStart());
             document.append("endTime", cachedGame.getEnd());
-            document.append("server", GameManager.getServerType());
+            document.append("server", GameManager.get().getServerType());
 
             UHC.get().getGameCollection().insertOne(document);
         });

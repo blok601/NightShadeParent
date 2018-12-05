@@ -34,12 +34,12 @@ public class RvBCommand implements UHCCommand{
 //                TeamManager.getInstance().setTeamFriendlyFire(false);
 //                TeamManager.getInstance().setTeamManagement(false);
 //                TeamManager.getInstance().setTeamSize(-1);
-//                GameManager.setIsTeam(true);
+//                GameManager.get().setIsTeam(true);
 //
-////                GameManager.getScoreboard().getObjective("board").getScore(ChatColor.DARK_RED.toString()).setScore(0);
-////                GameManager.getScoreboard().getObjective("board").getScore(ChatColor.BLUE.toString()).setScore(1);
-////                GameManager.getScoreboard().getObjective("board").getScore(ChatColor.DARK_GRAY.toString()).setScore(-1);
-////                GameManager.getScoreboard().getTeam("players").unregister();
+////                GameManager.get().getScoreboard().getObjective("board").getScore(ChatColor.DARK_RED.toString()).setScore(0);
+////                GameManager.get().getScoreboard().getObjective("board").getScore(ChatColor.BLUE.toString()).setScore(1);
+////                GameManager.get().getScoreboard().getObjective("board").getScore(ChatColor.DARK_GRAY.toString()).setScore(-1);
+////                GameManager.get().getScoreboard().getTeam("players").unregister();
 //
 //                p.sendMessage(ChatUtils.message("&eYou have enabled RvB! Make sure to assign teams and scatter!"));
 //                return;
@@ -70,8 +70,8 @@ public class RvBCommand implements UHCCommand{
 //                                i++;
 //                            }
 //
-//                            org.bukkit.scoreboard.Team redTeam = GameManager.getScoreboard().registerNewTeam(red.getName());
-//                            org.bukkit.scoreboard.Team blueTeam = GameManager.getScoreboard().registerNewTeam(blue.getName());
+//                            org.bukkit.scoreboard.Team redTeam = GameManager.get().getScoreboard().registerNewTeam(red.getName());
+//                            org.bukkit.scoreboard.Team blueTeam = GameManager.get().getScoreboard().registerNewTeam(blue.getName());
 //
 //                            redTeam.setPrefix(ChatUtils.format("&c"));
 //                            blueTeam.setPrefix(ChatUtils.format("&9"));
@@ -161,8 +161,8 @@ public class RvBCommand implements UHCCommand{
 //                        @Override
 //                        public void run() {
 //                            Bukkit.getOnlinePlayers().forEach(onlinePlayer -> onlinePlayer.teleport(MConf.get().getSpawnLocation().asBukkitLocation(true)));
-//                            Bukkit.unloadWorld(GameManager.getWorld(), false);
-//                            Util.deleteWorldFolder(GameManager.getWorld());
+//                            Bukkit.unloadWorld(GameManager.get().getWorld(), false);
+//                            Util.deleteWorldFolder(GameManager.get().getWorld());
 //                        }
 //                    }.runTaskLater(UHC.get(), 20*15);
 //
@@ -218,8 +218,8 @@ public class RvBCommand implements UHCCommand{
 //                        @Override
 //                        public void run() {
 //                            Bukkit.getOnlinePlayers().forEach(onlinePlayer -> onlinePlayer.teleport(MConf.get().getSpawnLocation().asBukkitLocation(true)));
-//                            Bukkit.unloadWorld(GameManager.getWorld(), false);
-//                            Util.deleteWorldFolder(GameManager.getWorld());
+//                            Bukkit.unloadWorld(GameManager.get().getWorld(), false);
+//                            Util.deleteWorldFolder(GameManager.get().getWorld());
 //                        }
 //                    }.runTaskLater(UHC.get(), 20*15);
 //

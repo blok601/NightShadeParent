@@ -23,7 +23,7 @@ public class TimeUtils {
 				String f = dateFormatGmt.format(new Date());
                 //System.out.println(f);
 				if(f.equalsIgnoreCase(time)){
-                    GameManager.setWhitelistEnabled(false);
+                    GameManager.get().setWhitelistEnabled(false);
 						cancel();
 				}
 			}

@@ -27,7 +27,7 @@ public class KickSolosCommand implements UHCCommand {
         Player p = (Player) s;
         UHCPlayerColl.get().getAllOnline().stream().filter(uhcPlayer -> !uhcPlayer.isSpectator()).forEach(uhcPlayer -> {
             if(TeamManager.getInstance().getTeam(uhcPlayer.getPlayer()) == null){
-                GameManager.getWhitelist().remove(uhcPlayer.getName().toLowerCase());
+                GameManager.get().getWhitelist().remove(uhcPlayer.getName().toLowerCase());
                 uhcPlayer.getPlayer().kickPlayer("Solo's aren't allowed in this game type!\n Join the discord for support @ \n discord.me/NightShadeMC");
             }
         });

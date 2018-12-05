@@ -53,11 +53,11 @@ public class GameStartTask extends BukkitRunnable {
         this.meetupTime = meetupTime;
         this.counter = 120;
         if (TeamManager.getInstance().isTeamManagement()) TeamManager.getInstance().setTeamManagement(false);
-        if (GameManager.isIsTeam()) {
-            if (GameManager.getHost() == null) {
+        if (GameManager.get().isIsTeam()) {
+            if (GameManager.get().getHost() == null) {
                 NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> nsPlayer.hasRank(Rank.TRIALHOST)).findFirst().ifPresent(nsPlayer -> nsPlayer.getPlayer().chat("/team color"));
             } else {
-                GameManager.getHost().chat("/team color");
+                GameManager.get().getHost().chat("/team color");
             }
         }
     }
@@ -87,8 +87,8 @@ public class GameStartTask extends BukkitRunnable {
                        }
                        ((CraftPlayer) uhcPlayer.getPlayer()).getHandle().playerConnection.sendPacket(packet);
                    }
-                    GameManager.world = world;
-                    GameManager.setDate();
+                    GameManager.get().world = world;
+                    GameManager.get().setDate();
                     PvP.disablePvP();
                     Freeze.stop();
 
@@ -102,7 +102,7 @@ public class GameStartTask extends BukkitRunnable {
 
                     Core.get().getLogManager().log(Logger.LogType.INFO, "Everyone has been healed and fed!");
                     Bukkit.getOnlinePlayers().forEach(o -> o.getInventory().addItem(new ItemStack(Material.COOKED_BEEF, 10)));
-                    TimerTask timerTask = GameManager.getTimer();
+                    TimerTask timerTask = GameManager.get().getTimer();
                     timerTask.start();
                     Bukkit.getServer().getPluginManager().callEvent(new GameStartEvent());
                     StringBuilder builder = new StringBuilder();
@@ -110,7 +110,7 @@ public class GameStartTask extends BukkitRunnable {
                     Bukkit.getOnlinePlayers().forEach(p ->{
                         p.sendMessage(ChatUtils.format("&5&m-----------------------------------"));
 
-                        p.sendMessage(ChatUtils.format("&e&lHost: &3" + GameManager.getHost().getName()));
+                        p.sendMessage(ChatUtils.format("&e&lHost: &3" + GameManager.get().getHost().getName()));
                         if(builder.length() > 0){
                             p.sendMessage(ChatUtils.format("&e&lScenarios: &3" + builder.toString().substring(0, builder.length()-1)));
                         }else{
@@ -118,9 +118,9 @@ public class GameStartTask extends BukkitRunnable {
                         }
 
                         p.sendMessage(" ");
-                        p.sendMessage(ChatUtils.format("&e&lFinal Heal Time: " + GameManager.getFinalHealTime() /60 + " minutes"));
-                        p.sendMessage(ChatUtils.format("&e&lPvP Time: " + GameManager.getPvpTime() /60 + " minutes"));
-                        p.sendMessage(ChatUtils.format("&e&lMeetup Time: " + GameManager.getBorderTime() /60 + " minutes"));
+                        p.sendMessage(ChatUtils.format("&e&lFinal Heal Time: " + GameManager.get().getFinalHealTime() /60 + " minutes"));
+                        p.sendMessage(ChatUtils.format("&e&lPvP Time: " + GameManager.get().getPvpTime() /60 + " minutes"));
+                        p.sendMessage(ChatUtils.format("&e&lMeetup Time: " + GameManager.get().getBorderTime() /60 + " minutes"));
 
                         p.sendMessage(ChatUtils.format("&5&m-----------------------------------"));
 
@@ -131,26 +131,26 @@ public class GameStartTask extends BukkitRunnable {
                    if(finalHealTime >0){
                        task.runTaskTimer(UHC.get(), 0, Util.TICKS);
                    }
-                   GameManager.setFinalHealTask(task);
+                   GameManager.get().setFinalHealTask(task);
 
                    PvPTask pvpTask = new PvPTask(pvpTime, world);
                    if(pvpTime > 0){
                        pvpTask.runTaskTimer(UHC.get(), 0, Util.TICKS);
                    }
-                   GameManager.setPvpTask(pvpTask);
+                   GameManager.get().setPvpTask(pvpTask);
 
 
                    WorldBorderTask worldBorderTask = new WorldBorderTask(borderTime, world, firstShrink);
                    if(borderTime > 0){
                        worldBorderTask.runTaskTimer(UHC.get(), 0, Util.TICKS);
                    }
-                   GameManager.setWorldBorderTask(worldBorderTask);
+                   GameManager.get().setWorldBorderTask(worldBorderTask);
 
                    MeetupTask meetupTask = new MeetupTask(meetupTime);
                    if (meetupTime > 0) {
                        meetupTask.runTaskTimer(UHC.get(), 0, Util.TICKS);
                    }
-                   GameManager.setMeetupTask(meetupTask);
+                   GameManager.get().setMeetupTask(meetupTask);
 
 
                    GameState.setState(GameState.INGAME);

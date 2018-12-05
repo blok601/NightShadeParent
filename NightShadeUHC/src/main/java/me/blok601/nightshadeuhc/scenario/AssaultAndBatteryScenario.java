@@ -32,7 +32,7 @@ public class AssaultAndBatteryScenario extends Scenario{
     @EventHandler
     public void onEnable(ScenarioEnableEvent e){
         if(e.getScenario().getName().equalsIgnoreCase(getName())){
-            if(TeamManager.getInstance().getTeamSize() != 2 || !GameManager.isIsTeam()){
+            if(TeamManager.getInstance().getTeamSize() != 2 || !GameManager.get().isIsTeam()){
                 e.setCancelled(true);
                 e.getPlayer().closeInventory();
                 e.getPlayer().sendMessage(ChatUtils.format(getPrefix() + "&cAssault and Battery can only be enabled in Teams of 2!"));

@@ -47,7 +47,7 @@ public class EndGameCommand implements UHCCommand{
             return;
         }
 
-        boolean isTeam = GameManager.isIsTeam();
+        boolean isTeam = GameManager.get().isIsTeam();
 
         Player target = Bukkit.getPlayer(args[0]);
         if(target == null){
@@ -209,8 +209,8 @@ public class EndGameCommand implements UHCCommand{
                 Util.staffLog("&4The Server Will Restart in 30 seconds!");
 
                 UHC.getMultiverseCore().getMVWorldManager().removeWorldFromConfig(args[0]);
-                Bukkit.unloadWorld(GameManager.getWorld(), false);
-                Util.deleteWorldFolder(GameManager.getWorld());
+                Bukkit.unloadWorld(GameManager.get().getWorld(), false);
+                Util.deleteWorldFolder(GameManager.get().getWorld());
 
             }
         }.runTaskLater(UHC.get(), 20*10);

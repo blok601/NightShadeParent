@@ -92,7 +92,7 @@ public class LoggerEvents implements Listener {
                     }
 
                     PlayerRespawnObject object = new PlayerRespawnObject(logger.getArmor(), logger.getInventory(), logger.getZombie().getLocation());
-                    GameManager.getInvs().put(logger.getUuid(), object);
+                    GameManager.get().getInvs().put(logger.getUuid(), object);
 
                     Bukkit.broadcastMessage(ChatUtils.format("&5" + name + " (Logger) &9 was killed"));
                     LoggerHandler.getInstance().getDeadLoggers().add(logger.getUuid());

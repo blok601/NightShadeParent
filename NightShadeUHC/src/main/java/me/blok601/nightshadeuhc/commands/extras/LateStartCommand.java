@@ -35,14 +35,14 @@ public class LateStartCommand implements UHCCommand{
 
         Player target = Bukkit.getPlayer(args[0]);
         if(target == null){
-            if (GameManager.getLateScatter().contains(args[0].toLowerCase())) {
+            if (GameManager.get().getLateScatter().contains(args[0].toLowerCase())) {
                 p.sendMessage(ChatUtils.message("&cThat player is already in the late scatter queue!"));
                 return;
             }
 
             String name = args[0];
-            GameManager.getLateScatter().add(name.toLowerCase());
-            GameManager.getWhitelist().add(name.toLowerCase());
+            GameManager.get().getLateScatter().add(name.toLowerCase());
+            GameManager.get().getWhitelist().add(name.toLowerCase());
             p.sendMessage(ChatUtils.message("&a" + name + " &ehas been whitelisted and added to the late scatter queue!"));
             return;
         }
@@ -58,7 +58,7 @@ public class LateStartCommand implements UHCCommand{
         target.setLevel(0);
         target.setExp(0F);
         target.getInventory().addItem(new ItemStack(Material.COOKED_BEEF, 10));
-        ScatterUtil.scatterPlayer(GameManager.getWorld(), (int) GameManager.getBorderSize(), target);
+        ScatterUtil.scatterPlayer(GameManager.get().getWorld(), (int) GameManager.get().getBorderSize(), target);
         target.playSound(target.getLocation(), Sound.CHICKEN_EGG_POP, 5, 5);
         p.sendMessage(ChatUtils.message("&aYou have scattered &e" + target.getName()));
         target.sendMessage(ChatUtils.message("&eYou were scattered!"));

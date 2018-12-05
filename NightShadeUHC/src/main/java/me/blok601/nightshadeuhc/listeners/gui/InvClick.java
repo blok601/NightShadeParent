@@ -71,13 +71,13 @@ public class InvClick implements Listener {
                 return;
             }
 
-            int cBorder = GameManager.getShrinks()[slot];
+            int cBorder = GameManager.get().getShrinks()[slot];
 
             if(e.getClick() == ClickType.LEFT){
-                GameManager.getShrinks()[slot] = cBorder+50; //Add 50
+                GameManager.get().getShrinks()[slot] = cBorder+50; //Add 50
             }else if(e.getClick() == ClickType.RIGHT){
-                if(GameManager.getShrinks()[slot] - 50 < 0)return;
-                GameManager.getShrinks()[slot] = cBorder-50; //Minus 50
+                if(GameManager.get().getShrinks()[slot] - 50 < 0)return;
+                GameManager.get().getShrinks()[slot] = cBorder-50; //Minus 50
             }else{
                 return;
             }
@@ -85,7 +85,7 @@ public class InvClick implements Listener {
             ItemStack stack = e.getCurrentItem();
             ItemBuilder builder = new ItemBuilder(stack);
 
-            int border = GameManager.getShrinks()[slot];
+            int border = GameManager.get().getShrinks()[slot];
             if(border ==0 && GameState.getState() != GameState.WAITING){
                 return;
             }else{
@@ -122,16 +122,16 @@ public class InvClick implements Listener {
             }
 
             if(e.getCurrentItem().getType() == Material.SIGN){
-                if(GameManager.isIsTeam()){
-                    GameManager.setIsTeam(false);
+                if(GameManager.get().isIsTeam()){
+                    GameManager.get().setIsTeam(false);
                     ItemBuilder builder = new ItemBuilder(Material.SIGN);
-                    builder.name(ChatUtils.format("&eTeam Game")).lore(GameManager.isIsTeam() ? ChatUtils.format("&aYes") : ChatUtils.format("&cNo"));
+                    builder.name(ChatUtils.format("&eTeam Game")).lore(GameManager.get().isIsTeam() ? ChatUtils.format("&aYes") : ChatUtils.format("&cNo"));
                     e.getInventory().setItem(e.getSlot(), builder.make());
                     p.updateInventory();
                 }else{
-                    GameManager.setIsTeam(true);
+                    GameManager.get().setIsTeam(true);
                     ItemBuilder builder = new ItemBuilder(Material.SIGN);
-                    builder.name(ChatUtils.format("&eTeam Game")).lore(GameManager.isIsTeam() ? ChatUtils.format("&aYes") : ChatUtils.format("&cNo"));
+                    builder.name(ChatUtils.format("&eTeam Game")).lore(GameManager.get().isIsTeam() ? ChatUtils.format("&aYes") : ChatUtils.format("&cNo"));
                     e.getInventory().setItem(e.getSlot(), builder.make());
                     p.updateInventory();
                 }
@@ -156,23 +156,23 @@ public class InvClick implements Listener {
                 }
 
                 if (e.getClick() == ClickType.LEFT) {
-                    GameManager.setFinalHealTime(GameManager.getFinalHealTime() + 300); // Add 5 mins
+                    GameManager.get().setFinalHealTime(GameManager.get().getFinalHealTime() + 300); // Add 5 mins
                 } else if (e.getClick() == ClickType.RIGHT) {
-                    if (GameManager.getFinalHealTime() - 300 < 0) {
+                    if (GameManager.get().getFinalHealTime() - 300 < 0) {
                         return;
                     }
-                    GameManager.setFinalHealTime(GameManager.getFinalHealTime() - 300); // Add 5 mins
+                    GameManager.get().setFinalHealTime(GameManager.get().getFinalHealTime() - 300); // Add 5 mins
                 } else {
                     return;
                 }
 
                 ItemStack itemStack = e.getCurrentItem(); // Know its the final heal one
                 ItemBuilder builder = new ItemBuilder(itemStack);
-                int finalHeal = GameManager.getFinalHealTime();
+                int finalHeal = GameManager.get().getFinalHealTime();
                 if (finalHeal == 0 && GameState.getState() != GameState.WAITING) {
                     builder.lore(ChatUtils.format("&6Not set or already passed!"), true);
                 } else {
-                    builder.lore(ChatUtils.format("&6" + GameManager.getFinalHealTime() / 60 + " minutes"), true);
+                    builder.lore(ChatUtils.format("&6" + GameManager.get().getFinalHealTime() / 60 + " minutes"), true);
                 }
                 builder.lore("&7(&6&oi&r&7) &6&oTime until Final Heal is given");
 
@@ -186,12 +186,12 @@ public class InvClick implements Listener {
                 }
 
                 if (e.getClick() == ClickType.LEFT) {
-                    GameManager.setPvpTime(GameManager.getPvpTime() + 300); // Add 5 mins
+                    GameManager.get().setPvpTime(GameManager.get().getPvpTime() + 300); // Add 5 mins
                 } else if (e.getClick() == ClickType.RIGHT) {
-                    if (GameManager.getPvpTime() - 300 < 0) {
+                    if (GameManager.get().getPvpTime() - 300 < 0) {
                         return;
                     }
-                    GameManager.setPvpTime(GameManager.getPvpTime() - 300); // Add 5 mins
+                    GameManager.get().setPvpTime(GameManager.get().getPvpTime() - 300); // Add 5 mins
                 } else {
                     return;
                 }
@@ -199,11 +199,11 @@ public class InvClick implements Listener {
                 ItemStack itemStack = e.getCurrentItem(); // Know its the final heal one
                 ItemBuilder builder = new ItemBuilder(itemStack);
                 builder.removeLore(0);
-                int pvpTime = GameManager.getPvpTime();
+                int pvpTime = GameManager.get().getPvpTime();
                 if (pvpTime == 0 && GameState.getState() != GameState.WAITING) {
                     builder.lore(ChatUtils.format("&6Not set or already passed!"), true);
                 } else {
-                    builder.lore(ChatUtils.format("&6" + GameManager.getPvpTime() / 60 + " minutes"), true);
+                    builder.lore(ChatUtils.format("&6" + GameManager.get().getPvpTime() / 60 + " minutes"), true);
                 }
                 builder.lore("&7(&6&oi&r&7) &6&oTime until PvP is enabled");
 
@@ -218,12 +218,12 @@ public class InvClick implements Listener {
                 }
 
                 if (e.getClick() == ClickType.LEFT) {
-                    GameManager.setBorderTime(GameManager.getBorderTime() + 300); // Add 5 mins
+                    GameManager.get().setBorderTime(GameManager.get().getBorderTime() + 300); // Add 5 mins
                 } else if (e.getClick() == ClickType.RIGHT) {
-                    if (GameManager.getBorderTime() - 300 < 0) {
+                    if (GameManager.get().getBorderTime() - 300 < 0) {
                         return;
                     }
-                    GameManager.setBorderTime(GameManager.getBorderTime() - 300); // remove 5 mins
+                    GameManager.get().setBorderTime(GameManager.get().getBorderTime() - 300); // remove 5 mins
                 } else {
                     return;
                 }
@@ -231,11 +231,11 @@ public class InvClick implements Listener {
                 ItemStack itemStack = e.getCurrentItem(); // Know its the final heal one
                 ItemBuilder builder = new ItemBuilder(itemStack);
                 builder.removeLore(0);
-                int borderTime = GameManager.getBorderTime();
+                int borderTime = GameManager.get().getBorderTime();
                 if (borderTime == 0 && GameState.getState() != GameState.WAITING) {
                     builder.lore(ChatUtils.format("&6Not set or already passed!"), true);
                 } else {
-                    builder.lore(ChatUtils.format("&6" + GameManager.getBorderTime() / 60 + " minutes"), true);
+                    builder.lore(ChatUtils.format("&6" + GameManager.get().getBorderTime() / 60 + " minutes"), true);
                 }
                 builder.lore("&7(&6&oi&r&7) &6&oTime until First Border Shrink");
 
@@ -250,12 +250,12 @@ public class InvClick implements Listener {
                 }
 
                 if (e.getClick() == ClickType.LEFT) {
-                    GameManager.setMeetupTime(GameManager.getMeetupTime() + 300); // Add 5 mins
+                    GameManager.get().setMeetupTime(GameManager.get().getMeetupTime() + 300); // Add 5 mins
                 } else if (e.getClick() == ClickType.RIGHT) {
-                    if (GameManager.getMeetupTime() - 300 < 0) {
+                    if (GameManager.get().getMeetupTime() - 300 < 0) {
                         return;
                     }
-                    GameManager.setMeetupTime(GameManager.getMeetupTime() - 300); // remove 5 mins
+                    GameManager.get().setMeetupTime(GameManager.get().getMeetupTime() - 300); // remove 5 mins
                 } else {
                     return;
                 }
@@ -263,11 +263,11 @@ public class InvClick implements Listener {
                 ItemStack itemStack = e.getCurrentItem(); // Know its the final heal one
                 ItemBuilder builder = new ItemBuilder(itemStack);
                 builder.removeLore(0);
-                int borderTime = GameManager.getMeetupTime();
+                int borderTime = GameManager.get().getMeetupTime();
                 if (borderTime == 0 && GameState.getState() != GameState.WAITING) {
                     builder.lore(ChatUtils.format("&6Not set or already passed!"), true);
                 } else {
-                    builder.lore(ChatUtils.format("&6" + GameManager.getMeetupTime() / 60 + " minutes"), true);
+                    builder.lore(ChatUtils.format("&6" + GameManager.get().getMeetupTime() / 60 + " minutes"), true);
                 }
                 builder.lore("&7(&6&oi&r&7) &6&oTime until \"Meetup\" begins");
 

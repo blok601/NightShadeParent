@@ -28,7 +28,7 @@ public class ClearTreesCommand implements UHCCommand {
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
 
-        World world = GameManager.getWorld();
+        World world = GameManager.get().getWorld();
         if (world == null) {
             p.sendMessage(ChatUtils.message("&cThe world has not been set yet!"));
             return;

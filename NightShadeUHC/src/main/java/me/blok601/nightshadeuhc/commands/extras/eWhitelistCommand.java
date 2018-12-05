@@ -29,19 +29,19 @@ public class eWhitelistCommand implements UHCCommand{
 
         if(args[0].equalsIgnoreCase("add")){
             String target = args[1];
-            if(GameManager.getWhitelist().contains(target.toLowerCase())){
+            if(GameManager.get().getWhitelist().contains(target.toLowerCase())){
                 return;
             }
 
-            GameManager.getWhitelist().add(target.toLowerCase());
+            GameManager.get().getWhitelist().add(target.toLowerCase());
             Bukkit.getConsoleSender().sendMessage(ChatUtils.format("&a" + target + " has been added to the whitelist!"));
         }else if(args[0].equalsIgnoreCase("remove")){
             String target = args[1];
-            if(!GameManager.getWhitelist().contains(target.toLowerCase())){
+            if(!GameManager.get().getWhitelist().contains(target.toLowerCase())){
                 return;
             }
 
-            GameManager.getWhitelist().remove(target.toLowerCase());
+            GameManager.get().getWhitelist().remove(target.toLowerCase());
             Bukkit.getConsoleSender().sendMessage(ChatUtils.format("&a" + target + " has been removed from the whitelist!"));
         }else{
             return;

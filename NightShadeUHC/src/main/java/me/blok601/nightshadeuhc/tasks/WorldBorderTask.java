@@ -39,22 +39,22 @@ public class WorldBorderTask extends BukkitRunnable {
             if (counter == (counter - 300)) {
                 //5 mins before
                 Util.staffLog("The border will shrink in 5 minutes!");
-                ChatUtils.sendAll("The border will shrink to " + GameManager.getFirstShrink() + " radius in 5 minutes");
+                ChatUtils.sendAll("The border will shrink to " + GameManager.get().getFirstShrink() + " radius in 5 minutes");
                 Bukkit.getOnlinePlayers().forEach((Consumer<Player>) player -> {
-                    ActionBarUtil.sendActionBarMessage(player, "§5Shrink to " + GameManager.getFirstShrink() + "radius in " + get(counter), 1, UHC.get());
+                    ActionBarUtil.sendActionBarMessage(player, "§5Shrink to " + GameManager.get().getFirstShrink() + "radius in " + get(counter), 1, UHC.get());
                 });
             }else if(Util.isBetween(10, 0, counter)){
-                ChatUtils.sendAll("The border will shrink to " + GameManager.getFirstShrink() + " radius in " + counter);
+                ChatUtils.sendAll("The border will shrink to " + GameManager.get().getFirstShrink() + " radius in " + counter);
             }
         } else if (counter == 0) {
             GameState.setState(GameState.MEETUP);
             bd.setRadius(first);
-            GameManager.genWalls(first);
-            GameManager.setBorderID(GameManager.getBorderID()+1);
+            GameManager.get().genWalls(first);
+            GameManager.get().setBorderID(GameManager.get().getBorderID()+1);
             for (Player pls : Bukkit.getOnlinePlayers()) {
                 pls.playSound(pls.getLocation(), Sound.BAT_DEATH, 5, 1);
             }
-            ChatUtils.sendAll("&bThe border has shrunk to " + GameManager.getFirstShrink() + " radius!");
+            ChatUtils.sendAll("&bThe border has shrunk to " + GameManager.get().getFirstShrink() + " radius!");
             Bukkit.getServer().getPluginManager().callEvent(new MeetupStartEvent());
             counter = -1;
             new ShrinkTask(world).runTaskTimer(UHC.get(), 290 * Util.TICKS, 290 * Util.TICKS);

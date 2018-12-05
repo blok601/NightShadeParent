@@ -30,169 +30,175 @@ public class GameManager {
     This class is ALL static and is only used for storage purposes
      */
 
-    private static HashMap<UUID, PlayerRespawnObject> invs = new HashMap<>();
-    private static ArrayList<UUID> deathBans = new ArrayList<>();
-    private static HashSet<CachedColor> colors;//storing player names because teams don't store UUIDs ;(
+    private static GameManager i = new GameManager();
 
-    private static int maxPlayers;
+    public static GameManager get() {
+        return i;
+    }
 
-    private static ArrayList<String> whitelist = new ArrayList<>();
-    private static HashSet<String> respawnQueue = new HashSet<>(); // This saves names like whitelist and will check using ignore case
+    private  HashMap<UUID, PlayerRespawnObject> invs = new HashMap<>();
+    private  ArrayList<UUID> deathBans = new ArrayList<>();
+    private  HashSet<CachedColor> colors;//storing player names because teams don't store UUIDs ;(
 
-    @Getter
-    private static HashMap<UUID, Integer> helpOpMutes = new HashMap<>();
-    @Getter
-    public static HashMap<UUID, String> helpopMuteReasons = new HashMap<>();
-    @Getter
-    public static HashSet<String> lateScatter = new HashSet<>();
+    private  int maxPlayers;
 
-    public static boolean IS_SCATTERING = false;
-
-
-    private static TimerTask timer;
-
-    private static boolean whitelistEnabled;
-
-    private static int finalHealTime = 0;
-
-    private static int pvpTime = 0;
-
-    private static int borderTime = 0;
+    private  ArrayList<String> whitelist = new ArrayList<>();
+    private  HashSet<String> respawnQueue = new HashSet<>(); // This saves names like whitelist and will check using ignore case
 
     @Getter
-    @Setter
-    private static int meetupTime = 0;
+    private  HashMap<UUID, Integer> helpOpMutes = new HashMap<>();
+    @Getter
+    public HashMap<UUID, String> helpopMuteReasons = new HashMap<>();
+    @Getter
+    public HashSet<String> lateScatter = new HashSet<>();
 
-    private static boolean isTeam;
+    public boolean IS_SCATTERING = false;
 
-    private static Player host;
-    private static int radius = 0;
-    private static int appleRates = 5;
-    private static int flintRates = 50;
 
-    private static FinalHealTask finalHealTask;
-    private static PvPTask pvpTask;
-    private static WorldBorderTask worldBorderTask;
+    private  TimerTask timer;
+
+    private  boolean whitelistEnabled;
+
+    private  int finalHealTime = 0;
+
+    private  int pvpTime = 0;
+
+    private  int borderTime = 0;
+
     @Getter
     @Setter
-    private static MeetupTask meetupTask;
+    private  int meetupTime = 0;
 
-    private static int[] shrinks;
-    private static int borderID;
+    private  boolean isTeam;
 
-    private static String serverType;
+    private  Player host;
+    private  int radius = 0;
+    private  int appleRates = 5;
+    private  int flintRates = 50;
 
-    private static HashMap<UUID, Integer> kills = new HashMap<>();
+    private  FinalHealTask finalHealTask;
+    private  PvPTask pvpTask;
+    private  WorldBorderTask worldBorderTask;
+    @Getter
+    @Setter
+    private  MeetupTask meetupTask;
+
+    private  int[] shrinks;
+    private  int borderID;
+
+    private  String serverType;
+
+    private  HashMap<UUID, Integer> kills = new HashMap<>();
 
     @Getter
-    public static World world;
+    public World world;
 
-    private static String date;
+    private  String date;
 
-    public static String getDate(){
+    public String getDate(){
         return date;
     }
 
-    public static void setDate(){
+    public void setDate(){
         DateFormat format = new SimpleDateFormat("MM/dd/yyyy:HH");
         Date date = new Date();
-        GameManager.date = format.format(date);
+        this.date = format.format(date);
     }
 
-    public static int getFinalHealTime() {
+    public int getFinalHealTime() {
         return finalHealTime;
     }
 
-    public static void setFinalHealTime(int finalHealTime) {
-        GameManager.finalHealTime = finalHealTime;
+    public void setFinalHealTime(int finalHealTime) {
+        this.finalHealTime = finalHealTime;
     }
 
-    public static int getPvpTime() {
+    public int getPvpTime() {
         return pvpTime;
     }
 
-    public static void setPvpTime(int pvpTime) {
-        GameManager.pvpTime = pvpTime;
+    public void setPvpTime(int pvpTime) {
+        this.pvpTime = pvpTime;
     }
 
-    public static int getBorderTime() {
+    public int getBorderTime() {
         return borderTime;
     }
 
-    public static void setBorderTime(int borderTime) {
-        GameManager.borderTime = borderTime;
+    public void setBorderTime(int borderTime) {
+        this.borderTime = borderTime;
     }
 
-    public static boolean isIsTeam() {
+    public boolean isIsTeam() {
         return isTeam;
     }
 
-    public static void setIsTeam(boolean isTeam) {
-        GameManager.isTeam = isTeam;
+    public void setIsTeam(boolean isTeam) {
+        this.isTeam = isTeam;
     }
 
-    public static Player getHost() {
+    public Player getHost() {
         return host;
     }
 
-    public static void setHost(Player host) {
-        GameManager.host = host;
+    public void setHost(Player host) {
+        this.host = host;
     }
 
-    public static int getRadius() {
+    public int getRadius() {
         return radius;
     }
 
-    public static void setRadius(int radius) {
-        GameManager.radius = radius;
+    public void setRadius(int radius) {
+        this.radius = radius;
     }
 
-    public static int getFirstShrink() {
+    public int getFirstShrink() {
         return getShrinks()[0];
     }
 
-    public static void setFirstShrink(int firstShrink) {
+    public void setFirstShrink(int firstShrink) {
 
         getShrinks()[0] = firstShrink;
     }
 
-    public static void setWorld(World world) {
-        GameManager.world = world;
+    public void setWorld(World world) {
+        this.world = world;
     }
 
-    public static void setDate(String date) {
-        GameManager.date = date;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public static ArrayList<String> getWhitelist() {
+    public ArrayList<String> getWhitelist() {
         return whitelist;
     }
 
-    public static boolean isWhitelistEnabled() {
+    public boolean isWhitelistEnabled() {
         return whitelistEnabled;
     }
 
-    public static void setWhitelistEnabled(boolean whitelistEnabled) {
-        GameManager.whitelistEnabled = whitelistEnabled;
+    public void setWhitelistEnabled(boolean whitelistEnabled) {
+        this.whitelistEnabled = whitelistEnabled;
     }
 
-    public static int getMaxPlayers() {
+    public int getMaxPlayers() {
         return maxPlayers;
     }
 
-    public static void setMaxPlayers(int maxPlayers) {
-        GameManager.maxPlayers = maxPlayers;
+    public void setMaxPlayers(int maxPlayers) {
+        this.maxPlayers = maxPlayers;
     }
 
-    public static TimerTask getTimer() {
+    public TimerTask getTimer() {
         return timer;
     }
 
-    public static void setTimer(TimerTask timer) {
-        GameManager.timer = timer;
+    public void setTimer(TimerTask timer) {
+        this.timer = timer;
     }
 
-    public static double getBorderSize(){
+    public double getBorderSize(){
 
         if(world == null) return 0;
 
@@ -201,12 +207,12 @@ public class GameManager {
         return bd.getRadiusX();
     }
 
-    public static HashMap<UUID, PlayerRespawnObject> getInvs() {
+    public HashMap<UUID, PlayerRespawnObject> getInvs() {
         return invs;
     }
 
 
-    public static void setup(){
+    public void setup(){
         setTimer(new TimerTask());
         setMaxPlayers(60);
 
@@ -220,67 +226,67 @@ public class GameManager {
     }
 
 
-    public static ArrayList<UUID> getDeathBans() {
+    public ArrayList<UUID> getDeathBans() {
         return deathBans;
     }
 
-    public static int getAppleRates() {
+    public int getAppleRates() {
         return appleRates;
     }
 
-    public static void setAppleRates(int appleRates) {
-        GameManager.appleRates = appleRates;
+    public void setAppleRates(int appleRates) {
+        this.appleRates = appleRates;
     }
 
-    public static int getFlintRates() {
+    public int getFlintRates() {
         return flintRates;
     }
 
-    public static void setFlintRates(int flintRates) {
-        GameManager.flintRates = flintRates;
+    public void setFlintRates(int flintRates) {
+        this.flintRates = flintRates;
     }
 
-    public static FinalHealTask getFinalHealTask() {
+    public FinalHealTask getFinalHealTask() {
         return finalHealTask;
     }
 
-    public static void setFinalHealTask(FinalHealTask finalHealTask) {
-        GameManager.finalHealTask = finalHealTask;
+    public void setFinalHealTask(FinalHealTask finalHealTask) {
+        this.finalHealTask = finalHealTask;
     }
 
-    public static PvPTask getPvpTask() {
+    public PvPTask getPvpTask() {
         return pvpTask;
     }
 
-    public static void setPvpTask(PvPTask pvpTask) {
-        GameManager.pvpTask = pvpTask;
+    public void setPvpTask(PvPTask pvpTask) {
+        this.pvpTask = pvpTask;
     }
 
-    public static WorldBorderTask getWorldBorderTask() {
+    public WorldBorderTask getWorldBorderTask() {
         return worldBorderTask;
     }
 
-    public static void setWorldBorderTask(WorldBorderTask worldBorderTask) {
-        GameManager.worldBorderTask = worldBorderTask;
+    public void setWorldBorderTask(WorldBorderTask worldBorderTask) {
+        this.worldBorderTask = worldBorderTask;
     }
 
-    public static int[] getShrinks() {
+    public int[] getShrinks() {
         return shrinks;
     }
 
-    public static int getBorderID() {
+    public int getBorderID() {
         return borderID;
     }
 
-    public static void setBorderID(int borderID) {
-        GameManager.borderID = borderID;
+    public void setBorderID(int borderID) {
+        this.borderID = borderID;
     }
 
-    public static HashMap<UUID, Integer> getKills() {
+    public HashMap<UUID, Integer> getKills() {
         return kills;
     }
 
-    public static void genWalls(int size) {
+    public void genWalls(int size) {
         UHC.get().getServer().dispatchCommand(Bukkit.getConsoleSender(), "wb " + getWorld().getName() + " set " + size + " " + size + " 0 0");
         UHC.get().getServer().dispatchCommand(Bukkit.getConsoleSender(), "wb shape square");
         Location loc = new Location(getWorld(), 0.0D, 59.0D, 0.0D);
@@ -302,19 +308,19 @@ public class GameManager {
         }
     }
 
-    public static String getServerType() {
+    public String getServerType() {
         return serverType;
     }
 
-    public static void setServerType(String serverType) {
-        GameManager.serverType = serverType;
+    public void setServerType(String serverType) {
+        this.serverType = serverType;
     }
 
-    public static HashSet<CachedColor> getColors() {
+    public HashSet<CachedColor> getColors() {
         return colors;
     }
 
-    public static HashSet<String> getRespawnQueue() {
+    public HashSet<String> getRespawnQueue() {
         return respawnQueue;
     }
 }

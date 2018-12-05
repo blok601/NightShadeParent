@@ -26,21 +26,21 @@ public class TimerCommand implements UHCCommand{
             s.sendMessage(ChatUtils.message("&cUsage: /timer <start/stop>"));
         }else{
             if(args[0].equalsIgnoreCase("start") || args[0].equalsIgnoreCase("on")){
-                if(!GameManager.getTimer().isRunning()){
-                    TimerTask timerTask = GameManager.getTimer();
+                if(!GameManager.get().getTimer().isRunning()){
+                    TimerTask timerTask = GameManager.get().getTimer();
                     timerTask.start();
                     s.sendMessage(ChatUtils.message("&eThe timer has started!"));
                 }else{
                     s.sendMessage(ChatUtils.message("&cThe timer is already running!"));
                 }
             }else if(args[0].equalsIgnoreCase("stop") || args[0].equalsIgnoreCase("off")){
-                if(GameManager.getTimer() == null){
+                if(GameManager.get().getTimer() == null){
                     s.sendMessage(ChatUtils.message("&cThe timer isn't running!"));
                     return;
                 }
 
-                Bukkit.getScheduler().cancelTask(GameManager.getTimer().getTaskID());
-                GameManager.getTimer().setRunning(false);
+                Bukkit.getScheduler().cancelTask(GameManager.get().getTimer().getTaskID());
+                GameManager.get().getTimer().setRunning(false);
                 s.sendMessage(ChatUtils.message("&eYou have stopped the timer!"));
             }
         }

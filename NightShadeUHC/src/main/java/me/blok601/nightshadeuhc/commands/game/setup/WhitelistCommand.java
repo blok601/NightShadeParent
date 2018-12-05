@@ -42,30 +42,30 @@ public class WhitelistCommand implements UHCCommand {
             if(user.hasRank(Rank.TRIAL)){
                if(args[0].equalsIgnoreCase("list")){
                    StringBuilder builder = new StringBuilder();
-                   for (String string : GameManager.getWhitelist()){
+                   for (String string : GameManager.get().getWhitelist()){
                        builder.append("&6").append(string).append(",");
                    }
                    p.sendMessage(ChatUtils.message("&eWhitelisted players:"));
                    p.sendMessage(ChatUtils.format(builder.toString()));
                }else if(args[0].equalsIgnoreCase("clear")){
-                   GameManager.setWhitelistEnabled(false);
-                   GameManager.getWhitelist().clear();
+                   GameManager.get().setWhitelistEnabled(false);
+                   GameManager.get().getWhitelist().clear();
                    p.sendMessage(ChatUtils.message("&eThe whitelist has been cleared!"));
                }else if(args[0].equalsIgnoreCase("on")){
-                   if(GameManager.isWhitelistEnabled()){
+                   if(GameManager.get().isWhitelistEnabled()){
                        p.sendMessage(ChatUtils.message("&cThe whitelist is already enabled!"));
                        return;
                    }
 
-                   GameManager.setWhitelistEnabled(true);
+                   GameManager.get().setWhitelistEnabled(true);
                    p.sendMessage(ChatUtils.message("&eThe whitelist has been enabled!"));
                }else if(args[0].equalsIgnoreCase("off")){
-                   if(!GameManager.isWhitelistEnabled()){
+                   if(!GameManager.get().isWhitelistEnabled()){
                        p.sendMessage(ChatUtils.message("&cThe whitelist is already disabled!"));
                        return;
                    }
 
-                   GameManager.setWhitelistEnabled(false);
+                   GameManager.get().setWhitelistEnabled(false);
                    p.sendMessage(ChatUtils.message("&eThe whitelist has been disabled!"));
                }else{
                    sendHelp(p, true);
@@ -86,8 +86,8 @@ public class WhitelistCommand implements UHCCommand {
                     }
 
                     for (Player player : Bukkit.getOnlinePlayers()){
-                        if (!GameManager.getWhitelist().contains(player.getName().toLowerCase()))  {
-                            GameManager.getWhitelist().add(player.getName().toLowerCase());
+                        if (!GameManager.get().getWhitelist().contains(player.getName().toLowerCase()))  {
+                            GameManager.get().getWhitelist().add(player.getName().toLowerCase());
                         }
                     }
 
@@ -95,28 +95,28 @@ public class WhitelistCommand implements UHCCommand {
                     return;
                 }
 
-                if(GameManager.getWhitelist().contains(name.toLowerCase())){
+                if(GameManager.get().getWhitelist().contains(name.toLowerCase())){
                     p.sendMessage(ChatUtils.message("&e" + name  + " &cis already whitelisted!"));
                     return;
                 }
 
-                GameManager.getWhitelist().add(name.toLowerCase());
+                GameManager.get().getWhitelist().add(name.toLowerCase());
                 p.sendMessage(ChatUtils.message("&e" + name + " &ahas been whitelisted!"));
             }else if(args[0].equalsIgnoreCase("remove")){
                 if(user.hasRank(Rank.TRIAL)){
                     String target = args[1];
-                    if(!GameManager.getWhitelist().contains(target.toLowerCase())){
+                    if(!GameManager.get().getWhitelist().contains(target.toLowerCase())){
                         p.sendMessage(ChatUtils.message("&cThat player isn't on the whitelist!"));
                         return;
                     }
 
                     if(target.equalsIgnoreCase("all") || target.equalsIgnoreCase("*")){
-                        GameManager.getWhitelist().clear();
+                        GameManager.get().getWhitelist().clear();
                         p.sendMessage(ChatUtils.message("&eThe whitelist has been cleared!"));
                         return;
                     }
 
-                    GameManager.getWhitelist().remove(target.toLowerCase());
+                    GameManager.get().getWhitelist().remove(target.toLowerCase());
                     p.sendMessage(ChatUtils.message("&e" + target + " &ahas been removed from the whitelist!"));
                     return;
                 }else{

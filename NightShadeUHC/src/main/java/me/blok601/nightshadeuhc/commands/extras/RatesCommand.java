@@ -34,8 +34,8 @@ public class RatesCommand implements UHCCommand, Listener{
         Player p = (Player) s;
         if(args.length ==0){
            p.sendMessage(ChatUtils.message("&eApple and Flint Rates&8:"));
-           p.sendMessage(ChatUtils.format("&3Apple Rates&8: &5" + GameManager.getAppleRates()));
-            p.sendMessage(ChatUtils.format("&3Flint Rates&8: &5" + GameManager.getFlintRates()));
+           p.sendMessage(ChatUtils.format("&3Apple Rates&8: &5" + GameManager.get().getAppleRates()));
+            p.sendMessage(ChatUtils.format("&3Flint Rates&8: &5" + GameManager.get().getFlintRates()));
         }
 
         if(args.length != 0 && args.length != 2){
@@ -53,7 +53,7 @@ public class RatesCommand implements UHCCommand, Listener{
                 return;
             }
 
-            GameManager.setAppleRates(rate);
+            GameManager.get().setAppleRates(rate);
             p.sendMessage(ChatUtils.message("&eUpdated apple rates to &6" + rate + "&e."));
         }else if(args[0].equalsIgnoreCase("flint")){
             String arg = args[1];
@@ -65,7 +65,7 @@ public class RatesCommand implements UHCCommand, Listener{
                 return;
             }
 
-            GameManager.setFlintRates(rate);
+            GameManager.get().setFlintRates(rate);
             p.sendMessage(ChatUtils.message("&eUpdated flint rates to &6" + rate + "&e."));
         }else{
             p.sendMessage(ChatUtils.message("&cUsage: /rates <apple/flint> <number>"));
@@ -85,7 +85,7 @@ public class RatesCommand implements UHCCommand, Listener{
                 return;
             }
 
-            if(Util.getChance(GameManager.getFlintRates())){
+            if(Util.getChance(GameManager.get().getFlintRates())){
                 e.getBlock().setType(Material.AIR);
                 e.getBlock().getDrops().clear();
                 e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(), new ItemStack(Material.FLINT));
@@ -100,7 +100,7 @@ public class RatesCommand implements UHCCommand, Listener{
     public void decay(LeavesDecayEvent e){
         if(e.getBlock().getType() == Material.LEAVES || e.getBlock().getType() == Material.LEAVES_2){
 
-            if(Util.getChance(GameManager.getAppleRates())){
+            if(Util.getChance(GameManager.get().getAppleRates())){
                 e.getBlock().setType(Material.AIR);
                 e.getBlock().getDrops().clear();
                 e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), new ItemStack(Material.APPLE));

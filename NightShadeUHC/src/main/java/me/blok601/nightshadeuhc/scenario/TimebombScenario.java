@@ -35,7 +35,7 @@ public class TimebombScenario extends Scenario{
 
         e.setDropItems(false);
 
-        if(GameManager.getWorld() == null || !e.getKilled().getLocation().getWorld().getName().equalsIgnoreCase(GameManager.getWorld().getName())){
+        if(GameManager.get().getWorld() == null || !e.getKilled().getLocation().getWorld().getName().equalsIgnoreCase(GameManager.get().getWorld().getName())){
             return;
         }
 
