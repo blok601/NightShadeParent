@@ -2,13 +2,11 @@ package com.nightshadepvp.core.cmd.cmds.staff;
 
 import com.massivecraft.massivecore.MassiveException;
 import com.massivecraft.massivecore.command.requirement.RequirementIsPlayer;
-import com.massivecraft.massivecore.command.type.primitive.TypeInteger;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.cmd.NightShadeCoreCommand;
 import com.nightshadepvp.core.cmd.req.ReqRankHasAtLeast;
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.nightshadepvp.core.utils.ChatUtils;
-import com.nightshadepvp.core.utils.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -30,7 +28,6 @@ public class CmdGiveall extends NightShadeCoreCommand {
         this.setDesc("Gives everyone the item in your hand, with the amount specified");
         this.addRequirements(ReqRankHasAtLeast.get(Rank.TRIALHOST));
         this.addRequirements(RequirementIsPlayer.get());
-        this.addParameter(TypeInteger.get(), "amount");
     }
 
     @Override
@@ -41,16 +38,9 @@ public class CmdGiveall extends NightShadeCoreCommand {
             nsPlayer.msg(ChatUtils.message("&cThe item must be valid!"));
             return;
         }
+        ItemStack newStack = nsPlayer.getPlayer().getItemInHand();
 
-        int amount = this.readArg();
-        if (amount <= 0 || amount > 64) {
-            nsPlayer.msg(ChatUtils.message("&cThe amount must be between 1 and 64 (inclusive!)"));
-            return;
-        }
-
-        ItemStack newStack = new ItemBuilder(stack).amount(amount).make();
-
-        nsPlayer.msg(ChatUtils.message("&eGiving all players &3" + amount + " " + newStack.getType().name()));
+        nsPlayer.msg(ChatUtils.message("&eGiving all players &3" + newStack.getAmount() + " " + newStack.getType().name()));
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (nsPlayer.getName().equalsIgnoreCase(player.getName())) {
                 continue;
@@ -58,10 +48,10 @@ public class CmdGiveall extends NightShadeCoreCommand {
 
             if (player.getInventory().firstEmpty() == -1) {
                 player.getWorld().dropItemNaturally(player.getLocation(), newStack);
-                player.sendMessage(ChatUtils.message("&eYou have received &3" + amount + " " + newStack.getType().name() + " &efrom the host!"));
+                player.sendMessage(ChatUtils.message("&eYou have received &3" + newStack.getAmount() + " " + newStack.getType().name() + " &efrom the host!"));
                 player.sendMessage(ChatUtils.message("&4Your inventory was full, dropping items on the ground!"));
             } else {
-                player.sendMessage(ChatUtils.message("&eYou have received &3" + amount + " " + newStack.getType().name() + " &efrom the host!"));
+                player.sendMessage(ChatUtils.message("&eYou have received &3" + newStack.getAmount() + " " + newStack.getType().name() + " &efrom the host!"));
                 player.getInventory().setItem(player.getInventory().firstEmpty(), newStack);
             }
         }
