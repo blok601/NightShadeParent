@@ -25,7 +25,7 @@ public class BackpackScenario extends Scenario{
     @EventHandler
     public void onStart(GameStartEvent e){
         for (Player player : Bukkit.getOnlinePlayers()){
-            bps.put(player.getUniqueId(), Bukkit.createInventory(null, 54, player.getName() + "'s BackPack"));
+            bps.put(player.getUniqueId(), Bukkit.createInventory(null, 27, player.getName() + "'s BackPack"));
         }
     }
 }

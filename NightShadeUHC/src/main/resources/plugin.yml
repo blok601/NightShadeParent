@@ -174,3 +174,6 @@ commands:
     aliases: [removetrees]
   pmores:
     description: Send your ores to your team
+  backpack:
+    description: Command for backpack scenario
+    aliases: [bp, backpacks, bps]
