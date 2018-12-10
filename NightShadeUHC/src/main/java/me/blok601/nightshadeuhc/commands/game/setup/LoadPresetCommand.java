@@ -2,7 +2,7 @@ package me.blok601.nightshadeuhc.commands.game.setup;
 
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.commands.UHCCommand;
-import me.blok601.nightshadeuhc.gui.PresetGUI;
+import me.blok601.nightshadeuhc.utils.ChatUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -21,7 +21,7 @@ public class LoadPresetCommand implements UHCCommand{
     @Override
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
-        new PresetGUI(p);
+        p.sendMessage(ChatUtils.message("&cThis command is temporarily disabled."));
     }
 
     @Override

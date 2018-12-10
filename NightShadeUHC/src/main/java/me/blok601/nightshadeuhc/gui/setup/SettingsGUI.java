@@ -1,7 +1,8 @@
-package me.blok601.nightshadeuhc.gui;
+package me.blok601.nightshadeuhc.gui.setup;
 
 import com.nightshadepvp.core.utils.ChatUtils;
 import me.blok601.nightshadeuhc.GameState;
+import me.blok601.nightshadeuhc.gui.GuiBuilder;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.scenario.Scenario;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;

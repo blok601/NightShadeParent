@@ -4,9 +4,9 @@ import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
 import me.blok601.nightshadeuhc.GameState;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
-import me.blok601.nightshadeuhc.gui.BorderConfigGUI;
-import me.blok601.nightshadeuhc.gui.ComponentGUI;
-import me.blok601.nightshadeuhc.gui.SettingsGUI;
+import me.blok601.nightshadeuhc.gui.setup.BorderConfigGUI;
+import me.blok601.nightshadeuhc.gui.setup.ComponentGUI;
+import me.blok601.nightshadeuhc.gui.setup.SettingsGUI;
 import me.blok601.nightshadeuhc.gui.leaderboards.StatsGUI;
 import me.blok601.nightshadeuhc.gui.leaderboards.TopKillsGUI;
 import me.blok601.nightshadeuhc.gui.leaderboards.TopWinnersGUI;
@@ -15,6 +15,7 @@ import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.scenario.MolesScenario;
 import me.blok601.nightshadeuhc.scenario.Scenario;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
+import me.blok601.nightshadeuhc.staff.SetupStage;
 import me.blok601.nightshadeuhc.teams.TeamManager;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.utils.ItemBuilder;
@@ -55,6 +56,20 @@ public class InvClick implements Listener {
             e.setCancelled(true);
             ComponentHandler.getInstance().handleClick(e.getCurrentItem(), e, e.getSlot());
         }
+
+        if (e.getInventory().getName().equalsIgnoreCase(ChatColor.DARK_PURPLE + "Game Setup")) {
+            e.setCancelled(true);
+            int slot = e.getSlot();
+            if (slot == 0) { //matchpost
+                p.closeInventory();
+                p.sendMessage(ChatUtils.message("&eType your matchpost now, or say 'cancel' to leave the setup process"));
+                GameManager.get().getSetupStageHashMap().put(p, SetupStage.MATCHPOST);
+                return;
+            }else if(slot == 2){
+                //Open world GUI
+            }
+        }
+
 
         if(e.getInventory().getName().equalsIgnoreCase(ChatColor.YELLOW + "Border Config")){
             e.setCancelled(true);

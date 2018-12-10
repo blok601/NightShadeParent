@@ -27,7 +27,8 @@ public class BackpackCommand implements UHCCommand{
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
         NSPlayer user= NSPlayer.get(p.getUniqueId());
-        if(ScenarioManager.getScen("BackPack").isEnabled()){
+
+        if(!ScenarioManager.getScen("BackPack").isEnabled()){
             s.sendMessage(ChatUtils.message("&cBackpacks isn't enabled!"));
             return;
         }

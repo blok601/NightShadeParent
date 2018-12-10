@@ -1,5 +1,6 @@
-package me.blok601.nightshadeuhc.gui;
+package me.blok601.nightshadeuhc.gui.setup;
 
+import me.blok601.nightshadeuhc.gui.GuiBuilder;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.utils.ItemBuilder;

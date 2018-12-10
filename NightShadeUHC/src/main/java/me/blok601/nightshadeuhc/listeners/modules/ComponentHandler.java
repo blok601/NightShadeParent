@@ -1,7 +1,7 @@
 package me.blok601.nightshadeuhc.listeners.modules;
 
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.gui.SettingsGUI;
+import me.blok601.nightshadeuhc.gui.setup.SettingsGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;

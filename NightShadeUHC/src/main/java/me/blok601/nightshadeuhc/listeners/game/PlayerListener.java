@@ -1,5 +1,6 @@
 package me.blok601.nightshadeuhc.listeners.game;
 
+import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.nightshadepvp.core.entity.objects.PlayerTag;
@@ -7,6 +8,8 @@ import me.blok601.nightshadeuhc.GameState;
 import me.blok601.nightshadeuhc.entity.MConf;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
+import me.blok601.nightshadeuhc.manager.GameManager;
+import me.blok601.nightshadeuhc.staff.SetupStage;
 import me.blok601.nightshadeuhc.staff.spec.SpectatorChatCommand;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import org.bukkit.ChatColor;
@@ -147,7 +150,6 @@ public class PlayerListener implements Listener {
             return;
         }
 
-
         Player p = e.getPlayer();
         NSPlayer nsPlayer = NSPlayer.get(p);
         UHCPlayer uhcPlayer = UHCPlayer.get(p);
@@ -157,6 +159,20 @@ public class PlayerListener implements Listener {
                 e.setCancelled(true);
                 p.sendMessage(ChatUtils.message("&cNormal players can't use those characters!"));
                 return;
+            }
+        }
+
+        if (GameManager.get().getSetupStageHashMap().containsKey(p)) {
+            SetupStage stage = GameManager.get().getSetupStageHashMap().get(p);
+            if (stage == SetupStage.MATCHPOST) {
+                if (e.getMessage().toLowerCase().startsWith("cancel")) {
+                    p.sendMessage(ChatUtils.message("&eYou have left the setup process."));
+                    GameManager.get().getSetupStageHashMap().remove(p);
+                }
+                Core.get().setMatchpost(e.getMessage());
+                p.sendMessage(ChatUtils.message("&eThe matchpost is now: &a" + e.getMessage()));
+            } else if (stage == SetupStage.SEED) {
+                //TODO: Finish
             }
         }
 

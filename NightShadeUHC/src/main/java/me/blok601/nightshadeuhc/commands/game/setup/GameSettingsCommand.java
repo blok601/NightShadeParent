@@ -2,7 +2,7 @@ package me.blok601.nightshadeuhc.commands.game.setup;
 
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.commands.UHCCommand;
-import me.blok601.nightshadeuhc.gui.SettingsGUI;
+import me.blok601.nightshadeuhc.gui.setup.SettingsGUI;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

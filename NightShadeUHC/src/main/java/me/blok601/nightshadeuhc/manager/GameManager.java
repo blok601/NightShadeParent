@@ -9,6 +9,7 @@ import lombok.Setter;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.entity.object.CachedColor;
 import me.blok601.nightshadeuhc.entity.object.PlayerRespawnObject;
+import me.blok601.nightshadeuhc.staff.SetupStage;
 import me.blok601.nightshadeuhc.tasks.*;
 import me.blok601.nightshadeuhc.tasks.TimerTask;
 import org.bukkit.Bukkit;
@@ -31,80 +32,57 @@ public class GameManager {
      */
 
     private static GameManager i = new GameManager();
-
     public static GameManager get() {
         return i;
     }
-
     private  HashMap<UUID, PlayerRespawnObject> invs = new HashMap<>();
     private  ArrayList<UUID> deathBans = new ArrayList<>();
     private  HashSet<CachedColor> colors;//storing player names because teams don't store UUIDs ;(
-
     private  int maxPlayers;
-
     private  ArrayList<String> whitelist = new ArrayList<>();
     private  HashSet<String> respawnQueue = new HashSet<>(); // This saves names like whitelist and will check using ignore case
-
     @Getter
     private  HashMap<UUID, Integer> helpOpMutes = new HashMap<>();
     @Getter
     public HashMap<UUID, String> helpopMuteReasons = new HashMap<>();
     @Getter
     public HashSet<String> lateScatter = new HashSet<>();
-
     public boolean IS_SCATTERING = false;
-
-
     private  TimerTask timer;
-
     private  boolean whitelistEnabled;
-
     private  int finalHealTime = 0;
-
     private  int pvpTime = 0;
-
     private  int borderTime = 0;
-
     @Getter
     @Setter
     private  int meetupTime = 0;
-
     private  boolean isTeam;
-
     private  Player host;
     private  int radius = 0;
     private  int appleRates = 5;
     private  int flintRates = 50;
-
     private  FinalHealTask finalHealTask;
     private  PvPTask pvpTask;
     private  WorldBorderTask worldBorderTask;
     @Getter
     @Setter
     private  MeetupTask meetupTask;
-
     private  int[] shrinks;
     private  int borderID;
-
     private  String serverType;
-
     private  HashMap<UUID, Integer> kills = new HashMap<>();
-
     @Getter
     public World world;
-
     private  String date;
+    @Getter
+    private HashMap<Player, SetupStage> setupStageHashMap = new HashMap<>();
 
-    public String getDate(){
-        return date;
-    }
 
     public void setDate(){
         DateFormat format = new SimpleDateFormat("MM/dd/yyyy:HH");
         Date date = new Date();
         this.date = format.format(date);
     }
-
     public int getFinalHealTime() {
         return finalHealTime;
     }
@@ -222,7 +200,6 @@ public class GameManager {
 
         colors = new HashSet<>();
         Core.get().getLogManager().log(Logger.LogType.INFO, "GameManager has been setup!");
-
     }
 
 
