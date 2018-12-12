@@ -111,11 +111,11 @@ public class SpecEvents implements Listener {
 	public void interact(PlayerInteractEvent e) {
 		Player p = e.getPlayer();
 		UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
-		Random r = ThreadLocalRandom.current();
-		ArrayList<Player> players = new ArrayList<>();
-        UHC.players.stream().filter(uuid -> Bukkit.getPlayer(uuid) != null).forEach(uuid -> players.add(Bukkit.getPlayer(uuid)));
 
 		if (gamePlayer.isSpectator()) {
+			Random r = ThreadLocalRandom.current();
+			ArrayList<Player> players = new ArrayList<>();
+			UHC.players.stream().filter(uuid -> Bukkit.getPlayer(uuid) != null).forEach(uuid -> players.add(Bukkit.getPlayer(uuid)));
 			if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
                 if (p.getItemInHand() == null || p.getItemInHand().getType() == Material.AIR) {
                     //If they have something in their hand
@@ -131,7 +131,9 @@ public class SpecEvents implements Listener {
 
                     p.teleport(loc);
                     p.sendMessage(ChatUtils.message("&6Teleported to&8: &3" + loc.getName()));
-                }
+                }else{
+                	e.setCancelled(true);
+				}
 			}
 		}
 	}
