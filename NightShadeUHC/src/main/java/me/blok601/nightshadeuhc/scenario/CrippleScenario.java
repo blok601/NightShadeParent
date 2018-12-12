@@ -23,7 +23,7 @@ public class CrippleScenario extends Scenario{
 
         if(e.getEntity() instanceof Player){
             Player p = (Player) e.getEntity();
-            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 30, 0));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 30*20, 0));
         }
     }
 }
