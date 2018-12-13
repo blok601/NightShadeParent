@@ -34,7 +34,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
-import us.myles.ViaVersion.api.ViaVersion;
 
 /**
  * Created by Blok on 9/4/2017.
@@ -49,12 +48,6 @@ public class JoinListener implements Listener {
         gamePlayer.setSpectator(false);
         gamePlayer.setReceiveHelpop(true);
         gamePlayer.setKillStreak(0);
-        if(ViaVersion.getInstance().getPlayerVersion(player) == 47){
-            //Deprecated but we don't care cuz we savages!
-            gamePlayer.setUsingOldVersion(false);
-        }else{
-            gamePlayer.setUsingOldVersion(true);
-        }
         player.sendMessage(ChatUtils.message("&5Welcome &5back to the NightShadePvP Network!"));
         ScoreboardManager scoreboardManager = UHC.get().getScoreboardManager();
        scoreboardManager.addToPlayerCache(player);
