@@ -52,7 +52,6 @@ public class GameSetupInventoryClick implements Listener {
         NSPlayer user = NSPlayer.get(p.getUniqueId());
         Inventory inventory = e.getInventory();
         int slot = e.getSlot();
-        e.setCancelled(true);
 
         if (e.getInventory().getName().equalsIgnoreCase(ChatColor.DARK_PURPLE + "Game Settings")) {
             e.setCancelled(true);
@@ -85,6 +84,7 @@ public class GameSetupInventoryClick implements Listener {
         }
 
         if (inventory.getName().equalsIgnoreCase(ChatColor.DARK_PURPLE + "World Setup")) {
+            e.setCancelled(true);
             if (slot == 26) {
                 //back
                 new HostGUI(p);
@@ -99,6 +99,7 @@ public class GameSetupInventoryClick implements Listener {
         }
 
         if (inventory.getName().equalsIgnoreCase(ChatColor.DARK_PURPLE + "Overworld Setup")) {
+            e.setCancelled(true);
             if (slot == 3) {
                 //Seed
                 p.closeInventory();
