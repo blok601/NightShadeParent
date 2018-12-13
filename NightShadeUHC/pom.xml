@@ -163,5 +163,12 @@
             <artifactId>mongodb-driver</artifactId>
             <version>3.4.3</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.jetbrains/annotations -->
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>13.0</version>
+        </dependency>
+
     </dependencies>
 </project>
