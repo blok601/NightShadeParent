@@ -19,7 +19,7 @@ public class UltraParanoidScenario extends Scenario {
         super("UltraParanoid", "Your coordinates are broadcasted every time you mine gold or diamonds", new ItemBuilder(Material.DIAMOND_PICKAXE).name("Ultra Paranoid").make());
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onBreak(BlockBreakEvent e){
 
         if(!isEnabled()){

@@ -1,4 +1,4 @@
-package me.blok601.nightshadeuhc.gui.setup;
+package me.blok601.nightshadeuhc.gui.setup.world;
 
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.utils.ItemBuilder;
@@ -13,6 +13,7 @@ import org.bukkit.inventory.Inventory;
 public class WorldGUI {
 
     public WorldGUI(Player player) {
+
         Inventory inventory = Bukkit.createInventory(null, 27, ChatUtils.format("&5World Setup"));
 
         ItemBuilder normal = new ItemBuilder(Material.GRASS)
@@ -22,5 +23,14 @@ public class WorldGUI {
         ItemBuilder nether = new ItemBuilder(Material.NETHERRACK)
                 .name("&6Nether Creation")
                 .lore("&7&o(&6i&7) &6Click to start the nether world creation process");
+
+        ItemBuilder back = new ItemBuilder(Material.ARROW)
+                .name("&cBack");
+
+        inventory.setItem(12, normal.make());
+        inventory.setItem(14, nether.make());
+        inventory.setItem(26, back.make());
+
+        player.openInventory(inventory);
     }
 }

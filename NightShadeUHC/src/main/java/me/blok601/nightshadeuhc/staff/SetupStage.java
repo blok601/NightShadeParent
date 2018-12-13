@@ -5,6 +5,6 @@ package me.blok601.nightshadeuhc.staff;
  */
 public enum SetupStage {
 
-    MATCHPOST, SEED, RADIUS
+    MATCHPOST, SEED;
 
 }

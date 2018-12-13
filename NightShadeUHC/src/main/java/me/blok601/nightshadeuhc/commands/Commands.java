@@ -112,7 +112,8 @@ public class Commands {
                 new SetMoleCommand(),
                 new ToggleMobsCommand(),
                 new ClearTreesCommand(),
-                new PMOresCommand()
+                new PMOresCommand(),
+                new BetaHostCommand()
         };
     }
 

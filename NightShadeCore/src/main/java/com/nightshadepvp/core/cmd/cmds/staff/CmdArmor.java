@@ -2,7 +2,7 @@ package com.nightshadepvp.core.cmd.cmds.staff;
 
 import com.massivecraft.massivecore.MassiveException;
 import com.massivecraft.massivecore.command.requirement.RequirementIsPlayer;
-import com.massivecraft.massivecore.command.type.primitive.TypeString;
+import com.massivecraft.massivecore.command.type.sender.TypePlayer;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.cmd.NightShadeCoreCommand;
 import com.nightshadepvp.core.cmd.req.ReqRankHasAtLeast;
@@ -29,21 +29,19 @@ public class CmdArmor extends NightShadeCoreCommand {
         this.addAliases("armor");
         this.addRequirements(RequirementIsPlayer.get());
         this.addRequirements(ReqRankHasAtLeast.get(Rank.TRIAL));
-        this.addParameter(TypeString.get(), "player");
+        this.addParameter(TypePlayer.get(), "player");
     }
 
     @Override
     public void perform() throws MassiveException {
-        String targetName = this.readArg();
         NSPlayer nsPlayer = NSPlayer.get(sender);
 
 
-        Player target = Bukkit.getPlayer(targetName);
+        Player target = this.readArg();
         if (target == null) {
             nsPlayer.msg(ChatUtils.message("&cThat player couldn't be found!"));
             return;
         }
-
 
         int slot = 0;
         Inventory inventory = Bukkit.createInventory(null, 9, target.getName() + "'s Armor");

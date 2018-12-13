@@ -76,6 +76,10 @@ public class GameManager {
     private  String date;
     @Getter
     private HashMap<Player, SetupStage> setupStageHashMap = new HashMap<>();
+    @Getter@Setter
+    private int setupRadius = 0;
+    @Getter@Setter
+    private String setupSeed = "";
 
 
     public void setDate(){

@@ -1,9 +1,9 @@
 package me.blok601.nightshadeuhc.scenario;
 
 import me.blok601.nightshadeuhc.UHC;
+import me.blok601.nightshadeuhc.events.GameStartEvent;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.utils.ItemBuilder;
-import me.blok601.nightshadeuhc.events.GameStartEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -62,7 +62,6 @@ public class LootCrateScenario extends Scenario{
 
 
         new BukkitRunnable(){
-
             @Override
             public void run(){
                 if(!isEnabled()){
@@ -79,7 +78,6 @@ public class LootCrateScenario extends Scenario{
                     }
                 }
             }
-
         }.runTaskTimer(UHC.get(), 0, 20*30);
     }
 
@@ -98,13 +96,23 @@ public class LootCrateScenario extends Scenario{
             if(e.getItem().getType() == Material.CHEST){
                 Random r = ThreadLocalRandom.current();
                 ItemStack stack = tier1[r.nextInt(tier1.length)];
-                p.getInventory().remove(e.getItem());
+                ItemStack itemInHand = p.getItemInHand();
+                if (itemInHand.getAmount() > 1) {
+                    itemInHand.setAmount(itemInHand.getAmount() - 1);
+                } else {
+                    p.getItemInHand().setType(Material.AIR);
+                }
                 p.getInventory().addItem(stack);
                 p.sendMessage(ChatUtils.format(getPrefix() + "&eYou have gotten " + stack.getAmount() + " &b" + stack.getType().name() + " &efrom your lootcrate!"));
             }else if(e.getItem().getType() == Material.ENDER_CHEST){
                 Random r = ThreadLocalRandom.current();
                 ItemStack stack = tier2[r.nextInt(tier2.length)];
-                p.getInventory().remove(e.getItem());
+                ItemStack itemInHand = p.getItemInHand();
+                if (itemInHand.getAmount() > 1) {
+                    itemInHand.setAmount(itemInHand.getAmount() - 1);
+                } else {
+                    p.getItemInHand().setType(Material.AIR);
+                }
                 p.getInventory().addItem(stack);
                 p.sendMessage(ChatUtils.format(getPrefix() + "&eYou have gotten " + stack.getAmount() + " &b" + stack.getType().name() + " &efrom your lootcrate!"));
             }

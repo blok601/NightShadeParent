@@ -29,7 +29,7 @@ public class SlutCleanScenario extends Scenario{
         Player p = e.getPlayer();
         Block b = e.getBlock();
 
-        if(PlayerUtils.wearingArmor(p)){
+        if(!PlayerUtils.wearingArmor(p)){
             Location clone = new Location(b.getWorld(),  b.getLocation().getBlockX() + 0.5D, b.getLocation().getBlockY(),  b.getLocation().getBlockZ() + 0.5D); //XP ORB
 
             if(e.getBlock().getType().equals(Material.GOLD_ORE)){

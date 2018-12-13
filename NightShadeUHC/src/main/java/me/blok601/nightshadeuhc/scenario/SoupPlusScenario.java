@@ -33,9 +33,10 @@ public class SoupPlusScenario extends Scenario{
                 }else{
                     p.setHealth(p.getHealth()+5);
                 }
+                p.getItemInHand().setType(Material.BOWL);
             }
 
-            p.getItemInHand().setType(Material.BOWL);
+
         }
     }
 

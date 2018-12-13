@@ -17,7 +17,7 @@ import org.bukkit.inventory.ItemStack;
 public class HostGUI {
 
     public HostGUI(Player player) {
-        Inventory inventory = Bukkit.createInventory(null, 54, ChatUtils.format("&5Game Setup"));
+        Inventory inventory = Bukkit.createInventory(null, 54, ChatUtils.format("&5UHC Game Setup"));
 
         ItemBuilder post = new ItemBuilder(new ItemStack(Material.WOOL, 1, DyeColor.ORANGE.getWoolData())).name("&6&lSet the Matchpost").lore("&7&o(&6i&7) &6Click to set the matchpost for the UHC");
         if (!Core.get().getMatchpost().equalsIgnoreCase("uhc.gg")) {//Its set

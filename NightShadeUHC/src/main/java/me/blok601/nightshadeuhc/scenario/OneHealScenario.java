@@ -49,6 +49,7 @@ public class OneHealScenario extends Scenario {
                 if(meta.getDisplayName().equalsIgnoreCase(ChatColor.YELLOW + "Magical Tool")){
                     e.getPlayer().setHealth(e.getPlayer().getMaxHealth());
                     e.getPlayer().getInventory().remove(e.getItem());
+                    e.getPlayer().getItemInHand().setType(Material.AIR);
                     e.getPlayer().sendMessage(ChatUtils.format(getPrefix() + "&eYou have redeemed your one heal!"));
                 }
             }

@@ -18,7 +18,7 @@ public class BetaZombiesScenario extends Scenario{
         if(!isEnabled()) return;
 
         if(e.getEntity() instanceof Zombie){
-            e.getDrops().add(new ItemStack(Material.FEATHER, 3));
+            e.getDrops().add(new ItemStack(Material.FEATHER, 2));
         }
     }
 }

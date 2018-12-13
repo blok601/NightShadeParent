@@ -171,8 +171,16 @@ public class PlayerListener implements Listener {
                 }
                 Core.get().setMatchpost(e.getMessage());
                 p.sendMessage(ChatUtils.message("&eThe matchpost is now: &a" + e.getMessage()));
+                return;
             } else if (stage == SetupStage.SEED) {
-                //TODO: Finish
+                if (e.getMessage().toLowerCase().startsWith("cancel")) {
+                    p.sendMessage(ChatUtils.message("&eYou have left the setup process."));
+                    GameManager.get().getSetupStageHashMap().remove(p);
+                }
+
+                GameManager.get().setSetupSeed(e.getMessage());
+                p.sendMessage(ChatUtils.message("&eThe seed is now&8: &b" + e.getMessage()));
+                return;
             }
         }
 

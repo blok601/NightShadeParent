@@ -3,6 +3,7 @@ package me.blok601.nightshadeuhc.manager;
 import me.blok601.nightshadeuhc.commands.extras.RatesCommand;
 import me.blok601.nightshadeuhc.commands.extras.disguise.Undisguise;
 import me.blok601.nightshadeuhc.listeners.game.*;
+import me.blok601.nightshadeuhc.listeners.gui.GameSetupInventoryClick;
 import me.blok601.nightshadeuhc.listeners.gui.InvClick;
 import me.blok601.nightshadeuhc.listeners.gui.ScenarioClick;
 import me.blok601.nightshadeuhc.listeners.modules.GoldenHeadConsume;
@@ -41,7 +42,8 @@ public class ListenerHandler {
             new SkriptScenarios(),
             new ArenaListener(),
             new SpectatorInfoListener(),
-            new GameDeathListener()
+            new GameDeathListener(),
+            new GameSetupInventoryClick()
     };
 
     public static Listener[] getListeners() {

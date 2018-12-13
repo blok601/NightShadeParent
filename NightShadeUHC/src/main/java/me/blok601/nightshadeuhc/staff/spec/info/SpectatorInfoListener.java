@@ -83,7 +83,7 @@ public class SpectatorInfoListener implements Listener {
 
     HashMap<UUID, HashSet<Block>> brokenBlocks = new HashMap<>();
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBreak(BlockBreakEvent e) {
         Player p = e.getPlayer();
         if (brokenBlocks.containsKey(p.getUniqueId())) {
