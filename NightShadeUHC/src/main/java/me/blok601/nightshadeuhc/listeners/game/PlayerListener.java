@@ -163,11 +163,13 @@ public class PlayerListener implements Listener {
         }
 
         if (GameManager.get().getSetupStageHashMap().containsKey(p)) {
+            e.setCancelled(true);
             SetupStage stage = GameManager.get().getSetupStageHashMap().get(p);
             if (stage == SetupStage.MATCHPOST) {
                 if (e.getMessage().toLowerCase().startsWith("cancel")) {
                     p.sendMessage(ChatUtils.message("&eYou have left the setup process."));
                     GameManager.get().getSetupStageHashMap().remove(p);
+                    return;
                 }
                 Core.get().setMatchpost(e.getMessage());
                 p.sendMessage(ChatUtils.message("&eThe matchpost is now: &a" + e.getMessage()));
@@ -176,6 +178,7 @@ public class PlayerListener implements Listener {
                 if (e.getMessage().toLowerCase().startsWith("cancel")) {
                     p.sendMessage(ChatUtils.message("&eYou have left the setup process."));
                     GameManager.get().getSetupStageHashMap().remove(p);
+                    return;
                 }
 
                 GameManager.get().setSetupSeed(e.getMessage());
