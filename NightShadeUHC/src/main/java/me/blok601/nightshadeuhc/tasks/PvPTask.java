@@ -1,7 +1,7 @@
 package me.blok601.nightshadeuhc.tasks;
 
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.commands.extras.PvP;
+import me.blok601.nightshadeuhc.commands.extras.PvPCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
 import me.blok601.nightshadeuhc.events.PvPEnableEvent;
@@ -32,9 +32,9 @@ public class PvPTask extends BukkitRunnable {
     @Override
     public void run() {
         if (counter == 0) {
-            PvP.enablePvP(w);
+            PvPCommand.enablePvP(w);
             Bukkit.getServer().getPluginManager().callEvent(new PvPEnableEvent());
-            PacketPlayOutTitle packet = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"PvP Has Been Enabled!\",\"color\":\"dark_aqua\",\"bold\":true}"));
+            PacketPlayOutTitle packet = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"PvPCommand Has Been Enabled!\",\"color\":\"dark_aqua\",\"bold\":true}"));
             for (UHCPlayer uhcPlayer : UHCPlayerColl.get().getAllOnline()) {
                 if (uhcPlayer.isUsingOldVersion()) {
                     uhcPlayer.msg(ChatUtils.message("&3PvP has been enabled!"));

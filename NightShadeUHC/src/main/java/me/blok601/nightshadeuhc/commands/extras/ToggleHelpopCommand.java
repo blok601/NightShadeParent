@@ -25,12 +25,12 @@ public class ToggleHelpopCommand implements UHCCommand{
         UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
         if(gamePlayer.isReceiveHelpop()){
             gamePlayer.setReceiveHelpop(false);
-            p.sendMessage(ChatUtils.message("&eToggled Helpop messages&8: &coff"));
+            p.sendMessage(ChatUtils.message("&eToggled HelpOP messages&8: &coff"));
             return;
         }
 
         gamePlayer.setReceiveHelpop(true);
-        p.sendMessage(ChatUtils.message("&eToggled Helpop messages &8: &aon"));
+        p.sendMessage(ChatUtils.message("&eToggled HelpOP messages &8: &aon"));
         return;
     }
 

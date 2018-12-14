@@ -12,7 +12,7 @@ commands:
   spec:
     description: Spectator Command
   helpop:
-    description: Helpop Command
+    description: HelpopCommand Command
   team:
     description: Team Base command
   pm:
@@ -37,22 +37,32 @@ commands:
     description: Get the top kills for a game
     aliases: [kt, ktop]
   feedall:
+    description: Feed all players
   freezeall:
+    description: Freeze all players
   health:
+    description: Get the health of another player
     aliases: [h, hp]
   heal:
+    description: Heal a player
   helpop:
+    description: Send a message to the online staff
   pvp:
+    description: Enable/Disable PvP
   lag:
     description: Get information about the world (lag info)
   lct:
+    description: Check how much longer until lootcrates are given
   cancelgame:
+    description: Stop game tasks from beginning
   randomd:
+    description: Randomly disguise
   endgame:
     aliases: [winner, egame]
   spc:
     aliases: [specchat, sp, spcchat]
   alerts:
+    description: Enable or disable staff alerts
   locreport:
     aliases: [lreport, locs, locations, playerlocations, ploc, locationreport]
     description: Get online player's locations
@@ -72,26 +82,29 @@ commands:
   claimhost:
     description: Claim the current game
   setworld:
+    description: Set the world for the game
   teams:
+    description: View the teams
   maxplayers:
+    description: Set the maxplayers for the game
   timer:
+    description: Manually start and stop the timer
   setupdates:
     description: Command for Circle Integration
   config:
     aliases: [conf, uhc]
     description: Show the game config
-  savepreset:
-  loadpreset:
   respawn:
+    description: Respawn players
   ewl:
   latestart:
     aliases: [latescatter]
   killtop:
     aliases: [kt]
-  pregen:
   explain:
     description: View scenario descriptions
   rates:
+    description: Set the apple and flint rates
   feed:
     description: Feed command
     aliases: [eat]

@@ -32,10 +32,10 @@ public class Commands {
         commands = new UHCCommand[]{
                 new FeedAll(),
                 new FreezeAll(),
-                new GetHealth(),
+                new HealthCommand(),
                 new HealCommand(),
-                new Helpop(),
-                new PvP(),
+                new HelpopCommand(),
+                new PvPCommand(),
                 new WhitelistCommand(),
                 new InfoCommand(),
                 new StartUHCCommand(),

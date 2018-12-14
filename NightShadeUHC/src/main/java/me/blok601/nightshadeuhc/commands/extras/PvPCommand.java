@@ -9,7 +9,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class PvP implements UHCCommand{
+public class PvPCommand implements UHCCommand{
 
 	@Override
 	public String[] getNames() {

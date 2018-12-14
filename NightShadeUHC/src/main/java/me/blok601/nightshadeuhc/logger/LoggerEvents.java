@@ -2,10 +2,10 @@ package me.blok601.nightshadeuhc.logger;
 
 import me.blok601.nightshadeuhc.GameState;
 import me.blok601.nightshadeuhc.UHC;
+import me.blok601.nightshadeuhc.commands.extras.PvPCommand;
 import me.blok601.nightshadeuhc.entity.object.PlayerRespawnObject;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
-import me.blok601.nightshadeuhc.commands.extras.PvP;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -43,7 +43,7 @@ public class LoggerEvents implements Listener {
     public void onDamage(EntityDamageByEntityEvent event) {
 
         if (event.getEntity() instanceof Zombie) {
-            if (!PvP.isEnabled() && event.getEntity().hasMetadata("logger")) {
+            if (!PvPCommand.isEnabled() && event.getEntity().hasMetadata("logger")) {
                 event.setCancelled(true);
             }
         }

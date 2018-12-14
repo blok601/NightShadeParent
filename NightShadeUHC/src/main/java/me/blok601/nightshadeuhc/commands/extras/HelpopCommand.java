@@ -18,7 +18,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.HashSet;
 import java.util.UUID;
 
-public class Helpop implements UHCCommand{
+public class HelpopCommand implements UHCCommand{
 
 	private HashSet<UUID> helpopCooldown = new HashSet<>();
 
@@ -72,7 +72,7 @@ public class Helpop implements UHCCommand{
 				String reason = message.toString().trim();
 
 
-				Bukkit.getOnlinePlayers().stream().filter(o -> NSPlayer.get(o.getUniqueId()).hasRank(Rank.TRIAL)).filter(o -> UHCPlayer.get(o.getUniqueId()).isReceiveHelpop()).forEach(o -> o.sendMessage(ChatColor.DARK_AQUA + "[Helpop] "+  p.getName() + ": "+ ChatColor.YELLOW + reason));
+				Bukkit.getOnlinePlayers().stream().filter(o -> NSPlayer.get(o.getUniqueId()).hasRank(Rank.TRIAL)).filter(o -> UHCPlayer.get(o.getUniqueId()).isReceiveHelpop()).forEach(o -> o.sendMessage(ChatColor.DARK_AQUA + "[HelpopCommand] "+  p.getName() + ": "+ ChatColor.YELLOW + reason));
                 this.helpopCooldown.add(p.getUniqueId());
                 new BukkitRunnable(){
                     @Override

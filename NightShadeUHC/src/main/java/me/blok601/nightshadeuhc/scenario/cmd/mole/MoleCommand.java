@@ -22,7 +22,7 @@ public class MoleCommand implements UHCCommand {
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
         p.sendMessage(ChatUtils.message("Some useful commands for moles games:"));
-        p.sendMessage(ChatUtils.format("&e- &b/mmc - Send a message to the moles"));
+        p.sendMessage(ChatUtils.format("&e- &b/mcc - Send a message to the moles"));
         p.sendMessage(ChatUtils.format("&e- &b/mcl - Send your location to the moles"));
         p.sendMessage(ChatUtils.format("&e- &b/molekit - Redeem your molekit"));
     }

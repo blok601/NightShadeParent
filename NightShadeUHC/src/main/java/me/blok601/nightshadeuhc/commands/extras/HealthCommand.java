@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 
 import java.text.DecimalFormat;
 
-public class GetHealth implements UHCCommand {
+public class HealthCommand implements UHCCommand {
 
 	@Override
 	public String[] getNames() {

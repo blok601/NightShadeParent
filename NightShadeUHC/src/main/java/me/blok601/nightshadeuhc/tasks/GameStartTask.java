@@ -7,7 +7,7 @@ import com.nightshadepvp.core.entity.NSPlayerColl;
 import me.blok601.nightshadeuhc.GameState;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.commands.extras.Freeze;
-import me.blok601.nightshadeuhc.commands.extras.PvP;
+import me.blok601.nightshadeuhc.commands.extras.PvPCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
 import me.blok601.nightshadeuhc.events.GameStartEvent;
@@ -89,7 +89,7 @@ public class GameStartTask extends BukkitRunnable {
                    }
                     GameManager.get().world = world;
                     GameManager.get().setDate();
-                    PvP.disablePvP();
+                    PvPCommand.disablePvP();
                     Freeze.stop();
 
                     Bukkit.getOnlinePlayers().forEach(o -> o.setMaxHealth(20.0));
