@@ -88,18 +88,14 @@ public class StatUpdateTask extends BukkitRunnable {
             itemBuilder.lore("&eFill&8» &b" + cachedGame.getFill());
             itemBuilder.lore("&eTeam Type&8» &b" + cachedGame.getTeamType());
             itemBuilder.lore(" ");
-            if (cachedGame.getWinners().size() > 1) {
-                //FFA
-                String winnerName = UHCPlayer.get(UUID.fromString(cachedGame.getWinners().get(0))).getName();
-                itemBuilder.lore("&eWinner&8» &b" + winnerName + " &8[&3" + cachedGame.getWinnerKills().get(cachedGame.getWinners().get(0)) + "&8]");
-            } else {
-                itemBuilder.lore("&eWinners&8»");
-                String winnerName;
-                for (String winner : cachedGame.getWinners()) {
-                    winnerName = UHCPlayer.get(UUID.fromString(winner)).getName();
-                    itemBuilder.lore("  &8→ &b" + winnerName + "&8[&3" + cachedGame.getWinnerKills().get(winner) + "&8]");
-                }
+            String winnerName;
+            itemBuilder.lore("&eWinner&7(&es&7)&8»");
+            //itemBuilder.lore("&eWinner&7(&es&7)&8» &b" + winnerName + " &8[&3" + cachedGame.getWinnerKills().get(cachedGame.getWinners().get(0)) + "&8]");
+            for (String w : cachedGame.getWinners()) {
+                winnerName = UHCPlayer.get(UUID.fromString(w)).getName();
+                itemBuilder.lore("  &8→ &b" + winnerName + "&8[&3" + cachedGame.getWinnerKills().get(w) + "&8]");
             }
+
             itemBuilder.lore(" ");
             itemBuilder.lore("&eScenarios&8»");
             for (String scenario : cachedGame.getScenarios()) {

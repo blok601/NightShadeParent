@@ -26,6 +26,10 @@ public class HallOfFameCommand implements UHCCommand {
     @Override
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
+        if (StatsHandler.getInstance().getHallOfFameInventory().isEmpty()) {
+            p.sendMessage(ChatUtils.message("&cThe hall of fame has not been loaded yet!"));
+            return;
+        }
         p.sendMessage(ChatUtils.message("&eLoading Hall of Fame Inventory..."));
         new PagedInventory(StatsHandler.getInstance().getHallOfFameInventory(), ChatUtils.format("&6Hall of Fame"), p);
         new BukkitRunnable(){
