@@ -208,7 +208,7 @@ public class EndGameCommand implements UHCCommand{
                 Bukkit.getOnlinePlayers().forEach(onlinePlayer -> onlinePlayer.teleport(MConf.get().getSpawnLocation().asBukkitLocation(true)));
                 Util.staffLog("&4The Server Will Restart in 30 seconds!");
 
-                UHC.getMultiverseCore().getMVWorldManager().removeWorldFromConfig(args[0]);
+                UHC.getMultiverseCore().getMVWorldManager().removeWorldFromConfig(GameManager.get().getWorld().getName());
                 Bukkit.unloadWorld(GameManager.get().getWorld(), false);
                 Util.deleteWorldFolder(GameManager.get().getWorld());
 
