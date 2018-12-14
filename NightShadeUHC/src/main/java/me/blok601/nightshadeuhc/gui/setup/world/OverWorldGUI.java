@@ -61,7 +61,7 @@ public class OverWorldGUI {
                 .name("&c-50")
                 .lore("&7&o(&6i&7) &cClick to decrease the radius by 50");
         ItemBuilder minus100 = new ItemBuilder(Material.REDSTONE_BLOCK)
-                .name("&c-5")
+                .name("&c-100")
                 .lore("&7&o(&6i&7) &cClick to decrease the radius by 100");
 
         inventory.setItem(3, seedClick.make());

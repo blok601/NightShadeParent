@@ -128,7 +128,7 @@ public class EndGameCommand implements UHCCommand{
 
                     user = NSPlayer.get(pl);
                     gamePlayer = UHCPlayer.get(pl);
-                    winners.add(UUID.fromString(uuid));
+                    winners.add(pl.getUniqueId());
 
 //                user.setPrefix(ChatColor.RED + "[Winner] ");
                     gamePlayer.setGamesWon(gamePlayer.getGamesWon() + 1);

@@ -22,8 +22,8 @@ public class CancelGameCommand implements UHCCommand {
     @Override
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
-        if(CmdStartUHC.arrayList.contains(p.getName())){
-            CmdStartUHC.arrayList.remove(p.getName());
+        if(StartUHCCommand.arrayList.contains(p.getName())){
+            StartUHCCommand.arrayList.remove(p.getName());
             p.sendMessage(ChatUtils.message("&bYour game has been cancelled!"));
             return;
         }else{

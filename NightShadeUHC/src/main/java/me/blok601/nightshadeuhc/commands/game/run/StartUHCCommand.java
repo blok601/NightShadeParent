@@ -21,7 +21,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 
-public class CmdStartUHC implements UHCCommand {
+public class StartUHCCommand implements UHCCommand {
 
 	public static ArrayList<String> arrayList = new ArrayList<>();
 

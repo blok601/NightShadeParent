@@ -38,7 +38,7 @@ public class Commands {
                 new PvP(),
                 new WhitelistCommand(),
                 new InfoCommand(),
-                new CmdStartUHC(),
+                new StartUHCCommand(),
                 new LootCrateTimeCommand(),
                 new BackpackCommand(),
                 new CancelGameCommand(),
