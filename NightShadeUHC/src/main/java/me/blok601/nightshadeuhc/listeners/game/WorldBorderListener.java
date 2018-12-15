@@ -27,8 +27,9 @@ public class WorldBorderListener implements Listener {
                 Core.get().getLogManager().log(Logger.LogType.DEBUG, "Queue was null!");
                 return;
             }
-            queue.setRunning(false);
             PregenTask.getPregenQueue().remove(queue);
+            queue.setRunning(false);
+            PregenTask.RUNNING = false;
             Player player = Bukkit.getPlayer(queue.getStarter());
             if (player != null) {
                 player.sendMessage(ChatUtils.message("&eThe pregen for &b" + queue.getWorld().getName() + " &ehas finished!"));

@@ -20,6 +20,8 @@ public class PregenTask extends BukkitRunnable {
     @Getter
     public static ArrayList<PregenQueue> pregenQueue = new ArrayList<>();
 
+    public static boolean RUNNING = false;
+
     @Override
     public void run() {
 
@@ -34,19 +36,23 @@ public class PregenTask extends BukkitRunnable {
             return;
         }
 
+        if(RUNNING) return;
+
         Player p = Bukkit.getPlayer(queue.getStarter());
         if (p == null) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb " + queue.getWorld().getName() + " set " + GameManager.get().getSetupNetherRadius() + " " + GameManager.get().getSetupNetherRadius() + " 0 0");
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb " + queue.getWorld().getName() + " fill 250");
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb fill confirm");
-            queue.setRunning(false);
-            Util.staffLog("Pregen for &cnether world: " + queue.getWorld().getName() + " &ehas begun!");
+            queue.setRunning(true);
+            RUNNING = true;
+            Util.staffLog("Pregen for world: " + queue.getWorld().getName() + " &ehas begun!");
         } else {
             p.chat("/wb " + queue.getWorld().getName() + " set " + GameManager.get().getSetupNetherRadius() + " " + GameManager.get().getSetupNetherRadius() + " 0 0");
             p.chat("/wb " + queue.getWorld().getName() + " fill 250");
             p.chat("/wb fill confirm");
-            queue.setRunning(false);
-            p.sendMessage(ChatUtils.message("&aPregen in &cnether world &b" + queue.getWorld().getName() + " &ehas begun!"));
+            queue.setRunning(true);
+            RUNNING = true;
+            p.sendMessage(ChatUtils.message("&aPregen in world &b" + queue.getWorld().getName() + " &ehas begun!"));
         }
     }
 
