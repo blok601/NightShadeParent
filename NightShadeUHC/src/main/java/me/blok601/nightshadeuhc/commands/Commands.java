@@ -81,7 +81,6 @@ public class Commands {
                 new DeleteWorldCommand(),
                 new FullBrightCommand(),
                 new RvBCommand(),
-                new PregenCommand(),
                 new LeaderboardsCommand(),
                 new StatsCommand(),
                 new MoleChatCommand(),
