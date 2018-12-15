@@ -142,7 +142,7 @@ public class GameSetupInventoryClick implements Listener {
 //                                p.chat("/wb fill confirm");
 //                                p.sendMessage(ChatUtils.message("&aPregen in world &b" + GameManager.get().getWorld().getName() + " &ehas begun!"));
                                 PregenQueue queue = new PregenQueue();
-                                queue.setFinished(false);
+                                queue.setRunning(false);
                                 queue.setStarter(p.getUniqueId());
                                 queue.setRadius(GameManager.get().getSetupRadius());
                                 queue.setWorld(Bukkit.getWorld("UHC" + p.getName()));
@@ -255,6 +255,7 @@ public class GameSetupInventoryClick implements Listener {
                                     pregenQueue.setWorld(Bukkit.getWorld("UHC" + p.getName() + "_nether"));
                                     pregenQueue.setRadius(GameManager.get().getSetupNetherRadius());
                                     pregenQueue.setStarter(p.getUniqueId());
+                                    pregenQueue.setRunning(false);
                                     PregenTask.getPregenQueue().add(pregenQueue);
                                 }
                             }.runTaskLater(UHC.get(), 5 * 20);

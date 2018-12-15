@@ -12,11 +12,11 @@ import java.util.UUID;
 public class PregenQueue {
 
     private World world;
-    private boolean finished;
+    private boolean running;
     private int radius;
     private UUID starter;
 
     public PregenQueue() {
-        this.finished = true;
+        this.running = false;
     }
 }
