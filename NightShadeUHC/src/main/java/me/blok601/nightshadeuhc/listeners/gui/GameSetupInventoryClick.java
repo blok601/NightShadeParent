@@ -263,7 +263,68 @@ public class GameSetupInventoryClick implements Listener {
                     }.runTaskLater(UHC.get(), 50);
                     return;
                 }
+            } else if (slot == 8) {
+                new WorldGUI(p);
+                return;
+            } else if (slot == 18) {
+                //- 100
+                GameManager.get().setSetupNetherRadius(GameManager.get().getSetupNetherRadius() - 100);
+                ItemBuilder currentBorder = new ItemBuilder(new ItemStack(Material.STAINED_GLASS_PANE, 1, DyeColor.BLACK.getWoolData()))
+                        .name("&6Current Border")
+                        .lore("&eCurrent Border: " + GameManager.get().getSetupNetherRadius());
+                inventory.setItem(22, currentBorder.make());
+                p.updateInventory();
+            } else if (slot == 19) {
+                GameManager.get().setSetupNetherRadius(GameManager.get().getSetupNetherRadius() - 50);
+                ItemBuilder currentBorder = new ItemBuilder(new ItemStack(Material.STAINED_GLASS_PANE, 1, DyeColor.BLACK.getWoolData()))
+                        .name("&6Current Border")
+                        .lore("&eCurrent Border: " + GameManager.get().getSetupNetherRadius());
+                inventory.setItem(22, currentBorder.make());
+                p.updateInventory();
+            } else if (slot == 20) {
+                GameManager.get().setSetupNetherRadius(GameManager.get().getSetupNetherRadius() - 10);
+                ItemBuilder currentBorder = new ItemBuilder(new ItemStack(Material.STAINED_GLASS_PANE, 1, DyeColor.BLACK.getWoolData()))
+                        .name("&6Current Border")
+                        .lore("&eCurrent Border: " + GameManager.get().getSetupNetherRadius());
+                inventory.setItem(22, currentBorder.make());
+                p.updateInventory();
+            } else if (slot == 21) {
+                GameManager.get().setSetupNetherRadius(GameManager.get().getSetupNetherRadius() - 5);
+                ItemBuilder currentBorder = new ItemBuilder(new ItemStack(Material.STAINED_GLASS_PANE, 1, DyeColor.BLACK.getWoolData()))
+                        .name("&6Current Border")
+                        .lore("&eCurrent Border: " + GameManager.get().getSetupNetherRadius());
+                inventory.setItem(22, currentBorder.make());
+                p.updateInventory();
+            } else if (slot == 23) {
+                GameManager.get().setSetupNetherRadius(GameManager.get().getSetupNetherRadius() + 5);
+                ItemBuilder currentBorder = new ItemBuilder(new ItemStack(Material.STAINED_GLASS_PANE, 1, DyeColor.BLACK.getWoolData()))
+                        .name("&6Current Border")
+                        .lore("&eCurrent Border: " + GameManager.get().getSetupNetherRadius());
+                inventory.setItem(22, currentBorder.make());
+                p.updateInventory();
+            } else if (slot == 24) {
+                GameManager.get().setSetupNetherRadius(GameManager.get().getSetupNetherRadius() + 10);
+                ItemBuilder currentBorder = new ItemBuilder(new ItemStack(Material.STAINED_GLASS_PANE, 1, DyeColor.BLACK.getWoolData()))
+                        .name("&6Current Border")
+                        .lore("&eCurrent Border: " + GameManager.get().getSetupNetherRadius());
+                inventory.setItem(22, currentBorder.make());
+                p.updateInventory();
+            } else if (slot == 25) {
+                GameManager.get().setSetupNetherRadius(GameManager.get().getSetupNetherRadius() + 50);
+                ItemBuilder currentBorder = new ItemBuilder(new ItemStack(Material.STAINED_GLASS_PANE, 1, DyeColor.BLACK.getWoolData()))
+                        .name("&6Current Border")
+                        .lore("&eCurrent Border: " + GameManager.get().getSetupNetherRadius());
+                inventory.setItem(22, currentBorder.make());
+                p.updateInventory();
+            } else if (slot == 26) {
+                GameManager.get().setSetupNetherRadius(GameManager.get().getSetupNetherRadius() + 100);
+                ItemBuilder currentBorder = new ItemBuilder(new ItemStack(Material.STAINED_GLASS_PANE, 1, DyeColor.BLACK.getWoolData()))
+                        .name("&6Current Border")
+                        .lore("&eCurrent Border: " + GameManager.get().getSetupNetherRadius());
+                inventory.setItem(22, currentBorder.make());
+                p.updateInventory();
             }
+            return;
         }
 
         if (inventory.getName().equalsIgnoreCase(ChatColor.YELLOW + "Border Config")) {
