@@ -231,7 +231,6 @@ public class GameSetupInventoryClick implements Listener {
                 return;
             } else if (slot == 5) {
                 p.closeInventory();
-                if (GameManager.get().isOverWorldPregenned()) {
                     new BukkitRunnable() {
                         @Override
                         public void run() {
@@ -262,7 +261,6 @@ public class GameSetupInventoryClick implements Listener {
                         }
                     }.runTaskLater(UHC.get(), 50);
                     return;
-                }
             } else if (slot == 8) {
                 new WorldGUI(p);
                 return;
