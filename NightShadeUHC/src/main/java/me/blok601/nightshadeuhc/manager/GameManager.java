@@ -79,7 +79,15 @@ public class GameManager {
     @Getter@Setter
     private int setupRadius = 0;
     @Getter@Setter
+    private int setupNetherRadius = 0;
+    @Getter@Setter
     private String setupSeed = "";
+    @Getter@Setter
+    private boolean netherEnabled = false;
+    @Getter@Setter
+    private boolean overWorldPregenned = false;
+    @Getter@Setter
+    private boolean netherPregenned = false;
 
 
     public void setDate(){

@@ -43,7 +43,8 @@ public class ListenerHandler {
             new ArenaListener(),
             new SpectatorInfoListener(),
             new GameDeathListener(),
-            new GameSetupInventoryClick()
+            new GameSetupInventoryClick(),
+            new WorldBorderListener()
     };
 
     public static Listener[] getListeners() {

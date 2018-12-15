@@ -12,8 +12,8 @@ import com.nightshadepvp.core.Logger;
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import de.robingrether.idisguise.api.DisguiseAPI;
-import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.commands.Commands;
+import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.listeners.gui.EnchantHider;
 import me.blok601.nightshadeuhc.listeners.modules.ComponentHandler;
 import me.blok601.nightshadeuhc.listeners.modules.GoldenHeadRecipe;
@@ -26,6 +26,7 @@ import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
 import me.blok601.nightshadeuhc.scoreboard.ScoreboardManager;
 import me.blok601.nightshadeuhc.stats.handler.StatsHandler;
+import me.blok601.nightshadeuhc.tasks.PregenTask;
 import me.blok601.nightshadeuhc.tasks.ScoreboardHealthTask;
 import me.blok601.nightshadeuhc.tasks.StaffTrackTask;
 import me.blok601.nightshadeuhc.tasks.WorldLoadTask;
@@ -99,6 +100,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         new ScoreboardHealthTask(scoreboardManager).runTaskTimerAsynchronously(this, 0, 60);
         Commands.setup();
         new StaffTrackTask().runTaskTimer(this, 0, 100);
+        new PregenTask().runTaskTimer(this, 0, 50);
 
         ComponentHandler.getInstance().setup();
         StatsHandler.getInstance().setup();

@@ -4,6 +4,7 @@ import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
 import me.blok601.nightshadeuhc.GameState;
 import me.blok601.nightshadeuhc.UHC;
+import me.blok601.nightshadeuhc.entity.object.PregenQueue;
 import me.blok601.nightshadeuhc.gui.setup.ComponentGUI;
 import me.blok601.nightshadeuhc.gui.setup.HostGUI;
 import me.blok601.nightshadeuhc.gui.setup.SettingsGUI;
@@ -13,6 +14,7 @@ import me.blok601.nightshadeuhc.gui.setup.world.WorldGUI;
 import me.blok601.nightshadeuhc.listeners.modules.ComponentHandler;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.staff.SetupStage;
+import me.blok601.nightshadeuhc.tasks.PregenTask;
 import me.blok601.nightshadeuhc.teams.TeamManager;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.utils.ItemBuilder;
@@ -130,11 +132,20 @@ public class GameSetupInventoryClick implements Listener {
                         new BukkitRunnable() {
                             @Override
                             public void run() {
-                                GameManager.get().setWorld(Bukkit.getWorld("UHC" + p.getName()));
-                                p.chat("/wb " + GameManager.get().getWorld().getName() + " set " + GameManager.get().getSetupRadius() + " " + GameManager.get().getSetupRadius() + " 0 0");
-                                p.chat("/wb " + GameManager.get().getWorld().getName() + " fill 250");
-                                p.chat("/wb fill confirm");
-                                p.sendMessage(ChatUtils.message("&aPregen in world &b" + GameManager.get().getWorld().getName() + " &ehas begun!"));
+                                if (PregenTask.getPregenQueue().size() > 0) {
+                                    p.sendMessage(ChatUtils.message("&eThere are other worlds being pregenning right now! This world will be added to the pregen queue!"));
+                                }
+//                                GameManager.get().setWorld(Bukkit.getWorld("UHC" + p.getName()));
+//                                p.chat("/wb " + GameManager.get().getWorld().getName() + " set " + GameManager.get().getSetupRadius() + " " + GameManager.get().getSetupRadius() + " 0 0");
+//                                p.chat("/wb " + GameManager.get().getWorld().getName() + " fill 250");
+//                                p.chat("/wb fill confirm");
+//                                p.sendMessage(ChatUtils.message("&aPregen in world &b" + GameManager.get().getWorld().getName() + " &ehas begun!"));
+                                PregenQueue queue = new PregenQueue();
+                                queue.setFinished(false);
+                                queue.setStarter(p.getUniqueId());
+                                queue.setRadius(GameManager.get().getSetupRadius());
+                                queue.setWorld(Bukkit.getWorld("UHC" + p.getName()));
+                                PregenTask.getPregenQueue().add(queue);
                             }
                         }.runTaskLater(UHC.get(), 5 * 20);
                     }
@@ -199,6 +210,57 @@ public class GameSetupInventoryClick implements Listener {
                         .lore("&eCurrent Border: " + GameManager.get().getSetupRadius());
                 inventory.setItem(22, currentBorder.make());
                 p.updateInventory();
+            }
+        }
+
+        if (inventory.getName().equalsIgnoreCase(ChatColor.DARK_PURPLE + "Nether World Setup")) {
+            e.setCancelled(true);
+            if (slot == 3) {
+                if (GameManager.get().isNetherEnabled()) {
+                    GameManager.get().setNetherEnabled(false);
+                } else {
+                    GameManager.get().setNetherEnabled(true);
+                }
+
+                ItemBuilder toggler = new ItemBuilder(Material.PAPER)
+                        .name("&c&lEnable/Disable Nether")
+                        .lore("&eCurrently: " + (GameManager.get().isNetherEnabled() ? "&aEnabled" : "&cDisabled"));
+                inventory.setItem(slot, toggler.make());
+                p.updateInventory();
+                return;
+            } else if (slot == 5) {
+                p.closeInventory();
+                if (GameManager.get().isOverWorldPregenned()) {
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            p.sendMessage(ChatUtils.message("&eYour &cnether&e is now being created and pregenned..."));
+                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mv create UHC" + p.getName() + "_nether NETHER");
+                        }
+                    }.runTaskLater(UHC.get(), 1);
+
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            p.sendMessage(ChatUtils.message("&eYour world has been created!"));
+                            p.sendMessage(ChatUtils.message("&ePregen will begin in 5 seconds..."));
+                            new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    if (!PregenTask.getPregenQueue().isEmpty()) {
+                                        p.sendMessage(ChatUtils.message("&cThe game world has not finished pregenning! The nether world will be created and pregenned after the game world is finished!"));
+                                    }
+                                    PregenQueue pregenQueue = new PregenQueue();
+                                    pregenQueue.setWorld(Bukkit.getWorld("UHC" + p.getName() + "_nether"));
+                                    pregenQueue.setRadius(GameManager.get().getSetupNetherRadius());
+                                    pregenQueue.setStarter(p.getUniqueId());
+                                    PregenTask.getPregenQueue().add(pregenQueue);
+                                }
+                            }.runTaskLater(UHC.get(), 5 * 20);
+                        }
+                    }.runTaskLater(UHC.get(), 50);
+                    return;
+                }
             }
         }
 

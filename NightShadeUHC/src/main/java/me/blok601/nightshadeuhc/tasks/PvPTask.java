@@ -34,7 +34,7 @@ public class PvPTask extends BukkitRunnable {
         if (counter == 0) {
             PvPCommand.enablePvP(w);
             Bukkit.getServer().getPluginManager().callEvent(new PvPEnableEvent());
-            PacketPlayOutTitle packet = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"PvPCommand Has Been Enabled!\",\"color\":\"dark_aqua\",\"bold\":true}"));
+            PacketPlayOutTitle packet = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"PvP Has Been Enabled!\",\"color\":\"dark_aqua\",\"bold\":true}"));
             for (UHCPlayer uhcPlayer : UHCPlayerColl.get().getAllOnline()) {
                 if (uhcPlayer.isUsingOldVersion()) {
                     uhcPlayer.msg(ChatUtils.message("&3PvP has been enabled!"));

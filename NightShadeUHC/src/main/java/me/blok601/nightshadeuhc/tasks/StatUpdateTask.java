@@ -57,10 +57,8 @@ public class StatUpdateTask extends BukkitRunnable {
                 cachedGame.setStart(doc.getLong("startTime"));
                 cachedGame.setStart(doc.getLong("endTime"));
                 cachedGame.setServer(doc.getString("server"));
-//                if (cachedGame.getFill() > 10)
-//                    cachedGames.add(cachedGame);
-
-                cachedGames.add(cachedGame);
+                if (cachedGame.getFill() > 10)
+                    cachedGames.add(cachedGame);
             }
         } finally {
             cursor.close();
