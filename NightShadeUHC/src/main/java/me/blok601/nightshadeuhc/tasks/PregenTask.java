@@ -22,6 +22,9 @@ public class PregenTask extends BukkitRunnable {
 
     @Override
     public void run() {
+
+        if(pregenQueue.isEmpty()) return;
+
         PregenQueue queue = pregenQueue.get(0);
         if (queue == null) {
             return;
