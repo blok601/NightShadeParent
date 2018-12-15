@@ -9,6 +9,7 @@ import me.blok601.nightshadeuhc.gui.setup.ComponentGUI;
 import me.blok601.nightshadeuhc.gui.setup.HostGUI;
 import me.blok601.nightshadeuhc.gui.setup.SettingsGUI;
 import me.blok601.nightshadeuhc.gui.setup.world.BorderConfigGUI;
+import me.blok601.nightshadeuhc.gui.setup.world.NetherGUI;
 import me.blok601.nightshadeuhc.gui.setup.world.OverWorldGUI;
 import me.blok601.nightshadeuhc.gui.setup.world.WorldGUI;
 import me.blok601.nightshadeuhc.listeners.modules.ComponentHandler;
@@ -96,7 +97,7 @@ public class GameSetupInventoryClick implements Listener {
                 new OverWorldGUI(p);
                 return;
             } else if (slot == 14) {
-                //TODO: Finish nether
+                new NetherGUI(p);
             }
         }
 
