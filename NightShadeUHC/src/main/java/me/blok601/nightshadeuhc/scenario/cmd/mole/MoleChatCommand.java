@@ -44,10 +44,10 @@ public class MoleChatCommand implements UHCCommand{
             Player target;
             for (UUID uuid  : MolesScenario.moles.keySet()){
                 target = Bukkit.getPlayer(uuid);
-                if(target != null) target.sendMessage(ChatUtils.format("&8[&6MoleChat&8] &b" + p.getName() + "&8: &e" + msg));
+                if(target != null) target.sendMessage(ChatUtils.format("&8[&6Moles&8] &b" + p.getName() + "&8: &e" + msg));
             }
         }else{
-            p.sendMessage(ChatUtils.message("&cUsage: /mmc <message>"));
+            p.sendMessage(ChatUtils.message("&cUsage: /mcc <message>"));
         }
 
     }
