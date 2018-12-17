@@ -1,0 +1,176 @@
+package me.blok601.nightshadeuhc.task;
+
+import com.nightshadepvp.core.Core;
+import com.nightshadepvp.core.Logger;
+import com.nightshadepvp.core.Rank;
+import com.nightshadepvp.core.entity.NSPlayerColl;
+import me.blok601.nightshadeuhc.entity.object.GameState;
+import me.blok601.nightshadeuhc.UHC;
+import me.blok601.nightshadeuhc.util.Freeze;
+import me.blok601.nightshadeuhc.command.staff.PvPCommand;
+import me.blok601.nightshadeuhc.entity.UHCPlayer;
+import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
+import me.blok601.nightshadeuhc.event.GameStartEvent;
+import me.blok601.nightshadeuhc.manager.GameManager;
+import me.blok601.nightshadeuhc.scenario.ScenarioManager;
+import me.blok601.nightshadeuhc.manager.TeamManager;
+import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.util.Util;
+import net.minecraft.server.v1_8_R3.IChatBaseComponent;
+import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.World;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
+
+
+/**
+ * Created by Blok on 3/16/2017.
+ */
+public class GameStartTask extends BukkitRunnable {
+
+    private Player p;
+    private int finalHealTime;
+    private int pvpTime;
+    private World world;
+    private int borderTime;
+    private int firstShrink;
+    private boolean isTeam;
+    private int counter;
+    private int meetupTime;
+
+    public GameStartTask(Player p, int finalHealTime, int pvpTime, int borderTime, World world, int firstShrink, int meetupTime) {
+        this.p = p;
+        this.finalHealTime = finalHealTime;
+        this.pvpTime = pvpTime;
+        this.world = world;
+        this.borderTime = borderTime;
+        this.firstShrink = firstShrink;
+        this.meetupTime = meetupTime;
+        this.counter = 120;
+        if (TeamManager.getInstance().isTeamManagement()) TeamManager.getInstance().setTeamManagement(false);
+        if (GameManager.get().isIsTeam()) {
+            if (GameManager.get().getHost() == null) {
+                NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> nsPlayer.hasRank(Rank.TRIALHOST)).findFirst().ifPresent(nsPlayer -> nsPlayer.getPlayer().chat("/team color"));
+            } else {
+                GameManager.get().getHost().chat("/team color");
+            }
+        }
+    }
+
+
+    @Override
+    public void run() {
+        if (counter >= 0) {
+            if (counter % 60 == 0 && counter != 0) {
+                ChatUtils.sendAll("The game will start in " + counter / 60 + " minute&8(s&8)&b!");
+            } else if (counter <= 10) {
+               if (counter > 0) {
+                   PacketPlayOutTitle packet = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + counter + "\",\"color\":\"dark_aqua\",\"bold\":true}"), 0, 20, 0);
+                   for (UHCPlayer uhcPlayer : UHCPlayerColl.get().getAllOnline()) {
+                       if (uhcPlayer.isUsingOldVersion()) {
+                           uhcPlayer.msg(ChatUtils.message("&3The game will start in &e" + counter + " &3seconds"));
+                           continue;
+                       }
+                       ((CraftPlayer) uhcPlayer.getPlayer()).getHandle().playerConnection.sendPacket(packet);
+                   }
+                } else {
+                   PacketPlayOutTitle packet = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"Go!\",\"color\":\"dark_aqua\",\"bold\":true}"), 0, 20, 0);
+                   for (UHCPlayer uhcPlayer : UHCPlayerColl.get().getAllOnline()) {
+                       if (uhcPlayer.isUsingOldVersion()) {
+                           uhcPlayer.msg(ChatUtils.message("&3The game has started!"));
+                           continue;
+                       }
+                       ((CraftPlayer) uhcPlayer.getPlayer()).getHandle().playerConnection.sendPacket(packet);
+                   }
+                    GameManager.get().world = world;
+                    GameManager.get().setDate();
+                    PvPCommand.disablePvP();
+                    Freeze.stop();
+
+                    Bukkit.getOnlinePlayers().forEach(o -> o.setMaxHealth(20.0));
+                    Bukkit.getOnlinePlayers().forEach(o -> o.setHealth(o.getMaxHealth()));
+                    Bukkit.getOnlinePlayers().forEach(o -> o.setFoodLevel(20));
+                    Bukkit.getOnlinePlayers().forEach(o -> o.setLevel(0));
+                    Bukkit.getOnlinePlayers().forEach(o -> o.setExp(0));
+
+
+
+                    Core.get().getLogManager().log(Logger.LogType.INFO, "Everyone has been healed and fed!");
+                    Bukkit.getOnlinePlayers().forEach(o -> o.getInventory().addItem(new ItemStack(Material.COOKED_BEEF, 10)));
+                    TimerTask timerTask = GameManager.get().getTimer();
+                    timerTask.start();
+                    Bukkit.getServer().getPluginManager().callEvent(new GameStartEvent());
+                    StringBuilder builder = new StringBuilder();
+                    ScenarioManager.getEnabledScenarios().forEach(scenario -> builder.append(scenario.getName()).append(", "));
+                    Bukkit.getOnlinePlayers().forEach(p ->{
+                        p.sendMessage(ChatUtils.format("&5&m-----------------------------------"));
+
+                        p.sendMessage(ChatUtils.format("&e&lHost: &3" + GameManager.get().getHost().getName()));
+                        if(builder.length() > 0){
+                            p.sendMessage(ChatUtils.format("&e&lScenarios: &3" + builder.toString().substring(0, builder.length()-1)));
+                        }else{
+                            p.sendMessage(ChatUtils.format("&e&lScenarios: &3None"));
+                        }
+
+                        p.sendMessage(" ");
+                        p.sendMessage(ChatUtils.format("&e&lFinal Heal Time: " + GameManager.get().getFinalHealTime() /60 + " minutes"));
+                        p.sendMessage(ChatUtils.format("&e&lPvP Time: " + GameManager.get().getPvpTime() /60 + " minutes"));
+                        p.sendMessage(ChatUtils.format("&e&lMeetup Time: " + GameManager.get().getBorderTime() /60 + " minutes"));
+
+                        p.sendMessage(ChatUtils.format("&5&m-----------------------------------"));
+
+                        p.playSound(p.getLocation(), Sound.BAT_DEATH, 5, 5);
+                    });
+
+                   FinalHealTask task = new FinalHealTask(finalHealTime);
+                   if(finalHealTime >0){
+                       task.runTaskTimer(UHC.get(), 0, Util.TICKS);
+                   }
+                   GameManager.get().setFinalHealTask(task);
+
+                   PvPTask pvpTask = new PvPTask(pvpTime, world);
+                   if(pvpTime > 0){
+                       pvpTask.runTaskTimer(UHC.get(), 0, Util.TICKS);
+                   }
+                   GameManager.get().setPvpTask(pvpTask);
+
+
+                   WorldBorderTask worldBorderTask = new WorldBorderTask(borderTime, world, firstShrink);
+                   if(borderTime > 0){
+                       worldBorderTask.runTaskTimer(UHC.get(), 0, Util.TICKS);
+                   }
+                   GameManager.get().setWorldBorderTask(worldBorderTask);
+
+                   MeetupTask meetupTask = new MeetupTask(meetupTime);
+                   if (meetupTime > 0) {
+                       meetupTask.runTaskTimer(UHC.get(), 0, Util.TICKS);
+                   }
+                   GameManager.get().setMeetupTask(meetupTask);
+
+
+                   GameState.setState(GameState.INGAME);
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        for (Player p2 : Bukkit.getOnlinePlayers()) {
+                            UHCPlayer gamePlayer = UHCPlayer.get(p2.getUniqueId());
+                            if (!gamePlayer.isSpectator()) {
+                                p.showPlayer(p2);
+                            }else{
+                                p.hidePlayer(p2);
+                            }
+                        }
+                    }
+                    counter = -1;
+                    cancel();
+                    return;
+                }
+            }
+        }
+        counter--;
+    }
+}
+
