@@ -1,6 +1,6 @@
 package me.blok601.nightshadeuhc.scenario;
 
-import me.blok601.nightshadeuhc.events.ScenarioEnableEvent;
+import me.blok601.nightshadeuhc.event.ScenarioEnableEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

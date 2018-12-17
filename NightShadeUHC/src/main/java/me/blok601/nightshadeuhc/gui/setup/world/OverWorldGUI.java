@@ -1,8 +1,8 @@
 package me.blok601.nightshadeuhc.gui.setup.world;
 
 import me.blok601.nightshadeuhc.manager.GameManager;
-import me.blok601.nightshadeuhc.utils.ChatUtils;
-import me.blok601.nightshadeuhc.utils.ItemBuilder;
+import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;

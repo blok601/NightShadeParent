@@ -6,10 +6,10 @@ import com.massivecraft.massivecore.util.MUtil;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.staff.spec.SpecCommand;
-import me.blok601.nightshadeuhc.utils.ChatUtils;
-import me.blok601.nightshadeuhc.utils.ItemBuilder;
-import me.blok601.nightshadeuhc.utils.Util;
+import me.blok601.nightshadeuhc.command.staff.SpectatorCommand;
+import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.util.ItemBuilder;
+import me.blok601.nightshadeuhc.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -448,7 +448,7 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         ItemStack inspect = new ItemBuilder(Material.BOOK).name(ChatUtils.format("&cPlayer Inventory")).make();
 
         if (!isSpectator()) {
-            SpecCommand.setSpec(player);
+            SpectatorCommand.setSpec(player);
             player.sendMessage(ChatUtils.message("&cYou are now in spec mode!"));
         }
 

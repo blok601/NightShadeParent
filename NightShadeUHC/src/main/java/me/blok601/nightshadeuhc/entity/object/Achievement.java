@@ -1,6 +1,6 @@
 package me.blok601.nightshadeuhc.entity.object;
 
-import me.blok601.nightshadeuhc.utils.ChatUtils;
+import me.blok601.nightshadeuhc.util.ChatUtils;
 import org.bukkit.entity.Player;
 
 /**

@@ -1,7 +1,7 @@
 package me.blok601.nightshadeuhc.gui.leaderboards;
 
 import me.blok601.nightshadeuhc.gui.GuiBuilder;
-import me.blok601.nightshadeuhc.utils.ItemBuilder;
+import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

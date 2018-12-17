@@ -1,8 +1,8 @@
 package me.blok601.nightshadeuhc.scenario.cmd;
 
 import com.nightshadepvp.core.Rank;
-import me.blok601.nightshadeuhc.utils.ChatUtils;
-import me.blok601.nightshadeuhc.commands.UHCCommand;
+import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.command.UHCCommand;
 import me.blok601.nightshadeuhc.scenario.LootCrateScenario;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import org.bukkit.command.Command;

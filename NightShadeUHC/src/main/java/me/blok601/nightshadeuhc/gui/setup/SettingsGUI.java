@@ -1,13 +1,13 @@
 package me.blok601.nightshadeuhc.gui.setup;
 
 import com.nightshadepvp.core.utils.ChatUtils;
-import me.blok601.nightshadeuhc.GameState;
+import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.gui.GuiBuilder;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.scenario.Scenario;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
-import me.blok601.nightshadeuhc.teams.TeamManager;
-import me.blok601.nightshadeuhc.utils.ItemBuilder;
+import me.blok601.nightshadeuhc.manager.TeamManager;
+import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -56,7 +56,7 @@ public class SettingsGUI {
         } else {
             mTime.lore("&6" + borderTime / 60 + " minutes");
         }
-        bTime.lore("&7(&6&oi&r&7) &6&oTime until \"Meetup\" begins");
+        mTime.lore("&7(&6&oi&r&7) &6&oTime until \"Meetup\" begins");
 
         ItemBuilder isTeam = new ItemBuilder(Material.SIGN).name(ChatUtils.format("&eTeam Game"));
         isTeam.lore(GameManager.get().isIsTeam() ? ChatUtils.format("&aYes") : ChatUtils.format("&cNo"));

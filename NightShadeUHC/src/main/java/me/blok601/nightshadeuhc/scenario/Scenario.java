@@ -5,7 +5,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 
-import static me.blok601.nightshadeuhc.utils.ChatUtils.format;
+import static me.blok601.nightshadeuhc.util.ChatUtils.format;
 
 /**
  * Created by Blok on 5/12/2017.

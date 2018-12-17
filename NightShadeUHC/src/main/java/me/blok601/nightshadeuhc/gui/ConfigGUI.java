@@ -2,7 +2,7 @@ package me.blok601.nightshadeuhc.gui;
 
 import com.nightshadepvp.core.utils.ItemBuilder;
 import me.blok601.nightshadeuhc.manager.GameManager;
-import me.blok601.nightshadeuhc.utils.ChatUtils;
+import me.blok601.nightshadeuhc.util.ChatUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -35,7 +35,7 @@ public class ConfigGUI {
                 .lore(ChatUtils.format("&3iPvP» &e3 days")).lore(ChatUtils.format("&3Chat Spam» &e15 minute mute")).lore(ChatUtils.format("&3Racism» &eMute (length + punishment type can change)")).make();
 
         ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
-        me.blok601.nightshadeuhc.utils.ItemBuilder newSkull = new me.blok601.nightshadeuhc.utils.ItemBuilder(skull);
+        me.blok601.nightshadeuhc.util.ItemBuilder newSkull = new me.blok601.nightshadeuhc.util.ItemBuilder(skull);
         newSkull.name(ChatUtils.format("&6Host")).lore(ChatUtils.format("&3Host» &e" + GameManager.get().getHost().getName()));
         newSkull.skullOwner(GameManager.get().getHost().getName());
 

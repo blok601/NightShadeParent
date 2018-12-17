@@ -12,29 +12,30 @@ import com.nightshadepvp.core.Logger;
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import de.robingrether.idisguise.api.DisguiseAPI;
-import me.blok601.nightshadeuhc.commands.Commands;
-import me.blok601.nightshadeuhc.commands.UHCCommand;
-import me.blok601.nightshadeuhc.listeners.gui.EnchantHider;
+import me.blok601.nightshadeuhc.command.Commands;
+import me.blok601.nightshadeuhc.command.UHCCommand;
+import me.blok601.nightshadeuhc.entity.object.GameState;
+import me.blok601.nightshadeuhc.listener.gui.EnchantHider;
 import me.blok601.nightshadeuhc.component.ComponentHandler;
 import me.blok601.nightshadeuhc.component.GoldenHeadRecipe;
-import me.blok601.nightshadeuhc.logger.LoggerHandler;
+import me.blok601.nightshadeuhc.manager.LoggerManager;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.manager.ListenerHandler;
-import me.blok601.nightshadeuhc.manager.Settings;
-import me.blok601.nightshadeuhc.packet.OldEnchanting;
+import me.blok601.nightshadeuhc.manager.SettingsManager;
+import me.blok601.nightshadeuhc.manager.packet.OldEnchanting;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
 import me.blok601.nightshadeuhc.scoreboard.ScoreboardManager;
-import me.blok601.nightshadeuhc.stats.handler.StatsHandler;
-import me.blok601.nightshadeuhc.tasks.PregenTask;
-import me.blok601.nightshadeuhc.tasks.ScoreboardHealthTask;
-import me.blok601.nightshadeuhc.tasks.StaffTrackTask;
-import me.blok601.nightshadeuhc.tasks.WorldLoadTask;
-import me.blok601.nightshadeuhc.teams.SendCoordsCommand;
-import me.blok601.nightshadeuhc.teams.CmdTeamChat;
-import me.blok601.nightshadeuhc.utils.ChatUtils;
-import me.blok601.nightshadeuhc.utils.Lag;
-import me.blok601.nightshadeuhc.utils.Util;
+import me.blok601.nightshadeuhc.stat.handler.StatsHandler;
+import me.blok601.nightshadeuhc.task.PregenTask;
+import me.blok601.nightshadeuhc.task.ScoreboardHealthTask;
+import me.blok601.nightshadeuhc.task.StaffTrackTask;
+import me.blok601.nightshadeuhc.task.WorldLoadTask;
+import me.blok601.nightshadeuhc.command.player.teams.SendCoordsCommand;
+import me.blok601.nightshadeuhc.command.player.teams.TeamChatCommand;
+import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.util.Lag;
+import me.blok601.nightshadeuhc.util.Util;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -86,7 +87,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         saveConfig();
 
         GameState.setState(GameState.WAITING);
-        Settings.getInstance().setup(this);
+        SettingsManager.getInstance().setup(this);
 
         registerCommands();
         registerListeners();
@@ -157,14 +158,14 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
 
     public void onDisable() {
         //LoggerHandler.getInstance().getLoggers().forEach(combatLogger -> LoggerHandler.getInstance().removeLogger(combatLogger));
-        LoggerHandler.getInstance().getLoggers().clear();
+        LoggerManager.getInstance().getLoggers().clear();
         Bukkit.getMessenger().unregisterIncomingPluginChannel(this, "BungeeCord", this);
         Bukkit.getMessenger().unregisterOutgoingPluginChannel(this, "BungeeCord");
 
     }
 
     private void registerCommands() {
-        getCommand("pm").setExecutor(new CmdTeamChat());
+        getCommand("pm").setExecutor(new TeamChatCommand());
         getCommand("pmcoords").setExecutor(new SendCoordsCommand());
 
     }

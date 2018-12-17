@@ -1,7 +1,7 @@
 package me.blok601.nightshadeuhc.component;
 
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.utils.ItemBuilder;
+import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerItemConsumeEvent;

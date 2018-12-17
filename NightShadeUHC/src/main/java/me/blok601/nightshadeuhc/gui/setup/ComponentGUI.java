@@ -3,7 +3,7 @@ package me.blok601.nightshadeuhc.gui.setup;
 import me.blok601.nightshadeuhc.component.Component;
 import me.blok601.nightshadeuhc.component.ComponentHandler;
 import me.blok601.nightshadeuhc.gui.GuiBuilder;
-import me.blok601.nightshadeuhc.utils.ItemBuilder;
+import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 

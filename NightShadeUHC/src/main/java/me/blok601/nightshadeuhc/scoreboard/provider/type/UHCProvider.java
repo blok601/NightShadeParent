@@ -1,16 +1,16 @@
 package me.blok601.nightshadeuhc.scoreboard.provider.type;
 
 
-import me.blok601.nightshadeuhc.GameState;
+import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.scoreboard.ScoreboardProvider;
 import me.blok601.nightshadeuhc.scoreboard.ScoreboardText;
-import me.blok601.nightshadeuhc.teams.Team;
-import me.blok601.nightshadeuhc.teams.TeamManager;
-import me.blok601.nightshadeuhc.utils.ChatUtils;
+import me.blok601.nightshadeuhc.entity.object.Team;
+import me.blok601.nightshadeuhc.manager.TeamManager;
+import me.blok601.nightshadeuhc.util.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;

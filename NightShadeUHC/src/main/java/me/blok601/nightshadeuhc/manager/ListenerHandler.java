@@ -1,19 +1,19 @@
 package me.blok601.nightshadeuhc.manager;
 
-import me.blok601.nightshadeuhc.commands.extras.RatesCommand;
-import me.blok601.nightshadeuhc.commands.extras.disguise.Undisguise;
+import me.blok601.nightshadeuhc.command.staff.RatesCommand;
+import me.blok601.nightshadeuhc.command.player.disguise.Undisguise;
 import me.blok601.nightshadeuhc.component.GoldenHeadConsume;
-import me.blok601.nightshadeuhc.listeners.game.*;
-import me.blok601.nightshadeuhc.listeners.gui.GameSetupInventoryClick;
-import me.blok601.nightshadeuhc.listeners.gui.InvClick;
-import me.blok601.nightshadeuhc.listeners.gui.ScenarioClick;
-import me.blok601.nightshadeuhc.logger.LoggerEvents;
+import me.blok601.nightshadeuhc.listener.game.*;
+import me.blok601.nightshadeuhc.listener.gui.GameSetupInventoryClick;
+import me.blok601.nightshadeuhc.listener.gui.InvClick;
+import me.blok601.nightshadeuhc.listener.gui.ScenarioClick;
+import me.blok601.nightshadeuhc.listener.game.LoggerListener;
 import me.blok601.nightshadeuhc.scenario.SkriptScenarios;
 import me.blok601.nightshadeuhc.staff.listener.CommandSpyListener;
-import me.blok601.nightshadeuhc.staff.listener.StaffListener;
-import me.blok601.nightshadeuhc.staff.spec.SpecEvents;
-import me.blok601.nightshadeuhc.staff.spec.info.SpectatorInfoListener;
-import me.blok601.nightshadeuhc.stats.listener.JoinListener;
+import me.blok601.nightshadeuhc.listener.misc.StaffListener;
+import me.blok601.nightshadeuhc.listener.misc.SpectatorListener;
+import me.blok601.nightshadeuhc.listener.misc.SpectatorInfoListener;
+import me.blok601.nightshadeuhc.stat.listener.JoinListener;
 import me.blok601.nightshadeuhc.teams.FriendlyFire;
 import org.bukkit.event.Listener;
 
@@ -23,9 +23,9 @@ import org.bukkit.event.Listener;
 public class ListenerHandler {
 
     private static Listener[] listeners = new Listener[]{
-            new LoggerEvents(),
+            new LoggerListener(),
             new InvClick(),
-            new SpecEvents(),
+            new SpectatorListener(),
             new FriendlyFire(),
             new GoldenHeadConsume(),
             new RatesCommand(),
