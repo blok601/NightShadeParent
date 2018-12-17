@@ -35,10 +35,10 @@ public class Util {
 		}
 	}
 
-	public static boolean getChance(int c){
+	public static boolean getChance(double c) {
 		Random random = new Random();
-		int r = random.nextInt(100);
-		return r < c;
+		double r = random.nextDouble();
+		return r * 100 < c;
 	}
 	
 	public static void staffLog(String string){
