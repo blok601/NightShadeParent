@@ -1,7 +1,8 @@
-package me.blok601.nightshadeuhc.listeners.modules;
+package me.blok601.nightshadeuhc.component;
 
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.utils.ItemBuilder;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -22,6 +23,7 @@ public abstract class Component implements Listener{
         this.name = name;
         this.itemStack = itemStack;
         this.defaultState = defaultState;
+        this.enabled = defaultState;
     }
 
     public String getName() {
@@ -49,7 +51,7 @@ public abstract class Component implements Listener{
     }
 
     public void toggle(){
-        setEnabled(!isEnabled());
+        this.enabled = !this.enabled;
     }
 
     public ItemStack getItemStack() {
@@ -67,11 +69,13 @@ public abstract class Component implements Listener{
         e.getInventory().setItem(slot, builder.make());
         p.updateInventory();
 
-        if(isEnabled()){
+        onToggle(isEnabled(), p);
+        if (isEnabled()) {
             p.sendMessage(ChatUtils.message("&eSuccessfully &aenabled &3" + getName() + "&e."));
-        }else{
+        } else {
             p.sendMessage(ChatUtils.message("&eSuccessfully &cdisabled &3" + getName() + "&e."));
         }
+        p.playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 3, 3);
     }
 
     public boolean isLocked() {
@@ -80,5 +84,9 @@ public abstract class Component implements Listener{
 
     public boolean getDefaultState() {
         return defaultState;
+    }
+
+    public void onToggle(boolean newState, Player p) {
+
     }
 }

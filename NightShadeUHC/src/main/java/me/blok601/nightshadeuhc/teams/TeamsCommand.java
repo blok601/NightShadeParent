@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 /**
  * Created by Blok on 9/24/2017.
  */
-public class CmdTeams implements UHCCommand{
+public class TeamsCommand implements UHCCommand{
     @Override
     public String[] getNames() {
         return new String[]{

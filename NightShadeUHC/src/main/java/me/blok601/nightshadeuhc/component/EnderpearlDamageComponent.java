@@ -1,4 +1,4 @@
-package me.blok601.nightshadeuhc.listeners.modules;
+package me.blok601.nightshadeuhc.component;
 
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.utils.ItemBuilder;
@@ -11,10 +11,10 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 /**
  * Created by Blok on 12/10/2017.
  */
-public class EnderpearlComponent extends Component{
+public class EnderpearlDamageComponent extends Component{
 
 
-    public EnderpearlComponent() {
+    public EnderpearlDamageComponent() {
         super("Enderpearl Damage", new ItemBuilder(Material.ENDER_PEARL).name(ChatUtils.format("&eEnderpearl Damage")).make() ,true);
     }
 

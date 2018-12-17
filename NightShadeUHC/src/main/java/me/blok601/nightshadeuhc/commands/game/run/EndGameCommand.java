@@ -17,6 +17,7 @@ import me.blok601.nightshadeuhc.utils.Util;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -208,9 +209,18 @@ public class EndGameCommand implements UHCCommand{
                 Bukkit.getOnlinePlayers().forEach(onlinePlayer -> onlinePlayer.teleport(MConf.get().getSpawnLocation().asBukkitLocation(true)));
                 Util.staffLog("&4The Server Will Restart in 30 seconds!");
 
+                World nether = Bukkit.getWorld(GameManager.get().getWorld().getName() + "_nether");
+                if (nether != null) {
+                    UHC.getMultiverseCore().getMVWorldManager().removeWorldFromConfig(nether.getName());
+                    Bukkit.unloadWorld(nether, false);
+                    Util.deleteWorldFolder(nether);
+                }
+
+
                 UHC.getMultiverseCore().getMVWorldManager().removeWorldFromConfig(GameManager.get().getWorld().getName());
                 Bukkit.unloadWorld(GameManager.get().getWorld(), false);
                 Util.deleteWorldFolder(GameManager.get().getWorld());
+
 
             }
         }.runTaskLater(UHC.get(), 20*10);

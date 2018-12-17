@@ -35,10 +35,10 @@ public class GameManager {
     public static GameManager get() {
         return i;
     }
+
     private  HashMap<UUID, PlayerRespawnObject> invs = new HashMap<>();
     private  ArrayList<UUID> deathBans = new ArrayList<>();
     private  HashSet<CachedColor> colors;//storing player names because teams don't store UUIDs ;(
-    private  int maxPlayers;
     private  ArrayList<String> whitelist = new ArrayList<>();
     private  HashSet<String> respawnQueue = new HashSet<>(); // This saves names like whitelist and will check using ignore case
     @Getter
@@ -56,16 +56,12 @@ public class GameManager {
     @Getter
     @Setter
     private  int meetupTime = 0;
-    private  boolean isTeam;
-    private  Player host;
     private  int radius = 0;
-    private  int appleRates = 5;
-    private  int flintRates = 50;
     private  FinalHealTask finalHealTask;
     private  PvPTask pvpTask;
     private  WorldBorderTask worldBorderTask;
-    @Getter
     @Setter
+    @Getter
     private  MeetupTask meetupTask;
     private  int[] shrinks;
     private  int borderID;
@@ -88,6 +84,19 @@ public class GameManager {
     private boolean overWorldPregenned = false;
     @Getter@Setter
     private boolean netherPregenned = false;
+
+    // ---------------------------------------
+    //            Host GUI Game Settings
+    // ---------------------------------------
+
+    @Getter
+    @Setter
+    private int starterFood = 10;
+    private int maxPlayers;
+    private Player host;
+    private boolean isTeam;
+    private double appleRates = 5;
+    private double flintRates = 50;
 
 
     public void setDate(){
@@ -219,19 +228,19 @@ public class GameManager {
         return deathBans;
     }
 
-    public int getAppleRates() {
+    public double getAppleRates() {
         return appleRates;
     }
 
-    public void setAppleRates(int appleRates) {
+    public void setAppleRates(double appleRates) {
         this.appleRates = appleRates;
     }
 
-    public int getFlintRates() {
+    public double getFlintRates() {
         return flintRates;
     }
 
-    public void setFlintRates(int flintRates) {
+    public void setFlintRates(double flintRates) {
         this.flintRates = flintRates;
     }
 

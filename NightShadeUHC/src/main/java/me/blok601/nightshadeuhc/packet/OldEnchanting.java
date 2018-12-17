@@ -31,7 +31,7 @@ public class OldEnchanting implements Listener {
         this.lapis = true;
         this.hideEnchant = true;
         this.oldEnchantCosts = true;
-        this.randomizeEnchants = true; //These all can be changed to your liking
+        this.randomizeEnchants = true; //These can all be changed
         this.plugin = plugin;
         try {
             version = UHC.get().getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];

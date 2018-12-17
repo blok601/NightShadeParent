@@ -130,7 +130,6 @@ public class InvClick implements Listener {
 
                 p.getInventory().addItem(speed.toItemStack(1), weakness.toItemStack(1), poison.toItemStack(1));
                 p.sendMessage(ChatUtils.format(scenario.getPrefix() + "&eYou selected the &6Potter Kit&e!"));
-
                 MolesScenario.moles.replace(p.getUniqueId(), true);
             }else if(slot == 2){
                 p.getInventory().addItem(new ItemStack(Material.DIAMOND_SWORD, 1));

@@ -1,4 +1,4 @@
-package me.blok601.nightshadeuhc.listeners.modules;
+package me.blok601.nightshadeuhc.component;
 
 import me.blok601.nightshadeuhc.utils.ItemBuilder;
 import org.bukkit.Material;
@@ -10,7 +10,6 @@ import org.bukkit.inventory.ItemStack;
  * Created by Blok on 2/10/2018.
  */
 public class GodAppleComponent extends Component{
-
 
     public GodAppleComponent() {
         super("God Apples", new ItemBuilder(new ItemStack(Material.getMaterial(322), 1, (short) 1)).name("&eGod Apples").make(), false);

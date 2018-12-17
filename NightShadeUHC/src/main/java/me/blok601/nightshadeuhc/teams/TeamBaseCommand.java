@@ -23,33 +23,35 @@ import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.*;
 
-public class CmdTeamBase implements UHCCommand{
+public class TeamBaseCommand implements UHCCommand{
 	
 	public static HashMap<String, String> invites = new HashMap<>();
 
 
 	
 	public void sendHelp(Player p){
-		p.sendMessage(ChatColor.DARK_PURPLE + "[UHC] " + ChatColor.GREEN + "Team Commands:");
-		p.sendMessage(ChatColor.DARK_PURPLE + "[UHC] " + ChatColor.GREEN + "/team create");
-		p.sendMessage(ChatColor.DARK_PURPLE + "[UHC] " + ChatColor.GREEN + "/team invite <player>");
-		p.sendMessage(ChatColor.DARK_PURPLE + "[UHC] " + ChatColor.GREEN + "/team kick <player>");
-		p.sendMessage(ChatColor.DARK_PURPLE + "[UHC] " + ChatColor.GREEN + "/team list [player]");
-		p.sendMessage(ChatColor.DARK_PURPLE + "[UHC] " + ChatColor.GREEN + "/team join <player>");
+        p.sendMessage(ChatUtils.message("&aTeam Commands"));
+        p.sendMessage(ChatUtils.message("&a/team create"));
+        p.sendMessage(ChatUtils.message("&a/team invite <player>"));
+        p.sendMessage(ChatUtils.message("&a/team kick <player>"));
+        p.sendMessage(ChatUtils.message("&a/team list [player]"));
+        p.sendMessage(ChatUtils.message("&a/team join <player>"));
+
+
 	}
 	
 	public void sendAdminHelp(Player p){
-		p.sendMessage(ChatColor.DARK_PURPLE + "[UHC] " + ChatColor.GREEN + "Team Commands:");
-		p.sendMessage(ChatColor.DARK_PURPLE + "[UHC] " + ChatColor.GREEN + "/team create");
-		p.sendMessage(ChatColor.DARK_PURPLE + "[UHC] " + ChatColor.GREEN + "/team invite <player>");
-		p.sendMessage(ChatColor.DARK_PURPLE + "[UHC] " + ChatColor.GREEN + "/team kick <player>");
-		p.sendMessage(ChatColor.DARK_PURPLE + "[UHC] " + ChatColor.GREEN + "/team list [player]");
-		p.sendMessage(ChatColor.DARK_PURPLE + "[UHC] " + ChatColor.GREEN + "/team join <player>");
-		p.sendMessage(ChatColor.DARK_PURPLE + "[UHC] " + ChatColor.GREEN + "Admin commands:");
-		p.sendMessage(ChatColor.DARK_PURPLE + "[UHC] " + ChatColor.GREEN + "/team limit <size>");
-		p.sendMessage(ChatColor.DARK_PURPLE + "[UHC] " + ChatColor.GREEN + "/team reset");
-		p.sendMessage(ChatColor.DARK_PURPLE + "[UHC] " + ChatColor.GREEN + "/team man <on/off>");
-		p.sendMessage(ChatColor.DARK_PURPLE + "[UHC] " + ChatColor.GREEN + "/team ff <on/off>");
+        p.sendMessage(ChatUtils.message("&aTeam Commands"));
+        p.sendMessage(ChatUtils.message("&a/team create"));
+        p.sendMessage(ChatUtils.message("&a/team invite <player>"));
+        p.sendMessage(ChatUtils.message("&a/team kick <player>"));
+        p.sendMessage(ChatUtils.message("&a/team list [player]"));
+        p.sendMessage(ChatUtils.message("&a/team join <player>"));
+        p.sendMessage(ChatUtils.message("&aAdmin Commands"));
+        p.sendMessage(ChatUtils.message("&a/team limit <size>"));
+        p.sendMessage(ChatUtils.message("&a/team reset"));
+        p.sendMessage(ChatUtils.message("&a/team man <on/off>"));
+        p.sendMessage(ChatUtils.message("&a/team ff <on/off>"));
 	}
 
     @Override

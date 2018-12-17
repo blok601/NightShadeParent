@@ -1,4 +1,4 @@
-package me.blok601.nightshadeuhc.listeners.modules;
+package me.blok601.nightshadeuhc.component;
 
 import me.blok601.nightshadeuhc.utils.ItemBuilder;
 import org.bukkit.Bukkit;

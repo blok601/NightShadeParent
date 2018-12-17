@@ -1,4 +1,4 @@
-package me.blok601.nightshadeuhc.listeners.modules;
+package me.blok601.nightshadeuhc.component;
 
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.utils.ItemBuilder;
@@ -14,10 +14,10 @@ import java.util.Random;
 /**
  * Created by Blok on 12/29/2017.
  */
-public class SaturationModule extends Component{
+public class SaturationComponent extends Component{
 
 
-    public SaturationModule() {
+    public SaturationComponent() {
         super("Saturation Fix", new ItemBuilder(Material.COOKED_BEEF).name("&eSaturation Fix").make(), true);
     }
 
@@ -50,6 +50,5 @@ public class SaturationModule extends Component{
         if(e.getFoodLevel() < p.getFoodLevel()){
             e.setCancelled(new Random().nextInt(100) < 60);
         }
-
     }
 }

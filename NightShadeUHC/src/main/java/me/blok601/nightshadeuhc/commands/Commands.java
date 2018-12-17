@@ -15,8 +15,8 @@ import me.blok601.nightshadeuhc.staff.spec.SpecsCommand;
 import me.blok601.nightshadeuhc.staff.spec.SpectatorChatCommand;
 import me.blok601.nightshadeuhc.stats.command.LeaderboardsCommand;
 import me.blok601.nightshadeuhc.stats.command.StatsCommand;
-import me.blok601.nightshadeuhc.teams.CmdTeamBase;
-import me.blok601.nightshadeuhc.teams.CmdTeams;
+import me.blok601.nightshadeuhc.teams.TeamBaseCommand;
+import me.blok601.nightshadeuhc.teams.TeamsCommand;
 import me.blok601.nightshadeuhc.teams.PMOresCommand;
 import me.blok601.nightshadeuhc.teams.RvBCommand;
 
@@ -57,8 +57,8 @@ public class Commands {
                 new SitCommand(),
                 new SetWorldCommand(),
                 new ScenarioManager(),
-                new CmdTeams(),
-                new CmdTeamBase(),
+                new TeamsCommand(),
+                new TeamBaseCommand(),
                 new MaxplayersCommand(),
                 new TimerCommand(),
                 new ConfigCommand(),

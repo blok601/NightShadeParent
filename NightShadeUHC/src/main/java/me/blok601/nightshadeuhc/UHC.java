@@ -15,8 +15,8 @@ import de.robingrether.idisguise.api.DisguiseAPI;
 import me.blok601.nightshadeuhc.commands.Commands;
 import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.listeners.gui.EnchantHider;
-import me.blok601.nightshadeuhc.listeners.modules.ComponentHandler;
-import me.blok601.nightshadeuhc.listeners.modules.GoldenHeadRecipe;
+import me.blok601.nightshadeuhc.component.ComponentHandler;
+import me.blok601.nightshadeuhc.component.GoldenHeadRecipe;
 import me.blok601.nightshadeuhc.logger.LoggerHandler;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.manager.ListenerHandler;
@@ -30,7 +30,7 @@ import me.blok601.nightshadeuhc.tasks.PregenTask;
 import me.blok601.nightshadeuhc.tasks.ScoreboardHealthTask;
 import me.blok601.nightshadeuhc.tasks.StaffTrackTask;
 import me.blok601.nightshadeuhc.tasks.WorldLoadTask;
-import me.blok601.nightshadeuhc.teams.CmdSendCoords;
+import me.blok601.nightshadeuhc.teams.SendCoordsCommand;
 import me.blok601.nightshadeuhc.teams.CmdTeamChat;
 import me.blok601.nightshadeuhc.utils.ChatUtils;
 import me.blok601.nightshadeuhc.utils.Lag;
@@ -165,7 +165,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
 
     private void registerCommands() {
         getCommand("pm").setExecutor(new CmdTeamChat());
-        getCommand("pmcoords").setExecutor(new CmdSendCoords());
+        getCommand("pmcoords").setExecutor(new SendCoordsCommand());
 
     }
 

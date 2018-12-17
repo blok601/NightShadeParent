@@ -1,4 +1,4 @@
-package me.blok601.nightshadeuhc.listeners.modules;
+package me.blok601.nightshadeuhc.component;
 
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.gui.setup.SettingsGUI;
@@ -27,14 +27,13 @@ public class ComponentHandler {
     public void setup(){
         this.components = new ArrayList<>();
 
-        addComponent(new EnderpearlComponent());
         addComponent(new AbsorptionComponent());
-        addComponent(new SaturationModule());
-        addComponent(new GodAppleComponent());
         addComponent(new CobbleComponent());
-
+        addComponent(new EnderpearlDamageComponent());
+        addComponent(new GodAppleComponent());
+        addComponent(new NetherComponent());
+        addComponent(new SaturationComponent());
     }
-
 
     public void addComponent(Component component){
         this.components.add(component);

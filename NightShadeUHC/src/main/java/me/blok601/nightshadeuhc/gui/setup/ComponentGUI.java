@@ -1,8 +1,8 @@
 package me.blok601.nightshadeuhc.gui.setup;
 
+import me.blok601.nightshadeuhc.component.Component;
+import me.blok601.nightshadeuhc.component.ComponentHandler;
 import me.blok601.nightshadeuhc.gui.GuiBuilder;
-import me.blok601.nightshadeuhc.listeners.modules.Component;
-import me.blok601.nightshadeuhc.listeners.modules.ComponentHandler;
 import me.blok601.nightshadeuhc.utils.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -18,8 +18,11 @@ public class ComponentGUI {
         builder.rows(3);
 
         int slot = 0;
+        ItemBuilder itemBuilder;
         for (Component component : ComponentHandler.getInstance().getComponents()){
-            builder.item(slot, component.getItemStack());
+            itemBuilder = new ItemBuilder(component.getItemStack());
+            itemBuilder.lore(component.isEnabled() ? "&aEnabled" : "&cDisabled");
+            builder.item(slot, itemBuilder.make());
             slot++;
         }
 

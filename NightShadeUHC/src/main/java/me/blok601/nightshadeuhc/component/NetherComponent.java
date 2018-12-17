@@ -1,23 +1,30 @@
-package me.blok601.nightshadeuhc.listeners.modules;
+package me.blok601.nightshadeuhc.component;
 
-import me.blok601.nightshadeuhc.UHC;
-
-import org.bukkit.ChatColor;
+import me.blok601.nightshadeuhc.utils.ChatUtils;
+import me.blok601.nightshadeuhc.utils.ItemBuilder;
+import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPortalEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
 
-public class NetherEvent implements Listener{
-	
-	FileConfiguration config = UHC.get().getConfig();
-	
+/**
+ * Created by Blok on 12/2/2018.
+ */
+public class NetherComponent extends Component {
+
+    public NetherComponent() {
+        super("Nether", new ItemBuilder(Material.NETHERRACK).name("&eNether").make(), false);
+    }
+
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void on(EntityPortalEvent event) {
-        if (config.getBoolean("nether")) return;
+
+        if (isEnabled()) {
+            return; //This is for blocking
+        }
+
         if (event.getTo() == null) return;
 
         if (event.getTo().getWorld().getEnvironment() == World.Environment.NETHER) {
@@ -27,12 +34,15 @@ public class NetherEvent implements Listener{
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void on(PlayerPortalEvent event) {
-        if (config.getBoolean("nether")) return;
+        if (isEnabled()) {
+            return; //This is for blocking
+        }
         if (event.getTo() == null) return;
 
         if (event.getTo().getWorld().getEnvironment() == World.Environment.NETHER) {
             event.setCancelled(true);
-            event.getPlayer().sendMessage(ChatColor.DARK_AQUA + "[UHC] " + ChatColor.RED + "Travelling to the nether is disabled!");
+            event.getPlayer().sendMessage(ChatUtils.message("&cTravelling to the nether is disabled!"));
         }
     }
+
 }

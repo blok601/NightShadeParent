@@ -1,6 +1,7 @@
 package me.blok601.nightshadeuhc.scenario.cmd.mole;
 
 import com.nightshadepvp.core.Rank;
+import com.nightshadepvp.core.entity.NSPlayer;
 import me.blok601.nightshadeuhc.commands.UHCCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.manager.GameManager;
@@ -45,8 +46,10 @@ public class MolesCommand implements UHCCommand{
         }
 
         if (gamePlayer.isSpectator()) {
-            p.sendMessage(ChatUtils.message("&cYou must be playing the game to view the moles!"));
-            return;
+            if (!NSPlayer.get(p).hasRank(Rank.TRIAL)) {
+                p.sendMessage(ChatUtils.message("&cYou must be playing the game to view the moles!"));
+                return;
+            }
         }
 
         if (gamePlayer.isSpectator() && GameManager.get().getHost().getUniqueId() != p.getUniqueId()) {

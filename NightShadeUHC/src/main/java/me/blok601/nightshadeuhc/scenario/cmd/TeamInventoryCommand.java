@@ -31,6 +31,12 @@ public class TeamInventoryCommand implements UHCCommand {
             p.sendMessage(ChatUtils.message("&cThe game has not started yet!"));
             return;
         }
+
+        if(!ScenarioManager.getScen("Team Inventory").isEnabled()){
+            p.sendMessage(ChatUtils.message("&cTeam Inventory isn't enabled!"));
+            return;
+        }
+
         Team team = TeamManager.getInstance().getTeam(p);
         if (team == null) {
             //They are a solo
