@@ -1,5 +1,7 @@
 package com.nightshadepvp.core.utils;
 
+import com.nightshadepvp.core.Rank;
+import com.nightshadepvp.core.entity.NSPlayerColl;
 import com.nightshadepvp.core.entity.objects.PlayerColor;
 import com.nightshadepvp.core.entity.objects.PlayerEffect;
 import org.bukkit.ChatColor;
@@ -74,6 +76,10 @@ public class ChatUtils {
         }
 
         return string.substring(0, string.length());
+    }
+
+    public static void sendAll(String message, Rank allowed){
+        NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> nsPlayer.hasRank(allowed)).forEach(nsPlayer -> nsPlayer.msg(ChatUtils.message(message)));
     }
 
 }

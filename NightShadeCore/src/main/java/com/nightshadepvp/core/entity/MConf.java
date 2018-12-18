@@ -5,6 +5,8 @@ import com.massivecraft.massivecore.store.Entity;
 import com.massivecraft.massivecore.util.TimeUnit;
 import com.nightshadepvp.core.ServerType;
 
+import java.util.ArrayList;
+
 @EditorName("config")
 public class MConf extends Entity<MConf> {
 
@@ -16,6 +18,7 @@ public class MConf extends Entity<MConf> {
     public MConf load(MConf that) {
         super.load(that);
         this.setServerName(that.serverName);
+        this.setExempt(that.exempt);
         return this;
     }
 
@@ -24,6 +27,7 @@ public class MConf extends Entity<MConf> {
     public long particleDelayTaskMillis = 100L;
     public ServerType serverType = ServerType.PRACTICE;
     private String serverName;
+    private ArrayList<String> exempt = new ArrayList<>();
 
     public String getServerName() {
         return serverName;
@@ -31,6 +35,15 @@ public class MConf extends Entity<MConf> {
 
     public void setServerName(String serverName) {
         this.serverName = serverName;
+        this.changed();
+    }
+
+    public ArrayList<String> getExempt() {
+        return exempt;
+    }
+
+    public void setExempt(ArrayList<String> exempt) {
+        this.exempt = exempt;
         this.changed();
     }
 }

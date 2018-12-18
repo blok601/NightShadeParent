@@ -1,19 +1,25 @@
 package com.nightshadepvp.core.engine;
 
 import com.massivecraft.massivecore.Engine;
+import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.entity.NSPlayer;
+import com.nightshadepvp.core.ubl.UBLHandler;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+
+import java.util.UUID;
 
 public class EnginePunish extends Engine {
 
     private static EnginePunish i = new EnginePunish();
     public static EnginePunish get() { return i; }
+
 
     @EventHandler
     public void onMove(PlayerMoveEvent e) {
@@ -72,5 +78,16 @@ public class EnginePunish extends Engine {
             NSPlayer user = NSPlayer.get(p);
             if (user.isFrozen()) e.setCancelled(true);
         }
+    }
+
+    @EventHandler
+    public void preLogin(AsyncPlayerPreLoginEvent e) {
+        UUID uuid = e.getUniqueId();
+        UBLHandler handler = Core.get().getUblHandler();
+
+        if (handler.isUBLed(uuid) && !handler.isExempt(e.getName())) {
+            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, handler.getBanMessage(uuid));
+        }
+
     }
 }
