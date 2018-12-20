@@ -30,7 +30,7 @@ public class ListenerHandler {
             new Undisguise(),
             new JoinListener(),
             new GameListener(GameManager.get()),
-            new PlayerListener(),
+            new PlayerListener(GameManager.get()),
             new SkriptScenarios(),
             new ArenaListener(),
             new SpectatorInfoListener(),
