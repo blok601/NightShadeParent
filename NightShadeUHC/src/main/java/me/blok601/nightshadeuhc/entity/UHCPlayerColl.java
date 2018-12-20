@@ -7,6 +7,8 @@ import me.blok601.nightshadeuhc.UHC;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class UHCPlayerColl extends SenderColl<UHCPlayer> {
     // -------------------------------------------- //
@@ -41,10 +43,9 @@ public class UHCPlayerColl extends SenderColl<UHCPlayer> {
         return MConf.get().cleanInactivityToleranceMillis;
     }
 
-    public Collection<UHCPlayer> getAllPlaying(){
-        ArrayList<UHCPlayer> list = new ArrayList<>();
-        getAllOnline().stream().filter(uhcPlayer -> !uhcPlayer.isSpectator()).filter(uhcPlayer -> UHC.players.contains(uhcPlayer.getUuid())).forEach(list::add);
-        return list;
+    public List<UHCPlayer> getAllPlaying(){
+        return getAllOnline().stream().filter(uhcPlayer -> !uhcPlayer.isSpectator()).filter(uhcPlayer -> UHC.players.contains(uhcPlayer.getUuid())).collect(Collectors.toList());
+
     }
 
     public Collection<UHCPlayer> getSpectators(){

@@ -2,11 +2,11 @@ package me.blok601.nightshadeuhc.component;
 
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.ItemStack;
 
 /**
  * Created by Blok on 12/10/2017.
@@ -16,12 +16,12 @@ public abstract class Component implements Listener{
     private String name;
     private boolean enabled;
     private boolean locked;
-    private ItemStack itemStack;
+    private Material material;
     private boolean defaultState;
 
-    public Component(String name, ItemStack itemStack, boolean defaultState) {
+    public Component(String name, Material material, boolean defaultState) {
         this.name = name;
-        this.itemStack = itemStack;
+        this.material = material;
         this.defaultState = defaultState;
         this.enabled = defaultState;
     }
@@ -54,8 +54,8 @@ public abstract class Component implements Listener{
         this.enabled = !this.enabled;
     }
 
-    public ItemStack getItemStack() {
-        return itemStack;
+    public Material getMaterial() {
+        return material;
     }
 
 
@@ -63,7 +63,7 @@ public abstract class Component implements Listener{
         toggle();
         Player p = (Player) e.getWhoClicked();
 
-        ItemBuilder builder = new ItemBuilder(itemStack);
+        ItemBuilder builder = new ItemBuilder(material);
         builder.lore(isEnabled() ? ChatUtils.format("&aEnabled") : ChatUtils.format("&cDisabled"), true);
 
         e.getInventory().setItem(slot, builder.make());

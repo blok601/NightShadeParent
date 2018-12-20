@@ -84,6 +84,8 @@ public class GameManager {
     private boolean overWorldPregenned = false;
     @Getter@Setter
     private boolean netherPregenned = false;
+    @Getter@Setter
+    private World netherWorld = null;
 
     // ---------------------------------------
     //            Host GUI Game Settings

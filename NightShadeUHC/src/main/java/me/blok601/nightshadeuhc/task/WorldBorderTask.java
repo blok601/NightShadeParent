@@ -1,9 +1,8 @@
 package me.blok601.nightshadeuhc.task;
 
 import com.wimbli.WorldBorder.BorderData;
-import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.event.MeetupStartEvent;
+import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.util.ActionBarUtil;
 import me.blok601.nightshadeuhc.util.ChatUtils;
@@ -55,7 +54,6 @@ public class WorldBorderTask extends BukkitRunnable {
                 pls.playSound(pls.getLocation(), Sound.BAT_DEATH, 5, 1);
             }
             ChatUtils.sendAll("&bThe border has shrunk to " + GameManager.get().getFirstShrink() + " radius!");
-            Bukkit.getServer().getPluginManager().callEvent(new MeetupStartEvent());
             counter = -1;
             new ShrinkTask(world).runTaskTimer(UHC.get(), 290 * Util.TICKS, 290 * Util.TICKS);
             this.cancel();

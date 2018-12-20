@@ -2,7 +2,6 @@ package me.blok601.nightshadeuhc.component;
 
 import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.manager.GameManager;
-import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -12,7 +11,7 @@ public class CobbleComponent extends Component{
 
 
     public CobbleComponent() {
-        super("1.8 Stone", new ItemBuilder(Material.COBBLESTONE).name("&e1.8 Stone").make(), true);
+        super("1.8 Stone", Material.COBBLESTONE, true);
     }
 
     @EventHandler

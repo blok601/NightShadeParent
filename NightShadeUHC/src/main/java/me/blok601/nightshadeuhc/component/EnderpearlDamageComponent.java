@@ -1,7 +1,5 @@
 package me.blok601.nightshadeuhc.component;
 
-import me.blok601.nightshadeuhc.util.ChatUtils;
-import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -15,7 +13,7 @@ public class EnderpearlDamageComponent extends Component{
 
 
     public EnderpearlDamageComponent() {
-        super("Enderpearl Damage", new ItemBuilder(Material.ENDER_PEARL).name(ChatUtils.format("&eEnderpearl Damage")).make() ,true);
+        super("Enderpearl Damage", Material.ENDER_PEARL, true);
     }
 
 

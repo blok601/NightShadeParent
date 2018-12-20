@@ -1,7 +1,6 @@
 package me.blok601.nightshadeuhc.component;
 
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
@@ -15,7 +14,7 @@ public class AbsorptionComponent extends Component{
 
 
     public AbsorptionComponent() {
-        super("Absorption", new ItemBuilder(Material.GOLDEN_APPLE).name("&eAbsorption").make(), true);
+        super("Absorption", Material.GOLDEN_APPLE, true);
     }
 
     @EventHandler

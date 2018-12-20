@@ -78,7 +78,7 @@ public class GameDeathListener implements Listener {
 
             e.setDamage(0);
             e.setCancelled(true);
-            p.getWorld().strikeLightningEffect(p.getLocation());
+            //p.getWorld().strikeLightningEffect(p.getLocation());
             CustomDeathEvent customDeathEvent = new CustomDeathEvent(p, damager, items, p.getLocation(), true);
             Bukkit.getPluginManager().callEvent(customDeathEvent);
 
@@ -236,7 +236,7 @@ public class GameDeathListener implements Listener {
             items.add(i);
         }
 
-        p.getWorld().strikeLightningEffect(p.getLocation());
+        //p.getWorld().strikeLightningEffect(p.getLocation());
         CustomDeathEvent customDeathEvent = new CustomDeathEvent(p, damager, items, p.getLocation(), true);
         Bukkit.getPluginManager().callEvent(customDeathEvent);
 

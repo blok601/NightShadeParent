@@ -1,7 +1,6 @@
 package me.blok601.nightshadeuhc.component;
 
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,7 +17,7 @@ public class SaturationComponent extends Component{
 
 
     public SaturationComponent() {
-        super("Saturation Fix", new ItemBuilder(Material.COOKED_BEEF).name("&eSaturation Fix").make(), true);
+        super("Saturation Fix", Material.COOKED_BEEF, true);
     }
 
     @EventHandler

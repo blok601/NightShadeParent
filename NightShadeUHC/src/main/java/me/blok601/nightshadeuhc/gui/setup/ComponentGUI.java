@@ -18,9 +18,9 @@ public class ComponentGUI {
         builder.rows(3);
 
         int slot = 0;
-        ItemBuilder itemBuilder;
         for (Component component : ComponentHandler.getInstance().getComponents()){
-            itemBuilder = new ItemBuilder(component.getItemStack());
+            ItemBuilder itemBuilder = new ItemBuilder(component.getMaterial());
+            itemBuilder.name("&e" + component.getName());
             itemBuilder.lore(component.isEnabled() ? "&aEnabled" : "&cDisabled");
             builder.item(slot, itemBuilder.make());
             slot++;

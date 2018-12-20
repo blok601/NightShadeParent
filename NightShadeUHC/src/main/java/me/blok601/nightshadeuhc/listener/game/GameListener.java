@@ -3,18 +3,25 @@ package me.blok601.nightshadeuhc.listener.game;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
 import me.blok601.nightshadeuhc.UHC;
+import me.blok601.nightshadeuhc.component.ComponentHandler;
+import me.blok601.nightshadeuhc.entity.UHCPlayer;
+import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
 import me.blok601.nightshadeuhc.event.GameEndEvent;
 import me.blok601.nightshadeuhc.event.GameStartEvent;
+import me.blok601.nightshadeuhc.event.MeetupStartEvent;
 import me.blok601.nightshadeuhc.event.PvPEnableEvent;
 import me.blok601.nightshadeuhc.manager.GameManager;
+import me.blok601.nightshadeuhc.manager.TeamManager;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.stat.CachedGame;
 import me.blok601.nightshadeuhc.stat.handler.StatsHandler;
-import me.blok601.nightshadeuhc.manager.TeamManager;
 import me.blok601.nightshadeuhc.task.WorldBorderTask;
 import me.blok601.nightshadeuhc.util.ActionBarUtil;
+import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.util.ScatterUtil;
 import org.bson.Document;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -27,6 +34,12 @@ import java.util.UUID;
  * Created by Blok on 11/11/2017.
  */
 public class GameListener implements Listener {
+
+    private GameManager gameManager;
+
+    public GameListener(GameManager gameManager) {
+        this.gameManager = gameManager;
+    }
 
     @EventHandler
     public void onStart(GameStartEvent e){
@@ -113,6 +126,17 @@ public class GameListener implements Listener {
         }.runTaskTimer(UHC.get(), 0, 20);
 
 
+    }
+
+    @EventHandler
+    public void onMeetup(MeetupStartEvent e) {
+        for (UHCPlayer uhcPlayer : UHCPlayerColl.get().getAllPlaying()) {
+            if (uhcPlayer.getPlayer().getWorld().getEnvironment() == World.Environment.NETHER) {
+                ScatterUtil.scatterPlayer(gameManager.getWorld(), gameManager.getShrinks()[gameManager.getBorderID()], uhcPlayer.getPlayer());
+                uhcPlayer.msg(ChatUtils.message("&eYou have been scattered out of the nether!"));
+            }
+        }
+        ComponentHandler.getInstance().getComponent("Nether").setEnabled(false);
     }
 
     private String get(int i){

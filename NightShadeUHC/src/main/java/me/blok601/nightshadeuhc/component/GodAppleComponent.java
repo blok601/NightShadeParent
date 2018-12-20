@@ -1,6 +1,5 @@
 package me.blok601.nightshadeuhc.component;
 
-import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.CraftItemEvent;
@@ -12,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 public class GodAppleComponent extends Component{
 
     public GodAppleComponent() {
-        super("God Apples", new ItemBuilder(new ItemStack(Material.getMaterial(322), 1, (short) 1)).name("&eGod Apples").make(), false);
+        super("God Apples", Material.GOLD_BLOCK, false);
     }
 
     @EventHandler

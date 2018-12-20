@@ -2,9 +2,9 @@ package me.blok601.nightshadeuhc.gui.setup;
 
 import com.nightshadepvp.core.Core;
 import me.blok601.nightshadeuhc.manager.GameManager;
+import me.blok601.nightshadeuhc.manager.TeamManager;
 import me.blok601.nightshadeuhc.scenario.Scenario;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
-import me.blok601.nightshadeuhc.manager.TeamManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Bukkit;
@@ -23,11 +23,11 @@ public class HostGUI {
         Inventory inventory = Bukkit.createInventory(null, 54, ChatUtils.format("&5UHC Game Setup"));
 
         ItemBuilder post = new ItemBuilder(new ItemStack(Material.WOOL, 1, DyeColor.ORANGE.getWoolData()))
-                .name("&6&lSet the Matchpost")
-                .lore("&7&o(&6i&7) &6Click to set the matchpost for the UHC");
+                .name("&6&lSet the Matchpost");
         if (!Core.get().getMatchpost().equalsIgnoreCase("uhc.gg")) {//Its set
             post.lore("&7Current: &6" + Core.get().getMatchpost());
         }
+        post.lore("&7&o(&6i&7) &6Click to set the matchpost for the UHC");
 
         ItemBuilder world = new ItemBuilder(new ItemStack(Material.WOOL, 1, DyeColor.YELLOW.getWoolData()))
                 .name("&e&lWorld Setup")

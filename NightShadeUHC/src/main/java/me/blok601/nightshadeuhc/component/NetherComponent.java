@@ -1,7 +1,6 @@
 package me.blok601.nightshadeuhc.component;
 
 import me.blok601.nightshadeuhc.util.ChatUtils;
-import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
@@ -15,7 +14,7 @@ import org.bukkit.event.player.PlayerPortalEvent;
 public class NetherComponent extends Component {
 
     public NetherComponent() {
-        super("Nether", new ItemBuilder(Material.NETHERRACK).name("&eNether").make(), false);
+        super("Nether", Material.NETHERRACK, false);
     }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)

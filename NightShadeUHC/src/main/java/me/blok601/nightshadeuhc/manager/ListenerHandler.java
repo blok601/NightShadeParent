@@ -29,7 +29,7 @@ public class ListenerHandler {
             new StaffListener(),
             new Undisguise(),
             new JoinListener(),
-            new GameListener(),
+            new GameListener(GameManager.get()),
             new PlayerListener(),
             new SkriptScenarios(),
             new ArenaListener(),
