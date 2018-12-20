@@ -2,7 +2,6 @@ package me.blok601.nightshadeuhc.task;
 
 import com.wimbli.WorldBorder.BorderData;
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.util.ActionBarUtil;
 import me.blok601.nightshadeuhc.util.ChatUtils;
@@ -46,7 +45,6 @@ public class WorldBorderTask extends BukkitRunnable {
                 ChatUtils.sendAll("The border will shrink to " + GameManager.get().getFirstShrink() + " radius in " + counter);
             }
         } else if (counter == 0) {
-            GameState.setState(GameState.MEETUP);
             bd.setRadius(first);
             GameManager.get().genWalls(first);
             GameManager.get().setBorderID(GameManager.get().getBorderID()+1);

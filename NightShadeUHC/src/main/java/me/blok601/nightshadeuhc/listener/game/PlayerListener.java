@@ -4,15 +4,16 @@ import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.nightshadepvp.core.entity.objects.PlayerTag;
-import me.blok601.nightshadeuhc.entity.object.GameState;
+import me.blok601.nightshadeuhc.command.player.SpectatorChatCommand;
 import me.blok601.nightshadeuhc.entity.MConf;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
+import me.blok601.nightshadeuhc.entity.object.GameState;
+import me.blok601.nightshadeuhc.entity.object.SetupStage;
 import me.blok601.nightshadeuhc.entity.object.Team;
+import me.blok601.nightshadeuhc.gui.setup.HostGUI;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.manager.TeamManager;
-import me.blok601.nightshadeuhc.entity.object.SetupStage;
-import me.blok601.nightshadeuhc.command.player.SpectatorChatCommand;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -37,6 +38,12 @@ import org.bukkit.event.player.PlayerMoveEvent;
  * Created by Blok on 1/4/2018.
  */
 public class PlayerListener implements Listener {
+
+    GameManager gameManager;
+
+    public PlayerListener(GameManager gameManager) {
+        this.gameManager = gameManager;
+    }
 
     @EventHandler
     public void onRegen(EntityRegainHealthEvent e) {
@@ -174,6 +181,7 @@ public class PlayerListener implements Listener {
                 Core.get().setMatchpost(e.getMessage());
                 p.sendMessage(ChatUtils.message("&eThe matchpost is now: &a" + e.getMessage()));
                 GameManager.get().getSetupStageHashMap().remove(p);
+                new HostGUI(p, gameManager);
                 return;
             } else if (stage == SetupStage.SEED) {
                 if (e.getMessage().toLowerCase().startsWith("cancel")) {
@@ -185,6 +193,7 @@ public class PlayerListener implements Listener {
                 GameManager.get().setSetupSeed(e.getMessage());
                 p.sendMessage(ChatUtils.message("&eThe seed is now&8: &b" + e.getMessage()));
                 GameManager.get().getSetupStageHashMap().remove(p);
+                new HostGUI(p, gameManager);
                 return;
             }
         }

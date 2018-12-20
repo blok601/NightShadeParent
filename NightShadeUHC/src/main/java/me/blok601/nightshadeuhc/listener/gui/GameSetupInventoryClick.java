@@ -676,8 +676,8 @@ public class GameSetupInventoryClick implements Listener {
                 ItemStack itemStack = e.getCurrentItem(); // Know its the final heal one
                 ItemBuilder builder = new ItemBuilder(itemStack);
                 builder.removeLore(0);
-                int borderTime = gameManager.getMeetupTime();
-                if (borderTime == 0 && GameState.getState() != GameState.WAITING) {
+                int meetupTime = gameManager.getMeetupTime();
+                if (meetupTime == 0 && GameState.getState() != GameState.WAITING) {
                     builder.lore(ChatUtils.format("&6Not set or already passed!"), true);
                 } else {
                     builder.lore(ChatUtils.format("&6" + gameManager.getMeetupTime() / 60 + " minutes"), true);

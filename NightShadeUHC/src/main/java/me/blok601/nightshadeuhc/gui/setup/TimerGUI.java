@@ -45,13 +45,13 @@ public class TimerGUI {
         bTime.lore("&7(&6&oi&r&7) &6&oTime until first border shrink");
 
         ItemBuilder mTime = new ItemBuilder(Material.PAPER).name("&eMeetup Time");
-        int meetup = GameManager.get().getMeetupTime();
-        if (meetup == 0 && GameState.getState() == GameState.WAITING) {
+        int meetupTime = GameManager.get().getMeetupTime();
+        if (meetupTime == 0 && GameState.getState() == GameState.WAITING) {
             mTime.lore("&6Not Set");
         } else {
-            mTime.lore("&6" + borderTime / 60 + " minutes");
+            mTime.lore("&6" + meetupTime / 60 + " minutes");
         }
-        bTime.lore("&7(&6&oi&r&7) &6&oTime until \"Meetup\" begins");
+        mTime.lore("&7(&6&oi&r&7) &6&oTime until \"Meetup\" begins");
 
         ItemBuilder back = new ItemBuilder(Material.ARROW).name("&cBack");
 

@@ -2,6 +2,7 @@ package me.blok601.nightshadeuhc.task;
 
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
+import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.event.MeetupStartEvent;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
@@ -27,6 +28,7 @@ public class MeetupTask extends BukkitRunnable {
     public void run() {
         if (counter == 0) {
             Bukkit.getServer().getPluginManager().callEvent(new MeetupStartEvent());
+            GameState.setState(GameState.MEETUP);
             for (Player pl : Bukkit.getOnlinePlayers()) {
                pl.sendMessage(ChatUtils.format("&5&m-----------------------------------"));
                pl.sendMessage(ChatUtils.format("&3Meetup is now!"));

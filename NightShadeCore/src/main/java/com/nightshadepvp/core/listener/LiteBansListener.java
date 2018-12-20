@@ -1,15 +1,20 @@
 package com.nightshadepvp.core.listener;
 
+import com.google.gson.JsonObject;
 import com.nightshadepvp.core.Core;
+import com.nightshadepvp.core.Logger;
 import litebans.api.Entry;
 import litebans.api.Events;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import redis.clients.jedis.Jedis;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -39,5 +44,31 @@ public class LiteBansListener extends Events.Listener {
                 }
             }.runTask(Core.get());
         }
+
+        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(entry.getUuid());
+        if (offlinePlayer == null) {
+            return;
+        }
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("type", entry.getType());
+        jsonObject.addProperty("player", offlinePlayer.getName());
+        jsonObject.addProperty("punisher", entry.getExecutorName());
+        jsonObject.addProperty("reason", entry.getReason());
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                Jedis jedis = Core.get().getJedis();
+                if (jedis == null) {
+                    Core.get().getLogManager().log(Logger.LogType.SEVERE, "Jedis was null!");
+                    return;
+                }
+
+                jedis.publish("punishments", ChatColor.stripColor(jsonObject.toString()));
+                Core.get().getLogManager().log(Logger.LogType.DEBUG, "Sent!");
+            }
+        }.runTaskAsynchronously(Core.get());
+
     }
 }
