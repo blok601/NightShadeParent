@@ -45,16 +45,22 @@ public class LiteBansListener extends Events.Listener {
             }.runTask(Core.get());
         }
 
-        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(entry.getUuid());
-        if (offlinePlayer == null) {
-            return;
+        String name;
+        Player player = Bukkit.getPlayer(entry.getUuid());
+        if(player == null){
+            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(entry.getUuid());
+            if(offlinePlayer == null) return;
+            name = offlinePlayer.getName();
+        }else{
+            name = player.getName();
         }
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("type", entry.getType());
-        jsonObject.addProperty("player", offlinePlayer.getName());
+        jsonObject.addProperty("player", name);
         jsonObject.addProperty("punisher", entry.getExecutorName());
         jsonObject.addProperty("reason", entry.getReason());
+        jsonObject.addProperty("length", entry.getDurationString());
 
         new BukkitRunnable() {
             @Override
@@ -66,7 +72,6 @@ public class LiteBansListener extends Events.Listener {
                 }
 
                 jedis.publish("punishments", ChatColor.stripColor(jsonObject.toString()));
-                Core.get().getLogManager().log(Logger.LogType.DEBUG, "Sent!");
             }
         }.runTaskAsynchronously(Core.get());
 
