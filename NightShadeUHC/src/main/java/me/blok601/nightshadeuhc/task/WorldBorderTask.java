@@ -46,7 +46,7 @@ public class WorldBorderTask extends BukkitRunnable {
             }
         } else if (counter == 0) {
             bd.setRadius(first);
-            GameManager.get().genWalls(first);
+            GameManager.get().genWalls(first, GameManager.get().getWorld());
             GameManager.get().setBorderID(GameManager.get().getBorderID()+1);
             for (Player pls : Bukkit.getOnlinePlayers()) {
                 pls.playSound(pls.getLocation(), Sound.BAT_DEATH, 5, 1);

@@ -114,7 +114,8 @@ public class Commands {
                 new ClearTreesCommand(),
                 new PMOresCommand(),
                 new BetaHostCommand(),
-                new ConfirmCommand()
+                new ConfirmCommand(),
+                new SetBorderCommand()
         };
     }
 

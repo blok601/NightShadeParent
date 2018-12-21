@@ -36,6 +36,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashSet;
+import java.util.stream.Collectors;
 
 /**
  * Created by Blok on 12/13/2018.
@@ -317,7 +318,7 @@ public class GameSetupInventoryClick implements Listener {
                     return;
                 }
 
-                p.sendMessage(ChatUtils.message("&eThe following world&8(&es&8)&e are about to be deleted: " + Joiner.on("&7, &b").join(toDelete)));
+                p.sendMessage(ChatUtils.message("&eThe following world&8(&es&8)&e are about to be deleted: &b" + Joiner.on("&7, &b").join(toDelete.stream().map(World::getName).collect(Collectors.toList()))));
                 FancyMessage fancyMessage = new FancyMessage("Please confirm within 10 seconds by doing /confirm or clicking this message");
                 fancyMessage.color(ChatColor.YELLOW).command("/confirm");
                 fancyMessage.send(p);
@@ -473,6 +474,12 @@ public class GameSetupInventoryClick implements Listener {
                 return;
             } else if (slot == 5) {
                 p.closeInventory();
+
+                if(Bukkit.getWorld("UHC" + p.getName()) == null){
+                    p.sendMessage(ChatUtils.message("&cYour overworld does not exist! Make sure to create an overworld first!"));
+                    return;
+                }
+
                 new BukkitRunnable() {
                     @Override
                     public void run() {

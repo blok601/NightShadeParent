@@ -286,11 +286,11 @@ public class GameManager {
         return kills;
     }
 
-    public void genWalls(int size) {
+    public void genWalls(int size, World w) {
         UHC.get().getServer().dispatchCommand(Bukkit.getConsoleSender(), "wb " + getWorld().getName() + " set " + size + " " + size + " 0 0");
         UHC.get().getServer().dispatchCommand(Bukkit.getConsoleSender(), "wb shape square");
         Location loc = new Location(getWorld(), 0.0D, 59.0D, 0.0D);
-        World uhc = getWorld();
+        World uhc = w;
         int i = 4;
         while (i < 4 + 4) {
             for (int x = loc.getBlockX() - size; x <= loc.getBlockX() + size; x++) {

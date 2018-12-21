@@ -132,7 +132,7 @@ commands:
   chatstop:
     aliases: [togglechatmute, gmute, globalmute, chattoggle, ozzyisgay]
   walls:
-    aliases: [setborder, shrink, setwalls]
+    aliases: [shrink, setwalls]
     description: Set and generate the border for the given radius
   cancelpregen:
   power:
@@ -193,3 +193,5 @@ commands:
   betahost:
   confirm:
     description: Hosting command
+  setborder:
+    description: Set the world border for a command
