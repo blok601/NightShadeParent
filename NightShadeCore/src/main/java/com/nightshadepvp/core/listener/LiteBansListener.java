@@ -60,7 +60,7 @@ public class LiteBansListener extends Events.Listener {
         jsonObject.addProperty("player", name);
         jsonObject.addProperty("punisher", entry.getExecutorName());
         jsonObject.addProperty("reason", entry.getReason());
-        jsonObject.addProperty("length", entry.getDurationString());
+        jsonObject.addProperty("length", entry.getRemainingDurationString(System.currentTimeMillis()));
 
         new BukkitRunnable() {
             @Override

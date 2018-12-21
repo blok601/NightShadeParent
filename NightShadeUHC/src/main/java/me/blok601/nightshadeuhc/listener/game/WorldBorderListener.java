@@ -4,6 +4,7 @@ import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Logger;
 import com.wimbli.WorldBorder.Events.WorldBorderFillFinishedEvent;
 import me.blok601.nightshadeuhc.entity.object.PregenQueue;
+import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.task.PregenTask;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.Util;
@@ -17,6 +18,12 @@ import org.bukkit.event.Listener;
  * Created by Blok on 12/13/2018.
  */
 public class WorldBorderListener implements Listener {
+
+    private GameManager gameManager;
+
+    public WorldBorderListener(GameManager gameManager) {
+        this.gameManager = gameManager;
+    }
 
     @EventHandler
     public void onFinish(WorldBorderFillFinishedEvent e) {
@@ -33,8 +40,20 @@ public class WorldBorderListener implements Listener {
             Player player = Bukkit.getPlayer(queue.getStarter());
             if (player != null) {
                 player.sendMessage(ChatUtils.message("&eThe pregen for &b" + queue.getWorld().getName() + " &ehas finished!"));
+                if (world.getEnvironment() == World.Environment.NORMAL) {
+                    if (!gameManager.isOverWorldPregenned()) {
+                        gameManager.setOverWorldPregenned(true);
+                    }
+                }
             }
             Util.staffLog("Pregen for world &b" + queue.getWorld().getName() + " &2has finished!");
+            if (world.getEnvironment() == World.Environment.NETHER && world.getName().contains("UHC")) {
+                if (gameManager.getWorld() == null) return;
+                if (world.getName().startsWith(gameManager.getWorld().getName())) {
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mvnp link nether " + gameManager.getWorld().getName() + " " + world.getName());
+                    Util.staffLog("&aWorlds: &e" + gameManager.getWorld().getName() + " &aand &c" + world.getName() + " &ehave been linked!");
+                }
+            }
         }
     }
 

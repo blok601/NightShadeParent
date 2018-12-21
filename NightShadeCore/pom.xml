@@ -85,17 +85,6 @@
             <scope>system</scope>
             <systemPath>${basedir}/src/main/resources/libs/pspigot.jar</systemPath>
         </dependency>
-
-
-        <dependency>
-            <groupId>litebans</groupId>
-            <artifactId>api</artifactId>
-            <version>LATEST</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/src/main/resources/libs/LiteBansAPI.jar</systemPath>
-        </dependency>
-
-
         <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
         <dependency>
             <groupId>redis.clients</groupId>
@@ -114,6 +103,14 @@
             <artifactId>commons-csv</artifactId>
             <version>1.4</version>
         </dependency>
+        <dependency>
+            <groupId>litebans</groupId>
+            <artifactId>api</artifactId>
+            <version>0.3</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/src/main/resources/libs/LiteBansAPI.jar</systemPath>
+        </dependency>
     </dependencies>
+
 
 </project>
