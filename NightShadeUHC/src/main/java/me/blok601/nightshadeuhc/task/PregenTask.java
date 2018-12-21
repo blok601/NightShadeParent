@@ -1,8 +1,13 @@
 package me.blok601.nightshadeuhc.task;
 
+import com.nightshadepvp.core.Rank;
+import com.nightshadepvp.core.entity.NSPlayerColl;
+import com.wimbli.WorldBorder.Config;
 import lombok.Getter;
+import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.entity.object.PregenQueue;
 import me.blok601.nightshadeuhc.manager.GameManager;
+import me.blok601.nightshadeuhc.util.ActionBarUtil;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.Util;
 import org.bukkit.Bukkit;
@@ -36,7 +41,12 @@ public class PregenTask extends BukkitRunnable {
             return;
         }
 
-        if(RUNNING) return;
+        if (RUNNING) {
+            NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> nsPlayer.hasRank(Rank.TRIAL)).forEach(nsPlayer -> {
+                Player player = nsPlayer.getPlayer();
+                ActionBarUtil.sendActionBarMessage(player, get(Config.fillTask.getPercentageCompleted(), pregenQueue.get(0).getWorld().getName()), 1, UHC.get());
+            });
+        }
 
         Player p = Bukkit.getPlayer(queue.getStarter());
         if (p == null) {
@@ -73,5 +83,21 @@ public class PregenTask extends BukkitRunnable {
         }
 
         return null;
+    }
+
+    private String get(double pct, String worldName) {
+        String coloredPercent;
+        if (pct < 25.0) {
+            coloredPercent = "§4" + pct + "%";
+        } else if (pct > 25.0 && pct < 50.0) {
+            coloredPercent = "§c" + pct + "%";
+        } else if (pct > 50.0 && pct < 75.0) {
+            coloredPercent = "§e" + pct + "%";
+        } else if (pct > 75.0 && pct < 100) {
+            coloredPercent = "§a" + pct + "%";
+        } else {
+            coloredPercent = "§4" + pct + "%";
+        }
+        return "&5Pregen in &b" + worldName + "&8» " + coloredPercent;
     }
 }

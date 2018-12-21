@@ -287,18 +287,17 @@ public class GameManager {
     }
 
     public void genWalls(int size, World w) {
-        UHC.get().getServer().dispatchCommand(Bukkit.getConsoleSender(), "wb " + getWorld().getName() + " set " + size + " " + size + " 0 0");
+        UHC.get().getServer().dispatchCommand(Bukkit.getConsoleSender(), "wb " + w + " set " + size + " " + size + " 0 0");
         UHC.get().getServer().dispatchCommand(Bukkit.getConsoleSender(), "wb shape square");
-        Location loc = new Location(getWorld(), 0.0D, 59.0D, 0.0D);
-        World uhc = w;
+        Location loc = new Location(w, 0.0D, 59.0D, 0.0D);
         int i = 4;
         while (i < 4 + 4) {
             for (int x = loc.getBlockX() - size; x <= loc.getBlockX() + size; x++) {
                 for (int y = 59; y <= 59; y++) {
                     for (int z = loc.getBlockZ() - size; z <= loc.getBlockZ() + size; z++) {
                         if ((x == loc.getBlockX() - size) || (x == loc.getBlockX() + size) || (z == loc.getBlockZ() - size) || (z == loc.getBlockZ() + size)) {
-                            Location loc2 = new Location(getWorld(), x, y, z);
-                            loc2.setY(uhc.getHighestBlockYAt(loc2));
+                            Location loc2 = new Location(w, x, y, z);
+                            loc2.setY(w.getHighestBlockYAt(loc2));
                             loc2.getBlock().setType(Material.BEDROCK);
                         }
                     }

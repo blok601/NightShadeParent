@@ -48,7 +48,8 @@ public class SetBorderCommand implements UHCCommand {
             }
 
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb " + world.getName() + " set " + radius + " " + radius + " 0 0");
-            p.sendMessage(ChatUtils.message("&cThe border for &b" + world.getName() + " &eis now &b" + radius + " &ex&b " + radius + " &ein &b" + world.getName()));
+            p.sendMessage(ChatUtils.message("&eThe border for &b" + world.getName() + " &eis now &b" + radius + " &ex&b " + radius));
+
         } else if (args.length == 2) {
 
             if (!Util.isInt(args[0])) {
@@ -65,7 +66,7 @@ public class SetBorderCommand implements UHCCommand {
             }
 
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb " + world.getName() + " set " + radius + " " + radius + " 0 0");
-            p.sendMessage(ChatUtils.message("&cThe border for &b" + world.getName() + " &eis now &b" + radius + " &ex&b " + radius + " &ein &b" + world.getName()));
+            p.sendMessage(ChatUtils.message("&eThe border for &b" + world.getName() + " &eis now &b" + radius + " &ex&b " + radius));
         } else {
             p.sendMessage(ChatUtils.message("&cUsage: /setborder <radius> [world]"));
             return;
