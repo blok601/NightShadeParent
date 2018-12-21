@@ -1,7 +1,7 @@
 package me.blok601.nightshadeuhc.task;
 
 import com.nightshadepvp.core.Rank;
-import com.nightshadepvp.core.entity.NSPlayerColl;
+import com.nightshadepvp.core.entity.NSPlayer;
 import com.wimbli.WorldBorder.Config;
 import lombok.Getter;
 import me.blok601.nightshadeuhc.UHC;
@@ -40,17 +40,20 @@ public class PregenTask extends BukkitRunnable {
         }
 
         if (queue.isRunning()) {
-            NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> nsPlayer.hasRank(Rank.TRIAL)).forEach(nsPlayer -> {
-                Player player = nsPlayer.getPlayer();
-                ActionBarUtil.sendActionBarMessage(player, get(Config.fillTask.getPercentageCompleted(), pregenQueue.get(0).getWorld().getName()), 1, UHC.get());
+            Bukkit.getOnlinePlayers().forEach(o -> {
+                if(NSPlayer.get(o).hasRank(Rank.TRIAL)){
+                    ActionBarUtil.sendActionBarMessage(o, get(Config.fillTask.getPercentageCompleted(), pregenQueue.get(0).getWorld().getName()), 3, UHC.get());
+                }
             });
             return;
         }
 
         if (RUNNING) {
-            NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> nsPlayer.hasRank(Rank.TRIAL)).forEach(nsPlayer -> {
-                Player player = nsPlayer.getPlayer();
-                ActionBarUtil.sendActionBarMessage(player, get(Config.fillTask.getPercentageCompleted(), pregenQueue.get(0).getWorld().getName()), 1, UHC.get());
+
+            Bukkit.getOnlinePlayers().forEach(o -> {
+                if(NSPlayer.get(o).hasRank(Rank.TRIAL)){
+                    ActionBarUtil.sendActionBarMessage(o, get(Config.fillTask.getPercentageCompleted(), pregenQueue.get(0).getWorld().getName()), 3, UHC.get());
+                }
             });
         }
 
