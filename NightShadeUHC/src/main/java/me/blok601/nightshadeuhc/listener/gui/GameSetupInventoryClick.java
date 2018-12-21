@@ -312,9 +312,14 @@ public class GameSetupInventoryClick implements Listener {
                     }
                 }
 
+                if (toDelete.isEmpty()) {
+                    p.sendMessage(ChatUtils.message("&eYou have no current worlds to delete!"));
+                    return;
+                }
+
                 p.sendMessage(ChatUtils.message("&eThe following world&8(&es&8)&e are about to be deleted: " + Joiner.on("&7, &b").join(toDelete)));
-                FancyMessage fancyMessage = new FancyMessage();
-                fancyMessage.then("Please confirm within 10 seconds by doing /confirm or clicking this message").color(ChatColor.YELLOW).command("/confirm");
+                FancyMessage fancyMessage = new FancyMessage("Please confirm within 10 seconds by doing /confirm or clicking this message");
+                fancyMessage.color(ChatColor.YELLOW).command("/confirm");
                 fancyMessage.send(p);
                 PlayerUtils.getToConfirm().put(p.getUniqueId(), () -> {
                     p.sendMessage(ChatUtils.message("&eThe worlds will now be deleted..."));

@@ -3,10 +3,10 @@ package me.blok601.nightshadeuhc.listener.game;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.nightshadepvp.core.utils.ChatUtils;
-import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.entity.MConf;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
+import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.entity.object.PlayerRespawnObject;
 import me.blok601.nightshadeuhc.event.CustomDeathEvent;
 import me.blok601.nightshadeuhc.manager.GameManager;
@@ -15,6 +15,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -44,6 +45,7 @@ public class GameDeathListener implements Listener {
         NSPlayer user = NSPlayer.get(p);
         Player damager = null;
         boolean shot = false;
+        Projectile projectile = null;
 
         UHCPlayer gamePlayer1 = null;
 
@@ -56,6 +58,7 @@ public class GameDeathListener implements Listener {
                 damager = (Player) a.getShooter();
                 gamePlayer1 = UHCPlayer.get(damager);
                 shot = true;
+                projectile = a;
             } else {
                 damager = null;
                 shot = false;
@@ -81,6 +84,13 @@ public class GameDeathListener implements Listener {
             //p.getWorld().strikeLightningEffect(p.getLocation());
             CustomDeathEvent customDeathEvent = new CustomDeathEvent(p, damager, items, p.getLocation(), true);
             Bukkit.getPluginManager().callEvent(customDeathEvent);
+
+            if (shot) {
+                if (projectile != null) {
+                    customDeathEvent.setUsedProjectile(true);
+                    customDeathEvent.setProjectile(projectile);
+                }
+            }
 
             if (!customDeathEvent.isCancelled()) {
                 String deathMessage = ""; //Figure out death message based on how they died

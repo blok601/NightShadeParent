@@ -2,6 +2,7 @@ package me.blok601.nightshadeuhc.event;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -22,6 +23,9 @@ public class CustomDeathEvent extends Event implements Cancellable{
 
     private boolean cancelled;
     private boolean dropItems;
+
+    private boolean usedProjectile;
+    private Projectile projectile;
 
     /**
      * The default constructor is defined for cleaner code. This constructor
@@ -92,5 +96,21 @@ public class CustomDeathEvent extends Event implements Cancellable{
 
     public void setDropItems(boolean dropItems) {
         this.dropItems = dropItems;
+    }
+
+    public boolean usedProjectile() {
+        return usedProjectile;
+    }
+
+    public void setUsedProjectile(boolean usedProjectile) {
+        this.usedProjectile = usedProjectile;
+    }
+
+    public Projectile getProjectile() {
+        return projectile;
+    }
+
+    public void setProjectile(Projectile projectile) {
+        this.projectile = projectile;
     }
 }
