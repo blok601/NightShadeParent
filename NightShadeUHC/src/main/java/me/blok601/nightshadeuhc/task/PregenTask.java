@@ -80,7 +80,7 @@ public class PregenTask extends BukkitRunnable {
                 RUNNING = true;
                 Util.staffLog("Pregen for world: " + queue.getWorld().getName() + " &ehas begun!");
             } else {
-                p.chat("/wb " + queue.getWorld().getName() + " set " + GameManager.get().getSetupNetherRadius() + " " + GameManager.get().getSetupRadius() + " 0 0");
+                p.chat("/wb " + queue.getWorld().getName() + " set " + GameManager.get().getSetupRadius() + " " + GameManager.get().getSetupRadius() + " 0 0");
                 p.chat("/wb " + queue.getWorld().getName() + " fill 250");
                 p.chat("/wb fill confirm");
                 queue.setRunning(true);
@@ -122,6 +122,6 @@ public class PregenTask extends BukkitRunnable {
         } else {
             coloredPercent = "§4" + DECIMAL_FORMAT.format(pct) + "%";
         }
-        return "&5Pregen in &b" + worldName + "&8» " + coloredPercent;
+        return "§5Pregen in §b" + worldName + "§8» " + coloredPercent;
     }
 }
