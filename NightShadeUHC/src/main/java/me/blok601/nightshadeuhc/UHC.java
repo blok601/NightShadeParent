@@ -101,7 +101,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         new ScoreboardHealthTask(scoreboardManager).runTaskTimerAsynchronously(this, 0, 60);
         Commands.setup();
         new StaffTrackTask().runTaskTimer(this, 0, 100);
-        new PregenTask().runTaskTimer(this, 0, 50);
+        new PregenTask().runTaskTimer(this, 0, 40);
 
         ComponentHandler.getInstance().setup();
         StatsHandler.getInstance().setup();

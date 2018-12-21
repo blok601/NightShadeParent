@@ -2,6 +2,7 @@ package me.blok601.nightshadeuhc.task;
 
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
+import com.nightshadepvp.core.entity.NSPlayerColl;
 import com.wimbli.WorldBorder.Config;
 import lombok.Getter;
 import me.blok601.nightshadeuhc.UHC;
@@ -9,7 +10,6 @@ import me.blok601.nightshadeuhc.entity.object.PregenQueue;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.util.ActionBarUtil;
 import me.blok601.nightshadeuhc.util.ChatUtils;
-import me.blok601.nightshadeuhc.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -59,37 +59,19 @@ public class PregenTask extends BukkitRunnable {
 
         Player p = Bukkit.getPlayer(queue.getStarter());
         if (queue.getWorld().getEnvironment() == World.Environment.NETHER) {
-            if (p == null) {
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb " + queue.getWorld().getName() + " set " + GameManager.get().getSetupNetherRadius() + " " + GameManager.get().getSetupNetherRadius() + " 0 0");
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb " + queue.getWorld().getName() + " fill 250");
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb fill confirm");
                 queue.setRunning(true);
                 RUNNING = true;
-                Util.staffLog("Pregen for world: " + queue.getWorld().getName() + " &ehas begun!");
-            } else {
-                p.chat("/wb " + queue.getWorld().getName() + " set " + GameManager.get().getSetupNetherRadius() + " " + GameManager.get().getSetupNetherRadius() + " 0 0");
-                p.chat("/wb " + queue.getWorld().getName() + " fill 250");
-                p.chat("/wb fill confirm");
-                queue.setRunning(true);
-                RUNNING = true;
-                p.sendMessage(ChatUtils.message("&aPregen in world &b" + queue.getWorld().getName() + " &ehas begun!"));
-            }
+            NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> nsPlayer.hasRank(Rank.TRIAL)).forEach(nsPlayer -> nsPlayer.msg(ChatUtils.message("&aPregen in world &c" + queue.getWorld().getName() + " &ahas begun!")));
         } else if (queue.getWorld().getEnvironment() == World.Environment.NORMAL) {
-            if (p == null) {
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb " + queue.getWorld().getName() + " set " + GameManager.get().getSetupRadius() + " " + GameManager.get().getSetupRadius() + " 0 0");
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb " + queue.getWorld().getName() + " fill 250");
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb fill confirm");
                 queue.setRunning(true);
                 RUNNING = true;
-                Util.staffLog("Pregen for world: " + queue.getWorld().getName() + " &ehas begun!");
-            } else {
-                p.chat("/wb " + queue.getWorld().getName() + " set " + GameManager.get().getSetupRadius() + " " + GameManager.get().getSetupRadius() + " 0 0");
-                p.chat("/wb " + queue.getWorld().getName() + " fill 250");
-                p.chat("/wb fill confirm");
-                queue.setRunning(true);
-                RUNNING = true;
-                p.sendMessage(ChatUtils.message("&aPregen in world &b" + queue.getWorld().getName() + " &ehas begun!"));
-            }
+            NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> nsPlayer.hasRank(Rank.TRIAL)).forEach(nsPlayer -> nsPlayer.msg(ChatUtils.message("&aPregen in world &b" + queue.getWorld().getName() + " &ehas begun!")));
         }
     }
 
