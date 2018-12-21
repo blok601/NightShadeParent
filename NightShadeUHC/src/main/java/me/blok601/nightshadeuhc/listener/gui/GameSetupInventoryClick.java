@@ -357,6 +357,13 @@ public class GameSetupInventoryClick implements Listener {
             } else if (slot == 5) {
                 //Create
                 p.closeInventory();
+
+                if (Bukkit.getWorld("UHC" + p.getName()) != null) {
+                    p.sendMessage(ChatUtils.message("&cYou already have a game world!"));
+                    p.sendMessage(ChatUtils.message("&cYou can delete it in the hosting gui!"));
+                    return;
+                }
+
                 new BukkitRunnable() {
                     @Override
                     public void run() {

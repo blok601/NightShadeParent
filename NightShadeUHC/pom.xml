@@ -111,9 +111,9 @@
         <dependency>
             <groupId>com.wimbli.WorldBorder</groupId>
             <artifactId>WorldBorder</artifactId>
+            <version>LATEST</version>
             <scope>system</scope>
             <systemPath>${basedir}/src/main/resources/libs/WorldBorder.jar</systemPath>
-            <version>1.8.4</version>
         </dependency>
 
         <dependency>
