@@ -26,7 +26,6 @@ public class ScenarioManager implements UHCCommand{
     private static ArrayList<Scenario> scenarios = new ArrayList<>();
 
     public void setup(){
-        addScen(new AnonymousScenario(), "Anon");
         addScen(new AssaultAndBatteryScenario(), "AAB");
         addScen(new AurophobiaScenario(), "AP");
         addScen(new BackpackScenario(), "BP");
@@ -103,6 +102,7 @@ public class ScenarioManager implements UHCCommand{
         addScen(new VengefulSpiritsScenario(), "VS");
         addScen(new MolesScenario());
         addScen(new GoldenRetrieverScenario());
+        addScen(new AnonymousScenario(), "Anon");
 
         sortScenarios();
     }

@@ -15,6 +15,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -26,6 +27,7 @@ public class PregenTask extends BukkitRunnable {
     public static ArrayList<PregenQueue> pregenQueue = new ArrayList<>();
 
     public static boolean RUNNING = false;
+    private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("##.##");
 
     @Override
     public void run() {
@@ -110,15 +112,15 @@ public class PregenTask extends BukkitRunnable {
     private String get(double pct, String worldName) {
         String coloredPercent;
         if (pct < 25.0) {
-            coloredPercent = "§4" + pct + "%";
+            coloredPercent = "§4" + DECIMAL_FORMAT.format(pct) + "%";
         } else if (pct > 25.0 && pct < 50.0) {
-            coloredPercent = "§c" + pct + "%";
+            coloredPercent = "§c" + DECIMAL_FORMAT.format(pct) + "%";
         } else if (pct > 50.0 && pct < 75.0) {
-            coloredPercent = "§e" + pct + "%";
+            coloredPercent = "§e" + DECIMAL_FORMAT.format(pct) + "%";
         } else if (pct > 75.0 && pct < 100) {
-            coloredPercent = "§a" + pct + "%";
+            coloredPercent = "§a" + DECIMAL_FORMAT.format(pct) + "%";
         } else {
-            coloredPercent = "§4" + pct + "%";
+            coloredPercent = "§4" + DECIMAL_FORMAT.format(pct) + "%";
         }
         return "&5Pregen in &b" + worldName + "&8» " + coloredPercent;
     }

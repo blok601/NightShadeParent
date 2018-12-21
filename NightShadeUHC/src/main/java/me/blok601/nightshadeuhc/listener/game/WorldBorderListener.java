@@ -2,6 +2,7 @@ package me.blok601.nightshadeuhc.listener.game;
 
 import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Logger;
+import com.wimbli.WorldBorder.Events.WorldBorderFillCancelEvent;
 import com.wimbli.WorldBorder.Events.WorldBorderFillFinishedEvent;
 import me.blok601.nightshadeuhc.entity.object.PregenQueue;
 import me.blok601.nightshadeuhc.manager.GameManager;
@@ -54,6 +55,17 @@ public class WorldBorderListener implements Listener {
                     Util.staffLog("&aWorlds: &e" + gameManager.getWorld().getName() + " &aand &c" + world.getName() + " &ehave been linked!");
                 }
             }
+        }
+    }
+
+    @EventHandler
+    public void onCancel(WorldBorderFillCancelEvent e) {
+        World world = e.getWorld();
+        if (PregenTask.isPregenning(world.getName())) {
+            PregenQueue queue = PregenTask.getFromWorld(world);
+            if (queue == null) return;
+            queue.setRunning(false);
+            PregenTask.getPregenQueue().remove(queue);
         }
     }
 
