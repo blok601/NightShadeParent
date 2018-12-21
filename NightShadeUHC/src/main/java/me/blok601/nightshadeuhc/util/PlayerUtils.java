@@ -1,5 +1,6 @@
 package me.blok601.nightshadeuhc.util;
 
+import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -14,6 +15,9 @@ import java.util.UUID;
 public class PlayerUtils {
 
     private static ArrayList<UUID> frozen = new ArrayList<>();
+
+    @Getter
+    private static HashMap<UUID, Runnable> toConfirm = new HashMap<>();
 
     public static HashMap<String /* Country*/, Integer /* People tally*/> locations = new HashMap<>();
 

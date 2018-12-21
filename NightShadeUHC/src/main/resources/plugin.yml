@@ -191,3 +191,5 @@ commands:
     description: Command for backpack scenario
     aliases: [bp, backpacks, bps]
   betahost:
+  confirm:
+    description: Hosting command

@@ -1,11 +1,15 @@
 package me.blok601.nightshadeuhc.listener.gui;
 
+import com.google.common.base.Joiner;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
-import me.blok601.nightshadeuhc.entity.object.GameState;
+import com.nightshadepvp.core.fanciful.FancyMessage;
+import com.onarandombox.MultiverseCore.api.MVWorldManager;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.component.ComponentHandler;
+import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.entity.object.PregenQueue;
+import me.blok601.nightshadeuhc.entity.object.SetupStage;
 import me.blok601.nightshadeuhc.gui.setup.ComponentGUI;
 import me.blok601.nightshadeuhc.gui.setup.HostGUI;
 import me.blok601.nightshadeuhc.gui.setup.SettingsGUI;
@@ -15,11 +19,11 @@ import me.blok601.nightshadeuhc.gui.setup.world.NetherGUI;
 import me.blok601.nightshadeuhc.gui.setup.world.OverWorldGUI;
 import me.blok601.nightshadeuhc.gui.setup.world.WorldGUI;
 import me.blok601.nightshadeuhc.manager.GameManager;
-import me.blok601.nightshadeuhc.entity.object.SetupStage;
-import me.blok601.nightshadeuhc.task.PregenTask;
 import me.blok601.nightshadeuhc.manager.TeamManager;
+import me.blok601.nightshadeuhc.task.PregenTask;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
+import me.blok601.nightshadeuhc.util.PlayerUtils;
 import me.blok601.nightshadeuhc.util.Util;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -30,6 +34,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.HashSet;
 
 /**
  * Created by Blok on 12/13/2018.
@@ -148,7 +154,7 @@ public class GameSetupInventoryClick implements Listener {
                     ItemBuilder maxPlayers = new ItemBuilder(Material.NAME_TAG)
                             .name("&5&lMax Players")
                             .lore("&eCurrent: " + gameManager.getMaxPlayers())
-                            .lore("&7&o(&6i&7) &6Click to increase by 5, left click to decrease by 5")
+                            .lore("&7&o(&6&oi&7&o) &6&oClick to increase by 5, left click to decrease by 5")
                             .amount(gameManager.getMaxPlayers());
                     inventory.setItem(slot, maxPlayers.make());
                     p.updateInventory();
@@ -159,7 +165,7 @@ public class GameSetupInventoryClick implements Listener {
                     ItemBuilder maxPlayers = new ItemBuilder(Material.NAME_TAG)
                             .name("&5&lMax Players")
                             .lore("&eCurrent: " + gameManager.getMaxPlayers())
-                            .lore("&7&o(&6i&7) &6Click to increase by 5, left click to decrease by 5")
+                            .lore("&7&o(&6&oi&7&o) &6&oClick to increase by 5, left click to decrease by 5")
                             .amount(gameManager.getMaxPlayers());
                     inventory.setItem(slot, maxPlayers.make());
                     p.updateInventory();
@@ -175,7 +181,7 @@ public class GameSetupInventoryClick implements Listener {
                     ItemBuilder appleRates = new ItemBuilder(Material.APPLE)
                             .name("&5&lApple Rates")
                             .lore("&eCurrent Apple Rates: " + gameManager.getAppleRates())
-                            .lore("&7&o(&6i&7) &6Click to increase by 0.5%, left click to decrease by 0.5%");
+                            .lore("&7&o(&6&oi&7&o) &6&oClick to increase by 0.5%, left click to decrease by 0.5%");
 
                     inventory.setItem(slot, appleRates.make());
                     p.updateInventory();
@@ -189,7 +195,7 @@ public class GameSetupInventoryClick implements Listener {
                     ItemBuilder appleRates = new ItemBuilder(Material.APPLE)
                             .name("&5&lApple Rates")
                             .lore("&eCurrent Apple Rates: " + gameManager.getAppleRates())
-                            .lore("&7&o(&6i&7) &6Click to increase by 0.5%, left click to decrease by 0.5%");
+                            .lore("&7&o(&6&oi&7&o) &6&oClick to increase by 0.5%, left click to decrease by 0.5%");
                     inventory.setItem(slot, appleRates.make());
                     p.updateInventory();
                     p.playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 3, 3);
@@ -201,7 +207,7 @@ public class GameSetupInventoryClick implements Listener {
                     ItemBuilder flintRates = new ItemBuilder(Material.FLINT)
                             .name("&5&lFlint Rates")
                             .lore("&eCurrent Flint Rates: " + gameManager.getFlintRates())
-                            .lore("&7&o(&6i&7) &6Click to increase by 0.5%, left click to decrease by 0.5%")
+                            .lore("&7&o(&6&oi&7&o) &6&oClick to increase by 0.5%, left click to decrease by 0.5%")
                             .lore("&cWarning: Flint Rates will be overridden by CutClean if enabled!");
                     inventory.setItem(slot, flintRates.make());
                     p.updateInventory();
@@ -215,7 +221,7 @@ public class GameSetupInventoryClick implements Listener {
                     ItemBuilder flintRates = new ItemBuilder(Material.FLINT)
                             .name("&5&lFlint Rates")
                             .lore("&eCurrent Flint Rates: " + gameManager.getFlintRates())
-                            .lore("&7&o(&6i&7) &6Click to increase by 0.5%, left click to decrease by 0.5%")
+                            .lore("&7&o(&6&oi&7&o) &6&oClick to increase by 0.5%, left click to decrease by 0.5%")
                             .lore("&cWarning: Flint Rates will be overridden by CutClean if enabled!");
                     inventory.setItem(slot, flintRates.make());
                     p.updateInventory();
@@ -229,7 +235,7 @@ public class GameSetupInventoryClick implements Listener {
                 ItemBuilder teamGame = new ItemBuilder(Material.SIGN)
                         .name("&5&lTeam Game")
                         .lore("&eCurrent: " + (gameManager.isIsTeam() ? "&aYes" : "&cNo"))
-                        .lore("&7&o(&6i&7) &6Click to toggle teams on and off");
+                        .lore("&7&o(&6&oi&7&o) &6&oClick to toggle teams on and off");
                 inventory.setItem(slot, teamGame.make());
                 p.updateInventory();
                 p.playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 3, 3);
@@ -239,7 +245,7 @@ public class GameSetupInventoryClick implements Listener {
                 ItemBuilder teamMan = new ItemBuilder(Material.ARROW)
                         .name("&5&lTeam Management")
                         .lore("&eCurrent: " + (TeamManager.getInstance().isTeamManagement() ? "&cEnabled" : "&cDisabled"))
-                        .lore("&7&o(&6i&7) &6Click to toggle team management");
+                        .lore("&7&o(&6&oi&7&o) &6&oClick to toggle team management");
                 inventory.setItem(slot, teamMan.make());
                 p.updateInventory();
                 p.playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 3, 3);
@@ -250,7 +256,7 @@ public class GameSetupInventoryClick implements Listener {
                     ItemBuilder teamSize = new ItemBuilder(Material.NETHER_STAR)
                             .name("&5&lTeam Size")
                             .lore("&eCurrent: " + TeamManager.getInstance().getTeamSize())
-                            .lore("&7&o(&6i&7) &6Click to increase team size, right click to decrease team size")
+                            .lore("&7&o(&6&oi&7&o) &6&oClick to increase team size, right click to decrease team size")
                             .amount(TeamManager.getInstance().getTeamSize());
                     inventory.setItem(slot, teamSize.make());
                     p.updateInventory();
@@ -264,7 +270,7 @@ public class GameSetupInventoryClick implements Listener {
                     ItemBuilder teamSize = new ItemBuilder(Material.NETHER_STAR)
                             .name("&5&lTeam Size")
                             .lore("&eCurrent: " + TeamManager.getInstance().getTeamSize())
-                            .lore("&7&o(&6i&7) &6Click to increase team size, right click to decrease team size")
+                            .lore("&7&o(&6&oi&7&o) &6&oClick to increase team size, right click to decrease team size")
                             .amount(TeamManager.getInstance().getTeamSize());
                     inventory.setItem(slot, teamSize.make());
                     p.updateInventory();
@@ -288,6 +294,44 @@ public class GameSetupInventoryClick implements Listener {
                 return;
             } else if (slot == 14) {
                 new NetherGUI(p);
+            } else if (slot == 18) {
+                if (PlayerUtils.getToConfirm().containsKey(p.getUniqueId())) {
+                    p.sendMessage(ChatUtils.message("&cYou are already in the process of deleting your worlds! Do /confirm to confirm your actions first!"));
+                    return;
+                }
+                p.closeInventory();
+                HashSet<World> toDelete = new HashSet<>();
+                MVWorldManager mvWorldManager = UHC.getMultiverseCore().getMVWorldManager();
+                for (World world : Bukkit.getWorlds()) {
+                    if (mvWorldManager.isMVWorld(world.getName())) {
+                        if (mvWorldManager.isMVWorld(world.getName())) {
+                            if (world.getName().startsWith("UHC" + p.getName())) {
+                                toDelete.add(world);
+                            }
+                        }
+                    }
+                }
+
+                p.sendMessage(ChatUtils.message("&eThe following world&8(&es&8)&e are about to be deleted: " + Joiner.on("&7, &b").join(toDelete)));
+                FancyMessage fancyMessage = new FancyMessage();
+                fancyMessage.then("Please confirm within 10 seconds by doing /confirm or clicking this message").color(ChatColor.YELLOW).command("/confirm");
+                fancyMessage.send(p);
+                PlayerUtils.getToConfirm().put(p.getUniqueId(), () -> {
+                    p.sendMessage(ChatUtils.message("&eThe worlds will now be deleted..."));
+                    for (World world : toDelete) {
+                        mvWorldManager.removeWorldFromConfig(world.getName());
+                        Bukkit.unloadWorld(world, false);
+                        Util.deleteWorldFolder(world);
+                    }
+
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            PlayerUtils.getToConfirm().remove(p.getUniqueId());
+                        }
+                    }.runTaskLater(UHC.get(), 10 * 20);
+                    p.sendMessage(ChatUtils.message("&eYour worlds have been cleared!"));
+                });
             }
         }
 

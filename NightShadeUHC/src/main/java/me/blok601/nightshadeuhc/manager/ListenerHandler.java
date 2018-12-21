@@ -36,7 +36,7 @@ public class ListenerHandler {
             new SpectatorInfoListener(),
             new GameDeathListener(),
             new GameSetupInventoryClick(GameManager.get()),
-            new WorldBorderListener()
+            new WorldBorderListener(GameManager.get())
     };
 
     public static Listener[] getListeners() {

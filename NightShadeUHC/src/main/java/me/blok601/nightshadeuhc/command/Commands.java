@@ -113,7 +113,8 @@ public class Commands {
                 new ToggleMobsCommand(),
                 new ClearTreesCommand(),
                 new PMOresCommand(),
-                new BetaHostCommand()
+                new BetaHostCommand(),
+                new ConfirmCommand()
         };
     }
 

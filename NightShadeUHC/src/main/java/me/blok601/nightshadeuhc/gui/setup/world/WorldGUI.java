@@ -18,11 +18,15 @@ public class WorldGUI {
 
         ItemBuilder normal = new ItemBuilder(Material.GRASS)
                 .name("&6Overworld Creation")
-                .lore("&7&o(&6i&7) &6Click to start the game world creation process");
+                .lore("&7&o(&6&oi&7&o) &6&oClick to start the game world creation process");
 
         ItemBuilder nether = new ItemBuilder(Material.NETHERRACK)
                 .name("&6Nether Creation")
-                .lore("&7&o(&6i&7) &6Click to start the nether world creation process");
+                .lore("&7&o(&6&oi&7&o) &6&oClick to start the nether world creation process");
+
+        ItemBuilder clearWorlds = new ItemBuilder(Material.LAVA_BUCKET)
+                .name("&6Clear your worlds")
+                .lore("&7&o(&6&oi&7&o) &6&oClick to clear all of your game worlds");
 
         ItemBuilder back = new ItemBuilder(Material.ARROW)
                 .name("&cBack");
@@ -30,6 +34,7 @@ public class WorldGUI {
         inventory.setItem(12, normal.make());
         inventory.setItem(14, nether.make());
         inventory.setItem(26, back.make());
+        inventory.setItem(18, clearWorlds.make());
 
         player.openInventory(inventory);
     }

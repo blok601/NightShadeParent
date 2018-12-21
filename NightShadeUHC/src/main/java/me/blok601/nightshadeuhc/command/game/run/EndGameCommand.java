@@ -6,12 +6,12 @@ import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.command.UHCCommand;
 import me.blok601.nightshadeuhc.entity.MConf;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
+import me.blok601.nightshadeuhc.entity.object.Team;
 import me.blok601.nightshadeuhc.event.GameEndEvent;
 import me.blok601.nightshadeuhc.manager.GameManager;
+import me.blok601.nightshadeuhc.manager.TeamManager;
 import me.blok601.nightshadeuhc.scenario.MolesScenario;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
-import me.blok601.nightshadeuhc.entity.object.Team;
-import me.blok601.nightshadeuhc.manager.TeamManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.Util;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
@@ -209,7 +209,7 @@ public class EndGameCommand implements UHCCommand{
                 Bukkit.getOnlinePlayers().forEach(onlinePlayer -> onlinePlayer.teleport(MConf.get().getSpawnLocation().asBukkitLocation(true)));
                 Util.staffLog("&4The Server Will Restart in 30 seconds!");
 
-                World nether = Bukkit.getWorld(GameManager.get().getWorld().getName() + "_nether");
+                World nether = GameManager.get().getNetherWorld();
                 if (nether != null) {
                     UHC.getMultiverseCore().getMVWorldManager().removeWorldFromConfig(nether.getName());
                     Bukkit.unloadWorld(nether, false);

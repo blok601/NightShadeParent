@@ -20,18 +20,18 @@ public class OverWorldGUI {
 
         ItemBuilder grass = new ItemBuilder(Material.GRASS)
                 .name("&eOverworld Creator")
-                .lore("&7&o(&6i&7) &6Configure the border and seed in this gui");
+                .lore("&7&o(&6&oi&7&o) &6&oConfigure the border and seed in this gui");
 
         ItemBuilder seedClick = new ItemBuilder(Material.SIGN)
                 .name("&eSet the Seed")
-                .lore("&7&o(&6i&7) &6Click to set the seed for the map");
+                .lore("&7&o(&6&oi&7&o) &6&oClick to set the seed for the map");
 
         ItemBuilder back = new ItemBuilder(Material.ARROW)
                 .name("&cBack");
 
         ItemBuilder create = new ItemBuilder(new ItemStack(Material.WOOL, 1, DyeColor.GREEN.getWoolData()))
                 .name("&a&lCreate the World")
-                .lore("&7&o(&6i&7) &6Create the game world")
+                .lore("&7&o(&6&oi&7&o) &6&oCreate the game world")
                 .lore("&cWarning: Make sure everything is configured correctly!");
 
         ItemBuilder currentBorder = new ItemBuilder(new ItemStack(Material.STAINED_GLASS_PANE, 1, DyeColor.BLACK.getWoolData()))

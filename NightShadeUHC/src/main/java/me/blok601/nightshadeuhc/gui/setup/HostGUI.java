@@ -27,26 +27,26 @@ public class HostGUI {
         if (!Core.get().getMatchpost().equalsIgnoreCase("uhc.gg")) {//Its set
             post.lore("&7Current: &6" + Core.get().getMatchpost());
         }
-        post.lore("&7&o(&6i&7) &6Click to set the matchpost for the UHC");
+        post.lore("&7&o(&6&oi&7&o) &6&oClick to set the matchpost for the UHC");
 
         ItemBuilder world = new ItemBuilder(new ItemStack(Material.WOOL, 1, DyeColor.YELLOW.getWoolData()))
                 .name("&e&lWorld Setup")
-                .lore("&7&o(&6i&7) &6Click to do the world setup");
+                .lore("&7&o(&6&oi&7&o) &6&oClick to do the world setup");
         if (gameManager.getWorld() != null) {
             world.lore("&7Current: &6" + gameManager.getWorld().getName());
         }
 
         ItemBuilder border = new ItemBuilder(new ItemStack(Material.WOOL, 1, DyeColor.LIGHT_BLUE.getWoolData()))
                 .name("&b&lBorder Configuration")
-                .lore("&7&o(&6i&7) &6Click to do the border setup");
+                .lore("&7&o(&6&oi&7&o) &6&oClick to do the border setup");
 
         ItemBuilder toggleable = new ItemBuilder(new ItemStack(Material.WOOL, 1, DyeColor.CYAN.getWoolData()))
                 .name("&3&lToggleable Options")
-                .lore("&7&o(&6i&7) &6Click to view the toggleable options");
+                .lore("&7&o(&6&oi&7&o) &6&oClick to view the toggleable options");
 
         ItemBuilder timers = new ItemBuilder(new ItemStack(Material.WOOL, 1, DyeColor.GREEN.getWoolData()))
                 .name("&2&lTimers")
-                .lore("&7&o(&6i&7) &6Click to setup the game timers");
+                .lore("&7&o(&6&oi&7&o) &6&oClick to setup the game timers");
 
         ItemBuilder starterFood = new ItemBuilder(Material.COOKED_BEEF)
                 .name("&5&lStarter Food")
@@ -67,7 +67,7 @@ public class HostGUI {
         ItemBuilder maxPlayers = new ItemBuilder(Material.NAME_TAG)
                 .name("&5&lMax Players")
                 .lore("&eCurrent: " + gameManager.getMaxPlayers())
-                .lore("&7&o(&6i&7) &6Click to increase by 5, left click to decrease by 5")
+                .lore("&7&o(&6&oi&7&o) &6&oClick to increase by 5, left click to decrease by 5")
                 .amount(gameManager.getMaxPlayers());
 
         ItemBuilder scenarios = new ItemBuilder(Material.WATCH)
@@ -79,29 +79,29 @@ public class HostGUI {
         ItemBuilder appleRates = new ItemBuilder(Material.APPLE)
                 .name("&5&lApple Rates")
                 .lore("&eCurrent Apple Rates: " + gameManager.getAppleRates())
-                .lore("&7&o(&6i&7) &6Click to increase by 0.5%, left click to decrease by 0.5%");
+                .lore("&7&o(&6&oi&7&o) &6&oClick to increase by 0.5%, left click to decrease by 0.5%");
 
 
         ItemBuilder flintRates = new ItemBuilder(Material.FLINT)
                 .name("&5&lFlint Rates")
                 .lore("&eCurrent Flint Rates: " + gameManager.getFlintRates())
-                .lore("&7&o(&6i&7) &6Click to increase by 0.5%, left click to decrease by 0.5%")
+                .lore("&7&o(&6&oi&7&o) &6&oClick to increase by 0.5%, left click to decrease by 0.5%")
                 .lore("&cWarning: Flint Rates will be overridden by CutClean if enabled!");
 
         ItemBuilder teamGame = new ItemBuilder(Material.SIGN)
                 .name("&5&lTeam Game")
                 .lore("&eCurrent: " + (gameManager.isIsTeam() ? "&aYes" : "&cNo"))
-                .lore("&7&o(&6i&7) &6Click to toggle teams on and off");
+                .lore("&7&o(&6&oi&7&o) &6&oClick to toggle teams on and off");
 
         ItemBuilder teamMan = new ItemBuilder(Material.ARROW)
                 .name("&5&lTeam Management")
                 .lore("&eCurrent: " + (TeamManager.getInstance().isTeamManagement() ? "&cEnabled" : "&cDisabled"))
-                .lore("&7&o(&6i&7) &6Click to toggle team management");
+                .lore("&7&o(&6&oi&7&o) &6&oClick to toggle team management");
 
         ItemBuilder teamSize = new ItemBuilder(Material.NETHER_STAR)
                 .name("&5&lTeam Size")
                 .lore("&eCurrent: " + TeamManager.getInstance().getTeamSize())
-                .lore("&7&o(&6i&7) &6Click to increase team size, right click to decrease team size")
+                .lore("&7&o(&6&oi&7&o) &6&oClick to increase team size, right click to decrease team size")
                 .amount(TeamManager.getInstance().getTeamSize());
 
         inventory.setItem(0, post.make());
