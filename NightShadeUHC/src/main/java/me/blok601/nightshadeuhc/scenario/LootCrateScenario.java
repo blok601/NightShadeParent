@@ -96,13 +96,13 @@ public class LootCrateScenario extends Scenario{
             if(e.getItem().getType() == Material.CHEST){
                 Random r = ThreadLocalRandom.current();
                 ItemStack stack = tier1[r.nextInt(tier1.length)];
-                p.getItemInHand().setType(Material.AIR);
+                p.getInventory().remove(p.getItemInHand());
                 p.getInventory().addItem(stack);
                 p.sendMessage(ChatUtils.format(getPrefix() + "&eYou have gotten " + stack.getAmount() + " &b" + stack.getType().name() + " &efrom your lootcrate!"));
             }else if(e.getItem().getType() == Material.ENDER_CHEST){
                 Random r = ThreadLocalRandom.current();
                 ItemStack stack = tier2[r.nextInt(tier2.length)];
-                p.getItemInHand().setType(Material.AIR);
+                p.getInventory().remove(p.getItemInHand());
                 p.getInventory().addItem(stack);
                 p.sendMessage(ChatUtils.format(getPrefix() + "&eYou have gotten " + stack.getAmount() + " &b" + stack.getType().name() + " &efrom your lootcrate!"));
             }
