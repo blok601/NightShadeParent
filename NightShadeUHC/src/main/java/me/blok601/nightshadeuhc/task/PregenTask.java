@@ -38,6 +38,10 @@ public class PregenTask extends BukkitRunnable {
         }
 
         if (queue.isRunning()) {
+            NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> nsPlayer.hasRank(Rank.TRIAL)).forEach(nsPlayer -> {
+                Player player = nsPlayer.getPlayer();
+                ActionBarUtil.sendActionBarMessage(player, get(Config.fillTask.getPercentageCompleted(), pregenQueue.get(0).getWorld().getName()), 1, UHC.get());
+            });
             return;
         }
 
@@ -49,20 +53,38 @@ public class PregenTask extends BukkitRunnable {
         }
 
         Player p = Bukkit.getPlayer(queue.getStarter());
-        if (p == null) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb " + queue.getWorld().getName() + " set " + GameManager.get().getSetupNetherRadius() + " " + GameManager.get().getSetupNetherRadius() + " 0 0");
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb " + queue.getWorld().getName() + " fill 250");
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb fill confirm");
-            queue.setRunning(true);
-            RUNNING = true;
-            Util.staffLog("Pregen for world: " + queue.getWorld().getName() + " &ehas begun!");
-        } else {
-            p.chat("/wb " + queue.getWorld().getName() + " set " + GameManager.get().getSetupNetherRadius() + " " + GameManager.get().getSetupNetherRadius() + " 0 0");
-            p.chat("/wb " + queue.getWorld().getName() + " fill 250");
-            p.chat("/wb fill confirm");
-            queue.setRunning(true);
-            RUNNING = true;
-            p.sendMessage(ChatUtils.message("&aPregen in world &b" + queue.getWorld().getName() + " &ehas begun!"));
+        if (queue.getWorld().getEnvironment() == World.Environment.NETHER) {
+            if (p == null) {
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb " + queue.getWorld().getName() + " set " + GameManager.get().getSetupNetherRadius() + " " + GameManager.get().getSetupNetherRadius() + " 0 0");
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb " + queue.getWorld().getName() + " fill 250");
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb fill confirm");
+                queue.setRunning(true);
+                RUNNING = true;
+                Util.staffLog("Pregen for world: " + queue.getWorld().getName() + " &ehas begun!");
+            } else {
+                p.chat("/wb " + queue.getWorld().getName() + " set " + GameManager.get().getSetupNetherRadius() + " " + GameManager.get().getSetupNetherRadius() + " 0 0");
+                p.chat("/wb " + queue.getWorld().getName() + " fill 250");
+                p.chat("/wb fill confirm");
+                queue.setRunning(true);
+                RUNNING = true;
+                p.sendMessage(ChatUtils.message("&aPregen in world &b" + queue.getWorld().getName() + " &ehas begun!"));
+            }
+        } else if (queue.getWorld().getEnvironment() == World.Environment.NORMAL) {
+            if (p == null) {
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb " + queue.getWorld().getName() + " set " + GameManager.get().getSetupRadius() + " " + GameManager.get().getSetupRadius() + " 0 0");
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb " + queue.getWorld().getName() + " fill 250");
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb fill confirm");
+                queue.setRunning(true);
+                RUNNING = true;
+                Util.staffLog("Pregen for world: " + queue.getWorld().getName() + " &ehas begun!");
+            } else {
+                p.chat("/wb " + queue.getWorld().getName() + " set " + GameManager.get().getSetupNetherRadius() + " " + GameManager.get().getSetupRadius() + " 0 0");
+                p.chat("/wb " + queue.getWorld().getName() + " fill 250");
+                p.chat("/wb fill confirm");
+                queue.setRunning(true);
+                RUNNING = true;
+                p.sendMessage(ChatUtils.message("&aPregen in world &b" + queue.getWorld().getName() + " &ehas begun!"));
+            }
         }
     }
 

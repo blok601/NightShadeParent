@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * Created by Blok on 3/28/2017.
@@ -102,6 +103,12 @@ public class ScenarioManager implements UHCCommand{
         addScen(new VengefulSpiritsScenario(), "VS");
         addScen(new MolesScenario());
         addScen(new GoldenRetrieverScenario());
+
+        sortScenarios();
+    }
+
+    private static void sortScenarios() {
+        scenarios.sort(Comparator.comparing(Scenario::getName));
     }
 
 
