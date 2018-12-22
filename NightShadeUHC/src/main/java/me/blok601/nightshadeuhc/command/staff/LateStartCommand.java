@@ -67,7 +67,15 @@ public class LateStartCommand implements UHCCommand{
 
                 StarterItems starterItems = (StarterItems) scenario;
 
-                PlayerUtils.giveBulkItems(target, starterItems.getStarterItems());
+                //UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> PlayerUtils.giveBulkItems(uhcPlayer.getPlayer(), starterItems.getStarterItems
+                for (ItemStack stack : starterItems.getStarterItems()) {
+                    if (PlayerUtils.inventoryFull(target)) {
+                        target.getWorld().dropItemNaturally(target.getLocation(), stack);
+                        target.sendMessage(ChatUtils.message("&eYour inventory was full! Dropping &b" + stack.getAmount() + " " + stack.getType().name() + " &eon the ground!"));
+                    } else {
+                        target.getInventory().addItem(stack);
+                    }
+                }
             }
         }
         ScatterUtil.scatterPlayer(GameManager.get().getWorld(), (int) GameManager.get().getBorderSize(), target);

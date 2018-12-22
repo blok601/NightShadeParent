@@ -160,7 +160,15 @@ public class JoinListener implements Listener {
 
                     StarterItems starterItems = (StarterItems) scenario;
 
-                    PlayerUtils.giveBulkItems(player, starterItems.getStarterItems());
+                    //UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> PlayerUtils.giveBulkItems(uhcPlayer.getPlayer(), starterItems.getStarterItems
+                    for (ItemStack stack : starterItems.getStarterItems()) {
+                        if (PlayerUtils.inventoryFull(player)) {
+                            player.getWorld().dropItemNaturally(player.getLocation(), stack);
+                            player.sendMessage(ChatUtils.message("&eYour inventory was full! Dropping &b" + stack.getAmount() + " " + stack.getType().name() + " &eon the ground!"));
+                        } else {
+                            player.getInventory().addItem(stack);
+                        }
+                    }
                 }
             }
             ScatterUtil.scatterPlayer(GameManager.get().getWorld(), (int) GameManager.get().getBorderSize(), player);

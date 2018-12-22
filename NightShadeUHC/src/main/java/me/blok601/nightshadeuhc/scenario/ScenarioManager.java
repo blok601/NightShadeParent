@@ -21,7 +21,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
+import java.util.stream.Collectors;
 
 /**
  * Created by Blok on 3/28/2017.
@@ -176,7 +178,7 @@ public class ScenarioManager implements UHCCommand, Listener {
         return scenarios;
     }
 
-    public static ArrayList<Scenario> getEnabledScenarios(){
+    public static Collection<Scenario> getEnabledScenarios() {
         ArrayList<Scenario> toReturn = new ArrayList<>();
         for (Scenario scenario : getScenarios()){
             if(scenario.isEnabled()){
@@ -184,7 +186,9 @@ public class ScenarioManager implements UHCCommand, Listener {
             }
         }
 
-        return toReturn;
+        return scenarios.stream().filter(Scenario::isEnabled).collect(Collectors.toList());
+
+        //return toReturn;
     }
 
     @Override
@@ -276,7 +280,18 @@ public class ScenarioManager implements UHCCommand, Listener {
 
                 StarterItems starterItems = (StarterItems) scenario;
 
-                UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> PlayerUtils.giveBulkItems(uhcPlayer.getPlayer(), starterItems.getStarterItems()));
+                //UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> PlayerUtils.giveBulkItems(uhcPlayer.getPlayer(), starterItems.getStarterItems()));
+                UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> {
+                    Player player = uhcPlayer.getPlayer();
+                    for (ItemStack stack : starterItems.getStarterItems()) {
+                        if (PlayerUtils.inventoryFull(player)) {
+                            player.getWorld().dropItemNaturally(player.getLocation(), stack);
+                            player.sendMessage(ChatUtils.message("&eYour inventory was full! Dropping &b" + stack.getAmount() + " " + stack.getType().name() + " &eon the ground!"));
+                        } else {
+                            player.getInventory().addItem(stack);
+                        }
+                    }
+                });
             }
         }
     }

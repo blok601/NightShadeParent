@@ -48,21 +48,13 @@ public class PlayerUtils {
     }
 
     public static void giveBulkItems(Player player, Collection<ItemStack> items) {
-        boolean drop = false;
-        for (ItemStack itemStack : items) {
-            if (player.getInventory().firstEmpty() == -1) {
-                player.getWorld().dropItemNaturally(player.getLocation(), itemStack);
-                if (!drop) drop = true;
-                continue;
-            }
+        for (ItemStack itemStack : items){
 
-            player.getInventory().addItem(itemStack);
         }
+    }
 
-        if (drop) {
-            player.sendMessage(ChatUtils.message("&eYour inventory was full! Dropping items on the ground!"));
-            return;
-        }
+    public static boolean inventoryFull(Player player) {
+        return player.getInventory().firstEmpty() == -1;
     }
 
 
