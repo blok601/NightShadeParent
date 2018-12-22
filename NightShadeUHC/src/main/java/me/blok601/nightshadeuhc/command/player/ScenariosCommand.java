@@ -11,7 +11,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Created by Blok on 3/7/2018.
@@ -27,7 +27,7 @@ public class ScenariosCommand implements UHCCommand{
     @Override
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
-        ArrayList<Scenario> scenarios = ScenarioManager.getEnabledScenarios();
+        Collection<Scenario> scenarios = ScenarioManager.getEnabledScenarios();
         FancyMessage fancyMessage = new FancyMessage(ChatUtils.format("&eEnabled Scenarios&8» "));
         for (Scenario scenario : scenarios){
             //builder.append("&3").append(scenario.getName()).append("&8,");
