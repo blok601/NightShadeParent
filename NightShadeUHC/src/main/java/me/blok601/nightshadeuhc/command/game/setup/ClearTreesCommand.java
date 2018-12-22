@@ -55,7 +55,7 @@ public class ClearTreesCommand implements UHCCommand {
 
     @Override
     public Rank getRequiredRank() {
-        return Rank.TRIALHOST;
+        return Rank.TRIAL;
     }
 
     @Override

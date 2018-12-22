@@ -111,6 +111,7 @@ public class ScenarioManager implements UHCCommand, Listener {
         addScen(new MolesScenario());
         addScen(new GoldenRetrieverScenario());
         addScen(new AnonymousScenario(), "Anon"); //Put this at bottom to test alphabetical order
+        addScen(new DoubleDatesScenario());
 
         sortScenarios();
     }
@@ -134,24 +135,9 @@ public class ScenarioManager implements UHCCommand, Listener {
 
     public static Scenario getScen(String name){
         return scenarios.stream().filter(scem -> scem.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
-//        for (Scenario s : scenarios){
-//            if(name.equalsIgnoreCase(s.getName())){
-//                return s;
-//            }
-//        }
-//
-//        return null;
     }
 
     public void openScenarioGUI(Player player){
-//        Inventory inv = Bukkit.createInventory(null, 54, ChatUtils.format("&6Scenarios"));
-//        inv.clear();
-//        for(Scenario scenario :  getScenarios()){
-//           ItemStack item = new ItemBuilder(scenario.getItem()).name(scenario.isEnabled() ? ChatUtils.format("&a" + scenario.getName()) : ChatUtils.format("&c" + scenario.getName())).make();
-//           inv.addItem(item);
-//        }
-//
-//        player.openInventory(inv);
 
         ArrayList<ItemStack> items = new ArrayList<>();
 
@@ -179,16 +165,7 @@ public class ScenarioManager implements UHCCommand, Listener {
     }
 
     public static Collection<Scenario> getEnabledScenarios() {
-        ArrayList<Scenario> toReturn = new ArrayList<>();
-        for (Scenario scenario : getScenarios()){
-            if(scenario.isEnabled()){
-                toReturn.add(scenario);
-            }
-        }
-
         return scenarios.stream().filter(Scenario::isEnabled).collect(Collectors.toList());
-
-        //return toReturn;
     }
 
     @Override
@@ -280,18 +257,14 @@ public class ScenarioManager implements UHCCommand, Listener {
 
                 StarterItems starterItems = (StarterItems) scenario;
 
-                //UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> PlayerUtils.giveBulkItems(uhcPlayer.getPlayer(), starterItems.getStarterItems()));
                 UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> {
                     Player player = uhcPlayer.getPlayer();
                     for (ItemStack stack : starterItems.getStarterItems()) {
-                        if (PlayerUtils.inventoryFull(player)) {
-                            player.getWorld().dropItemNaturally(player.getLocation(), stack);
-                            player.sendMessage(ChatUtils.message("&eYour inventory was full! Dropping &b" + stack.getAmount() + " " + stack.getType().name() + " &eon the ground!"));
-                        } else {
-                            player.getInventory().addItem(stack);
-                        }
+                        PlayerUtils.giveItem(stack, player);
                     }
                 });
+
+
             }
         }
     }

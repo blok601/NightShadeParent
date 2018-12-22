@@ -57,5 +57,13 @@ public class PlayerUtils {
         return player.getInventory().firstEmpty() == -1;
     }
 
+    public static void giveItem(ItemStack itemStack, Player player) {
+        if (inventoryFull(player)) {
+            player.getWorld().dropItemNaturally(player.getLocation(), itemStack);
+            return;
+        }
+
+        player.getInventory().addItem(itemStack);
+    }
 
 }

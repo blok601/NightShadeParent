@@ -6,6 +6,7 @@ import me.blok601.nightshadeuhc.command.game.setup.*;
 import me.blok601.nightshadeuhc.command.player.*;
 import me.blok601.nightshadeuhc.command.server.eWhitelistCommand;
 import me.blok601.nightshadeuhc.command.staff.*;
+import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.scenario.cmd.*;
 import me.blok601.nightshadeuhc.scenario.cmd.mole.*;
@@ -115,7 +116,8 @@ public class Commands {
                 new PMOresCommand(),
                 new BetaHostCommand(),
                 new ConfirmCommand(),
-                new SetBorderCommand()
+                new SetBorderCommand(),
+                new DoubleDatesCommand(GameManager.get())
         };
     }
 

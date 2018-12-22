@@ -82,4 +82,7 @@ public class Scenario implements Listener {
     public void setAbbreviation(String abbreviation) {
         this.abbreviation = abbreviation;
     }
+
+    public void onToggle(boolean newState){}
+
 }

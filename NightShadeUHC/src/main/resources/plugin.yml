@@ -195,3 +195,6 @@ commands:
     description: Hosting command
   setborder:
     description: Set the world border for a command
+  doubledates:
+    description: Double dates scenario command
+    aliases: [doubledate, dd, 2xdate]

@@ -1,9 +1,14 @@
 package me.blok601.nightshadeuhc.manager;
 
+import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.entity.object.Team;
+import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
+import me.blok601.nightshadeuhc.scoreboard.ScoreboardManager;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by Blok on 9/24/2017.
@@ -121,5 +126,29 @@ public class TeamManager {
 
     public void setRandomTeams(boolean randomTeams) {
         this.randomTeams = randomTeams;
+    }
+
+    public void resetTeams(){
+        ScoreboardManager scoreboardManager = UHC.get().getScoreboardManager();
+        TeamManager.getInstance().getTeams().clear();
+        Scoreboard scoreboard;
+
+        for (Map.Entry<Player, PlayerScoreboard> playerPlayerScoreboardEntry : scoreboardManager.getPlayerScoreboards().entrySet()) {
+            if (playerPlayerScoreboardEntry.getKey() == null) continue;
+            if (playerPlayerScoreboardEntry.getValue() == null) continue;
+            scoreboard = playerPlayerScoreboardEntry.getValue().getBukkitScoreboard();
+            for (org.bukkit.scoreboard.Team team : scoreboard.getTeams()){
+                if(team == null) continue;
+
+                if(team.getName().startsWith("UHC")){
+                    team.unregister();
+                }
+
+                if(team.getScoreboard().getTeam("RED") == null && team.getScoreboard().getTeam("BLUE") == null) continue;
+                if(team.getName().equalsIgnoreCase("RED") || team.getName().equalsIgnoreCase("BLUE")){
+                    team.unregister();
+                }
+            }
+        }
     }
 }

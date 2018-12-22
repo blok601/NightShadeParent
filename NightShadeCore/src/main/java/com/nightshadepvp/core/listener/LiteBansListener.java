@@ -3,13 +3,13 @@ package com.nightshadepvp.core.listener;
 import com.google.gson.JsonObject;
 import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Logger;
+import com.nightshadepvp.core.entity.NSPlayer;
 import litebans.api.Entry;
 import litebans.api.Events;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -45,15 +45,13 @@ public class LiteBansListener extends Events.Listener {
             }.runTask(Core.get());
         }
 
+        if (entry.getUuid() == null) return;
+
         String name;
-        Player player = Bukkit.getPlayer(entry.getUuid());
-        if(player == null){
-            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(entry.getUuid());
-            if(offlinePlayer == null) return;
-            name = offlinePlayer.getName();
-        }else{
-            name = player.getName();
-        }
+        UUID uuid = UUID.fromString(entry.getUuid());
+        NSPlayer nsPlayer = NSPlayer.get(uuid);
+        if (nsPlayer == null) return;
+        name = nsPlayer.getName();
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("type", entry.getType());

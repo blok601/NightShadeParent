@@ -264,6 +264,30 @@ public class UBLHandler implements Runnable {
 
     }
 
+    public String getTargetBanMessage(UBLEntry entry) {
+        return "\n" + "§5&m--------------------------------" +
+                "§7► §8Banned on§7: " + entry.getCreated()
+                + "\n" +
+                "§7► §8Reason§7: " + entry.getReason()
+                + "\n" +
+                "§7► §8Banned Length§7: " + entry.getLength() + "\n" +
+                "\n" +
+                "§7► §8Ban Expires§7: " + entry.getExpires() +
+                "\n" +
+                "§7► §8Case§7: " + entry.getBanPost() + "\n" +
+                "§5&m--------------------------------";
+    }
+
+    public UBLEntry getEntry(String name) {
+        for (UBLEntry entry : this.getBanEntries()) {
+            if (entry.getIgn().equalsIgnoreCase(name)) {
+                return entry;
+            }
+        }
+
+        return null;
+    }
+
     public boolean isExempt(String name) {
         return MConf.get().getExempt().contains(name.toLowerCase());
     }

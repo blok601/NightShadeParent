@@ -19,6 +19,7 @@ public class CmdUBL extends NightShadeCoreCommand {
     public CmdUBLExempt cmdUblExempt = new CmdUBLExempt();
     public CmdUBLUnExempt cmdUBLUnExempt = new CmdUBLUnExempt();
     public CmdUBLUpdate cmdUBLUpdate = new CmdUBLUpdate();
+    public CmdUBLCheck cmdUBLCheck = new CmdUBLCheck();
 
     @Override
     public List<String> getAliases() {
