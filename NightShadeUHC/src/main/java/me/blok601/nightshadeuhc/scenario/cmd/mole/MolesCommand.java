@@ -4,7 +4,6 @@ import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
 import me.blok601.nightshadeuhc.command.UHCCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
-import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.scenario.MolesScenario;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import org.bukkit.Bukkit;
@@ -50,27 +49,23 @@ public class MolesCommand implements UHCCommand{
                 p.sendMessage(ChatUtils.message("&cYou must be playing the game to view the moles!"));
                 return;
             }
-        }
-
-        if (gamePlayer.isSpectator() && GameManager.get().getHost().getUniqueId() != p.getUniqueId()) {
-            p.sendMessage(ChatUtils.message("&cYou must be the host to view the moles!"));
-            return;
-        }
-
-        p.sendMessage(ChatUtils.message("&eThe following moles:"));
+            p.sendMessage(ChatUtils.message("&eThe following moles:"));
             p.sendMessage(ChatUtils.format("&5&m-----------------------------------"));
             Player mole;
             OfflinePlayer offlineMole;
-            for (UUID uuid : MolesScenario.moles.keySet()){
+            for (UUID uuid : MolesScenario.moles.keySet()) {
                 mole = Bukkit.getPlayer(uuid);
-                if(mole != null){
+                if (mole != null) {
                     p.sendMessage(ChatUtils.format("&e- &a" + mole.getName()));
-                }else{
+                } else {
                     offlineMole = Bukkit.getOfflinePlayer(uuid);
                     p.sendMessage(ChatUtils.format("&e- &7" + offlineMole.getName()));
                 }
             }
             p.sendMessage(ChatUtils.format("&5&m-----------------------------------"));
+        }
+
+
     }
 
     @Override

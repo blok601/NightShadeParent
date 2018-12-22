@@ -15,7 +15,7 @@ public class BedBombScenario extends Scenario{
     }
 
     @EventHandler
-    public void onPLace(BlockPlaceEvent e){
+    public void onPlace(BlockPlaceEvent e){
         if(!isEnabled()){
             return;
         }

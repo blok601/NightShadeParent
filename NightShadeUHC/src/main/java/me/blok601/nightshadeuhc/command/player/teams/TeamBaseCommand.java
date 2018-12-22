@@ -207,7 +207,7 @@ public class TeamBaseCommand implements UHCCommand{
                             String color = generateColor();
                             player = uhcPlayer.getPlayer();
                             if(TeamManager.getInstance().getTeam(player) != null) continue; //Already colored
-                            String playerString = player.getName().length() > 16 ? player.getName().substring(0, 12) : player.getName();
+                            String playerString = player.getName().length() >= 13 ? player.getName().substring(0, 11) : player.getName();
                             name = "UHC" + playerString;
 
                             for (Map.Entry<Player, PlayerScoreboard> playerPlayerScoreboardEntry : scoreboardManager.getPlayerScoreboards().entrySet()){

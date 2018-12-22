@@ -1,43 +1,29 @@
 package me.blok601.nightshadeuhc.scenario;
 
-import me.blok601.nightshadeuhc.entity.UHCPlayer;
-import me.blok601.nightshadeuhc.event.GameStartEvent;
+import com.massivecraft.massivecore.util.MUtil;
+import me.blok601.nightshadeuhc.scenario.interfaces.StarterItems;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.List;
+
 /**
  * Created by Blok on 6/21/2018.
  */
-public class OneHealScenario extends Scenario {
+public class OneHealScenario extends Scenario implements StarterItems {
 
 
     public OneHealScenario() {
         super("OneHeal", "Player's get a golden hoe that they can right click to heal themselves with once throughout the game", new ItemBuilder(Material.GOLD_HOE).name("OneHeal").make());
     }
 
-    @EventHandler
-    public void onGameStart(GameStartEvent e){
-        if(!isEnabled()) return;
-
-        ItemStack itemStack = new ItemBuilder(Material.GOLD_HOE).name("&eMagical Tool").lore("&6Right click to receive a full heal! Only works once in the game").make();
-
-        UHCPlayer gamePlayer;
-        for (Player player : Bukkit.getOnlinePlayers()){
-            gamePlayer = UHCPlayer.get(player.getUniqueId());
-            if(gamePlayer == null) continue;
-            if(gamePlayer.isSpectator()) continue;
-            player.getInventory().addItem(itemStack);
-        }
-    }
 
     @EventHandler
     public void onClick(PlayerInteractEvent e){
@@ -54,5 +40,10 @@ public class OneHealScenario extends Scenario {
                 }
             }
         }
+    }
+
+    @Override
+    public List<ItemStack> getStarterItems() {
+        return MUtil.list(new ItemBuilder(Material.GOLD_HOE).name("&eMagical Tool").lore("&6Right click to receive a full heal! Only works once in the game").make());
     }
 }

@@ -10,6 +10,7 @@ import me.blok601.nightshadeuhc.listener.gui.ScenarioClick;
 import me.blok601.nightshadeuhc.listener.misc.SpectatorInfoListener;
 import me.blok601.nightshadeuhc.listener.misc.SpectatorListener;
 import me.blok601.nightshadeuhc.listener.misc.StaffListener;
+import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.scenario.SkriptScenarios;
 import me.blok601.nightshadeuhc.stat.listener.JoinListener;
 import org.bukkit.event.Listener;
@@ -36,7 +37,8 @@ public class ListenerHandler {
             new SpectatorInfoListener(),
             new GameDeathListener(),
             new GameSetupInventoryClick(GameManager.get()),
-            new WorldBorderListener(GameManager.get())
+            new WorldBorderListener(GameManager.get()),
+            new ScenarioManager()
     };
 
     public static Listener[] getListeners() {

@@ -4,21 +4,23 @@ import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.nightshadepvp.core.utils.LocationUtils;
-import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.util.Freeze;
+import me.blok601.nightshadeuhc.command.server.PlayerTracker;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.object.CachedColor;
-import me.blok601.nightshadeuhc.entity.object.PlayerRespawnObject;
 import me.blok601.nightshadeuhc.entity.object.CombatLogger;
-import me.blok601.nightshadeuhc.manager.LoggerManager;
+import me.blok601.nightshadeuhc.entity.object.GameState;
+import me.blok601.nightshadeuhc.entity.object.PlayerRespawnObject;
 import me.blok601.nightshadeuhc.manager.GameManager;
+import me.blok601.nightshadeuhc.manager.LoggerManager;
 import me.blok601.nightshadeuhc.manager.SettingsManager;
-import me.blok601.nightshadeuhc.scenario.ScenarioManager;
-import me.blok601.nightshadeuhc.scoreboard.ScoreboardManager;
-import me.blok601.nightshadeuhc.command.server.PlayerTracker;
 import me.blok601.nightshadeuhc.manager.TeamManager;
+import me.blok601.nightshadeuhc.scenario.Scenario;
+import me.blok601.nightshadeuhc.scenario.ScenarioManager;
+import me.blok601.nightshadeuhc.scenario.interfaces.StarterItems;
+import me.blok601.nightshadeuhc.scoreboard.ScoreboardManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.util.Freeze;
 import me.blok601.nightshadeuhc.util.PlayerUtils;
 import me.blok601.nightshadeuhc.util.ScatterUtil;
 import org.bukkit.*;
@@ -153,6 +155,14 @@ public class JoinListener implements Listener {
             player.setLevel(0);
             player.setExp(0F);
             player.getInventory().addItem(new ItemStack(Material.COOKED_BEEF, 10));
+            for (Scenario scenario : ScenarioManager.getEnabledScenarios()) {
+                if (scenario instanceof StarterItems) {
+
+                    StarterItems starterItems = (StarterItems) scenario;
+
+                    PlayerUtils.giveBulkItems(player, starterItems.getStarterItems());
+                }
+            }
             ScatterUtil.scatterPlayer(GameManager.get().getWorld(), (int) GameManager.get().getBorderSize(), player);
             player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 5, 5);
             player.sendMessage(ChatUtils.message("&eYou were scattered!"));
@@ -187,21 +197,8 @@ public class JoinListener implements Listener {
 
     @EventHandler (priority = EventPriority.LOWEST)
     public void onLeave(PlayerQuitEvent e) {
-//        Settings.getInstance().getPlayers().set(e.getPlayer().getUniqueId().toString(), LocationUtils.locationToString(e.getPlayer()));
-//        Settings.getInstance().savePlayers();
         UHC.get().getScoreboardManager().removeFromPlayerCache(e.getPlayer());
 
-//        new BukkitRunnable() {
-//            @Override
-//            public void run() {
-//                if (Settings.getInstance().getPlayers().contains(e.getPlayer().getUniqueId().toString())) {
-//                    Location location = LocationUtils.locationFromString(Settings.getInstance().getPlayers().getString(e.getPlayer().getUniqueId().toString()));
-//                    e.getPlayer().teleport(location);
-//                    Settings.getInstance().getPlayers().set(e.getPlayer().getUniqueId().toString(), null);
-//                    Settings.getInstance().savePlayers();
-//                }
-//            }
-//        }.runTaskLater(UHC.get(), (20 * 5 * 60) + 1);
 
         Player p = e.getPlayer();
         UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
@@ -227,8 +224,6 @@ public class JoinListener implements Listener {
 
     @EventHandler
     public void onKick(PlayerKickEvent e) {
-//        Settings.getInstance().getPlayers().set(e.getPlayer().getUniqueId().toString(), LocationUtils.locationToString(e.getPlayer()));
-//        Settings.getInstance().savePlayers();
         UHC.get().getScoreboardManager().removeFromPlayerCache(e.getPlayer());
 
         new BukkitRunnable() {

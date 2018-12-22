@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -44,6 +45,24 @@ public class PlayerUtils {
             }
         }
         return false;
+    }
+
+    public static void giveBulkItems(Player player, Collection<ItemStack> items) {
+        boolean drop = false;
+        for (ItemStack itemStack : items) {
+            if (player.getInventory().firstEmpty() == -1) {
+                player.getWorld().dropItemNaturally(player.getLocation(), itemStack);
+                if (!drop) drop = true;
+                continue;
+            }
+
+            player.getInventory().addItem(itemStack);
+        }
+
+        if (drop) {
+            player.sendMessage(ChatUtils.message("&eYour inventory was full! Dropping items on the ground!"));
+            return;
+        }
     }
 
 

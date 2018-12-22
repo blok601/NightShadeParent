@@ -3,15 +3,21 @@ package me.blok601.nightshadeuhc.scenario;
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.command.UHCCommand;
+import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
+import me.blok601.nightshadeuhc.event.GameStartEvent;
+import me.blok601.nightshadeuhc.scenario.interfaces.StarterItems;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
 import me.blok601.nightshadeuhc.util.PagedInventory;
+import me.blok601.nightshadeuhc.util.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -20,7 +26,7 @@ import java.util.Comparator;
 /**
  * Created by Blok on 3/28/2017.
  */
-public class ScenarioManager implements UHCCommand{
+public class ScenarioManager implements UHCCommand, Listener {
 
 
     private static ArrayList<Scenario> scenarios = new ArrayList<>();
@@ -261,5 +267,17 @@ public class ScenarioManager implements UHCCommand{
     @Override
     public boolean hasRequiredRank() {
         return true;
+    }
+
+    @EventHandler
+    public void onGameStart(GameStartEvent e) {
+        for (Scenario scenario : getEnabledScenarios()) {
+            if (scenario instanceof StarterItems) {
+
+                StarterItems starterItems = (StarterItems) scenario;
+
+                UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> PlayerUtils.giveBulkItems(uhcPlayer.getPlayer(), starterItems.getStarterItems()));
+            }
+        }
     }
 }

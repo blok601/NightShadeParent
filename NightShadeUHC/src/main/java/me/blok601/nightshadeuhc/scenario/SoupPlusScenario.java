@@ -1,7 +1,7 @@
 package me.blok601.nightshadeuhc.scenario;
 
-import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
-import me.blok601.nightshadeuhc.event.GameStartEvent;
+import com.massivecraft.massivecore.util.MUtil;
+import me.blok601.nightshadeuhc.scenario.interfaces.StarterItems;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -10,10 +10,12 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
+
 /**
  * Created by Blok on 7/19/2018.
  */
-public class SoupPlusScenario extends Scenario{
+public class SoupPlusScenario extends Scenario implements StarterItems {
 
     public SoupPlusScenario() {
         super("Soup+", "Eating a soup will heal you 2.5 hearts, and you start with materials to make soup", new ItemBuilder(Material.MUSHROOM_SOUP).name("Soup+").make());
@@ -40,14 +42,9 @@ public class SoupPlusScenario extends Scenario{
         }
     }
 
-    @EventHandler
-    public void onStart(GameStartEvent e){
-        if(!isEnabled()) return;
 
-        UHCPlayerColl.get().getAllOnline().stream().filter(uhcPlayer -> !uhcPlayer.isSpectator()).forEach(uhcPlayer -> {
-            uhcPlayer.getPlayer().getInventory().addItem(new ItemStack(Material.RED_MUSHROOM, 64));
-            uhcPlayer.getPlayer().getInventory().addItem(new ItemStack(Material.BROWN_MUSHROOM, 64));
-            uhcPlayer.getPlayer().getInventory().addItem(new ItemStack(Material.BOWL, 64));
-        });
+    @Override
+    public List<ItemStack> getStarterItems() {
+        return MUtil.list(new ItemStack(Material.RED_MUSHROOM, 64), new ItemStack(Material.BROWN_MUSHROOM, 64), new ItemStack(Material.BOWL, 64));
     }
 }
