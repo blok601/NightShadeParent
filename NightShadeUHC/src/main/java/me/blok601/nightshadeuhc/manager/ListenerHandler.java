@@ -1,5 +1,6 @@
 package me.blok601.nightshadeuhc.manager;
 
+import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.command.player.disguise.Undisguise;
 import me.blok601.nightshadeuhc.command.staff.RatesCommand;
 import me.blok601.nightshadeuhc.component.GoldenHeadConsume;
@@ -36,7 +37,7 @@ public class ListenerHandler {
             new ArenaListener(),
             new SpectatorInfoListener(),
             new GameDeathListener(),
-            new GameSetupInventoryClick(GameManager.get()),
+            new GameSetupInventoryClick(GameManager.get(), UHC.get()),
             new WorldBorderListener(GameManager.get()),
             new ScenarioManager()
     };

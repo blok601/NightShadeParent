@@ -43,7 +43,7 @@ public class Commands {
                 new StartUHCCommand(),
                 new LootCrateTimeCommand(),
                 new BackpackCommand(),
-                new CancelGameCommand(),
+                new CancelGameCommand(GameManager.get()),
                 new RandomDisguiseCommand(),
                 new EndGameCommand(),
                 new SpectatorChatCommand(),
