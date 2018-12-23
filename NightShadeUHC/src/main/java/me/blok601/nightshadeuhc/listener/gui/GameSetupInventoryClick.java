@@ -12,7 +12,6 @@ import me.blok601.nightshadeuhc.entity.object.PregenQueue;
 import me.blok601.nightshadeuhc.entity.object.SetupStage;
 import me.blok601.nightshadeuhc.gui.setup.ComponentGUI;
 import me.blok601.nightshadeuhc.gui.setup.HostGUI;
-import me.blok601.nightshadeuhc.gui.setup.SettingsGUI;
 import me.blok601.nightshadeuhc.gui.setup.TimerGUI;
 import me.blok601.nightshadeuhc.gui.setup.world.BorderConfigGUI;
 import me.blok601.nightshadeuhc.gui.setup.world.NetherGUI;
@@ -603,7 +602,7 @@ public class GameSetupInventoryClick implements Listener {
 
 
             if (slot == 26) {
-                new SettingsGUI("UHC Game Settings", 2, p);
+                new HostGUI(p, gameManager);
                 return;
             }
 

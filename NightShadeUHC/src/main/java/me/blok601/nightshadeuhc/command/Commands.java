@@ -1,26 +1,21 @@
 package me.blok601.nightshadeuhc.command;
 
-import me.blok601.nightshadeuhc.command.player.disguise.RandomDisguiseCommand;
 import me.blok601.nightshadeuhc.command.game.run.*;
 import me.blok601.nightshadeuhc.command.game.setup.*;
 import me.blok601.nightshadeuhc.command.player.*;
+import me.blok601.nightshadeuhc.command.player.disguise.RandomDisguiseCommand;
+import me.blok601.nightshadeuhc.command.player.teams.PMOresCommand;
+import me.blok601.nightshadeuhc.command.player.teams.RvBCommand;
+import me.blok601.nightshadeuhc.command.player.teams.TeamBaseCommand;
+import me.blok601.nightshadeuhc.command.player.teams.TeamsCommand;
 import me.blok601.nightshadeuhc.command.server.eWhitelistCommand;
 import me.blok601.nightshadeuhc.command.staff.*;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.scenario.cmd.*;
 import me.blok601.nightshadeuhc.scenario.cmd.mole.*;
-import me.blok601.nightshadeuhc.command.server.cmd.InfoCommand;
-import me.blok601.nightshadeuhc.command.server.cmd.PlayerLocationCommand;
-import me.blok601.nightshadeuhc.command.staff.SpectatorCommand;
-import me.blok601.nightshadeuhc.command.staff.SpectatorsCommand;
-import me.blok601.nightshadeuhc.command.player.SpectatorChatCommand;
 import me.blok601.nightshadeuhc.stat.command.LeaderboardsCommand;
 import me.blok601.nightshadeuhc.stat.command.StatsCommand;
-import me.blok601.nightshadeuhc.command.player.teams.TeamBaseCommand;
-import me.blok601.nightshadeuhc.command.player.teams.TeamsCommand;
-import me.blok601.nightshadeuhc.command.player.teams.PMOresCommand;
-import me.blok601.nightshadeuhc.command.player.teams.RvBCommand;
 
 /**
  * Created by Blok on 6/26/2017.
@@ -39,8 +34,6 @@ public class Commands {
                 new HelpopCommand(),
                 new PvPCommand(),
                 new WhitelistCommand(),
-                new InfoCommand(),
-                new StartUHCCommand(),
                 new LootCrateTimeCommand(),
                 new BackpackCommand(),
                 new CancelGameCommand(GameManager.get()),
@@ -48,13 +41,11 @@ public class Commands {
                 new EndGameCommand(),
                 new SpectatorChatCommand(),
                 new AlertsCommand(),
-                new PlayerLocationCommand(),
                 new CommandSpyCmd(),
                 new SetTickCommand(),
                 new TeleportAllCommand(),
                 new ChatStopCommand(),
                 new ManualGameCommand(),
-                new GameSettingsCommand(),
                 new ClaimHostCommand(),
                 new SitCommand(),
                 new SetWorldCommand(),
@@ -114,7 +105,7 @@ public class Commands {
                 new ToggleMobsCommand(),
                 new ClearTreesCommand(),
                 new PMOresCommand(),
-                new BetaHostCommand(),
+                new HostCommand(),
                 new ConfirmCommand(),
                 new SetBorderCommand(),
                 new DoubleDatesCommand(GameManager.get())

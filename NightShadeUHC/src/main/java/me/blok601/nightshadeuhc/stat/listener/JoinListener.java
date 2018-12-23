@@ -5,7 +5,6 @@ import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.nightshadepvp.core.utils.LocationUtils;
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.command.server.PlayerTracker;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.object.CachedColor;
 import me.blok601.nightshadeuhc.entity.object.CombatLogger;
@@ -66,18 +65,6 @@ public class JoinListener implements Listener {
             gamePlayer.setFrozen(true);
             Freeze.getToFreeze().remove(player.getUniqueId());
         }
-
-        PlayerTracker tracker = new PlayerTracker(player);
-        tracker.setupCountry();
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                int amt;
-                amt = PlayerUtils.locations.getOrDefault(tracker.getCountry(), 0);
-
-                PlayerUtils.locations.put(tracker.getCountry(), amt + 1);
-            }
-        }.runTaskLater(UHC.get(), 5);
 
         if (!GameState.gameHasStarted()) {
             player.getEnderChest().clear();

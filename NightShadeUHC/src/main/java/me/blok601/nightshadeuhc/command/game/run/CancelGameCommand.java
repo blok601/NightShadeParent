@@ -35,6 +35,7 @@ public class CancelGameCommand implements UHCCommand {
             return;
         }
 
+        GameState.setState(GameState.WAITING);
         gameManager.getGameCountdownTask().cancel();
         gameManager.setGameCountdownTask(null);
         p.sendMessage(ChatUtils.message("&bThe game countdown has been cancelled!"));

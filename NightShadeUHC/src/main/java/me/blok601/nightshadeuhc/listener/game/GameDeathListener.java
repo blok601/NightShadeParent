@@ -85,6 +85,12 @@ public class GameDeathListener implements Listener {
             CustomDeathEvent customDeathEvent = new CustomDeathEvent(p, damager, items, p.getLocation(), true);
             Bukkit.getPluginManager().callEvent(customDeathEvent);
 
+            PlayerRespawnObject inv = new PlayerRespawnObject();
+            inv.setArmor(p.getInventory().getArmorContents());
+            inv.setItems(p.getInventory().getContents());
+            inv.setLocation(p.getLocation());
+            GameManager.get().getInvs().put(p.getUniqueId(), inv);
+
             if (shot) {
                 if (projectile != null) {
                     customDeathEvent.setUsedProjectile(true);
@@ -107,12 +113,6 @@ public class GameDeathListener implements Listener {
                 } else {
                     deathMessage = "&5" + (uhcPlayer.isDisguised() ? uhcPlayer.getDisguisedName() : uhcPlayer.getName()) + " &9died.";
                 }
-
-                PlayerRespawnObject inv = new PlayerRespawnObject();
-                inv.setArmor(p.getInventory().getArmorContents());
-                inv.setItems(p.getInventory().getContents());
-                inv.setLocation(p.getLocation());
-                GameManager.get().getInvs().put(p.getUniqueId(), inv);
 
                 p.setHealth(p.getMaxHealth());
                 p.setFoodLevel(20);
@@ -143,24 +143,6 @@ public class GameDeathListener implements Listener {
                     GameManager.get().getKills().put(damager.getUniqueId(), 1);
                 }
 
-//                if (gamePlayer1.getKillTimer() != 0) {
-//                    //They got a double, triple, etc
-//                    gamePlayer1.setKillStreak(gamePlayer1.getKillStreak() + 1);
-//                    if (gamePlayer1.getKillStreak() == 2) {
-//                        Bukkit.broadcastMessage(ChatUtils.message("&6" + gamePlayer1.getName() + " &egot a &bdouble kill!"));
-//                        damager.getInventory().addItem(new ItemStack(Material.GOLD_INGOT, 2));
-//                    } else if (gamePlayer1.getKillStreak() == 3) {
-//                        Bukkit.broadcastMessage(ChatUtils.message("&6" + gamePlayer1.getName() + " &egot a &btriple kill!"));
-//                        damager.getInventory().addItem(new ItemStack(Material.GOLD_INGOT, 3));
-//                    } else if (gamePlayer1.getKillStreak() == 4) {
-//                        Bukkit.broadcastMessage(ChatUtils.message("&6" + gamePlayer1.getName() + " &egot a &cquadruple kill!"));
-//                        damager.getInventory().addItem(new ItemStack(Material.GOLD_INGOT, 4));
-//                    } else {
-//                        Bukkit.broadcastMessage(ChatUtils.message("&6" + gamePlayer1.getName() + " &ehas a &b" + gamePlayer1.getKillStreak() + " killstreak!"));
-//                    }
-//
-//                }
-//                gamePlayer1.startKillTimerTask();
             }
 
             uhcPlayer.setDeaths(uhcPlayer.getDeaths() + 1);
@@ -175,10 +157,6 @@ public class GameDeathListener implements Listener {
 
             p.sendMessage(ChatUtils.message("&eYou have died! Thank you for playing on NightShadePvP!"));
             p.sendMessage(ChatUtils.message("&eJoin the Discord at discord.me/NightShadePvP for updates and more!"));
-//            p.sendMessage(ChatUtils.format("&5&e----------------------------"));
-//            p.sendMessage(ChatUtils.message("&bYour rewards:"));
-//            p.sendMessage(ChatUtils.format(points >= 0 ? "&a&o+" + points  + " points" : "&c&o-" + points + " points"));
-//            p.sendMessage(ChatUtils.format());
 
             if (user.hasRank(Rank.DRAGON)) { //Dragon and above can spectate the games, otherwise kick
                 p.setAllowFlight(true);
@@ -234,6 +212,11 @@ public class GameDeathListener implements Listener {
         }
 
         e.getDrops().clear();
+        PlayerRespawnObject inv = new PlayerRespawnObject();
+        inv.setArmor(p.getInventory().getArmorContents());
+        inv.setItems(p.getInventory().getContents());
+        inv.setLocation(p.getLocation());
+        GameManager.get().getInvs().put(p.getUniqueId(), inv);
 
         ArrayList<ItemStack> items = new ArrayList<>(); //Get their loot
         for (ItemStack i : p.getInventory().getContents()) {
@@ -257,12 +240,6 @@ public class GameDeathListener implements Listener {
             }else{
                 deathMessage = "&5" + p.getName() + " &9was killed by &5" + damager.getName() + "";
             }
-
-            PlayerRespawnObject inv = new PlayerRespawnObject();
-            inv.setArmor(p.getInventory().getArmorContents());
-            inv.setItems(p.getInventory().getContents());
-            inv.setLocation(p.getLocation());
-            GameManager.get().getInvs().put(p.getUniqueId(), inv);
 
             p.setHealth(p.getMaxHealth());
             p.setFoodLevel(20);

@@ -49,8 +49,6 @@ commands:
     description: Send a message to the online staff
   pvp:
     description: Enable/Disable PvP
-  lag:
-    description: Get information about the world (lag info)
   lct:
     description: Check how much longer until lootcrates are given
   cancelgame:
@@ -63,9 +61,6 @@ commands:
     aliases: [specchat, sp, spcchat]
   alerts:
     description: Enable or disable staff alerts
-  locreport:
-    aliases: [lreport, locs, locations, playerlocations, ploc, locationreport]
-    description: Get online player's locations
   commandspy:
     aliases: [cmdspy]
   setticks:
@@ -89,8 +84,6 @@ commands:
     description: Set the maxplayers for the game
   timer:
     description: Manually start and stop the timer
-  setupdates:
-    description: Command for Circle Integration
   config:
     aliases: [conf, uhc]
     description: Show the game config
@@ -190,7 +183,9 @@ commands:
   backpack:
     description: Command for backpack scenario
     aliases: [bp, backpacks, bps]
-  betahost:
+  host:
+    description: Host a game!
+    aliases: [settings, betahost]
   confirm:
     description: Hosting command
   setborder:

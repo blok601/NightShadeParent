@@ -1,7 +1,7 @@
 package me.blok601.nightshadeuhc.component;
 
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.gui.setup.SettingsGUI;
+import me.blok601.nightshadeuhc.gui.setup.HostGUI;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -76,7 +76,7 @@ public class ComponentHandler {
     public boolean handleClick(ItemStack stack, InventoryClickEvent e, int slot){
 
         if (slot == 26) { //main menu slot
-            new SettingsGUI("UHC Game Settings", 2, (Player) e.getWhoClicked());
+            new HostGUI((Player) e.getWhoClicked(), gameManager);
         }
 
         if (getComponent(stack.getType()) != null) {

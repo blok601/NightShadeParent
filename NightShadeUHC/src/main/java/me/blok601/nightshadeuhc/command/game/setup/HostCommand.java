@@ -11,11 +11,11 @@ import org.bukkit.entity.Player;
 /**
  * Created by Blok on 12/13/2018.
  */
-public class BetaHostCommand implements UHCCommand {
+public class HostCommand implements UHCCommand {
     @Override
     public String[] getNames() {
         return new String[]{
-                "betahost"
+                "host"
         };
     }
 
@@ -32,7 +32,7 @@ public class BetaHostCommand implements UHCCommand {
 
     @Override
     public Rank getRequiredRank() {
-        return Rank.OWNER;
+        return Rank.TRIAL;
     }
 
     @Override
