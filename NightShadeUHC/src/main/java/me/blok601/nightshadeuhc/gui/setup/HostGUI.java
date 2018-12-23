@@ -106,7 +106,7 @@ public class HostGUI {
 
         ItemBuilder start = new ItemBuilder(new ItemStack(Material.WOOL, 1, DyeColor.LIME.getWoolData()))
                 .name("&a&lStart the UHC")
-                .lore("&7&o(&6&oi&7&o) &6&oClick to star the uhc in 3 minutes")
+                .lore("&7&o(&6&oi&7&o) &6&oClick to start the uhc in 3 minutes")
                 .lore("&cWarning: You may not undo this process! &4Make sure all settings are correct!")
                 .amount(3);
 

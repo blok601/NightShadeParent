@@ -2,11 +2,11 @@ package me.blok601.nightshadeuhc.task;
 
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
-import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
-import me.blok601.nightshadeuhc.manager.GameManager;
+import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.entity.object.Team;
+import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.manager.TeamManager;
 import me.blok601.nightshadeuhc.util.ActionBarUtil;
 import me.blok601.nightshadeuhc.util.ChatUtils;
@@ -81,6 +81,10 @@ public class ScatterTask extends BukkitRunnable {
                     }else{
                         Player p = players.get(0);
                         ScatterUtil.scatterPlayer(world, radius, p);
+                        p.setHealth(p.getMaxHealth());
+                        p.setFoodLevel(10);
+                        p.setFlying(false);
+                        p.setAllowFlight(false);
                         p.sendMessage(ChatUtils.message("&bYou have been scattered!"));
                         players.remove(p);
                     }
@@ -103,6 +107,12 @@ public class ScatterTask extends BukkitRunnable {
                         }
 
                         ScatterUtil.scatter(world, radius, players);
+                        players.forEach(player -> {
+                            player.setHealth(player.getMaxHealth());
+                            player.setFoodLevel(10);
+                            player.setFlying(false);
+                            player.setAllowFlight(false);
+                        });
                         tms++;
                     }
 
