@@ -5,6 +5,7 @@ import com.massivecraft.massivecore.store.SenderEntity;
 import com.nightshadepvp.core.entity.MConf;
 import com.nightshadepvp.core.store.NSStore;
 import me.blok601.nightshadeuhc.UHC;
+import me.blok601.nightshadeuhc.util.PlayerUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -45,8 +46,9 @@ public class UHCPlayerColl extends SenderColl<UHCPlayer> {
     }
 
     public List<UHCPlayer> getAllPlaying(){
-        return getAllOnline().stream().filter(uhcPlayer -> !uhcPlayer.isSpectator()).filter(uhcPlayer -> UHC.players.contains(uhcPlayer.getUuid())).filter(SenderEntity::isPlayer).collect(Collectors.toList());
+        //return getAllOnline().stream().filter(uhcPlayer -> !uhcPlayer.isSpectator()).filter(uhcPlayer -> UHC.players.contains(uhcPlayer.getUuid())).filter(SenderEntity::isPlayer).collect(Collectors.toList());
 
+        return getAllOnline().stream().filter(SenderEntity::isPlayer).filter(uhcPlayer -> !uhcPlayer.isSpectator()).filter(uhcPlayer -> PlayerUtils.inGameWorld(uhcPlayer.getPlayer())).collect(Collectors.toList());
     }
 
     public Collection<UHCPlayer> getSpectators(){

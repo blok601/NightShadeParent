@@ -20,6 +20,7 @@ import me.blok601.nightshadeuhc.gui.setup.world.OverWorldGUI;
 import me.blok601.nightshadeuhc.gui.setup.world.WorldGUI;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.manager.TeamManager;
+import me.blok601.nightshadeuhc.task.GameCountdownTask;
 import me.blok601.nightshadeuhc.task.PregenTask;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
@@ -44,9 +45,12 @@ import java.util.stream.Collectors;
 public class GameSetupInventoryClick implements Listener {
 
     private GameManager gameManager;
+    private UHC uhc;
 
-    public GameSetupInventoryClick(GameManager gameManager) {
+
+    public GameSetupInventoryClick(GameManager gameManager, UHC uhc) {
         this.gameManager = gameManager;
+        this.uhc = uhc;
     }
 
     @SuppressWarnings("Duplicates")
@@ -104,6 +108,14 @@ public class GameSetupInventoryClick implements Listener {
                 new ComponentGUI(p);
             } else if (slot == 8) {
                 new TimerGUI(p);
+            } else if (slot == 18) {
+                p.closeInventory();
+                p.sendMessage(ChatUtils.message("&eThe game will start in 3 minutes..."));
+                p.sendMessage(ChatUtils.message("&eDo /cancelgame at any time within those 3 minutes to cancel the start timer!"));
+                GameCountdownTask gameCountdownTask = new GameCountdownTask(uhc);
+                gameCountdownTask.runTaskTimer(uhc, 0, Util.TICKS);
+                gameManager.setGameCountdownTask(gameCountdownTask);
+                GameState.setState(GameState.PRE_SCATTER);
             } else if (slot == 27) { //Starter food
                 if (clickType == ClickType.LEFT) {
                     //Increase

@@ -2,14 +2,10 @@ package me.blok601.nightshadeuhc.command.game.run;
 
 
 import com.nightshadepvp.core.Rank;
-import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.command.UHCCommand;
-import me.blok601.nightshadeuhc.util.Freeze;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
-import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
 import me.blok601.nightshadeuhc.manager.GameManager;
-import me.blok601.nightshadeuhc.task.ScatterTask;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.Util;
 import org.bukkit.Bukkit;
@@ -82,13 +78,7 @@ public class StartUHCCommand implements UHCCommand {
 					@Override
 					public void run(){
 						if(arrayList.contains(p.getName())){
-							GameManager.get().getWorld().setTime(20);
-							ChatUtils.setChatFrozen(true);
-							Bukkit.broadcastMessage(ChatUtils.message("&9Use /helpop or message any online staff members if you need help!"));
-							Freeze.start();
-							UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isInArena).forEach(UHCPlayer::leaveArena);
-							GameState.setState(GameState.STARTING);
-							new ScatterTask(valid, GameManager.get().getWorld(), GameManager.get().getRadius(), GameManager.get().getHost(), GameManager.get().getFinalHealTime(), GameManager.get().getPvpTime(), GameManager.get().getBorderTime(), GameManager.get().isIsTeam(), GameManager.get().getFirstShrink(), GameManager.get().getMeetupTime()).runTaskTimer(UHC.get(), 0, 4);
+
 						}else{
 							arrayList.remove(p.getName());
 						}

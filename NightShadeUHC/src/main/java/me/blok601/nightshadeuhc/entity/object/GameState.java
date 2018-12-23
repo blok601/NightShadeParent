@@ -3,7 +3,7 @@ package me.blok601.nightshadeuhc.entity.object;
 
 public enum GameState {
 
-	WAITING, STARTING, INGAME, MEETUP, ENDGAME;
+	WAITING, PRE_SCATTER, STARTING, INGAME, MEETUP, ENDGAME;
 	
 	private static GameState state;
 	

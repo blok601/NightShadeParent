@@ -10,6 +10,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * Created by Blok on 12/10/2017.
@@ -42,9 +43,12 @@ public class ComponentHandler {
         addComponent(new NetherComponent());
         addComponent(new NetherQuartzXPNerfFeature(gameManager));
         addComponent(new SaturationComponent());
+        addComponent(new ShearsComponent(gameManager));
+
+        this.components.sort(Comparator.comparing(Component::getName));
     }
 
-    public void addComponent(Component component){
+    private void addComponent(Component component) {
         this.components.add(component);
         Bukkit.getPluginManager().registerEvents(component, UHC.get());
     }

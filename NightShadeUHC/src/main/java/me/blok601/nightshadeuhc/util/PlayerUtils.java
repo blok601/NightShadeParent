@@ -1,7 +1,9 @@
 package me.blok601.nightshadeuhc.util;
 
 import lombok.Getter;
+import me.blok601.nightshadeuhc.entity.MConf;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -64,6 +66,16 @@ public class PlayerUtils {
         }
 
         player.getInventory().addItem(itemStack);
+    }
+
+    public static boolean inGameWorld(Player player){
+        World world = player.getWorld();
+        if(world.getName().equalsIgnoreCase(MConf.get().getSpawnLocation().asBukkitLocation().getWorld().getName()) ||
+                world.getName().equalsIgnoreCase(MConf.get().getArenaLocation().asBukkitLocation().getWorld().getName())){
+            return false;
+        }
+
+        return true;
     }
 
 }

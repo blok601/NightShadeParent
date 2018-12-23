@@ -63,6 +63,9 @@ public class GameManager {
     @Setter
     @Getter
     private  MeetupTask meetupTask;
+    @Getter
+    @Setter
+    private GameCountdownTask gameCountdownTask;
     private  int[] shrinks;
     private  int borderID;
     private  String serverType;
@@ -86,9 +89,13 @@ public class GameManager {
     private boolean netherPregenned = false;
     @Getter@Setter
     private World netherWorld = null;
+    @Getter
+    private HashSet<UUID> toCancel = new HashSet<>();
+
+
 
     // ---------------------------------------
-    //            Host GUI Game Settings
+    //      Host GUI Game Settings START
     // ---------------------------------------
 
     @Getter
@@ -99,6 +106,10 @@ public class GameManager {
     private boolean isTeam;
     private double appleRates = 5;
     private double flintRates = 50;
+
+    // ---------------------------------------
+    //      Host GUI Game Settings END
+    // ---------------------------------------
 
 
     public void setDate(){
