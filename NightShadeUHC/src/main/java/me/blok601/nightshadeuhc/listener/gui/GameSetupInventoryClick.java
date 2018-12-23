@@ -115,6 +115,7 @@ public class GameSetupInventoryClick implements Listener {
                 gameCountdownTask.runTaskTimer(uhc, 0, Util.TICKS);
                 gameManager.setGameCountdownTask(gameCountdownTask);
                 GameState.setState(GameState.PRE_SCATTER);
+                p.chat("/claimhost");
             } else if (slot == 27) { //Starter food
                 if (clickType == ClickType.LEFT) {
                     //Increase
