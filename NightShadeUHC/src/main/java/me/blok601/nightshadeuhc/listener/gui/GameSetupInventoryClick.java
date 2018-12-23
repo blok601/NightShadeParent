@@ -108,7 +108,7 @@ public class GameSetupInventoryClick implements Listener {
                 new ComponentGUI(p);
             } else if (slot == 8) {
                 new TimerGUI(p);
-            } else if (slot == 18) {
+            } else if (slot == 13) {
                 p.closeInventory();
                 p.sendMessage(ChatUtils.message("&eThe game will start in 3 minutes..."));
                 p.sendMessage(ChatUtils.message("&eDo /cancelgame at any time within those 3 minutes to cancel the start timer!"));
