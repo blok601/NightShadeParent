@@ -10,7 +10,8 @@ public enum Perm implements Identified
 	VERSION,
 	EXEMPT,
 	UNEXEMPT,
-	UPDATE;
+	UPDATE,
+	CHECK;
 	
 	private final String id;
 	
