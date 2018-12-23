@@ -55,8 +55,6 @@ public class ArenaListener implements Listener {
         UHCPlayer uhcPlayer = UHCPlayer.get(p);
         if(uhcPlayer.isInArena()){
             uhcPlayer.setInArena(false);
-            p.getInventory().clear();
-            p.getInventory().setArmorContents(null);
             uhcPlayer.leaveArena();
         }
     }

@@ -50,9 +50,7 @@ public class SpectatorCommand implements UHCCommand {
         UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
         if (gamePlayer == null) return;
 
-        if (UHC.players.contains(p.getUniqueId())) {
-            UHC.players.remove(p.getUniqueId());
-        }
+        UHC.players.remove(p.getUniqueId());
 
         gamePlayer.spec();
 
@@ -64,9 +62,7 @@ public class SpectatorCommand implements UHCCommand {
             return;
         }
 
-        if (!UHC.players.contains(p.getUniqueId())) {
-            UHC.players.add(p.getUniqueId());
-        }
+        UHC.players.add(p.getUniqueId());
         gamePlayer.unspec();
     }
 

@@ -29,33 +29,34 @@ public class CmdPing extends NightShadeCoreCommand {
     @Override
     public void perform() throws MassiveException {
         NSPlayer nsPlayer = this.readArg(NSPlayer.get(sender));
+        NSPlayer senderNSPlayer = NSPlayer.get(sender);
         if (!nsPlayer.isOnline()) {
             sender.sendMessage(ChatUtils.message("&cThat player is not online!"));
             return;
         }
         int i = ((CraftPlayer) nsPlayer.getPlayer()).getHandle().ping;
         if (ProxyUtil.isBetween(20, 0, i)) {
-            nsPlayer.msg(ChatUtils.message("&e" + nsPlayer.getName() + "'s ping is&8: &a" + i + " &8(&aExcellent&8)"));
+            senderNSPlayer.msg(ChatUtils.message("&e" + nsPlayer.getName() + "'s ping is&8: &a" + i + " &8(&aExcellent&8)"));
             return;
         }
 
         if (ProxyUtil.isBetween(50, 20, i)) {
-            nsPlayer.msg(ChatUtils.message("&e" + nsPlayer.getName() + "'s ping is &8: &a" + i + " &8(&aGreat&8)"));
+            senderNSPlayer.msg(ChatUtils.message("&e" + nsPlayer.getName() + "'s ping is &8: &a" + i + " &8(&aGreat&8)"));
             return;
         }
 
         if (ProxyUtil.isBetween(100, 50, i)) {
-            nsPlayer.msg(ChatUtils.message("&e" + nsPlayer.getName() + "'s ping is &8: &e" + i + " &8(&eGood&8)"));
+            senderNSPlayer.msg(ChatUtils.message("&e" + nsPlayer.getName() + "'s ping is &8: &e" + i + " &8(&eGood&8)"));
             return;
         }
 
         if (ProxyUtil.isBetween(150, 100, i)) {
-            nsPlayer.msg(ChatUtils.message("&e" + nsPlayer.getName() + "'s ping is &8: &c" + i + " &8(&cPoor&8)"));
+            senderNSPlayer.msg(ChatUtils.message("&e" + nsPlayer.getName() + "'s ping is &8: &c" + i + " &8(&cPoor&8)"));
             return;
         }
 
         if (i > 150) {
-            nsPlayer.msg(ChatUtils.message("&e" + nsPlayer.getName() + "'s ping is &8: &4" + i + " &8(&4Awful&8)"));
+            senderNSPlayer.msg(ChatUtils.message("&e" + nsPlayer.getName() + "'s ping is &8: &4" + i + " &8(&4Awful&8)"));
         }
     }
 }

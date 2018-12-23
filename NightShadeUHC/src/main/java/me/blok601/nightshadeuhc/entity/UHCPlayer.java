@@ -384,14 +384,14 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         setSpectator(true);
         Player p = getPlayer();
 
-        UHCPlayer gamePlayer1;
         NSPlayer user;
-        for (Player pl : Bukkit.getOnlinePlayers()){
-            gamePlayer1 = UHCPlayer.get(pl.getUniqueId());
-            if(!gamePlayer1.isSpectator()){
-                pl.hidePlayer(p);
-            }
-        }
+        UHCPlayerColl.get().getAllPlaying()
+                .stream()
+                .filter(SenderEntity::isPlayer)
+                .forEach(uhcPlayer -> uhcPlayer.getPlayer().hidePlayer(p));
+        //Hid them from players -> show other specs
+        UHCPlayerColl.get().getSpectators().forEach(uhcPlayer -> p.showPlayer(uhcPlayer.getPlayer()));
+
 
         user = NSPlayer.get(p.getUniqueId());
 
@@ -418,6 +418,8 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         for (Player pl : Bukkit.getOnlinePlayers()){
             pl.showPlayer(p);
         }
+
+        UHCPlayerColl.get().getSpectators().forEach(uhcPlayer -> p.hidePlayer(uhcPlayer.getPlayer())); //Re-hide spectators -- abundant
         p.setFlying(false);
         p.setAllowFlight(false);
         p.setGameMode(GameMode.SURVIVAL);

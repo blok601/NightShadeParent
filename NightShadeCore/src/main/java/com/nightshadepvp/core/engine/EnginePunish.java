@@ -11,8 +11,11 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
+import java.util.HashSet;
 import java.util.UUID;
 
 public class EnginePunish extends Engine {
@@ -20,6 +23,7 @@ public class EnginePunish extends Engine {
     private static EnginePunish i = new EnginePunish();
     public static EnginePunish get() { return i; }
 
+    public HashSet<UUID> freezePersist = new HashSet<>();
 
     @EventHandler
     public void onMove(PlayerMoveEvent e) {
@@ -77,6 +81,23 @@ public class EnginePunish extends Engine {
             Player p = (Player) e.getEntity();
             NSPlayer user = NSPlayer.get(p);
             if (user.isFrozen()) e.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onLeave(PlayerQuitEvent e) {
+        NSPlayer nsPlayer = NSPlayer.get(e.getPlayer());
+        if (nsPlayer.isFrozen()) {
+            this.freezePersist.add(nsPlayer.getUuid());
+        }
+    }
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent e) {
+        NSPlayer nsPlayer = NSPlayer.get(e.getPlayer());
+        if (this.freezePersist.contains(nsPlayer.getUuid())) {
+            nsPlayer.setFrozen(true);
+            this.freezePersist.remove(nsPlayer.getUuid());
         }
     }
 

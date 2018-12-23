@@ -19,7 +19,6 @@ import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.scenario.interfaces.StarterItems;
 import me.blok601.nightshadeuhc.scoreboard.ScoreboardManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
-import me.blok601.nightshadeuhc.util.Freeze;
 import me.blok601.nightshadeuhc.util.PlayerUtils;
 import me.blok601.nightshadeuhc.util.ScatterUtil;
 import org.bukkit.*;
@@ -59,11 +58,6 @@ public class JoinListener implements Listener {
             Team team = scoreboard.registerNewTeam(cachedColor.getId());
             team.setPrefix(cachedColor.getColor());
             team.addEntry(cachedColor.getPlayer());
-        }
-
-        if(Freeze.getToFreeze().contains(player.getUniqueId())){
-            gamePlayer.setFrozen(true);
-            Freeze.getToFreeze().remove(player.getUniqueId());
         }
 
         if (!GameState.gameHasStarted()) {
@@ -120,9 +114,9 @@ public class JoinListener implements Listener {
                 Bukkit.getOnlinePlayers().forEach(o -> o.showPlayer(player));
                 player.getActivePotionEffects().forEach(potionEffect -> player.removePotionEffect(potionEffect.getType()));
                 targetUHCPlayer.setStaffMode(false);
-                player.getInventory().clear();
-                player.getInventory().setArmorContents(null);
-                player.chat("/rea");
+                targetUHCPlayer.getPlayer().getInventory().clear();
+                targetUHCPlayer.getPlayer().getInventory().setArmorContents(null);
+                targetUHCPlayer.getPlayer().chat("/rea");
             }
 
             if (targetUHCPlayer.isVanished()) targetUHCPlayer.unVanish();
@@ -197,9 +191,6 @@ public class JoinListener implements Listener {
             return;
         }
 
-        if (gamePlayer.isFrozen()) {
-            Freeze.getToFreeze().add(p.getUniqueId());
-        }
 
         if (UHC.players.contains(p.getUniqueId())) {
             if (GameState.getState() == GameState.INGAME || GameState.getState() == GameState.MEETUP) {
@@ -233,10 +224,6 @@ public class JoinListener implements Listener {
 
         if (gamePlayer.isSpectator() || gamePlayer.isStaffMode()) {
             return;
-        }
-
-        if (gamePlayer.isFrozen()) {
-            Freeze.getToFreeze().add(p.getUniqueId());
         }
 
         if (UHC.players.contains(p.getUniqueId())) {

@@ -79,11 +79,11 @@ public class RespawnCommand implements UHCCommand{
 
         if(targetUHCPlayer.isStaffMode()){
             Bukkit.getOnlinePlayers().forEach(o -> o.showPlayer(p));
-            p.getActivePotionEffects().forEach(potionEffect -> p.removePotionEffect(potionEffect.getType()));
+            target.getActivePotionEffects().forEach(potionEffect -> p.removePotionEffect(potionEffect.getType()));
             targetUHCPlayer.setStaffMode(false);
-            p.getInventory().clear();
-            p.getInventory().setArmorContents(null);
-            p.chat("/rea");
+            target.getInventory().clear();
+            target.getInventory().setArmorContents(null);
+            target.chat("/rea");
         }
 
         if(targetUHCPlayer.isVanished()) targetUHCPlayer.unVanish();

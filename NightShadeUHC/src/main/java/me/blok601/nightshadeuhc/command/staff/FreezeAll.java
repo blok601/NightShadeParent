@@ -1,16 +1,16 @@
 package me.blok601.nightshadeuhc.command.staff;
 
 import com.nightshadepvp.core.Rank;
-import me.blok601.nightshadeuhc.util.Freeze;
-import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.command.UHCCommand;
+import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.util.Freeze;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class FreezeAll implements UHCCommand{
 
-	boolean freezeAll = false;
+	private boolean freezeAll = false;
 
 	@Override
 	public String[] getNames() {

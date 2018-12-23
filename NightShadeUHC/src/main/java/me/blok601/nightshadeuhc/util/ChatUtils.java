@@ -62,14 +62,15 @@ public class ChatUtils {
         });
     }
 
+    public static String message(String s) {
+        String prefix = format("&5UHC&8 »");
+        return format(prefix + "&b" + s);
+    }
+
     public static String format(String s){
         return ChatColor.translateAlternateColorCodes('&', s);
     }
 
-    public static String message(String s){
-        String prefix = ChatColor.DARK_PURPLE + "UHC" + ChatColor.DARK_GRAY + "» ";
-        return prefix + ChatColor.translateAlternateColorCodes('&', "&b" + s);
-    }
 
     public static String helpBotMessage(String string){
         String prefix = ChatColor.BLUE + "[HelpBot] ";
@@ -99,7 +100,7 @@ public class ChatUtils {
    }
 
    public static String sendArenaMessage(String msg){
-       return format("&5Arena&8» &b" + msg);
+       return format("&5Arena &8» &b" + msg);
    }
 
 }
