@@ -1,11 +1,12 @@
 package me.blok601.nightshadeuhc.scenario;
 
-import me.blok601.nightshadeuhc.utils.ChatUtils;
-import me.blok601.nightshadeuhc.utils.ItemBuilder;
+import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockBreakEvent;
 
 /**
@@ -18,7 +19,7 @@ public class UltraParanoidScenario extends Scenario {
         super("UltraParanoid", "Your coordinates are broadcasted every time you mine gold or diamonds", new ItemBuilder(Material.DIAMOND_PICKAXE).name("Ultra Paranoid").make());
     }
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onBreak(BlockBreakEvent e){
 
         if(!isEnabled()){

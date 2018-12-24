@@ -63,6 +63,11 @@ public class ItemBuilder {
         itemM = item.getItemMeta();
     }
 
+    public ItemBuilder (ItemBuilder itemBuilder){
+        item = itemBuilder.make();
+        itemM = item.getItemMeta();
+    }
+
     /**
      * Init the item chainable with no defined Material/ItemStack
      *

@@ -2,13 +2,15 @@ package me.blok601.nightshadeuhc.scenario;
 
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
-import me.blok601.nightshadeuhc.events.CustomDeathEvent;
-import me.blok601.nightshadeuhc.utils.ChatUtils;
-import me.blok601.nightshadeuhc.utils.ItemBuilder;
+import me.blok601.nightshadeuhc.event.CustomDeathEvent;
+import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 /**
@@ -61,13 +63,15 @@ public class NoCleanScenario extends Scenario{
             return;
         }
 
+        if(!(e.getDamager() instanceof Player)) return;
+        if(!(e.getEntity() instanceof Player)) return;
         if(e.getDamage() == 0) return;
         if(e.isCancelled()) return;
 
         if(e.getEntity() instanceof Player){
             Player p = (Player) e.getEntity();
             UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
-            if(gamePlayer.isNoClean()){
+            if(gamePlayer.isNoClean()){ //They have a timer
                 e.setCancelled(true);
             }
         }
@@ -81,5 +85,29 @@ public class NoCleanScenario extends Scenario{
             }
         }
     }
+  @EventHandler
+  public void onCombust(EntityCombustEvent e) {
+    if (!isEnabled()) return;
+    if (e.getEntity() instanceof Player) {
+      Player p = (Player) e.getEntity();
+      UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
+      if (gamePlayer.isNoClean()) { //They have a timer
+        e.setCancelled(true);
 
+      }
+    }
+  }
+  @EventHandler
+  public void onDamage1(EntityDamageEvent e) {
+    if (!isEnabled()) return;
+    if (e.getEntity() instanceof Player) {
+      Player p = (Player) e.getEntity();
+      UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
+      if (gamePlayer.isNoClean()) { //They have a timer
+        if (e.getCause() == EntityDamageEvent.DamageCause.LAVA || e.getCause() == EntityDamageEvent.DamageCause.FIRE || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) {
+          e.setCancelled(true);
+        }
+      }
+    }
+  }
 }

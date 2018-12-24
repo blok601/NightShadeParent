@@ -12,17 +12,15 @@ import java.util.List;
  */
 public class Punishment extends AbstractPunishment {
 
-    List<String> commands;
-    AbstractPunishment parent;
-    PunishmentType type;
+    private List<String> commands;
+    private AbstractPunishment parent;
+    private PunishmentType type;
 
     public Punishment(String name, ItemStack itemStack, AbstractPunishment parent, List<String> commands, PunishmentType type) {
         super(name, itemStack, type);
         this.commands = commands;
         this.type = type;
         this.parent = parent;
-
-        parent.addChild(this, 1);
     }
 
     public void execute(Player staff){
@@ -48,7 +46,7 @@ public class Punishment extends AbstractPunishment {
             }
 
             for (String cmd : this.commands) {
-                staff.chat(cmd.replaceAll("%player%", name));
+                staff.chat("/" + cmd.replaceAll("%player%", name));
             }
         }
 

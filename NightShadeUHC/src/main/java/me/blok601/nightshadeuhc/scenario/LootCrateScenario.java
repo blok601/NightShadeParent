@@ -1,9 +1,9 @@
 package me.blok601.nightshadeuhc.scenario;
 
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.utils.ChatUtils;
-import me.blok601.nightshadeuhc.utils.ItemBuilder;
-import me.blok601.nightshadeuhc.events.GameStartEvent;
+import me.blok601.nightshadeuhc.event.GameStartEvent;
+import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -18,6 +18,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by Blok on 6/29/2017.
@@ -54,13 +55,13 @@ public class LootCrateScenario extends Scenario{
 
         for (Player player : Bukkit.getOnlinePlayers()){
             Random r = new Random();
-            player.getInventory().addItem(chests.get(r.nextInt(chests.size())));
+            ItemStack stack = chests.get(r.nextInt(chests.size()));
+            player.getInventory().addItem(stack);
             player.sendMessage(ChatUtils.message(getPrefix() + "&eYou have been given your lootcrate!"));
         }
 
 
         new BukkitRunnable(){
-
             @Override
             public void run(){
                 if(!isEnabled()){
@@ -77,7 +78,6 @@ public class LootCrateScenario extends Scenario{
                     }
                 }
             }
-
         }.runTaskTimer(UHC.get(), 0, 20*30);
     }
 
@@ -94,15 +94,17 @@ public class LootCrateScenario extends Scenario{
         if(e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR){
             Player p = e.getPlayer();
             if(e.getItem().getType() == Material.CHEST){
-                Random r = new Random();
-                p.getInventory().remove(e.getItem());
-                p.getInventory().addItem(tier1[r.nextInt(tier1.length)]);
-                p.sendMessage(ChatUtils.message(getPrefix() + "&bYou have been given your lootcrate!"));
+                Random r = ThreadLocalRandom.current();
+                ItemStack stack = tier1[r.nextInt(tier1.length)];
+                p.getInventory().remove(p.getItemInHand());
+                p.getInventory().addItem(stack);
+                p.sendMessage(ChatUtils.format(getPrefix() + "&eYou have gotten " + stack.getAmount() + " &b" + stack.getType().name() + " &efrom your lootcrate!"));
             }else if(e.getItem().getType() == Material.ENDER_CHEST){
-                Random r = new Random();
-                p.getInventory().remove(e.getItem());
-                p.getInventory().addItem(tier2[r.nextInt(tier2.length)]);
-                p.sendMessage(ChatUtils.message(getPrefix() + "&bYou have been given your lootcrate!"));
+                Random r = ThreadLocalRandom.current();
+                ItemStack stack = tier2[r.nextInt(tier2.length)];
+                p.getInventory().remove(p.getItemInHand());
+                p.getInventory().addItem(stack);
+                p.sendMessage(ChatUtils.format(getPrefix() + "&eYou have gotten " + stack.getAmount() + " &b" + stack.getType().name() + " &efrom your lootcrate!"));
             }
         }
     }

@@ -1,14 +1,14 @@
 package me.blok601.nightshadeuhc.scenario;
 
-import me.blok601.nightshadeuhc.GameState;
-import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.events.GameStartEvent;
-import me.blok601.nightshadeuhc.events.ScenarioEnableEvent;
+import me.blok601.nightshadeuhc.entity.object.GameState;
+import me.blok601.nightshadeuhc.entity.object.Team;
+import me.blok601.nightshadeuhc.event.GameStartEvent;
+import me.blok601.nightshadeuhc.event.ScenarioEnableEvent;
 import me.blok601.nightshadeuhc.manager.GameManager;
-import me.blok601.nightshadeuhc.teams.Team;
-import me.blok601.nightshadeuhc.teams.TeamManager;
-import me.blok601.nightshadeuhc.utils.ChatUtils;
-import me.blok601.nightshadeuhc.utils.ItemBuilder;
+import me.blok601.nightshadeuhc.manager.TeamManager;
+import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.util.ItemBuilder;
+import me.blok601.nightshadeuhc.util.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.FishHook;
@@ -26,13 +26,13 @@ public class AssaultAndBatteryScenario extends Scenario{
 
 
     public AssaultAndBatteryScenario() {
-        super("Assault and Battery", "To2 Where one person can only do meelee damage to players, while the other one can only do ranged attacks. If a teammate dies, you can do both meelee and ranged attacks.", new ItemBuilder(Material.WOOD_SWORD).name("Assault and Battery").make());
+        super("Assault and Battery", "To2 Where one person can only do meelee damage to players, while the other one can only do ranged attacks. If a teammate dies, you can do both meelee and ranged attacks.", "AAB", new ItemBuilder(Material.WOOD_SWORD).name("Assault and Battery").make());
     }
 
     @EventHandler
     public void onEnable(ScenarioEnableEvent e){
         if(e.getScenario().getName().equalsIgnoreCase(getName())){
-            if(TeamManager.getInstance().getTeamSize() != 2 || !GameManager.isIsTeam()){
+            if(TeamManager.getInstance().getTeamSize() != 2 || !GameManager.get().isIsTeam()){
                 e.setCancelled(true);
                 e.getPlayer().closeInventory();
                 e.getPlayer().sendMessage(ChatUtils.format(getPrefix() + "&cAssault and Battery can only be enabled in Teams of 2!"));
@@ -85,9 +85,10 @@ public class AssaultAndBatteryScenario extends Scenario{
                 Player shooter = (Player) projectile.getShooter();
                 Team team = TeamManager.getInstance().getTeam(shooter);
                 if(team != null){
-                    if(!UHC.players.contains(team.getBow())){
-                        return; //Allow the attack
+                    if (!PlayerUtils.isPlaying(team.getBow())) {
+                        return; //Allow
                     }
+
                     if(!team.getBow().equals(shooter.getUniqueId())){
                         e.setCancelled(true);
                         e.setDamage(0);

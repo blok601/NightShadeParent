@@ -14,24 +14,24 @@ import java.util.ArrayList;
 public enum Rank {
 
     PLAYER(0, "", ""),
-    FRIEND(0, "&8[&aFriend&8] &a", "&a"),
-    WINNER(0, "&8[&cWinner&8] &c", "&c"),
-    DRAGON(1, "&8[&aDragon&8] &a", "&a"),
-    COMET(2, "&8[&eComet&8] &e", "&e"),
-    GUARDIAN(3, "&8[&cGuardian&8] &c", "&c"),
-    YOUTUBE(4, ChatUtils.format("&8[&eMedia&8] &e"), "&e"),
-    TRIAL(5, "&8[&bTrial-Mod&8] &b", "&b"),
-    MOD(6, "&8[&cMod&8] &c", "&c"),
-    TRIALHOST(7, "&8[&bTrial-Host&8] &b", "&b"),
-    HOST(7, "&8[&cHost&8] &c", "&c"),
-    SRMOD(7, "&8[&dSrMod&8] &d", "&d"),
-    SRHOST(8, "&8[&dSrHost&8] &d", "&d"),
-    ADMIN(10, "&8[&6Admin&8] &6", "&6"),
-    DEVELOPER(15, ChatUtils.format("&8[&dDeveloper&8] &d"), "&d"),
-    PLATFORMADMIN(15, "&8[&3Platform Admin&8] &3", "&3"),
-    HEADADMIN(15, "&8[&9Head Admin&8] &9", "&9"),
-    COOWNER(20, "&8[&5Co-Owner&8] &5", "&5"),
-    OWNER(30, "&8[&5Owner&8] &5", "&5");
+    FRIEND(0, "&7[&aFriend&7] &a", "&a"),
+    WINNER(0, "&7[&cWinner&7] &c", "&c"),
+    DRAGON(1, "&7[&aDragon&7] &a", "&a"),
+    COMET(2, "&7[&eComet&7] &e", "&e"),
+    GUARDIAN(3, "&7[&cGuardian&7] &c", "&c"),
+    YOUTUBE(4, ChatUtils.format("&7[&eMedia&7] &e"), "&e"),
+    TRIAL(5, "&7[&dTrial-Mod&7] &d", "&d"),
+    MOD(6, "&7[&dMod&7] &d", "&d"),
+    TRIALHOST(7, "&7[&6Trial-Host&7] &6", "&6"),
+    HOST(7, "&7[&6Host&7] &6", "&6"),
+    SRMOD(7, "&7[&bSrMod&7] &b", "&b"),
+    SRHOST(8, "&7[&bSrHost&7] &b", "&b"),
+    ADMIN(10, "&7[&cAdmin&7] &c", "&c"),
+    DEVELOPER(15, ChatUtils.format("&7[&5Developer&7] &5"), "&5"),
+    PLATFORMADMIN(15, "&7[&cPlat-Admin&7] &c", "&c"),
+    HEADADMIN(15, "&7[&9Manager&7] &9", "&9"),
+    COOWNER(20, "&7[&5Co-Owner&7] &5", "&5"),
+    OWNER(100, "&7[&5Owner&7] &5", "&5");
 
     private int value;
     private String prefix;
@@ -92,5 +92,20 @@ public enum Rank {
         return null;
     }
 
+    public boolean isStaff(Rank rank) {
+        return rank.getValue() >= Rank.TRIAL.getValue();
+    }
+
+    public boolean isPlayerLadder(Rank rank) {
+        return rank.getValue() < Rank.DRAGON.getValue();
+    }
+
+    public boolean isDonorRank(Rank rank) {
+        return rank.getValue() >= Rank.DRAGON.getValue() && rank.getValue() <= Rank.GUARDIAN.getValue();
+    }
+
+    public boolean isDeathSpectate(Rank rank) {
+        return rank.getValue() > PLAYER.getValue();
+    }
 
 }

@@ -1,10 +1,11 @@
 package me.blok601.nightshadeuhc.scenario;
 
-import me.blok601.nightshadeuhc.entity.UHCPlayer;
-import me.blok601.nightshadeuhc.utils.ChatUtils;
-import me.blok601.nightshadeuhc.utils.ItemBuilder;
-import me.blok601.nightshadeuhc.events.GameStartEvent;
-import org.bukkit.Bukkit;
+import com.massivecraft.massivecore.util.MUtil;
+import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
+import me.blok601.nightshadeuhc.event.GameStartEvent;
+import me.blok601.nightshadeuhc.scenario.interfaces.StarterItems;
+import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -12,10 +13,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
+
 /**
  * Created by Blok on 2/17/2018.
  */
-public class GoneFishinScenario extends Scenario{
+public class GoneFishinScenario extends Scenario implements StarterItems {
 
 
     public GoneFishinScenario() {
@@ -28,13 +31,9 @@ public class GoneFishinScenario extends Scenario{
             return;
         }
 
-
-        Bukkit.getOnlinePlayers().stream().filter(o -> !UHCPlayer.get(o.getUniqueId()).isSpectator()).forEach(player ->{
-            player.getInventory().addItem(new ItemStack(Material.ANVIL, 20));
-            player.getInventory().addItem(new ItemBuilder(Material.FISHING_ROD).enchantment(Enchantment.DURABILITY, 100).enchantment(Enchantment.LUCK, 250).enchantment(Enchantment.LURE, 3).make());
-            player.setLevel(20000);
-        });
+        UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> uhcPlayer.getPlayer().setLevel(20000));
     }
+
     @EventHandler
     public void onCraft(CraftItemEvent e){
         if (!isEnabled()) return;
@@ -49,7 +48,13 @@ public class GoneFishinScenario extends Scenario{
             e.setCancelled(true);
             p.closeInventory();
             p.sendMessage(ChatUtils.format(getPrefix() + "You cannot craft an Enchantment Table in Gone Fishing!"));
-
         }
+    }
+
+
+    @Override
+    public List<ItemStack> getStarterItems() {
+        return MUtil.list(new ItemStack(Material.ANVIL, 20),
+                new ItemBuilder(Material.FISHING_ROD).enchantment(Enchantment.DURABILITY, 100).enchantment(Enchantment.LUCK, 250).enchantment(Enchantment.LURE, 3).make());
     }
 }

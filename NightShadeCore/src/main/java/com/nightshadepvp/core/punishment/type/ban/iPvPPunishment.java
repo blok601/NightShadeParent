@@ -21,6 +21,6 @@ public class iPvPPunishment extends AbstractPunishment {
                 .name("&5iPvP &8(&51st Offense&8)")
                 .lore("&eClick to ban the player for 3d for iPvP").make(),
                 this, Collections.singletonList("ban %player% 3d iPvP"), PunishmentType.BAN
-        ), 22);
+        ), 20);
     }
 }

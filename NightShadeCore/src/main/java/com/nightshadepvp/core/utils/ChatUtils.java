@@ -1,5 +1,7 @@
 package com.nightshadepvp.core.utils;
 
+import com.nightshadepvp.core.Rank;
+import com.nightshadepvp.core.entity.NSPlayerColl;
 import com.nightshadepvp.core.entity.objects.PlayerColor;
 import com.nightshadepvp.core.entity.objects.PlayerEffect;
 import org.bukkit.ChatColor;
@@ -12,9 +14,10 @@ import java.util.ArrayList;
  */
 public class ChatUtils {
 
+    public static final String PREFIX = format("&5NightShade&8 » ");
+
     public static String message(String msg){
-        String prefix = ChatColor.DARK_PURPLE + "NightShade" + ChatColor.DARK_GRAY + "» ";
-        return ChatColor.translateAlternateColorCodes('&', prefix + msg);
+        return ChatColor.translateAlternateColorCodes('&', PREFIX + msg);
     }
 
     public static String format(String msg){
@@ -73,6 +76,10 @@ public class ChatUtils {
         }
 
         return string.substring(0, string.length());
+    }
+
+    public static void sendAll(String message, Rank allowed){
+        NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> nsPlayer.hasRank(allowed)).forEach(nsPlayer -> nsPlayer.msg(ChatUtils.message(message)));
     }
 
 }

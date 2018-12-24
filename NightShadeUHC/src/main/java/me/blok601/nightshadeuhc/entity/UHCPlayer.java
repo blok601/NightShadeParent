@@ -5,13 +5,12 @@ import com.massivecraft.massivecore.store.SenderEntity;
 import com.massivecraft.massivecore.util.MUtil;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
-import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.staff.spec.SpecCommand;
-import me.blok601.nightshadeuhc.utils.ChatUtils;
-import me.blok601.nightshadeuhc.utils.ItemBuilder;
-import me.blok601.nightshadeuhc.utils.Util;
+import me.blok601.nightshadeuhc.command.staff.SpectatorCommand;
+import me.blok601.nightshadeuhc.entity.object.PlayerStatus;
+import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.util.ItemBuilder;
+import me.blok601.nightshadeuhc.util.Util;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -62,13 +61,13 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
     private transient int noCleanTimer;
     private transient boolean receiveHelpop;
     private transient boolean frozen;
-    private transient boolean inArena;
     private transient boolean receivingToggleSneakAlerts;
     private transient boolean receivingSpectatorInfo;
     private transient boolean receivingMiningAlerts;
     private transient boolean receivingCommandSpy;
     private transient double changedLevel;
     private transient boolean usingOldVersion;
+    private transient PlayerStatus playerStatus;
 
     @Override
     public UHCPlayer load(UHCPlayer that) {
@@ -366,28 +365,21 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         this.setLastActivityMillis(System.currentTimeMillis());
     }
 
-    public boolean isInArena() {
-        return inArena;
-    }
-
-    public void setInArena(boolean inArena) {
-        this.inArena = inArena;
-    }
 
     public void spec(){
         if(!isOnline()) return;
         setSpectator(true);
+        setPlayerStatus(PlayerStatus.SPECTATING);
         Player p = getPlayer();
 
-        UHCPlayer gamePlayer1;
         NSPlayer user;
-        for (Player pl : Bukkit.getOnlinePlayers()){
-            user = NSPlayer.get(pl.getUniqueId());
-            gamePlayer1 = UHCPlayer.get(pl.getUniqueId());
-            if(!user.hasRank(Rank.TRIAL) && !gamePlayer1.isSpectator()){
-                pl.hidePlayer(p);
-            }
-        }
+        UHCPlayerColl.get().getAllPlaying()
+                .stream()
+                .filter(SenderEntity::isPlayer)
+                .forEach(uhcPlayer -> uhcPlayer.getPlayer().hidePlayer(p));
+        //Hid them from players -> show other specs
+        UHCPlayerColl.get().getSpectators().forEach(uhcPlayer -> p.showPlayer(uhcPlayer.getPlayer()));
+
 
         user = NSPlayer.get(p.getUniqueId());
 
@@ -397,6 +389,7 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
             }
         }
 
+        p.setGameMode(GameMode.CREATIVE);
         p.setAllowFlight(true);
         p.setFlying(true);
         p.setFlySpeed(0.2F);
@@ -408,18 +401,25 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         if(!isOnline()) return;
         if(!isSpectator()) return;
         setSpectator(false);
+        this.playerStatus = PlayerStatus.LOBBY;
         Player p = getPlayer();
 
         for (Player pl : Bukkit.getOnlinePlayers()){
             pl.showPlayer(p);
         }
 
-        p.setGameMode(GameMode.SURVIVAL);
+        UHCPlayerColl.get().getSpectators().forEach(uhcPlayer -> p.hidePlayer(uhcPlayer.getPlayer())); //Re-hide spectators -- abundant
         p.setFlying(false);
+        p.setAllowFlight(false);
+        p.setGameMode(GameMode.SURVIVAL);
         p.getInventory().clear();
         p.getInventory().setArmorContents(null);
+        p.sendMessage(ChatUtils.message("&5You are no longer a spectator!"));
         Util.staffLog("&2" + p.getName()+ " is no longer a spectator!");
-        p.sendMessage(ChatColor.DARK_AQUA + "[UHC] " + ChatColor.GOLD + "You are no longer a spectator!");
+    }
+
+    public boolean isInArena() {
+        return this.playerStatus == PlayerStatus.ARENA;
     }
 
     public boolean isStaffMode() {
@@ -437,44 +437,30 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
 
         ItemStack vanish = new ItemBuilder(Material.TORCH).name(ChatUtils.format("&cToggle Vanish")).make();
 
-        ItemStack fly = new ItemBuilder(Material.PAPER).name(ChatUtils.format("&cFly Tool")).make();
-
-        ItemStack randomtp = new ItemBuilder(Material.WATCH).name(ChatUtils.format("&cRandom Teleporter")).make();
-
-        ItemStack freeze = new ItemBuilder(Material.PACKED_ICE).name(ChatUtils.format("&cFreeze Player")).make();
-
-        ItemStack chat = new ItemBuilder(Material.SIGN).name(ChatUtils.format("&cChat Control")).make();
+        ItemStack randomHead = new ItemStack(Material.SKULL_ITEM, 1,  (short) 3);
+        ItemStack randomBuilder = new ItemBuilder(randomHead).name("&cRandom Teleport").make();
 
         ItemStack inspect = new ItemBuilder(Material.BOOK).name(ChatUtils.format("&cPlayer Inventory")).make();
 
-        ItemStack violations = new ItemBuilder(Material.DIAMOND_SWORD).name(ChatUtils.format("&cView Player Violations")).make();
-
         if (!isSpectator()) {
-            SpecCommand.setSpec(player);
-            player.sendMessage(ChatUtils.message("&cYou are now in spec mode!"));
+            SpectatorCommand.setSpec(player);
+            player.sendMessage(ChatUtils.message("&aYou are now a spectator"));
         }
 
         player.chat("/van");
-
-        Bukkit.getOnlinePlayers().stream().filter(o -> !UHCPlayer.get(o.getUniqueId()).isSpectator()).forEach(o -> {
-            o.hidePlayer(player);
-        });
-
+        UHCPlayerColl.get().getAllOnline().stream().filter(uhcPlayer -> !uhcPlayer.isSpectator).forEach(uhcPlayer -> uhcPlayer.getPlayer().hidePlayer(player));
+        this.vanish(false);
 
         player.getInventory().setItem(0, jump);
-        player.getInventory().setItem(1, vanish);
-        player.getInventory().setItem(2, fly);
-        player.getInventory().setItem(3, randomtp);
-        player.getInventory().setItem(5, freeze);
-        player.getInventory().setItem(6, chat);
-        player.getInventory().setItem(7, inspect);
-        player.getInventory().setItem(8, violations);
+        player.getInventory().setItem(3, vanish);
+        player.getInventory().setItem(5, randomBuilder);
+        player.getInventory().setItem(8, inspect);
 
         player.setGameMode(GameMode.CREATIVE);
         player.setAllowFlight(true);
         player.setFlying(true);
         player.setFlySpeed(0.2F);
-        UHC.players.remove(player.getUniqueId());
+        //UHC.players.remove(player.getUniqueId());
         player.sendMessage(ChatUtils.message("&eYou are now in staff mode!"));
     }
 
@@ -508,8 +494,11 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         Player p = getPlayer();
         p.getInventory().clear();
         p.getInventory().setArmorContents(null);
+        p.setAllowFlight(false);
+        p.setFlying(false);
+        p.setGameMode(GameMode.SURVIVAL);
 
-        setInArena(true);
+        this.playerStatus = PlayerStatus.ARENA;
 
         ItemBuilder sword = new ItemBuilder(Material.IRON_SWORD).enchantment(Enchantment.DAMAGE_ALL, 2);
         ItemStack rod = new ItemStack(Material.FISHING_ROD);
@@ -519,14 +508,12 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         ItemBuilder boots = new ItemBuilder(Material.IRON_BOOTS).enchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
         ItemBuilder bow = new ItemBuilder(Material.BOW).enchantment(Enchantment.ARROW_DAMAGE, 2).enchantment(Enchantment.ARROW_INFINITE);
         ItemStack gapple = new ItemStack(Material.GOLDEN_APPLE, 1);
-        ItemStack steak = new ItemStack(Material.COOKED_BEEF, 64);
         ItemStack arrow = new ItemStack(Material.ARROW, 1);
 
         p.getInventory().addItem(sword.make());
         p.getInventory().addItem(rod);
         p.getInventory().addItem(bow.make());
         p.getInventory().addItem(gapple);
-        p.getInventory().addItem(steak);
         p.getInventory().setItem(8, arrow);
         p.getInventory().setBoots(boots.make());
         p.getInventory().setLeggings(leggings.make());
@@ -538,7 +525,7 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
     }
 
     public void leaveArena(){
-        setInArena(false);
+        this.playerStatus = PlayerStatus.LOBBY;
         getPlayer().getInventory().clear();
         getPlayer().getInventory().setArmorContents(null);
         getPlayer().teleport(MConf.get().getSpawnLocation().asBukkitLocation(true));
@@ -582,5 +569,13 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
 
     public void setChangedLevel(double changedLevel) {
         this.changedLevel = changedLevel;
+    }
+
+    public PlayerStatus getPlayerStatus() {
+        return playerStatus;
+    }
+
+    public void setPlayerStatus(PlayerStatus playerStatus) {
+        this.playerStatus = playerStatus;
     }
 }

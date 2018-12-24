@@ -1,6 +1,6 @@
 package me.blok601.nightshadeuhc.scenario;
 
-import me.blok601.nightshadeuhc.utils.ItemBuilder;
+import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
@@ -18,7 +18,7 @@ public class BetaZombiesScenario extends Scenario{
         if(!isEnabled()) return;
 
         if(e.getEntity() instanceof Zombie){
-            e.getDrops().add(new ItemStack(Material.FEATHER, 3));
+            e.getDrops().add(new ItemStack(Material.FEATHER, 2));
         }
     }
 }

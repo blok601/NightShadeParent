@@ -8,17 +8,19 @@ description: NightShadePvP UHC Plugin that runs on the UHC Servers
 website: www.nightshadepvp.com
 commands:
   suhc:
-    description: Main Start UHC Command
+    description: Main StartUHC Command
   spec:
     description: Spectator Command
   helpop:
-    description: Helpop Command
+    description: HelpopCommand Command
   team:
     description: Team Base command
   pm:
     description: Send a message to your team
+    aliases: [tc]
   pmcoords:
     description: Send your coords to your team
+    aliases: [pmc, sendcoords]
   scat:
     description: Scatter command
   pvp:
@@ -35,28 +37,36 @@ commands:
     description: Get the top kills for a game
     aliases: [kt, ktop]
   feedall:
+    description: Feed all players
   freezeall:
+    description: Freeze all players
   health:
+    description: Get the health of another player
     aliases: [h, hp]
   heal:
+    description: Heal a player
   helpop:
+    description: Send a message to the online staff
   pvp:
-  lag:
-    description: Get information about the world (lag info)
+    description: Enable/Disable PvP
   lct:
+    description: Check how much longer until lootcrates are given
   cancelgame:
+    description: Stop game tasks from beginning
   randomd:
+    description: Randomly disguise
   endgame:
     aliases: [winner, egame]
   spc:
+    aliases: [specchat, sp, spcchat]
   alerts:
-  locreport:
-    aliases: [lreport, locs, locations, playerlocations, ploc, locationreport]
-    description: Get online player's locations
+    description: Enable or disable staff alerts
   commandspy:
     aliases: [cmdspy]
   setticks:
     description: Set ticks command
+  sit:
+    description: Sit
   tpall:
     aliases: [teleportall, sall]
     description: Teleport everyone to you
@@ -67,28 +77,33 @@ commands:
   claimhost:
     description: Claim the current game
   setworld:
+    description: Set the world for the game
   teams:
+    description: View the teams
   maxplayers:
+    description: Set the maxplayers for the game
   timer:
-  setupdates:
-    description: Command for Circle Integration
+    description: Manually start and stop the timer
   config:
-  savepreset:
-  loadpreset:
+    aliases: [conf, uhc]
+    description: Show the game config
   respawn:
+    description: Respawn players
   ewl:
   latestart:
+    aliases: [latescatter]
   killtop:
     aliases: [kt]
-  pregen:
   explain:
     description: View scenario descriptions
   rates:
+    description: Set the apple and flint rates
   feed:
     description: Feed command
     aliases: [eat]
   togglehelpop:
   scenarios:
+    aliases: [scens, gamemodes]
     description: Show enabled scenarios
   resethealth:
   cleararmor:
@@ -97,6 +112,8 @@ commands:
   worlds:
   deleteworld:
   fullbright:
+    aliases: [nv, nightvision]
+    description: Get night vision / full bright for caving
   rvb:
   testgen:
   leaderboards:
@@ -105,11 +122,74 @@ commands:
   setarenaspawn:
   arena:
     aliases: [a]
-  cstop:
+  chatstop:
+    aliases: [togglechatmute, gmute, globalmute, chattoggle, ozzyisgay]
   walls:
+    aliases: [shrink, setwalls]
+    description: Set and generate the border for the given radius
   cancelpregen:
   power:
     aliases: [superpower]
   assignpower:
   setanonymousname:
   abrole:
+  specs:
+    description: View the spectators
+    aliases: [spectators]
+  permaday:
+    description: Set it to permaday
+  alive:
+    description: View the alive players
+  clearxp:
+    aliases: [xpclear]
+    description: Clear everyone's XP
+  teaminventory:
+    description: Team inventory command
+    aliases: [ti, tinv, tinventory]
+  moles:
+    description: View the moles
+  mcl:
+    description: Send moles locations
+  molekit:
+    description: Get your mole kit
+  mcc:
+    description: Talk in mole chat
+  spectime:
+    description: View player's spectating time
+  deathban:
+    aliases: [dq]
+    descrpition: Deathban a player for a reason
+  topspecs:
+    aliases: [topspec, tpsecs, spectop]
+    description: View the top 10 spectators
+  halloffame:
+    aliases: [hof, games, allgames, hofgames, pastgames]
+    description: View the UHC hall of fame
+  mole:
+    description: Show some useful moles commands
+    aliases: [molehelp, helpmoles, moleshelp]
+  setmole:
+    description: Update the mole for the team
+  kicksolos:
+    description: Kick the solos for the game
+  togglemobs:
+    description: Butcher and stop mobs spawning in that world
+    aliases: [removemobs, nomobs]
+  cleartrees:
+    description: Clear trees around 0 0
+    aliases: [removetrees]
+  pmores:
+    description: Send your ores to your team
+  backpack:
+    description: Command for backpack scenario
+    aliases: [bp, backpacks, bps]
+  host:
+    description: Host a game!
+    aliases: [settings, betahost]
+  confirm:
+    description: Hosting command
+  setborder:
+    description: Set the world border for a command
+  doubledates:
+    description: Double dates scenario command
+    aliases: [doubledate, dd, 2xdate]

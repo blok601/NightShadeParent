@@ -1,8 +1,8 @@
 package me.blok601.nightshadeuhc.scenario.cmd;
 
 import com.nightshadepvp.core.Rank;
-import me.blok601.nightshadeuhc.utils.ChatUtils;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.command.UHCCommand;
 import me.blok601.nightshadeuhc.scenario.Scenario;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import org.bukkit.command.Command;
@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 /**
  * Created by Blok on 2/10/2018.
  */
-public class ExplainCommand implements CmdInterface{
+public class ExplainCommand implements UHCCommand{
     @Override
     public String[] getNames() {
         return new String[]{

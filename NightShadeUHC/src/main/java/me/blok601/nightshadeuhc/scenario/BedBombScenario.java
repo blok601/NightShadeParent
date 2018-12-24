@@ -1,6 +1,6 @@
 package me.blok601.nightshadeuhc.scenario;
 
-import me.blok601.nightshadeuhc.utils.ItemBuilder;
+import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -15,7 +15,7 @@ public class BedBombScenario extends Scenario{
     }
 
     @EventHandler
-    public void onPLace(BlockPlaceEvent e){
+    public void onPlace(BlockPlaceEvent e){
         if(!isEnabled()){
             return;
         }

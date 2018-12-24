@@ -21,6 +21,6 @@ public class HostLyingPunishment extends AbstractPunishment {
                 .name("&5Lying to the Host &8(&51st Offense&8)")
                 .lore("&eClick to ban the player for 1d for lying to the host").make(),
                 this, Collections.singletonList("ban %player% 1d Lying to the Host"), PunishmentType.BAN
-        ), 22);
+        ), 20);
     }
 }

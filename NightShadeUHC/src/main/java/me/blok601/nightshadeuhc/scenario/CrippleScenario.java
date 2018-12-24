@@ -1,6 +1,6 @@
 package me.blok601.nightshadeuhc.scenario;
 
-import me.blok601.nightshadeuhc.utils.ItemBuilder;
+import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -23,7 +23,7 @@ public class CrippleScenario extends Scenario{
 
         if(e.getEntity() instanceof Player){
             Player p = (Player) e.getEntity();
-            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 30, 0));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 30*20, 0));
         }
     }
 }

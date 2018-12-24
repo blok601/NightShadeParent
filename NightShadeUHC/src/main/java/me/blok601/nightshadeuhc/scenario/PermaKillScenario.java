@@ -1,10 +1,10 @@
 package me.blok601.nightshadeuhc.scenario;
 
 import me.blok601.nightshadeuhc.manager.GameManager;
-import me.blok601.nightshadeuhc.utils.ChatUtils;
-import me.blok601.nightshadeuhc.utils.ItemBuilder;
-import me.blok601.nightshadeuhc.events.CustomDeathEvent;
-import me.blok601.nightshadeuhc.events.GameStartEvent;
+import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.util.ItemBuilder;
+import me.blok601.nightshadeuhc.event.CustomDeathEvent;
+import me.blok601.nightshadeuhc.event.GameStartEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -29,11 +29,11 @@ public class PermaKillScenario extends Scenario{
 
         if(day){
             day = false;
-            GameManager.getWorld().setTime(14000);
+            GameManager.get().getWorld().setTime(14000);
             Bukkit.broadcastMessage(ChatUtils.format(getPrefix() + " &eIt is now night!"));
         }else{
             day = true;
-            GameManager.getWorld().setTime(6000);
+            GameManager.get().getWorld().setTime(6000);
             Bukkit.broadcastMessage(ChatUtils.format(getPrefix() + " &eIt is now day!"));
 
         }
@@ -48,8 +48,9 @@ public class PermaKillScenario extends Scenario{
         }
 
 
-        GameManager.getWorld().setTime(6000);
-        GameManager.getWorld().setGameRuleValue("doDaylightCycle", "false");
+        GameManager.get().getWorld().setTime(6000);
+        GameManager.get().getWorld().setGameRuleValue("doDaylightCycle", "false");
+        GameManager.get().getWorld().setGameRuleValue("doWeatherCycle", "false");
         day = true;
         Bukkit.broadcastMessage(ChatUtils.format(getPrefix() + " &ePermaKill has started!"));
     }

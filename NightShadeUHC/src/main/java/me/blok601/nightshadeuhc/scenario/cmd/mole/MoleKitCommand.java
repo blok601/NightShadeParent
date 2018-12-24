@@ -1,12 +1,12 @@
 package me.blok601.nightshadeuhc.scenario.cmd.mole;
 
 import com.nightshadepvp.core.Rank;
-import me.blok601.nightshadeuhc.GameState;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.entity.object.GameState;
+import me.blok601.nightshadeuhc.command.UHCCommand;
 import me.blok601.nightshadeuhc.gui.MoleKitGUI;
 import me.blok601.nightshadeuhc.scenario.MolesScenario;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
-import me.blok601.nightshadeuhc.utils.ChatUtils;
+import me.blok601.nightshadeuhc.util.ChatUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 /**
  * Created by Blok on 7/6/2018.
  */
-public class MoleKitCommand implements CmdInterface{
+public class MoleKitCommand implements UHCCommand{
     @Override
     public String[] getNames() {
         return new String[]{
@@ -40,7 +40,12 @@ public class MoleKitCommand implements CmdInterface{
             return;
         }
 
-        p.sendMessage(ScenarioManager.getScen("Moles").getPrefix() + "&eOpening mole kits...");
+        if(MolesScenario.moles.get(p.getUniqueId())){
+            p.sendMessage(ChatUtils.format(ScenarioManager.getScen("Moles").getPrefix() + "&cYou have already redeemed your mole kit!"));
+            return;
+        }
+
+        p.sendMessage(ChatUtils.format(ScenarioManager.getScen("Moles").getPrefix() + "&eOpening mole kits..."));
         new MoleKitGUI(p);
     }
 

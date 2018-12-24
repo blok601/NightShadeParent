@@ -42,10 +42,10 @@ public class CmdStaffChat extends NightShadeCoreCommand{
 
             user.setInStaffChat(true);
             user.getPlayer().sendMessage(ChatUtils.message("&eYou have entered staff chat"));
-            return;
         } else { // They gave a param)
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF(user.getName());
+            //out.writeUTF(MConf.get().getServerName());
             out.writeUTF(message.trim());
             user.getPlayer().sendPluginMessage(Core.get(), "staffchat", out.toByteArray());
             Core.get().getLogManager().log(Logger.LogType.DEBUG, "Staff Chat line 61");

@@ -1,8 +1,8 @@
 package me.blok601.nightshadeuhc.scenario;
 
-import me.blok601.nightshadeuhc.utils.ChatUtils;
-import me.blok601.nightshadeuhc.utils.ItemBuilder;
-import me.blok601.nightshadeuhc.utils.Util;
+import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.util.ItemBuilder;
+import me.blok601.nightshadeuhc.util.Util;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -17,7 +17,7 @@ public class AurophobiaScenario extends Scenario{
 
 
     public AurophobiaScenario() {
-        super("Aurophobia", "Whenever you mine Gold you have a chance of getting damaged by a heart, getting spawned 2 silverfish on you, losing the gold, getting blindness for 10 seconds, or getting a cave spider spawned on you.", new ItemBuilder(Material.GOLD_ORE).name("Aurophobia").make());
+        super("Aurophobia", "Whenever you mine Gold you have a chance of getting damaged by a heart, getting spawned 2 silverfish on you, losing the gold, getting blindness for 10 seconds, or getting a cave spider spawned on you.", "AP", new ItemBuilder(Material.GOLD_ORE).name("Aurophobia").make());
     }
 
     @EventHandler

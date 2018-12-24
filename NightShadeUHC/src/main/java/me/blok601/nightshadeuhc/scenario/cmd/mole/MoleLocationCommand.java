@@ -1,10 +1,10 @@
 package me.blok601.nightshadeuhc.scenario.cmd.mole;
 
 import com.nightshadepvp.core.Rank;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.command.UHCCommand;
 import me.blok601.nightshadeuhc.scenario.MolesScenario;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
-import me.blok601.nightshadeuhc.utils.ChatUtils;
+import me.blok601.nightshadeuhc.util.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -15,7 +15,7 @@ import java.util.UUID;
 /**
  * Created by Blok on 7/6/2018.
  */
-public class MoleLocationCommand implements CmdInterface{
+public class MoleLocationCommand implements UHCCommand{
     @Override
     public String[] getNames() {
         return new String[]{
@@ -28,7 +28,7 @@ public class MoleLocationCommand implements CmdInterface{
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
         if(!MolesScenario.moles.containsKey(p.getUniqueId())){
-            p.sendMessage(ScenarioManager.getScen("Moles").getPrefix() + "&cYou are not a mole!");
+            p.sendMessage(ChatUtils.format(ScenarioManager.getScen("Moles").getPrefix() + "&cYou are not a mole!"));
             return;
         }
 

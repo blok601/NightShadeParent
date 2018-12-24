@@ -103,17 +103,17 @@
         <dependency>
             <groupId>com.nightshadepvp</groupId>
             <artifactId>Core</artifactId>
-            <version>LATSEST</version>
+            <version>LATEST</version>
             <scope>system</scope>
-            <systemPath>${basedir}/src/main/resources/libs/core-1.0-SNAPSHOT.jar</systemPath>
+            <systemPath>${basedir}/src/main/resources/libs/Core.jar</systemPath>
         </dependency>
 
         <dependency>
             <groupId>com.wimbli.WorldBorder</groupId>
             <artifactId>WorldBorder</artifactId>
+            <version>LATEST</version>
             <scope>system</scope>
             <systemPath>${basedir}/src/main/resources/libs/WorldBorder.jar</systemPath>
-            <version>1.8.4</version>
         </dependency>
 
         <dependency>
@@ -151,13 +151,6 @@
             <artifactId>ProtocolLib-API</artifactId>
             <version>4.3.0</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>13.0</version>
-        </dependency>
-
         <dependency>
             <groupId>org.multiverse</groupId>
             <artifactId>multiverse-core</artifactId>
@@ -165,25 +158,17 @@
             <scope>system</scope>
             <systemPath>${basedir}/src/main/resources/libs/Multiverse-Core-2.5.jar</systemPath>
         </dependency>
-
-        <dependency>
-            <groupId>us.myles</groupId>
-            <artifactId>viaversion</artifactId>
-            <version>LATEST</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/src/main/resources/libs/ViaVersion-1.4.0.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>com.gmail.filoghost.holographicdisplays</groupId>
-            <artifactId>holographicdisplays-api</artifactId>
-            <version>2.2.7-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
         <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>mongodb-driver</artifactId>
             <version>3.4.3</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.jetbrains/annotations -->
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>13.0</version>
+        </dependency>
+
     </dependencies>
 </project>

@@ -1,8 +1,8 @@
 package me.blok601.nightshadeuhc.scenario;
 
-import me.blok601.nightshadeuhc.events.GameStartEvent;
+import me.blok601.nightshadeuhc.event.GameStartEvent;
 import me.blok601.nightshadeuhc.manager.GameManager;
-import me.blok601.nightshadeuhc.utils.ItemBuilder;
+import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -37,7 +37,7 @@ public class RiskyRetrievalScenario extends Scenario {
     if(!isEnabled()) {
       return;
     }
-    Block block = GameManager.getWorld().getHighestBlockAt(0, 0);
+    Block block = GameManager.get().getWorld().getHighestBlockAt(0, 0);
     block.setType(Material.ENDER_CHEST);
   }
 }

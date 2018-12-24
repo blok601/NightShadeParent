@@ -7,10 +7,13 @@ import com.massivecraft.massivecore.store.DriverFlatfile;
 import com.massivecraft.massivecore.store.DriverMongo;
 import com.nightshadepvp.core.entity.MConf;
 import com.nightshadepvp.core.entity.NSPlayerColl;
+import com.nightshadepvp.core.listener.LiteBansListener;
 import com.nightshadepvp.core.punishment.PunishmentHandler;
 import com.nightshadepvp.core.store.NSStore;
 import com.nightshadepvp.core.store.NSStoreConf;
+import com.nightshadepvp.core.ubl.UBLHandler;
 import com.nightshadepvp.core.utils.ChatUtils;
+import litebans.api.Events;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -24,6 +27,8 @@ import java.io.IOException;
 
 public class Core extends MassivePlugin implements PluginMessageListener {
 
+    private String matchpost = "uhc.gg";
+
     private static Core i;
 
     public Core() {
@@ -31,6 +36,7 @@ public class Core extends MassivePlugin implements PluginMessageListener {
     }
 
     private static Scoreboard board;
+    private UBLHandler ublHandler = new UBLHandler(this);
 
     private Logger logger;
 
@@ -57,6 +63,7 @@ public class Core extends MassivePlugin implements PluginMessageListener {
 
         getConfig().options().copyDefaults(true);
         saveConfig();
+        Events.get().register(new LiteBansListener());
 
         PunishmentHandler.getInstance().setup();
         ServerType.setType(MConf.get().serverType);
@@ -69,6 +76,21 @@ public class Core extends MassivePlugin implements PluginMessageListener {
             }
         }.runTaskAsynchronously(this);
 
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                NSPlayerColl.get().getAllOnline().forEach(nsPlayer -> {
+                    nsPlayer.setCurrentAFKTime(nsPlayer.getCurrentAFKTime() + 1);
+                    if(nsPlayer.getCurrentAFKTime() >= 10){
+                        nsPlayer.setAFK(true); //If they haven't done shit for 10 seconds they are afk
+                    }
+                });
+            }
+        }.runTaskTimer(this, 0, 20);
+
+
+        getLogManager().log(Logger.LogType.INFO, "Starting UBL Tasks...");
+        ublHandler.setup();
         Bukkit.getConsoleSender().sendMessage(ChatUtils.message("&eLoading NightShadeCore version: " + getDescription().getVersion() + ". Server Type: " + ServerType.getType().toString()));
     }
 
@@ -131,10 +153,10 @@ public class Core extends MassivePlugin implements PluginMessageListener {
         if (channel.equalsIgnoreCase("staffchat")) {
             ByteArrayDataInput in = ByteStreams.newDataInput(message);
             String playerName = in.readUTF();
-            String server = in.readUTF();
+            //String server = in.readUTF();
             String msg = in.readUTF();
 
-            NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> nsPlayer.hasRank(Rank.TRIAL)).forEach(nsPlayer -> nsPlayer.msg(ChatUtils.format("&8[&cStaff Chat&8] &8[&c" + server + "&8] &a" + playerName + "&8: &r" + msg)));
+            NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> nsPlayer.hasRank(Rank.TRIAL)).forEach(nsPlayer -> nsPlayer.msg(ChatUtils.format("&8[&cStaff Chat&8] &a" + playerName + "&8: &r" + msg)));
         }
     }
 
@@ -144,5 +166,17 @@ public class Core extends MassivePlugin implements PluginMessageListener {
         }
 
         return jedis;
+    }
+
+    public String getMatchpost() {
+        return matchpost;
+    }
+
+    public void setMatchpost(String matchpost) {
+        this.matchpost = matchpost;
+    }
+
+    public UBLHandler getUblHandler() {
+        return ublHandler;
     }
 }

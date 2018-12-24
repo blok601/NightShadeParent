@@ -1,8 +1,8 @@
 package me.blok601.nightshadeuhc.scenario;
 
-import me.blok601.nightshadeuhc.utils.ChatUtils;
-import me.blok601.nightshadeuhc.utils.ItemBuilder;
-import me.blok601.nightshadeuhc.utils.Util;
+import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.util.ItemBuilder;
+import me.blok601.nightshadeuhc.util.Util;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -26,7 +26,20 @@ public class TrashOrTreasureScenario extends Scenario{
         }
 
 
-        if(e.getBlock().getType() == Material.DIAMOND_ORE){
+        if (e.getBlock().getType() == Material.DIAMOND_ORE) {
+          if(Util.getChance(3)){
+            e.getPlayer().getInventory().addItem(new ItemStack(Material.DIAMOND));
+          }
+        }
+
+          if(e.getBlock().getType() == Material.LAPIS_ORE){
+            if(Util.getChance(5)){
+              e.getPlayer().getInventory().addItem(new ItemStack(Material.DIAMOND));
+            }
+          }
+
+          if(e.getBlock().getType() == Material.GOLD_ORE){
+            if(Util.getChance(7)){
             e.setCancelled(true);
             e.getBlock().setType(Material.AIR);
             e.getPlayer().sendMessage(ChatUtils.format(getPrefix() + "&cYou can't mine diamonds in &6Trash or Treasure!"));
@@ -46,19 +59,6 @@ public class TrashOrTreasureScenario extends Scenario{
         }
 
         if(e.getBlock().getType() == Material.REDSTONE_ORE){
-            if(Util.getChance(3)){
-                e.getPlayer().getInventory().addItem(new ItemStack(Material.DIAMOND));
-            }
-        }
-
-        if(e.getBlock().getType() == Material.LAPIS_ORE){
-            if(Util.getChance(5)){
-                e.getPlayer().getInventory().addItem(new ItemStack(Material.DIAMOND));
-            }
-        }
-
-        if(e.getBlock().getType() == Material.GOLD_ORE){
-            if(Util.getChance(7)){
                 e.getPlayer().getInventory().addItem(new ItemStack(Material.DIAMOND));
             }
         }

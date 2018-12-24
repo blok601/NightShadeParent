@@ -31,6 +31,11 @@ public class CmdTpHere extends NightShadeCoreCommand{
         NSPlayer targetPlayer = this.readArg();
         Player p = (Player) sender;
 
+        if(!targetPlayer.isOnline()){
+            p.sendMessage(ChatUtils.message("&cThat player is not online!"));
+            return;
+        }
+
         targetPlayer.getPlayer().teleport(p);
         p.sendMessage(ChatUtils.message("&eYou teleported &a" + targetPlayer.getName() + " &eto yourself!"));
         targetPlayer.msg(ChatUtils.message("&eYou were teleported to &a" + targetPlayer.getName()));

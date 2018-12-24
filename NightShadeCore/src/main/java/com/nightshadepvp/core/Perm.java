@@ -7,7 +7,11 @@ import org.bukkit.permissions.Permissible;
 public enum Perm implements Identified
 {
 	BASECOMMAND,
-	VERSION;
+	VERSION,
+	EXEMPT,
+	UNEXEMPT,
+	UPDATE,
+	CHECK;
 	
 	private final String id;
 	

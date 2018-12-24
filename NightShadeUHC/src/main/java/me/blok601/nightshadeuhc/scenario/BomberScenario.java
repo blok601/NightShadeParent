@@ -1,19 +1,19 @@
 package me.blok601.nightshadeuhc.scenario;
 
-import me.blok601.nightshadeuhc.entity.UHCPlayer;
-import me.blok601.nightshadeuhc.events.GameStartEvent;
-import me.blok601.nightshadeuhc.utils.ItemBuilder;
-import org.bukkit.Bukkit;
+import me.blok601.nightshadeuhc.scenario.interfaces.StarterItems;
+import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerItemBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Collections;
+import java.util.List;
+
 //Created By Ozzy, All by himself. July 20th, 2028
-public class BomberScenario extends Scenario {
+public class BomberScenario extends Scenario implements StarterItems {
   public BomberScenario(){
     super("Bombers", "Mobs and Animals drop TNT. Everyone receives an unbreakable Flint and Steel on start.", new ItemBuilder(Material.TNT).name("Bombers").make());
   }
@@ -42,17 +42,8 @@ public class BomberScenario extends Scenario {
 
     }
   }
-  @EventHandler
-  public void onStart(GameStartEvent e){
-    if(!isEnabled()){
-      return;
-    }
-    ItemBuilder FnS = new ItemBuilder(Material.FLINT_AND_STEEL);
 
-    Bukkit.getOnlinePlayers().stream().filter(o -> !UHCPlayer.get(o.getUniqueId()).isSpectator()).forEach(player ->{
-      player.getInventory().addItem(FnS.make());
-    });
-  }
+
   @EventHandler
   public void onBreak (PlayerItemBreakEvent e) {
     Player p = e.getPlayer();
@@ -61,4 +52,8 @@ public class BomberScenario extends Scenario {
     }
   }
 
+  @Override
+  public List<ItemStack> getStarterItems() {
+    return Collections.singletonList(new ItemStack(Material.FLINT_AND_STEEL));
   }
+}

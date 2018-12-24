@@ -1,10 +1,11 @@
 package me.blok601.nightshadeuhc.scenario.cmd.mole;
 
 import com.nightshadepvp.core.Rank;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import com.nightshadepvp.core.entity.NSPlayer;
+import me.blok601.nightshadeuhc.command.UHCCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.scenario.MolesScenario;
-import me.blok601.nightshadeuhc.utils.ChatUtils;
+import me.blok601.nightshadeuhc.util.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -16,7 +17,7 @@ import java.util.UUID;
 /**
  * Created by Blok on 7/6/2018.
  */
-public class MolesCommand implements CmdInterface{
+public class MolesCommand implements UHCCommand{
     @Override
     public String[] getNames() {
         return new String[]{
@@ -43,24 +44,28 @@ public class MolesCommand implements CmdInterface{
             return;
         }
 
-        if (!gamePlayer.isSpectator()) {
-            p.sendMessage(ChatUtils.message("&cYou must be playing the game to view the moles!"));
-            return;
-        }
-
+        if (gamePlayer.isSpectator()) {
+            if (!NSPlayer.get(p).hasRank(Rank.TRIAL)) {
+                p.sendMessage(ChatUtils.message("&cYou must be playing the game to view the moles!"));
+                return;
+            }
+            p.sendMessage(ChatUtils.message("&eThe following moles:"));
             p.sendMessage(ChatUtils.format("&5&m-----------------------------------"));
             Player mole;
             OfflinePlayer offlineMole;
-            for (UUID uuid : MolesScenario.moles.keySet()){
+            for (UUID uuid : MolesScenario.moles.keySet()) {
                 mole = Bukkit.getPlayer(uuid);
-                if(mole != null){
-                    p.sendMessage(ChatUtils.format("&e- " + mole.getName()));
-                }else{
+                if (mole != null) {
+                    p.sendMessage(ChatUtils.format("&e- &a" + mole.getName()));
+                } else {
                     offlineMole = Bukkit.getOfflinePlayer(uuid);
-                    p.sendMessage(ChatUtils.format("&e- " + offlineMole.getName()));
+                    p.sendMessage(ChatUtils.format("&e- &7" + offlineMole.getName()));
                 }
             }
             p.sendMessage(ChatUtils.format("&5&m-----------------------------------"));
+        }
+
+
     }
 
     @Override

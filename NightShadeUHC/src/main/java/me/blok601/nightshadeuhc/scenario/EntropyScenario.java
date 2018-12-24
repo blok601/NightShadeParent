@@ -1,8 +1,10 @@
 package me.blok601.nightshadeuhc.scenario;
 
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.utils.ItemBuilder;
-import me.blok601.nightshadeuhc.events.GameStartEvent;
+import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
+import me.blok601.nightshadeuhc.event.GameStartEvent;
+import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -29,17 +31,16 @@ public class EntropyScenario extends Scenario {
         new BukkitRunnable(){
             @Override
             public void run() {
-                UHC.players.forEach(uuid -> {
-                    Player p = Bukkit.getPlayer(uuid);
+
+                UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> {
+                    Player p = uhcPlayer.getPlayer();
 
                     if(p.getLevel() == 0){
                         p.setHealth(0.0);
-                        Bukkit.broadcastMessage(getPrefix() + "&6" + p.getName() + " &4has withered away&8.");
+                        Bukkit.broadcastMessage(ChatUtils.format(getPrefix() + "&6" + p.getName() + " &4has withered away&8."));
                     }else{
                         p.setLevel(p.getLevel() -1);
                     }
-
-
                 });
             }
         }.runTaskTimer(UHC.get(), 0, 10*60*20);

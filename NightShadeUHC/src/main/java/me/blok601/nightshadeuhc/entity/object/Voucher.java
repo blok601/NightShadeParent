@@ -3,7 +3,7 @@ package me.blok601.nightshadeuhc.entity.object;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.objects.PlayerColor;
 import com.nightshadepvp.core.entity.objects.PlayerEffect;
-import me.blok601.nightshadeuhc.utils.ItemBuilder;
+import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Material;
 
 /**

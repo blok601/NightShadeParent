@@ -63,6 +63,11 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
+        <repository>
+            <id>jcenter</id>
+            <name>jcenter-bintray</name>
+            <url>http://jcenter.bintray.com</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -80,19 +85,32 @@
             <scope>system</scope>
             <systemPath>${basedir}/src/main/resources/libs/pspigot.jar</systemPath>
         </dependency>
-        <dependency>
-            <groupId>litebans</groupId>
-            <artifactId>api</artifactId>
-            <version>LATEST</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/src/main/resources/libs/LiteBansAPI.jar</systemPath>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
             <version>2.9.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.4</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+            <version>1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>litebans</groupId>
+            <artifactId>api</artifactId>
+            <version>0.3</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/src/main/resources/libs/LiteBansAPI.jar</systemPath>
+        </dependency>
     </dependencies>
-    
+
+
 </project>

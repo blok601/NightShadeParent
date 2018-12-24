@@ -2,7 +2,7 @@ package me.blok601.nightshadeuhc.scenario;
 
 import com.nightshadepvp.core.utils.ChatUtils;
 import com.nightshadepvp.core.utils.ItemBuilder;
-import me.blok601.nightshadeuhc.events.CustomDeathEvent;
+import me.blok601.nightshadeuhc.event.CustomDeathEvent;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;

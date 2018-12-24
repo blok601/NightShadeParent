@@ -1,6 +1,5 @@
 package me.blok601.nightshadeuhc;
 
-
 import com.comphenix.protocol.ProtocolLibrary;
 import com.earth2me.essentials.Essentials;
 import com.massivecraft.massivecore.MassivePlugin;
@@ -13,27 +12,31 @@ import com.nightshadepvp.core.Logger;
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import de.robingrether.idisguise.api.DisguiseAPI;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
-import me.blok601.nightshadeuhc.commands.Commands;
-import me.blok601.nightshadeuhc.listeners.gui.EnchantHider;
-import me.blok601.nightshadeuhc.listeners.modules.ComponentHandler;
-import me.blok601.nightshadeuhc.listeners.modules.GoldenHeadRecipe;
-import me.blok601.nightshadeuhc.logger.LoggerHandler;
+import me.blok601.nightshadeuhc.command.Commands;
+import me.blok601.nightshadeuhc.command.UHCCommand;
+import me.blok601.nightshadeuhc.command.player.teams.SendCoordsCommand;
+import me.blok601.nightshadeuhc.command.player.teams.TeamChatCommand;
+import me.blok601.nightshadeuhc.component.ComponentHandler;
+import me.blok601.nightshadeuhc.component.GoldenHeadRecipe;
+import me.blok601.nightshadeuhc.entity.object.GameState;
+import me.blok601.nightshadeuhc.listener.gui.EnchantHider;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.manager.ListenerHandler;
-import me.blok601.nightshadeuhc.manager.Settings;
-import me.blok601.nightshadeuhc.packet.OldEnchanting;
+import me.blok601.nightshadeuhc.manager.LoggerManager;
+import me.blok601.nightshadeuhc.manager.SettingsManager;
+import me.blok601.nightshadeuhc.manager.packet.OldEnchanting;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
 import me.blok601.nightshadeuhc.scoreboard.ScoreboardManager;
-import me.blok601.nightshadeuhc.stats.handler.StatsHandler;
-import me.blok601.nightshadeuhc.tasks.ScoreboardHealthTask;
-import me.blok601.nightshadeuhc.tasks.WorldLoadTask;
-import me.blok601.nightshadeuhc.teams.CmdSendCoords;
-import me.blok601.nightshadeuhc.teams.CmdTeamChat;
-import me.blok601.nightshadeuhc.utils.ChatUtils;
-import me.blok601.nightshadeuhc.utils.Lag;
-import me.blok601.nightshadeuhc.utils.Util;
+import me.blok601.nightshadeuhc.stat.handler.StatsHandler;
+import me.blok601.nightshadeuhc.task.PregenTask;
+import me.blok601.nightshadeuhc.task.ScoreboardHealthTask;
+import me.blok601.nightshadeuhc.task.StaffTrackTask;
+import me.blok601.nightshadeuhc.task.WorldLoadTask;
+import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.util.Lag;
+import me.blok601.nightshadeuhc.util.Util;
+import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -68,9 +71,11 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
     private ScenarioManager sm;
     private ScoreboardManager scoreboardManager;
 
-    private MongoCollection gameCollection;
+    private MongoCollection<Document> gameCollection;
 
     public static HashSet<UUID> players = new HashSet<>();
+
+    public static HashSet<UUID> loggedOutPlayers;
 
     @Override
     public void onEnableInner() {
@@ -84,18 +89,21 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         saveConfig();
 
         GameState.setState(GameState.WAITING);
-        Settings.getInstance().setup(this);
+        SettingsManager.getInstance().setup(this);
 
         registerCommands();
         registerListeners();
 
-        GameManager.setup();
+        setupExtraDatabase();
+        GameManager.get().setup();
         scoreboardManager = new ScoreboardManager();
         Bukkit.getScheduler().runTaskTimer(this, () -> {
             scoreboardManager.getPlayerScoreboards().values().forEach(PlayerScoreboard::update);
-        }, 0L, 10L);
-        new ScoreboardHealthTask(scoreboardManager).runTaskTimer(this, 0, 40);
+        }, 0L, 35L);
+        new ScoreboardHealthTask(scoreboardManager).runTaskTimerAsynchronously(this, 0, 60);
         Commands.setup();
+        new StaffTrackTask().runTaskTimer(this, 0, 100);
+        new PregenTask().runTaskTimer(this, 0, 40);
 
         ComponentHandler.getInstance().setup();
         StatsHandler.getInstance().setup();
@@ -134,34 +142,35 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
 
         if (Bukkit.getPluginManager().getPlugin("ViaRewind") != null) {
             //UHC2
-            GameManager.setServerType("UHC2");
+            GameManager.get().setServerType("UHC2");
         } else {
-            GameManager.setServerType("UHC1");
+            GameManager.get().setServerType("UHC1");
         }
 
-        setupExtraDatabase();
-        if(GameManager.getServerType().equalsIgnoreCase("UHC2")){
+
+        if(GameManager.get().getServerType().equalsIgnoreCase("UHC2")){
             hideEnchants();
             new OldEnchanting(this);
         }
 
+        loggedOutPlayers = new HashSet<>();
+
         Bukkit.getConsoleSender().sendMessage(ChatUtils.message("&aNightShadePvPUHC " + getDescription().getVersion() + " has been successfully enabled!"));
-        Bukkit.getConsoleSender().sendMessage(ChatUtils.message("&eDetected Server&8: &3" + GameManager.getServerType()));
+        Bukkit.getConsoleSender().sendMessage(ChatUtils.message("&eDetected Server&8: &3" + GameManager.get().getServerType()));
 
     }
 
     public void onDisable() {
-
-
-        LoggerHandler.getInstance().getLoggers().forEach(combatLogger -> LoggerHandler.getInstance().removeLogger(combatLogger));
+        //LoggerHandler.getInstance().getLoggers().forEach(combatLogger -> LoggerHandler.getInstance().removeLogger(combatLogger));
+        LoggerManager.getInstance().getLoggers().clear();
         Bukkit.getMessenger().unregisterIncomingPluginChannel(this, "BungeeCord", this);
         Bukkit.getMessenger().unregisterOutgoingPluginChannel(this, "BungeeCord");
 
     }
 
     private void registerCommands() {
-        getCommand("pm").setExecutor(new CmdTeamChat());
-        getCommand("pmcoords").setExecutor(new CmdSendCoords());
+        getCommand("pm").setExecutor(new TeamChatCommand());
+        getCommand("pmcoords").setExecutor(new SendCoordsCommand());
 
     }
 
@@ -176,7 +185,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
             Commands.setup();
         }
 
-        for (CmdInterface ci : Commands.getCommands()) {
+        for (UHCCommand ci : Commands.getCommands()) {
             List<String> cmds = new ArrayList<String>();
             if (ci.getNames() != null) {
                 for (String name : ci.getNames()) {
@@ -274,7 +283,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         });
     }
 
-    public MongoCollection getGameCollection() {
+    public MongoCollection<Document> getGameCollection() {
         return gameCollection;
     }
 

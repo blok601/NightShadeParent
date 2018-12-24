@@ -2,97 +2,123 @@ package me.blok601.nightshadeuhc.scenario;
 
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
-import me.blok601.nightshadeuhc.utils.ChatUtils;
-import me.blok601.nightshadeuhc.utils.ItemBuilder;
-import me.blok601.nightshadeuhc.utils.PagedInventory;
+import me.blok601.nightshadeuhc.command.UHCCommand;
+import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
+import me.blok601.nightshadeuhc.event.GameStartEvent;
+import me.blok601.nightshadeuhc.scenario.interfaces.StarterItems;
+import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.util.ItemBuilder;
+import me.blok601.nightshadeuhc.util.PagedInventory;
+import me.blok601.nightshadeuhc.util.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 /**
  * Created by Blok on 3/28/2017.
  */
-public class ScenarioManager implements CmdInterface{
+public class ScenarioManager implements UHCCommand, Listener {
 
 
     private static ArrayList<Scenario> scenarios = new ArrayList<>();
 
     public void setup(){
-        addScen(new AnonymousScenario());
-        addScen(new AssaultAndBatteryScenario());
-        addScen(new AurophobiaScenario());
-        addScen(new BackpackScenario());
-        addScen(new BarebonesScenario());
-        addScen(new BatsScenario());
+        addScen(new AssaultAndBatteryScenario(), "AAB");
+        addScen(new AurophobiaScenario(), "AP");
+        addScen(new BackpackScenario(), "BP");
+        addScen(new BarebonesScenario(), "BB");
+        addScen(new BatsScenario(), "Bats");
         addScen(new BedBombScenario());
         addScen(new BenchBlitzScenario());
-        addScen(new BestPvEScenario());
-        addScen(new BetaZombiesScenario());
-        addScen(new BleedingSweetsScenario());
+        addScen(new BestPvEScenario(), "BPVE");
+        addScen(new BetaZombiesScenario(), "BZ");
+        addScen(new BleedingSweetsScenario(), "BS");
         addScen(new BlockedScenario());
-        addScen(new BloodDiamondsScenario());
+        addScen(new BloodDiamondsScenario(), "BD");
+        addScen(new BloodStoneScenario());
         addScen(new BomberScenario());
         addScen(new BowlessScenario());
         addScen(new ChickenScenario());
-        addScen(new ColdWeaponsScenario());
-        addScen(new CreeperPongScenario());
+        addScen(new ColdWeaponsScenario(), "CW");
+        addScen(new CreeperPongScenario(), "CP");
         addScen(new CrippleScenario());
-        addScen(new CutCleanScenario());
+        addScen(new CutCleanScenario(), "CC");
         addScen(new DepthsScenario());
         addScen(new DiamondLessScenario());
         addScen(new DragonRushScenario());
+        addScen(new EggsScenario());
         addScen(new EnchantedDeathScenario());
         addScen(new EntropyScenario());
         addScen(new EveryRoseScenario());
-        addScen(new FastGetawayScenario());
+        addScen(new FastGetawayScenario(), "FG");
         addScen(new FeistyBoysScenario());
         addScen(new FirelessScenario());
         //addScen(new FlowerPowerScenario());
         addScen(new FurnaceDeathScenario());
-        addScen(new GapZapScenario());
-        addScen(new GigadrillScenario());
+        addScen(new GapZapScenario(), "GZ");
+        addScen(new GigadrillScenario(), "GD");
         addScen(new GoldLessScenario());
-        addScen(new GoneFishinScenario());
-        addScen(new HasteyBoysScenario());
+        addScen(new GoneFishinScenario(), "GF");
+        addScen(new HasteyBoysScenario(), "HB");
         addScen(new HobbitScenario());
-        addScen(new InfiniteEnchanterScenario());
+        addScen(new InfiniteEnchanterScenario(), "IE");
         addScen(new KingsScenario());
-        addScen(new LootCrateScenario());
-        addScen(new NoCleanScenario());
+        addScen(new LootCrateScenario(), "LC");
+        addScen(new MysteryScenarios(), "MS");
+        addScen(new NoCleanScenario(), "NC");
         addScen(new NoFurnaceScenario());
-        addScen(new NoFallScenario());
-        addScen(new OneHealScenario());
-        addScen(new OneHundredHeartsScenario());
-        addScen(new PermaKillScenario());
-        addScen(new PuppyPowerScenario());
-        addScen(new PuppyPlusScenario());
-        addScen(new RewardingLongShotsScenario());
-        addScen(new RiskyRetrievalScenario());
+        addScen(new NoFallScenario(), "NF");
+        addScen(new OneHealScenario(), "OH");
+        addScen(new OneHundredHeartsScenario(), "100H");
+        addScen(new PermaKillScenario(), "PK");
+        addScen(new PuppyPowerScenario(), "PP");
+        addScen(new PuppyPlusScenario(), "PP+");
+        addScen(new PuppyPowerPlusPlusScenario(), "PP++");
+        addScen(new RewardingLongShotsScenario(), "RL");
+        addScen(new RiskyRetrievalScenario(), "RR");
         addScen(new Scenario("Rush", "The game progresses quicker", new  ItemStack(Material.COMPASS, 1)));
         addScen(new SkycleanScenario());
         addScen(new SkyhighScenario());
-        addScen(new SlutCleanScenario());
+        addScen(new SlutCleanScenario(), "SC");
         addScen(new SoupScenario());
         addScen(new SoupPlusScenario());
         addScen(new StockUpScenario());
         addScen(new SuperheroesScenario());
         addScen(new SwitcherooScenario());
+        addScen(new TeamInventoryScenario(), "TI");
         addScen(new TimberScenario());
-        addScen(new TimebombScenario());
-        addScen(new TrashOrTreasureScenario());
+        addScen(new TimebombScenario(), "TB");
+        addScen(new TrashOrTreasureScenario(), "TOT");
         addScen(new UltraParanoidScenario());
         addScen(new UnbreakableBoysScenario());
         addScen(new VeinminerScenario());
         addScen(new VillagerMadnessScenario());
-        addScen(new WeakestLinkScenario());
-        addScen(new WebCageScenario());
+        addScen(new WeakestLinkScenario(), "WL");
+        addScen(new WebCageScenario(), "WC");
+        addScen(new VanillaPlusScenario());
+        //addScen(new VengefulSpiritsScenario(), "VS");
+        addScen(new MolesScenario());
+        addScen(new GoldenRetrieverScenario());
+        addScen(new AnonymousScenario(), "Anon"); //Put this at bottom to test alphabetical order
+        addScen(new DoubleDatesScenario());
+        addScen(new SecretTeamsScenario());
+
+        sortScenarios();
+    }
+
+    private static void sortScenarios() {
+        scenarios.sort(Comparator.comparing(Scenario::getName));
     }
 
 
@@ -102,26 +128,17 @@ public class ScenarioManager implements CmdInterface{
         Bukkit.getPluginManager().registerEvents(s, UHC.get());
     }
 
+    private void addScen(Scenario s, String abbreviation){
+        scenarios.add(s);
+        s.setAbbreviation(abbreviation);
+        Bukkit.getPluginManager().registerEvents(s, UHC.get());
+    }
+
     public static Scenario getScen(String name){
         return scenarios.stream().filter(scem -> scem.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
-//        for (Scenario s : scenarios){
-//            if(name.equalsIgnoreCase(s.getName())){
-//                return s;
-//            }
-//        }
-//
-//        return null;
     }
 
     public void openScenarioGUI(Player player){
-//        Inventory inv = Bukkit.createInventory(null, 54, ChatUtils.format("&6Scenarios"));
-//        inv.clear();
-//        for(Scenario scenario :  getScenarios()){
-//           ItemStack item = new ItemBuilder(scenario.getItem()).name(scenario.isEnabled() ? ChatUtils.format("&a" + scenario.getName()) : ChatUtils.format("&c" + scenario.getName())).make();
-//           inv.addItem(item);
-//        }
-//
-//        player.openInventory(inv);
 
         ArrayList<ItemStack> items = new ArrayList<>();
 
@@ -148,15 +165,8 @@ public class ScenarioManager implements CmdInterface{
         return scenarios;
     }
 
-    public static ArrayList<Scenario> getEnabledScenarios(){
-        ArrayList<Scenario> toReturn = new ArrayList<>();
-        for (Scenario scenario : getScenarios()){
-            if(scenario.isEnabled()){
-                toReturn.add(scenario);
-            }
-        }
-
-        return toReturn;
+    public static Collection<Scenario> getEnabledScenarios() {
+        return scenarios.stream().filter(Scenario::isEnabled).collect(Collectors.toList());
     }
 
     @Override
@@ -239,5 +249,24 @@ public class ScenarioManager implements CmdInterface{
     @Override
     public boolean hasRequiredRank() {
         return true;
+    }
+
+    @EventHandler
+    public void onGameStart(GameStartEvent e) {
+        for (Scenario scenario : getEnabledScenarios()) {
+            if (scenario instanceof StarterItems) {
+
+                StarterItems starterItems = (StarterItems) scenario;
+
+                UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> {
+                    Player player = uhcPlayer.getPlayer();
+                    for (ItemStack stack : starterItems.getStarterItems()) {
+                        PlayerUtils.giveItem(stack, player);
+                    }
+                });
+
+
+            }
+        }
     }
 }

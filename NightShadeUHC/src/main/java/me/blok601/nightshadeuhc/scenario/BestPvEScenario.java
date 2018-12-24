@@ -1,10 +1,11 @@
 package me.blok601.nightshadeuhc.scenario;
 
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.utils.ChatUtils;
-import me.blok601.nightshadeuhc.utils.ItemBuilder;
-import me.blok601.nightshadeuhc.events.CustomDeathEvent;
-import me.blok601.nightshadeuhc.events.GameStartEvent;
+import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
+import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.util.ItemBuilder;
+import me.blok601.nightshadeuhc.event.CustomDeathEvent;
+import me.blok601.nightshadeuhc.event.GameStartEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -31,7 +32,8 @@ public class BestPvEScenario extends Scenario{
 
         if(!isEnabled()) return;
 
-        UHC.players.stream().filter(uuid -> Bukkit.getPlayer(uuid) != null).forEach(uuid -> players.add(Bukkit.getPlayer(uuid)));
+//        UHC.players.stream().filter(uuid -> Bukkit.getPlayer(uuid) != null).forEach(uuid -> players.add(Bukkit.getPlayer(uuid)));
+        UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> players.add(uhcPlayer.getPlayer()));
         Bukkit.broadcastMessage(ChatUtils.format(getPrefix() + "&eBestPvE has begun!"));
         new BukkitRunnable(){
             @Override

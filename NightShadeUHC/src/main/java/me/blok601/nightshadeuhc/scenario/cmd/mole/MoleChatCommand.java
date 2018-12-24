@@ -1,10 +1,10 @@
 package me.blok601.nightshadeuhc.scenario.cmd.mole;
 
 import com.nightshadepvp.core.Rank;
-import me.blok601.nightshadeuhc.commands.CmdInterface;
+import me.blok601.nightshadeuhc.command.UHCCommand;
 import me.blok601.nightshadeuhc.scenario.MolesScenario;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
-import me.blok601.nightshadeuhc.utils.ChatUtils;
+import me.blok601.nightshadeuhc.util.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -15,11 +15,11 @@ import java.util.UUID;
 /**
  * Created by Blok on 7/6/2018.
  */
-public class MoleChatCommand implements CmdInterface{
+public class MoleChatCommand implements UHCCommand{
     @Override
     public String[] getNames() {
         return new String[]{
-                "mmc"
+                "mcc"
         };
     }
 
@@ -27,7 +27,7 @@ public class MoleChatCommand implements CmdInterface{
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
         if(!MolesScenario.moles.containsKey(p.getUniqueId())){
-            p.sendMessage(ScenarioManager.getScen("Moles").getPrefix() + "&cYou are not a mole!");
+            p.sendMessage(ChatUtils.format(ScenarioManager.getScen("Moles").getPrefix() + "&cYou are not a mole!"));
             return;
 
         }
@@ -44,10 +44,10 @@ public class MoleChatCommand implements CmdInterface{
             Player target;
             for (UUID uuid  : MolesScenario.moles.keySet()){
                 target = Bukkit.getPlayer(uuid);
-                if(target != null) target.sendMessage(ChatUtils.format("&8[&6MoleChat&8] &b" + p.getName() + "&8: &e" + msg));
+                if(target != null) target.sendMessage(ChatUtils.format("&8[&6Moles&8] &b" + p.getName() + "&8: &e" + msg));
             }
         }else{
-            p.sendMessage(ChatUtils.message("&cUsage: /mmc <message>"));
+            p.sendMessage(ChatUtils.message("&cUsage: /mcc <message>"));
         }
 
     }

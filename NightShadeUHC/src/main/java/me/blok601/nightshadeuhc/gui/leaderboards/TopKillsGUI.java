@@ -2,8 +2,8 @@ package me.blok601.nightshadeuhc.gui.leaderboards;
 
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.gui.GuiBuilder;
-import me.blok601.nightshadeuhc.stats.handler.StatsHandler;
-import me.blok601.nightshadeuhc.utils.ItemBuilder;
+import me.blok601.nightshadeuhc.stat.handler.StatsHandler;
+import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -33,7 +33,7 @@ public class TopKillsGUI {
             newSkull = new ItemBuilder(skull);
             newSkull.skullOwner(uhcPlayer.getName());
             newSkull.name("&e" + (index + 1) + ".&5 " + uhcPlayer.getName());
-            newSkull.lore("&eKills&8» &6" + uhcPlayer.getName());
+            newSkull.lore("&eKills&8» &6" + uhcPlayer.getKills());
             builder.item(assign[index], newSkull.make());
             index++;
         }

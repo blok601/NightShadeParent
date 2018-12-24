@@ -20,6 +20,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 import java.io.File;
 import java.io.IOException;
@@ -207,7 +208,8 @@ public class EngineInventory extends Engine {
                 }
             }
 
-            if (inv.getName().contains("Punish")) { //Will prob change this later on
+            if (inv.getName().contains("Punish")) {//Will prob change this later on
+                e.setCancelled(true);
                 if (stack.getType() == Material.AIR) return;
 
                 if (e.getSlot() == 3) {
@@ -224,9 +226,13 @@ public class EngineInventory extends Engine {
                 }
 
                 PunishmentHandler.getInstance().handleClick(stack, e);
+                return;
             }
 
             if (PunishmentHandler.getInstance().getPunishing().containsKey(p)) {
+                if(p.getOpenInventory() instanceof PlayerInventory) return;
+                if(inv.getSize() != 54) return;
+                e.setCancelled(true);
                 if (stack.getType() == Material.WOOL) {
                     PunishmentHandler.getInstance().createGUI(p);
                     return;
@@ -239,13 +245,13 @@ public class EngineInventory extends Engine {
                     return;
                 }
 
-                if(abstractPunishment.getChild(stack) == null){
+                if(abstractPunishment.getChild(e.getSlot()) == null){
                     p.closeInventory();
                     p.sendMessage(ChatUtils.message("&cThere was a problem loading that punishment!"));
                     return;
                 }
 
-                abstractPunishment.getChild(stack).execute(p);
+                abstractPunishment.getChild(e.getSlot()).execute(p);
             }
         }
     }

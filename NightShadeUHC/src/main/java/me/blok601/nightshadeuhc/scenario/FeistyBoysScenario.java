@@ -1,7 +1,7 @@
 package me.blok601.nightshadeuhc.scenario;
 
 import com.nightshadepvp.core.utils.ChatUtils;
-import me.blok601.nightshadeuhc.utils.ItemBuilder;
+import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;

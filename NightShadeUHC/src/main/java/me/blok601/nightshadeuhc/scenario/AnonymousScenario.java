@@ -3,9 +3,9 @@ package me.blok601.nightshadeuhc.scenario;
 import de.robingrether.idisguise.disguise.PlayerDisguise;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
-import me.blok601.nightshadeuhc.events.GameStartEvent;
-import me.blok601.nightshadeuhc.utils.ChatUtils;
-import me.blok601.nightshadeuhc.utils.ItemBuilder;
+import me.blok601.nightshadeuhc.event.GameStartEvent;
+import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 
@@ -17,7 +17,7 @@ public class AnonymousScenario extends Scenario {
     private static  String disuigse;
 
     public AnonymousScenario() {
-        super("Anonymous", "Everyone is disguised as the same person", new ItemBuilder(Material.NAME_TAG).name("Anonymous").make());
+        super("Anonymous", "Everyone is disguised as the same person", "Anon", new ItemBuilder(Material.NAME_TAG).name("Anonymous").make());
         disuigse = "Notch";
     }
 

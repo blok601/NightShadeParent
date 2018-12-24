@@ -1,7 +1,8 @@
 package me.blok601.nightshadeuhc.scenario;
 
-import me.blok601.nightshadeuhc.utils.ChatUtils;
-import me.blok601.nightshadeuhc.utils.ItemBuilder;
+import me.blok601.nightshadeuhc.event.CustomDeathEvent;
+import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
@@ -21,6 +22,8 @@ public class SwitcherooScenario extends Scenario{
         if(!isEnabled()){
             return;
         }
+
+        if (e.getFinalDamage() == 0) return;
 
         if (e.getEntity() instanceof Player) {
             if (e.getDamager() instanceof Arrow) {
@@ -42,5 +45,21 @@ public class SwitcherooScenario extends Scenario{
                 }
             }
         }
+    }
+
+    @EventHandler
+    public void onDeath(CustomDeathEvent e) {
+        if (!isEnabled()) return;
+
+        Player dead = e.getKilled();
+        Player killer = e.getKiller();
+        if (e.usedProjectile()) {
+            if (e.getProjectile() instanceof Arrow) {
+                Location dLocation = e.getLocation();
+                killer.teleport(dLocation);
+                killer.sendMessage(ChatUtils.format(getPrefix() + " &aYou got &eswitcheroo'd &awith &e" + dead.getName()));
+            }
+        }
+
     }
 }
