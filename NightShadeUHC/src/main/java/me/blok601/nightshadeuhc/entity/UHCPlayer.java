@@ -105,6 +105,7 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         this.setArenaKills(that.arenaKills);
         this.setArenaDeaths(that.arenaDeaths);
         this.setHighestArenaKillStreak(that.highestArenaKillStreak);
+        this.setPastArenaSessions(that.pastArenaSessions);
 
 
         this.setLastLocation(that.lastLocation);
@@ -660,5 +661,13 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
 
     public void setArenaSession(ArenaSession arenaSession) {
         this.arenaSession = arenaSession;
+    }
+
+    public ArrayList<JsonObject> getPastArenaSessions() {
+        return pastArenaSessions;
+    }
+
+    public void setPastArenaSessions(ArrayList<JsonObject> pastArenaSessions) {
+        this.pastArenaSessions = pastArenaSessions;
     }
 }
