@@ -395,13 +395,11 @@ public class GameSetupInventoryClick implements Listener {
                                 if (PregenTask.getPregenQueue().size() > 0) {
                                     p.sendMessage(ChatUtils.message("&eThere are other worlds being pregenning right now! This world will be added to the pregen queue!"));
                                 }
-//                                gameManager.setWorld(Bukkit.getWorld("UHC" + p.getName()));
-//                                p.chat("/wb " + gameManager.getWorld().getName() + " set " + gameManager.getSetupRadius() + " " + gameManager.getSetupRadius() + " 0 0");
-//                                p.chat("/wb " + gameManager.getWorld().getName() + " fill 250");
-//                                p.chat("/wb fill confirm");
-//                                p.sendMessage(ChatUtils.message("&aPregen in world &b" + gameManager.getWorld().getName() + " &ehas begun!"));
-
                                 World world = Bukkit.getWorld("UHC" + p.getName());
+                                if(world == null){
+                                    p.sendMessage(ChatUtils.message("&cThere was an error trying to load your world..."));
+                                    p.sendMessage(ChatUtils.message("&cTry recreating it to make sure!"));
+                                }
                                 gameManager.setWorld(world);
                                 PregenQueue queue = new PregenQueue();
                                 queue.setRunning(false);

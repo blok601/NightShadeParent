@@ -63,7 +63,7 @@ public class ChatUtils {
     }
 
     public static String message(String s) {
-        String prefix = format("&5UHC&8 »");
+        String prefix = format("&5UHC&8 » ");
         return format(prefix + "&b" + s);
     }
 

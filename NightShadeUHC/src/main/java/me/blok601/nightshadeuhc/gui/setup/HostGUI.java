@@ -90,12 +90,12 @@ public class HostGUI {
 
         ItemBuilder teamGame = new ItemBuilder(Material.SIGN)
                 .name("&5&lTeam Game")
-                .lore("&eCurrent: " + (gameManager.isIsTeam() ? "&aYes" : "&cNo"))
+                .lore("&eCurrent: " + (gameManager.isIsTeam() ? "&aYes" : "&aNo"))
                 .lore("&7&o(&6&oi&7&o) &6&oClick to toggle teams on and off");
 
         ItemBuilder teamMan = new ItemBuilder(Material.ARROW)
                 .name("&5&lTeam Management")
-                .lore("&eCurrent: " + (TeamManager.getInstance().isTeamManagement() ? "&cEnabled" : "&cDisabled"))
+                .lore("&eCurrent: " + (TeamManager.getInstance().isTeamManagement() ? "&aEnabled" : "&cDisabled"))
                 .lore("&7&o(&6&oi&7&o) &6&oClick to toggle team management");
 
         ItemBuilder teamSize = new ItemBuilder(Material.NETHER_STAR)

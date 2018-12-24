@@ -43,7 +43,7 @@ public class DoubleDatesCommand implements UHCCommand {
             return;
         }
 
-        if (TeamManager.getInstance().getTeams().size() % 2 == 0) {
+        if (TeamManager.getInstance().getTeams().size() % 2 != 0) {
             p.sendMessage(ChatUtils.message("&cThere must be an even amount of teams! There must be an event amount of teams to start double dates!"));
             p.sendMessage(ChatUtils.message("&cMake sure to kick solos!"));
             return;
