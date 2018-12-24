@@ -60,7 +60,7 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
     private int arenaKills = 0;
     private int arenaDeaths = 0;
     private int highestArenaKillStreak = 0;
-    private ArrayList<JsonObject> pastArenaSessions = new ArrayList<>();
+    private ArrayList<String> pastArenaSessions = new ArrayList<>();
     private transient ArenaSession arenaSession;
 
 
@@ -568,7 +568,7 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         jsonObject.addProperty("highestKillStreak", session.getKillstreak());
         jsonObject.addProperty("startTime", session.getStart().getTime());
         jsonObject.addProperty("endTime", session.getEnd().getTime());
-        this.pastArenaSessions.add(jsonObject);
+        this.pastArenaSessions.add(jsonObject.toString());
     }
 
     public boolean isReceivingToggleSneakAlerts() {
@@ -663,11 +663,11 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         this.arenaSession = arenaSession;
     }
 
-    public ArrayList<JsonObject> getPastArenaSessions() {
+    public ArrayList<String> getPastArenaSessions() {
         return pastArenaSessions;
     }
 
-    public void setPastArenaSessions(ArrayList<JsonObject> pastArenaSessions) {
+    public void setPastArenaSessions(ArrayList<String> pastArenaSessions) {
         this.pastArenaSessions = pastArenaSessions;
     }
 }
