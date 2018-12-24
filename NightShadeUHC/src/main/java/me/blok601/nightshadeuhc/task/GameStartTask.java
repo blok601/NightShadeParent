@@ -4,17 +4,18 @@ import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Logger;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayerColl;
-import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.util.Freeze;
 import me.blok601.nightshadeuhc.command.staff.PvPCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
+import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.event.GameStartEvent;
 import me.blok601.nightshadeuhc.manager.GameManager;
-import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.manager.TeamManager;
+import me.blok601.nightshadeuhc.scenario.Scenario;
+import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.util.Freeze;
 import me.blok601.nightshadeuhc.util.Util;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
@@ -33,18 +34,15 @@ import org.bukkit.scheduler.BukkitRunnable;
  */
 public class GameStartTask extends BukkitRunnable {
 
-    private Player p;
     private int finalHealTime;
     private int pvpTime;
     private World world;
     private int borderTime;
     private int firstShrink;
-    private boolean isTeam;
     private int counter;
     private int meetupTime;
 
     public GameStartTask(Player p, int finalHealTime, int pvpTime, int borderTime, World world, int firstShrink, int meetupTime) {
-        this.p = p;
         this.finalHealTime = finalHealTime;
         this.pvpTime = pvpTime;
         this.world = world;
@@ -53,13 +51,17 @@ public class GameStartTask extends BukkitRunnable {
         this.meetupTime = meetupTime;
         this.counter = 120;
         if (TeamManager.getInstance().isTeamManagement()) TeamManager.getInstance().setTeamManagement(false);
-        if (GameManager.get().isIsTeam()) {
-            if (GameManager.get().getHost() == null) {
-                NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> nsPlayer.hasRank(Rank.TRIALHOST)).findFirst().ifPresent(nsPlayer -> nsPlayer.getPlayer().chat("/team color"));
-            } else {
-                GameManager.get().getHost().chat("/team color");
+        Scenario scenario = ScenarioManager.getScen("Secret Teams");
+        if (scenario != null && !scenario.isEnabled()) {
+            if (GameManager.get().isIsTeam()) {
+                if (GameManager.get().getHost() == null) {
+                    NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> nsPlayer.hasRank(Rank.TRIALHOST)).findFirst().ifPresent(nsPlayer -> nsPlayer.getPlayer().chat("/team color"));
+                } else {
+                    GameManager.get().getHost().chat("/team color");
+                }
             }
         }
+
     }
 
 

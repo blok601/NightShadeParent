@@ -72,7 +72,7 @@ public class Scenario implements Listener {
     }
 
     public String getPrefix(){
-        return format("&4" + getName() + "&8» ");
+        return format("&4" + getName() + " &8» ");
     }
 
     public String getAbbreviation() {

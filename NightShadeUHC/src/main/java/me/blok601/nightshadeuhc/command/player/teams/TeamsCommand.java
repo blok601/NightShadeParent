@@ -1,11 +1,13 @@
 package me.blok601.nightshadeuhc.command.player.teams;
 
 import com.nightshadepvp.core.Rank;
+import me.blok601.nightshadeuhc.command.UHCCommand;
 import me.blok601.nightshadeuhc.entity.object.Team;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.manager.TeamManager;
+import me.blok601.nightshadeuhc.scenario.Scenario;
+import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
-import me.blok601.nightshadeuhc.command.UHCCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -28,6 +30,12 @@ public class TeamsCommand implements UHCCommand{
 
         if(!GameManager.get().isIsTeam()){
             p.sendMessage(ChatUtils.message("&cIt is not a teams game!"));
+            return;
+        }
+
+        Scenario scenario = ScenarioManager.getScen("Secret Teams");
+        if(scenario != null && scenario.isEnabled()){
+            p.sendMessage(ChatUtils.format(scenario.getPrefix() + "&cYou can't view the teams in Secret Teams!"));
             return;
         }
 

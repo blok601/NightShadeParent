@@ -11,6 +11,8 @@ import me.blok601.nightshadeuhc.entity.object.CachedColor;
 import me.blok601.nightshadeuhc.entity.object.Team;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.manager.TeamManager;
+import me.blok601.nightshadeuhc.scenario.Scenario;
+import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
 import me.blok601.nightshadeuhc.scoreboard.ScoreboardManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
@@ -446,6 +448,13 @@ public class TeamBaseCommand implements UHCCommand{
                         return;
                     }
                 } else if (args[0].equalsIgnoreCase("list")) {
+
+                    Scenario scenario = ScenarioManager.getScen("Secret Teams");
+                    if (scenario != null && scenario.isEnabled()) {
+                        p.sendMessage(ChatUtils.format(scenario.getPrefix() + "&cYou can't view other player's teams in Secret Teams!"));
+                        return;
+                    }
+
                     Player target = Bukkit.getPlayer(args[1]);
                     if (target == null) {
                         Team targetTeam = TeamManager.getInstance().getTeambyPlayerOnTeam(args[1]);
@@ -453,6 +462,7 @@ public class TeamBaseCommand implements UHCCommand{
                             p.sendMessage(ChatUtils.message("&cThat player is not on a team!"));
                             return;
                         }
+
 
                         StringBuilder stringBuilder = new StringBuilder();
                         for (String str : targetTeam.getMembers()) {

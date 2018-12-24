@@ -112,6 +112,7 @@ public class ScenarioManager implements UHCCommand, Listener {
         addScen(new GoldenRetrieverScenario());
         addScen(new AnonymousScenario(), "Anon"); //Put this at bottom to test alphabetical order
         addScen(new DoubleDatesScenario());
+        addScen(new SecretTeamsScenario());
 
         sortScenarios();
     }
