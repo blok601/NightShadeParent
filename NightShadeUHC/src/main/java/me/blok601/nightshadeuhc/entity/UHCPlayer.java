@@ -1,12 +1,18 @@
 package me.blok601.nightshadeuhc.entity;
 
+import com.google.gson.JsonObject;
 import com.massivecraft.massivecore.ps.PS;
 import com.massivecraft.massivecore.store.SenderEntity;
 import com.massivecraft.massivecore.util.MUtil;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
+import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.command.staff.SpectatorCommand;
+import me.blok601.nightshadeuhc.entity.object.ArenaSession;
 import me.blok601.nightshadeuhc.entity.object.PlayerStatus;
+import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
+import me.blok601.nightshadeuhc.scoreboard.provider.type.ArenaProvider;
+import me.blok601.nightshadeuhc.scoreboard.provider.type.UHCProvider;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
 import me.blok601.nightshadeuhc.util.Util;
@@ -18,7 +24,9 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.sql.Timestamp;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class UHCPlayer extends SenderEntity<UHCPlayer> {
     // -------------------------------------------- //
@@ -49,6 +57,15 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
     private int level = 0;
 
     private PS lastLocation = null;
+
+    // -----------------------------
+    //        ARENA STATS
+    // -----------------------------
+    private int arenaKills = 0;
+    private int arenaDeaths = 0;
+    private int highestArenaKillStreak = 0;
+    private ArrayList<JsonObject> pastArenaSessions;
+    private transient ArenaSession arenaSession;
 
 
     private transient boolean combatTagged;
@@ -89,6 +106,9 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         this.setDeaths(that.deaths);
         this.setPoints(that.points);
         this.setLevel(that.level);
+        this.setArenaKills(that.arenaKills);
+        this.setArenaDeaths(that.arenaDeaths);
+        this.setHighestArenaKillStreak(that.highestArenaKillStreak);
 
 
         this.setLastLocation(that.lastLocation);
@@ -492,6 +512,8 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
 
     public void joinArena() {
         Player p = getPlayer();
+        this.setArenaSession(new ArenaSession());
+        UHC.get().getScoreboardManager().getPlayerScoreboards().put(p, new PlayerScoreboard(new ArenaProvider(), p));
         p.getInventory().clear();
         p.getInventory().setArmorContents(null);
         p.setAllowFlight(false);
@@ -525,10 +547,31 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
     }
 
     public void leaveArena(){
+        Player p = getPlayer();
+        ArenaSession session = this.arenaSession;
+        session.setEnd(new Timestamp(System.currentTimeMillis()));
+        updateStats(session);
         this.playerStatus = PlayerStatus.LOBBY;
-        getPlayer().getInventory().clear();
-        getPlayer().getInventory().setArmorContents(null);
-        getPlayer().teleport(MConf.get().getSpawnLocation().asBukkitLocation(true));
+        UHC.get().getScoreboardManager().getPlayerScoreboards().put(p, new PlayerScoreboard(new UHCProvider(), p));
+        p.getInventory().clear();
+        p.getInventory().setArmorContents(null);
+        p.teleport(MConf.get().getSpawnLocation().asBukkitLocation(true));
+    }
+
+    private void updateStats(ArenaSession session) {
+        this.arenaKills += session.getKills();
+        this.arenaDeaths += session.getDeaths();
+        if(this.highestArenaKillStreak < session.getKillstreak()){
+            this.highestArenaKillStreak = session.getKillstreak();
+        }
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("kills", session.getKills());
+        jsonObject.addProperty("deaths", session.getDeaths());
+        jsonObject.addProperty("highestKillStreak", session.getKillstreak());
+        jsonObject.addProperty("startTime", session.getStart().getTime());
+        jsonObject.addProperty("endTime", session.getEnd().getTime());
+        this.pastArenaSessions.add(jsonObject);
     }
 
     public boolean isReceivingToggleSneakAlerts() {
@@ -577,5 +620,49 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
 
     public void setPlayerStatus(PlayerStatus playerStatus) {
         this.playerStatus = playerStatus;
+    }
+
+    public int getArenaKills() {
+        return arenaKills;
+    }
+
+    public void setArenaKills(int arenaKills) {
+        this.arenaKills = arenaKills;
+    }
+
+    public int getArenaDeaths() {
+        return arenaDeaths;
+    }
+
+    public void setArenaDeaths(int arenaDeaths) {
+        this.arenaDeaths = arenaDeaths;
+    }
+
+    public int getHighestArenaKillStreak() {
+        return highestArenaKillStreak;
+    }
+
+    public void setHighestArenaKillStreak(int highestArenaKillStreak) {
+        this.highestArenaKillStreak = highestArenaKillStreak;
+    }
+
+    public double getArenaKDR() {
+        if (this.arenaKills == 0) {
+            return 0;
+        }
+
+        if (this.deaths == 0) {
+            return this.arenaDeaths;
+        }
+
+        return this.arenaKills / this.arenaDeaths;
+    }
+
+    public ArenaSession getArenaSession() {
+        return arenaSession;
+    }
+
+    public void setArenaSession(ArenaSession arenaSession) {
+        this.arenaSession = arenaSession;
     }
 }

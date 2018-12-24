@@ -1,5 +1,8 @@
 package me.blok601.nightshadeuhc.scoreboard;
 
+import me.blok601.nightshadeuhc.entity.UHCPlayer;
+import me.blok601.nightshadeuhc.entity.object.PlayerStatus;
+import me.blok601.nightshadeuhc.scoreboard.provider.type.ArenaProvider;
 import me.blok601.nightshadeuhc.scoreboard.provider.type.UHCProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -30,7 +33,11 @@ public class ScoreboardManager implements Listener {
 
     public void updateCache(){
         for (Map.Entry<Player, PlayerScoreboard> scoreboardEntry : this.playerScoreboards.entrySet()){
-
+            if (UHCPlayer.get(scoreboardEntry.getKey()).getPlayerStatus() == PlayerStatus.PLAYING) {
+                scoreboardEntry.setValue(new PlayerScoreboard(new UHCProvider(), scoreboardEntry.getKey()));
+            } else {
+                scoreboardEntry.setValue(new PlayerScoreboard(new ArenaProvider(), scoreboardEntry.getKey()));
+            }
         }
     }
 

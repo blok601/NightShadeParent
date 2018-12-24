@@ -3,6 +3,7 @@ package me.blok601.nightshadeuhc.scoreboard.provider;
 
 import me.blok601.nightshadeuhc.scoreboard.ScoreboardProvider;
 import me.blok601.nightshadeuhc.scoreboard.ScoreboardText;
+import me.blok601.nightshadeuhc.scoreboard.provider.type.ArenaProvider;
 import me.blok601.nightshadeuhc.scoreboard.provider.type.UHCProvider;
 import org.bukkit.entity.Player;
 
@@ -17,6 +18,7 @@ public class DefaultProvider extends ScoreboardProvider {
         this.defaultProvider = new HashMap<>();
 
         this.defaultProvider.put(ProviderType.UHC, new UHCProvider());
+        this.defaultProvider.put(ProviderType.ARENA, new ArenaProvider());
     }
 
     @Override
@@ -30,7 +32,7 @@ public class DefaultProvider extends ScoreboardProvider {
     }
 
     public enum ProviderType {
-        UHC;
+        UHC, ARENA
     }
 
 }
