@@ -63,7 +63,7 @@ public class LoggerListener implements Listener {
 
 
     @EventHandler
-    public void onEntityDeath(EntityDeathEvent event) {
+    public void onDeath(EntityDeathEvent event) {
         if (GameState.getState() == GameState.INGAME || GameState.getState() == GameState.MEETUP) {
             if (event.getEntity() instanceof Zombie && event.getEntity().isCustomNameVisible() && event.getEntity().getCustomName() != null) {
                 Zombie zombie = (Zombie) event.getEntity();
@@ -88,11 +88,7 @@ public class LoggerListener implements Listener {
                     ((ExperienceOrb) event.getEntity().getWorld().spawnEntity(event.getEntity().getLocation(),
                             EntityType.EXPERIENCE_ORB)).setExperience((int) logger.getExp()); // Might be buggy, test
 
-                    OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(name);
-                    if(offlinePlayer.hasPlayedBefore()) {
-                        //UHC.players.remove(offlinePlayer.getUniqueId());
-                        UHC.loggedOutPlayers.remove(offlinePlayer.getUniqueId());
-                    }
+                    UHC.loggedOutPlayers.remove(logger.getUuid());
 
                     PlayerRespawn object = new PlayerRespawn(logger.getArmor(), logger.getInventory(), logger.getZombie().getLocation());
                     GameManager.get().getInvs().put(logger.getUuid(), object);

@@ -1,6 +1,8 @@
 package com.nightshadepvp.core.engine;
 
 import com.massivecraft.massivecore.Engine;
+import com.nightshadepvp.core.Core;
+import com.nightshadepvp.core.Logger;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.nightshadepvp.core.entity.objects.PlayerColor;
@@ -52,7 +54,7 @@ public class EngineInventory extends Engine {
 
                 Rank rank = Rank.getRank(stack);
                 if (rank == null) {
-                    System.out.printf("That rank was not found!");
+                    Core.get().getLogManager().log(Logger.LogType.DEBUG, "The rank wasn't found!");
                     return;
                 }
 

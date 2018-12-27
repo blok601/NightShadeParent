@@ -45,12 +45,14 @@ public class GameCountdownTask extends BukkitRunnable {
 
             GameManager.get().getWorld().setTime(20);
             ChatUtils.setChatFrozen(true);
-            Bukkit.broadcastMessage(ChatUtils.message("&3Use /helpop or message any online staff members if you need help!"));
+            Bukkit.broadcastMessage(ChatUtils.message("&eUse /helpop or message any online staff members if you need help!"));
             Freeze.start();
             UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isInArena).forEach(UHCPlayer::leaveArena);
             GameState.setState(GameState.STARTING);
             Bukkit.getOnlinePlayers().forEach(o -> {
                 ActionBarUtil.sendActionBarMessage(o, "§5The scatter is beginning....");
+                o.getInventory().clear();
+                o.getInventory().setArmorContents(null);
             });
             new ScatterTask(valid, GameManager.get().getWorld(), GameManager.get().getSetupRadius(), GameManager.get().getHost(), GameManager.get().getFinalHealTime(), GameManager.get().getPvpTime(), GameManager.get().getBorderTime(), GameManager.get().isIsTeam(), GameManager.get().getFirstShrink(), GameManager.get().getMeetupTime()).runTaskTimer(UHC.get(), 0, 4);
             return;

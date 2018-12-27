@@ -25,7 +25,7 @@
         }
 
         @EventHandler
-        public void onHit(ProjectileHitEvent e) {
+        public void on(ProjectileHitEvent e) {
             Projectile pr = e.getEntity();
             if (!isEnabled()) return;
             if (!(pr instanceof Egg)) {

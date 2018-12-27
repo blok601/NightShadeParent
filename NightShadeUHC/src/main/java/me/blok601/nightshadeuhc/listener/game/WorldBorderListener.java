@@ -41,6 +41,8 @@ public class WorldBorderListener implements Listener {
             Player player = Bukkit.getPlayer(queue.getStarter());
             if (player != null) {
                 player.sendMessage(ChatUtils.message("&eThe pregen for &b" + queue.getWorld().getName() + " &ehas finished!"));
+                player.sendMessage(ChatUtils.message("&eGenerating walls for the world now..."));
+                gameManager.genWalls(queue.getRadius(), world);
                 if (world.getEnvironment() == World.Environment.NORMAL) {
                     if (!gameManager.isOverWorldPregenned()) {
                         gameManager.setOverWorldPregenned(true);
