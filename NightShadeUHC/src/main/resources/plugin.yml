@@ -193,3 +193,5 @@ commands:
   doubledates:
     description: Double dates scenario command
     aliases: [doubledate, dd, 2xdate]
+  checkteam:
+    description: /team list alias

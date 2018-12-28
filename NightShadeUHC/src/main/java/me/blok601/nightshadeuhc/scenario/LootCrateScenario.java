@@ -94,12 +94,20 @@ public class LootCrateScenario extends Scenario{
         if(e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR){
             Player p = e.getPlayer();
             if(e.getItem().getType() == Material.CHEST){
+                if(e.getItem().getAmount() > 1){
+                    p.sendMessage(ChatUtils.message("&cYou can only open one lootcrate at a time!"));
+                    return;
+                }
                 Random r = ThreadLocalRandom.current();
                 ItemStack stack = tier1[r.nextInt(tier1.length)];
                 p.getInventory().remove(p.getItemInHand());
                 p.getInventory().addItem(stack);
                 p.sendMessage(ChatUtils.format(getPrefix() + "&eYou have gotten " + stack.getAmount() + " &b" + stack.getType().name() + " &efrom your lootcrate!"));
             }else if(e.getItem().getType() == Material.ENDER_CHEST){
+                if(e.getItem().getAmount() > 1){
+                    p.sendMessage(ChatUtils.message("&cYou can only open one lootcrate at a time!"));
+                    return;
+                }
                 Random r = ThreadLocalRandom.current();
                 ItemStack stack = tier2[r.nextInt(tier2.length)];
                 p.getInventory().remove(p.getItemInHand());

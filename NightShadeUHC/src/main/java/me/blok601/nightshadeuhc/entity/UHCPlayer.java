@@ -450,6 +450,7 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
     public void staffMode(){
         Player player = getPlayer();
         setStaffMode(true);
+        player.getInventory().clear();
         ItemStack jump = new ItemBuilder(Material.COMPASS).name(ChatUtils.format("&cJump Tool")).make();
 
         ItemStack vanish = new ItemBuilder(Material.TORCH).name(ChatUtils.format("&cToggle Vanish")).make();
@@ -538,6 +539,8 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         p.getInventory().setLeggings(leggings.make());
         p.getInventory().setChestplate(chestplate.make());
         p.getInventory().setHelmet(helmet.make());
+        p.setHealth(p.getMaxHealth());
+        p.setFoodLevel(20);
         if (MConf.get().getArenaLocation() != null) {
             p.teleport(MConf.get().getArenaLocation().asBukkitLocation(true));
         }

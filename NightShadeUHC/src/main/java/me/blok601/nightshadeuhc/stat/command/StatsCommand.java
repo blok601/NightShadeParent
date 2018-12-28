@@ -25,12 +25,17 @@ public class StatsCommand implements UHCCommand {
     @Override
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
-        if (args.length != 1) {
+        if (args.length > 1) {
             p.sendMessage(ChatUtils.message("&cUsage: /stats <player>"));
             return;
         }
 
-        String targetName = args[0];
+        String targetName;
+        if (args.length == 0) {
+            targetName = p.getName();
+        } else {
+            targetName = args[0];
+        }
         Player target = Bukkit.getPlayer(targetName);
         if (target == null) {
             //Offline route

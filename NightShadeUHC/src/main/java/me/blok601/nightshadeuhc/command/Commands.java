@@ -4,10 +4,7 @@ import me.blok601.nightshadeuhc.command.game.run.*;
 import me.blok601.nightshadeuhc.command.game.setup.*;
 import me.blok601.nightshadeuhc.command.player.*;
 import me.blok601.nightshadeuhc.command.player.disguise.RandomDisguiseCommand;
-import me.blok601.nightshadeuhc.command.player.teams.PMOresCommand;
-import me.blok601.nightshadeuhc.command.player.teams.RvBCommand;
-import me.blok601.nightshadeuhc.command.player.teams.TeamBaseCommand;
-import me.blok601.nightshadeuhc.command.player.teams.TeamsCommand;
+import me.blok601.nightshadeuhc.command.player.teams.*;
 import me.blok601.nightshadeuhc.command.server.eWhitelistCommand;
 import me.blok601.nightshadeuhc.command.staff.*;
 import me.blok601.nightshadeuhc.manager.GameManager;
@@ -108,7 +105,8 @@ public class Commands {
                 new HostCommand(),
                 new ConfirmCommand(),
                 new SetBorderCommand(),
-                new DoubleDatesCommand(GameManager.get())
+                new DoubleDatesCommand(GameManager.get()),
+                new CheckTeamCommand()
         };
     }
 

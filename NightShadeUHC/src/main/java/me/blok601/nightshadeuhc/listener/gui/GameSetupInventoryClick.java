@@ -19,12 +19,11 @@ import me.blok601.nightshadeuhc.gui.setup.world.OverWorldGUI;
 import me.blok601.nightshadeuhc.gui.setup.world.WorldGUI;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.manager.TeamManager;
+import me.blok601.nightshadeuhc.scenario.Scenario;
+import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.task.GameCountdownTask;
 import me.blok601.nightshadeuhc.task.PregenTask;
-import me.blok601.nightshadeuhc.util.ChatUtils;
-import me.blok601.nightshadeuhc.util.ItemBuilder;
-import me.blok601.nightshadeuhc.util.PlayerUtils;
-import me.blok601.nightshadeuhc.util.Util;
+import me.blok601.nightshadeuhc.util.*;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -35,6 +34,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
@@ -187,6 +187,15 @@ public class GameSetupInventoryClick implements Listener {
                 } else {
                     return;
                 }
+            } else if (slot == 30) {
+                ArrayList<ItemStack> items = new ArrayList<>();
+
+                for(Scenario scenario :  ScenarioManager.getScenarios()){
+                    ItemStack i = new ItemBuilder(scenario.getItem()).name(scenario.isEnabled() ? ChatUtils.format("&a" + scenario.getName()) : ChatUtils.format("&c" + scenario.getName())).make();
+                    items.add(i);
+                }
+
+                new PagedInventory(items, ChatColor.translateAlternateColorCodes('&', "&6Scenarios"), p);
             } else if (slot == 31) {
                 if (clickType == ClickType.LEFT) {
                     //Increase by .5
@@ -254,10 +263,14 @@ public class GameSetupInventoryClick implements Listener {
                 p.playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 3, 3);
                 return;
             } else if (slot == 34) {
+                if (!gameManager.isIsTeam()) {
+                    p.sendMessage(ChatUtils.message("&cIt must be a teams game to change this setting!"));
+                    return;
+                }
                 TeamManager.getInstance().setTeamManagement(!TeamManager.getInstance().isTeamManagement());
                 ItemBuilder teamMan = new ItemBuilder(Material.ARROW)
                         .name("&5&lTeam Management")
-                        .lore("&eCurrent: " + (TeamManager.getInstance().isTeamManagement() ? "&cEnabled" : "&cDisabled"))
+                        .lore("&eCurrent: " + (TeamManager.getInstance().isTeamManagement() ? "&aEnabled" : "&cDisabled"))
                         .lore("&7&o(&6&oi&7&o) &6&oClick to toggle team management");
                 inventory.setItem(slot, teamMan.make());
                 p.updateInventory();
@@ -265,6 +278,10 @@ public class GameSetupInventoryClick implements Listener {
                 return;
             } else if (slot == 35) {
                 if (clickType == ClickType.LEFT) {
+                    if (!gameManager.isIsTeam()) {
+                        p.sendMessage(ChatUtils.message("&cIt must be a teams game to change this setting!"));
+                        return;
+                    }
                     TeamManager.getInstance().setTeamSize(TeamManager.getInstance().getTeamSize() + 1);
                     ItemBuilder teamSize = new ItemBuilder(Material.NETHER_STAR)
                             .name("&5&lTeam Size")
@@ -396,7 +413,7 @@ public class GameSetupInventoryClick implements Listener {
                                     p.sendMessage(ChatUtils.message("&eThere are other worlds being pregenning right now! This world will be added to the pregen queue!"));
                                 }
                                 World world = Bukkit.getWorld("UHC" + p.getName());
-                                if(world == null){
+                                if (world == null) {
                                     p.sendMessage(ChatUtils.message("&cThere was an error trying to load your world..."));
                                     p.sendMessage(ChatUtils.message("&cTry recreating it to make sure!"));
                                 }
@@ -492,7 +509,7 @@ public class GameSetupInventoryClick implements Listener {
             } else if (slot == 5) {
                 p.closeInventory();
 
-                if(Bukkit.getWorld("UHC" + p.getName()) == null){
+                if (Bukkit.getWorld("UHC" + p.getName()) == null) {
                     p.sendMessage(ChatUtils.message("&cYour overworld does not exist! Make sure to create an overworld first!"));
                     return;
                 }

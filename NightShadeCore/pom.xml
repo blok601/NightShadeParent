@@ -110,6 +110,18 @@
             <scope>system</scope>
             <systemPath>${basedir}/src/main/resources/libs/LiteBansAPI.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>com.nightshadepvp</groupId>
+            <artifactId>Core</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.nightshadepvp</groupId>
+            <artifactId>Core</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 

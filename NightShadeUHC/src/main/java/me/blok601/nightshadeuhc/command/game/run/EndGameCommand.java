@@ -6,6 +6,7 @@ import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.command.UHCCommand;
 import me.blok601.nightshadeuhc.entity.MConf;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
+import me.blok601.nightshadeuhc.entity.object.PlayerStatus;
 import me.blok601.nightshadeuhc.entity.object.Team;
 import me.blok601.nightshadeuhc.event.GameEndEvent;
 import me.blok601.nightshadeuhc.manager.GameManager;
@@ -75,7 +76,7 @@ public class EndGameCommand implements UHCCommand{
                     gamePlayer = UHCPlayer.get(uuid);
                     winners.add(uuid);
                     if (pl == null) {
-                        gamePlayer.addPoints(10 / TeamManager.getInstance().getTeamSize());
+                        gamePlayer.addPoints(10 / TeamManager.getInstance().getTeamSize() * 1.0);
                         continue;
                     }
 
@@ -129,6 +130,7 @@ public class EndGameCommand implements UHCCommand{
 
                     user = NSPlayer.get(pl);
                     gamePlayer = UHCPlayer.get(pl);
+                    if(gamePlayer.getPlayerStatus() != PlayerStatus.PLAYING) continue;
                     winners.add(pl.getUniqueId());
 
 //                user.setPrefix(ChatColor.RED + "[Winner] ");

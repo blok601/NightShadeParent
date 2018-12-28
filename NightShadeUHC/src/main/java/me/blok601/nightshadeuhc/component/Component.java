@@ -11,7 +11,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 /**
  * Created by Blok on 12/10/2017.
  */
-public abstract class Component implements Listener{
+public abstract class Component implements Listener {
 
     private String name;
     private boolean enabled;
@@ -42,15 +42,15 @@ public abstract class Component implements Listener{
         this.enabled = enabled;
     }
 
-    public void lock(){
-        if(locked){
+    public void lock() {
+        if (locked) {
             this.locked = false;
-        }else{
+        } else {
             this.locked = true;
         }
     }
 
-    public void toggle(){
+    public void toggle() {
         this.enabled = !this.enabled;
     }
 
@@ -59,11 +59,11 @@ public abstract class Component implements Listener{
     }
 
 
-    public void click(InventoryClickEvent e, int slot){
+    public void click(InventoryClickEvent e, int slot) {
         toggle();
         Player p = (Player) e.getWhoClicked();
 
-        ItemBuilder builder = new ItemBuilder(material);
+        ItemBuilder builder = new ItemBuilder(material).name("&e" + name);
         builder.lore(isEnabled() ? ChatUtils.format("&aEnabled") : ChatUtils.format("&cDisabled"), true);
 
         e.getInventory().setItem(slot, builder.make());
@@ -71,9 +71,9 @@ public abstract class Component implements Listener{
 
         onToggle(isEnabled(), p);
         if (isEnabled()) {
-            p.sendMessage(ChatUtils.message("&eSuccessfully &aenabled &3" + getName() + "&e."));
+            p.sendMessage(ChatUtils.message("&aEnabled &b" + getName()));
         } else {
-            p.sendMessage(ChatUtils.message("&eSuccessfully &cdisabled &3" + getName() + "&e."));
+            p.sendMessage(ChatUtils.message("&cDisabled &b" + getName()));
         }
         p.playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 3, 3);
     }
