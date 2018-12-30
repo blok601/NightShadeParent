@@ -1,6 +1,7 @@
 package me.blok601.nightshadeuhc.scenario;
 
 import me.blok601.nightshadeuhc.util.ItemBuilder;
+import me.blok601.nightshadeuhc.util.MathUtil;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -39,18 +40,18 @@ public class CutCleanScenario extends Scenario {
             e.setCancelled(true);
             b.setType(Material.AIR);
             e.getPlayer().getInventory().addItem(new ItemStack(Material.GOLD_INGOT, 1));
-            ((ExperienceOrb) b.getWorld().spawn(clone, ExperienceOrb.class)).setExperience(2);
+            p.setExp(p.getExp() + MathUtil.calculateXPBuff(e.getExpToDrop()));
         } else if (b.getType().equals(Material.IRON_ORE)) {
             e.setCancelled(true);
             e.getBlock().setType(Material.AIR);
             p.getInventory().addItem(new ItemStack(Material.IRON_INGOT, 1));
-            ((ExperienceOrb) b.getWorld().spawn(clone, ExperienceOrb.class)).setExperience(1);
+            p.setExp(p.getExp() + MathUtil.calculateXPBuff(e.getExpToDrop()));
         }else if(b.getType().equals(Material.DIAMOND_ORE)){
-            e.setExpToDrop(e.getExpToDrop() * 2);
+            p.setExp(p.getExp() + MathUtil.calculateXPBuff(e.getExpToDrop()));
         }else if(b.getType().equals(Material.REDSTONE_ORE) || b.getType().equals(Material.GLOWING_REDSTONE_ORE)){
-            e.setExpToDrop(e.getExpToDrop() * 2);
+            p.setExp(p.getExp() + MathUtil.calculateXPBuff(e.getExpToDrop()));
         }else if(b.getType().equals(Material.LAPIS_ORE)){
-            e.setExpToDrop(e.getExpToDrop() * 2);
+            p.setExp(p.getExp() + MathUtil.calculateXPBuff(e.getExpToDrop()));
         }
     }
 

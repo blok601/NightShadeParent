@@ -27,14 +27,14 @@ public class PlayerUtils {
 
     public static HashMap<String /* Country*/, Integer /* People tally*/> locations = new HashMap<>();
 
-    public static void freezePlayer(Player punisher, Player target){
+    public static void freezePlayer(Player punisher, Player target) {
         frozen.add(target.getUniqueId());
         punisher.sendMessage(ChatUtils.message("&6You have frozen &9" + target.getName() + "!"));
         target.sendMessage(ChatUtils.message("&4&lYou have been frozen. Logging out will result in a ban!"));
     }
 
     public static void unFreeze(Player target) {
-        if(!frozen.contains(target.getUniqueId())) {
+        if (!frozen.contains(target.getUniqueId())) {
             return;
         }
 
@@ -53,7 +53,7 @@ public class PlayerUtils {
     }
 
     public static void giveBulkItems(Player player, Collection<ItemStack> items) {
-        for (ItemStack itemStack : items){
+        for (ItemStack itemStack : items) {
 
         }
     }
@@ -71,10 +71,10 @@ public class PlayerUtils {
         player.getInventory().addItem(itemStack);
     }
 
-    public static boolean inGameWorld(Player player){
+    public static boolean inGameWorld(Player player) {
         World world = player.getWorld();
-        if(world.getName().equalsIgnoreCase(MConf.get().getSpawnLocation().asBukkitLocation().getWorld().getName()) ||
-                world.getName().equalsIgnoreCase(MConf.get().getArenaLocation().asBukkitLocation().getWorld().getName())){
+        if (world.getName().equalsIgnoreCase(MConf.get().getSpawnLocation().asBukkitLocation().getWorld().getName()) ||
+                world.getName().equalsIgnoreCase(MConf.get().getArenaLocation().asBukkitLocation().getWorld().getName())) {
             return false;
         }
 
@@ -91,5 +91,7 @@ public class PlayerUtils {
         UHCPlayer uhcPlayer = UHCPlayer.get(uuid);
         return uhcPlayer.getPlayerStatus() == PlayerStatus.PLAYING;
     }
+
+
 
 }

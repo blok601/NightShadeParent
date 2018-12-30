@@ -56,6 +56,13 @@ public class MathUtil {
         return r * 100 < c;
     }
 
+    public static float calculateXPBuff(int initial) {
+        //1.25 buff
+        float add = (initial / 4);
+        return initial + add;
+
+    }
+
     public static boolean isBetween(int max, int min, int val){
         return min < val && val < max;
     }
