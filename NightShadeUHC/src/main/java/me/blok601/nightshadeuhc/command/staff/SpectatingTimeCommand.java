@@ -28,7 +28,7 @@ public class SpectatingTimeCommand implements UHCCommand {
         if (args.length == 0) {
             //Send their own time
             NSPlayer nsPlayer = NSPlayer.get(p);
-            p.sendMessage(ChatUtils.message("&eYou have spectated for " + TimeUtils.formatSecondsToTime(nsPlayer.getSpectatingTime())));
+            p.sendMessage(ChatUtils.message("&eYou have spectated for " + TimeUtils.formatSecondsToTime(nsPlayer.getSpectatingTime(), "&b")));
         } else if (args.length == 1) {
             Player target = Bukkit.getPlayer(args[0]);
             if (target == null) {
@@ -44,7 +44,7 @@ public class SpectatingTimeCommand implements UHCCommand {
                     return;
                 }
 
-                p.sendMessage(ChatUtils.message("&e" + targetNSPlayer.getName() + " has spectated for " + TimeUtils.formatSecondsToTime(targetNSPlayer.getSpectatingTime())));
+                p.sendMessage(ChatUtils.message("&e" + targetNSPlayer.getName() + " has spectated for " + TimeUtils.formatSecondsToTime(targetNSPlayer.getSpectatingTime(), "&b")));
             } else {
                 NSPlayer targetNSPlayer = NSPlayer.get(target);
                 if (targetNSPlayer == null) {
@@ -52,7 +52,7 @@ public class SpectatingTimeCommand implements UHCCommand {
                     return;
                 }
 
-                p.sendMessage(ChatUtils.message("&e" + targetNSPlayer.getName() + " has spectated for " + TimeUtils.formatSecondsToTime(targetNSPlayer.getSpectatingTime())));
+                p.sendMessage(ChatUtils.message("&e" + targetNSPlayer.getName() + " has spectated for " + TimeUtils.formatSecondsToTime(targetNSPlayer.getSpectatingTime(), "&b")));
             }
         } else {
             p.sendMessage(ChatUtils.message("&cUsage: /spectime [player]"));

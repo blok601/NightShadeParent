@@ -143,7 +143,7 @@ public class GameStartTask extends BukkitRunnable {
                    gameManager.setPvpTask(pvpTask);
 
 
-                   WorldBorderTask worldBorderTask = new WorldBorderTask(borderTime, world, firstShrink);
+                   WorldBorderTask worldBorderTask = new WorldBorderTask(borderTime, world, firstShrink, gameManager);
                    if(borderTime > 0){
                        worldBorderTask.runTaskTimer(UHC.get(), 0, Util.TICKS);
                    }

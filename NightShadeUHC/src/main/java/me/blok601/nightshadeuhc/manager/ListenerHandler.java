@@ -30,7 +30,7 @@ public class ListenerHandler {
             ScenarioClick.get(),
             new StaffListener(),
             new Undisguise(),
-            new JoinListener(),
+            new JoinListener(GameManager.get()),
             new GameListener(GameManager.get()),
             new PlayerListener(GameManager.get()),
             new SkriptScenarios(),

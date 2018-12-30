@@ -5,6 +5,7 @@ import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.util.ActionBarUtil;
 import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.util.MathUtil;
 import me.blok601.nightshadeuhc.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -22,11 +23,13 @@ public class WorldBorderTask extends BukkitRunnable {
     public static int counter;
     private World world;
     private int first;
+    private GameManager gameManager;
 
-    public WorldBorderTask(int counter, World world, int first) {
+    public WorldBorderTask(int counter, World world, int first, GameManager gameManager) {
         this.counter = counter;
         this.world = world;
         this.first = first;
+        this.gameManager = gameManager;
     }
 
     @Override
@@ -37,21 +40,21 @@ public class WorldBorderTask extends BukkitRunnable {
             if (counter == (counter - 300)) {
                 //5 mins before
                 Util.staffLog("The border will shrink in 5 minutes!");
-                ChatUtils.sendAll("The border will shrink to " + GameManager.get().getFirstShrink() + " radius in 5 minutes");
+                ChatUtils.sendAll("The border will shrink to " + gameManager.getFirstShrink() + " radius in 5 minutes");
                 Bukkit.getOnlinePlayers().forEach((Consumer<Player>) player -> {
-                    ActionBarUtil.sendActionBarMessage(player, "§5Shrink to " + GameManager.get().getFirstShrink() + "radius in " + get(counter), 1, UHC.get());
+                    ActionBarUtil.sendActionBarMessage(player, "§5Shrink to " + gameManager.getFirstShrink() + "radius in " + get(counter), 1, UHC.get());
                 });
             }else if(MathUtil.isBetween(10, 0, counter)){
-                ChatUtils.sendAll("The border will shrink to " + GameManager.get().getFirstShrink() + " radius in " + counter);
+                ChatUtils.sendAll("The border will shrink to " + gameManager.getFirstShrink() + " radius in " + counter);
             }
         } else if (counter == 0) {
             bd.setRadius(first);
-            GameManager.get().genWalls(first, GameManager.get().getWorld());
-            GameManager.get().setBorderID(GameManager.get().getBorderID()+1);
+            gameManager.genWalls(first, gameManager.getWorld());
+            gameManager.setBorderID(gameManager.getBorderID()+1);
             for (Player pls : Bukkit.getOnlinePlayers()) {
                 pls.playSound(pls.getLocation(), Sound.BAT_DEATH, 5, 1);
             }
-            ChatUtils.sendAll("&bThe border has shrunk to " + GameManager.get().getFirstShrink() + " radius!");
+            ChatUtils.sendAll("&bThe border has shrunk to " + gameManager.getFirstShrink() + " radius!");
             counter = -1;
             new ShrinkTask(world).runTaskTimer(UHC.get(), 290 * Util.TICKS, 290 * Util.TICKS);
             this.cancel();
