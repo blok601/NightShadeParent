@@ -45,6 +45,12 @@ public class CutCleanScenario extends Scenario {
             e.getBlock().setType(Material.AIR);
             p.getInventory().addItem(new ItemStack(Material.IRON_INGOT, 1));
             ((ExperienceOrb) b.getWorld().spawn(clone, ExperienceOrb.class)).setExperience(1);
+        }else if(b.getType().equals(Material.DIAMOND_ORE)){
+            e.setExpToDrop(e.getExpToDrop() * 2);
+        }else if(b.getType().equals(Material.REDSTONE_ORE) || b.getType().equals(Material.GLOWING_REDSTONE_ORE)){
+            e.setExpToDrop(e.getExpToDrop() * 2);
+        }else if(b.getType().equals(Material.LAPIS_ORE)){
+            e.setExpToDrop(e.getExpToDrop() * 2);
         }
     }
 

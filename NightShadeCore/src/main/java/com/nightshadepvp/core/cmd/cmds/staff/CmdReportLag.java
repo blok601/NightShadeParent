@@ -42,7 +42,7 @@ public class CmdReportLag extends NightShadeCoreCommand {
             public void run() {
                 nsPlayer.msg(ChatUtils.format("&4&m-----------&r&4Lag Report Start&4&m-----------"));
                 nsPlayer.msg(ChatUtils.message("&cSend the exact link to Blok so he can fix the problems!"));
-                Timings.generateReport(sender);
+                Timings.generateReport(nsPlayer.getPlayer());
                 nsPlayer.msg(ChatUtils.format("&4&m-----------&r&4Lag Report Finish&4&m-----------"));
                 coolDown = false;
             }

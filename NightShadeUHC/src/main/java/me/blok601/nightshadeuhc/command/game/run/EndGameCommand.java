@@ -33,7 +33,7 @@ import java.util.function.Consumer;
 /**
  * Created by Blok on 7/20/2017.
  */
-public class EndGameCommand implements UHCCommand{
+public class EndGameCommand implements UHCCommand {
     @Override
     public String[] getNames() {
         return new String[]{
@@ -44,7 +44,7 @@ public class EndGameCommand implements UHCCommand{
     @Override
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
-        if (args.length != 1){
+        if (args.length != 1) {
             p.sendMessage(ChatUtils.message("&cUsage: /endgame <player/player on team/moles>"));
             return;
         }
@@ -52,12 +52,12 @@ public class EndGameCommand implements UHCCommand{
         boolean isTeam = GameManager.get().isIsTeam();
 
         Player target = Bukkit.getPlayer(args[0]);
-        if(target == null){
+        if (target == null) {
             p.sendMessage(ChatUtils.message("&cThat player couldn't be found!"));
             return;
         }
 
-        if (isTeam){
+        if (isTeam) {
 
             if (args[0].equalsIgnoreCase("moles")) {
                 //The moles won
@@ -130,7 +130,7 @@ public class EndGameCommand implements UHCCommand{
 
                     user = NSPlayer.get(pl);
                     gamePlayer = UHCPlayer.get(pl);
-                    if(gamePlayer.getPlayerStatus() != PlayerStatus.PLAYING) continue;
+                    if (gamePlayer.getPlayerStatus() != PlayerStatus.PLAYING) continue;
                     winners.add(pl.getUniqueId());
 
 //                user.setPrefix(ChatColor.RED + "[Winner] ");
@@ -171,17 +171,17 @@ public class EndGameCommand implements UHCCommand{
 
                 });
             }
-        }else{
+        } else {
             NSPlayer user = NSPlayer.get(target.getUniqueId());
             UHCPlayer gamePlayer = UHCPlayer.get(target.getUniqueId());
 
 
-            gamePlayer.setGamesWon(gamePlayer.getGamesWon()+1);
+            gamePlayer.setGamesWon(gamePlayer.getGamesWon() + 1);
             gamePlayer.addPoints(10);
-            if(user.getRank() == Rank.PLAYER){
-                if(gamePlayer.getGamesWon() >= 10){
+            if (user.getRank() == Rank.PLAYER) {
+                if (gamePlayer.getGamesWon() >= 10) {
                     user.setPrefix(ChatUtils.format("&8[&c★&8]"));
-                }else{
+                } else {
                     user.setPrefix(ChatUtils.format("&8[&c★&8]"));
                 }
             }
@@ -192,23 +192,27 @@ public class EndGameCommand implements UHCCommand{
             ((CraftPlayer) target).getHandle().playerConnection.sendPacket(title);
 
 
-            PacketPlayOutTitle subtitle = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + target.getName() + " has won!\",\"color\":\"dark_red\"}"), 0, 60 ,0);
+            PacketPlayOutTitle subtitle = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + target.getName() + " has won!\",\"color\":\"dark_red\"}"), 0, 60, 0);
             PacketPlayOutTitle newTitle = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"Game Over!\",\"color\":\"dark_aqua\",\"bold\":true}"), 0, 60, 0);
 
 
-            Bukkit.getOnlinePlayers().forEach((Consumer<Player>) pl ->{
+            Bukkit.getOnlinePlayers().forEach((Consumer<Player>) pl -> {
                 ((CraftPlayer) pl).getHandle().playerConnection.sendPacket(subtitle);
-                if(!pl.getName().equalsIgnoreCase(target.getName())){
+                if (!pl.getName().equalsIgnoreCase(target.getName())) {
                     ((CraftPlayer) pl).getHandle().playerConnection.sendPacket(newTitle);
                 }
 
             });
         }
 
-        new BukkitRunnable(){
+        new BukkitRunnable() {
             @Override
             public void run() {
-                Bukkit.getOnlinePlayers().forEach(onlinePlayer -> onlinePlayer.teleport(MConf.get().getSpawnLocation().asBukkitLocation(true)));
+                Bukkit.getOnlinePlayers().forEach(onlinePlayer -> {
+                    onlinePlayer.teleport(MConf.get().getSpawnLocation().asBukkitLocation(true));
+                    onlinePlayer.getInventory().clear();
+                    onlinePlayer.getInventory().setArmorContents(null);
+                });
                 Util.staffLog("&4The Server Will Restart in 30 seconds!");
 
                 World nether = GameManager.get().getNetherWorld();
@@ -225,16 +229,16 @@ public class EndGameCommand implements UHCCommand{
 
 
             }
-        }.runTaskLater(UHC.get(), 20*10);
+        }.runTaskLater(UHC.get(), 20 * 10);
 
 
-        new BukkitRunnable(){
+        new BukkitRunnable() {
             @Override
             public void run() {
                 Bukkit.getOnlinePlayers().stream().filter(o -> !NSPlayer.get(o.getUniqueId()).hasRank(Rank.TRIAL)).forEach(o -> o.kickPlayer("The game has concluded! Thanks for playing! \n Follow us on twitter @NightShadePvPMC \n Join our Discord @ discord.me/NightShadeMC"));
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "restart");
             }
-        }.runTaskLater(UHC.get(), 30*20);
+        }.runTaskLater(UHC.get(), 30 * 20);
     }
 
     @Override

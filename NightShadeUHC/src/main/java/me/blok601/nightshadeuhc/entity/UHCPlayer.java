@@ -547,6 +547,8 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
     }
 
     public void leaveArena(){
+        if(!this.isInArena()) return;
+        if(!this.isPlayer()) return;
         Player p = getPlayer();
         ArenaSession session = this.arenaSession;
         session.setEnd(new Timestamp(System.currentTimeMillis()));
