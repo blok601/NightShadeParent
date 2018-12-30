@@ -37,6 +37,12 @@ import org.bukkit.scoreboard.Team;
  */
 public class JoinListener implements Listener {
 
+    private GameManager gameManager;
+
+    public JoinListener(GameManager gameManager) {
+        this.gameManager = gameManager;
+    }
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
@@ -46,14 +52,17 @@ public class JoinListener implements Listener {
         gamePlayer.setReceiveHelpop(true);
         player.sendMessage(ChatUtils.message("&5Welcome &5back to the NightShadePvP Network!"));
         ScoreboardManager scoreboardManager = UHC.get().getScoreboardManager();
-       scoreboardManager.addToPlayerCache(player);
+        scoreboardManager.addToPlayerCache(player);
 
         Scoreboard scoreboard = scoreboardManager.getPlayerScoreboard(player).getBukkitScoreboard();
-        for (CachedColor cachedColor : GameManager.get().getColors()){
-            if(scoreboard.getTeam(cachedColor.getId()) != null) continue;
-            Team team = scoreboard.registerNewTeam(cachedColor.getId());
-            team.setPrefix(cachedColor.getColor());
-            team.addEntry(cachedColor.getPlayer());
+        Scenario scen = ScenarioManager.getScen("Secret Teams");
+        if(scen != null && !scen.isEnabled()){
+            for (CachedColor cachedColor : gameManager.getColors()) {
+                if (scoreboard.getTeam(cachedColor.getId()) != null) continue;
+                Team team = scoreboard.registerNewTeam(cachedColor.getId());
+                team.setPrefix(cachedColor.getColor());
+                team.addEntry(cachedColor.getPlayer());
+            }
         }
 
         UHCPlayer gameP;
@@ -82,11 +91,11 @@ public class JoinListener implements Listener {
             }
         }
 
-        if (GameManager.get().getRespawnQueue().contains(player.getName().toLowerCase())) {
+        if (gameManager.getRespawnQueue().contains(player.getName().toLowerCase())) {
             // They should be respawned
             //TODO: Stopped here
-            GameManager.get().getRespawnQueue().remove(player.getName().toLowerCase());
-            PlayerRespawn obj = GameManager.get().getInvs().get(player.getUniqueId());
+            gameManager.getRespawnQueue().remove(player.getName().toLowerCase());
+            PlayerRespawn obj = gameManager.getInvs().get(player.getUniqueId());
             player.teleport(obj.getLocation());
             gamePlayer.setPlayerStatus(PlayerStatus.PLAYING);
             player.getInventory().setArmorContents(obj.getArmor());
@@ -108,13 +117,13 @@ public class JoinListener implements Listener {
 
             player.setGameMode(GameMode.SURVIVAL);
             //UHC.players.add(player.getUniqueId());
-            GameManager.get().getInvs().remove(player.getUniqueId());
+            gameManager.getInvs().remove(player.getUniqueId());
             player.sendMessage(ChatUtils.message("&aYou have been respawned!"));
         }
 
-        if (GameManager.get().getLateScatter().contains(player.getName().toLowerCase())) {
+        if (gameManager.getLateScatter().contains(player.getName().toLowerCase())) {
             //They should be late started
-            ScatterUtil.scatterPlayer(GameManager.get().getWorld(), (int) GameManager.get().getBorderSize(), player);
+            ScatterUtil.scatterPlayer(gameManager.getWorld(), (int) gameManager.getBorderSize(), player);
             //UHC.players.add(player.getUniqueId());
             player.getInventory().clear();
             player.getInventory().setArmorContents(null);
@@ -131,11 +140,11 @@ public class JoinListener implements Listener {
                     }
                 }
             }
-            ScatterUtil.scatterPlayer(GameManager.get().getWorld(), (int) GameManager.get().getBorderSize(), player);
+            ScatterUtil.scatterPlayer(gameManager.getWorld(), (int) gameManager.getBorderSize(), player);
             gamePlayer.setPlayerStatus(PlayerStatus.PLAYING);
             player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 5, 5);
             player.sendMessage(ChatUtils.message("&eYou were scattered!"));
-            GameManager.get().getLateScatter().remove(player.getName().toLowerCase());
+            gameManager.getLateScatter().remove(player.getName().toLowerCase());
         }
 
 
@@ -150,18 +159,18 @@ public class JoinListener implements Listener {
             ScenarioManager.getEnabledScenarios().forEach(scenario -> builder.append(scenario.getName()).append(", "));
             String scenarios = builder.toString().trim();
             player.sendMessage(ChatUtils.format("&5&m-----------------------------------"));
-            player.sendMessage(ChatUtils.format("&e&lHost: &3" + GameManager.get().getHost().getName()));
+            player.sendMessage(ChatUtils.format("&e&lHost: &3" + gameManager.getHost().getName()));
             if (scenarios.length() > 0) {
                 player.sendMessage(ChatUtils.format("&e&lScenarios: &3" + scenarios.substring(0, builder.length() - 1)));
             } else {
                 player.sendMessage(ChatUtils.format("&e&lScenarios: &3None"));
             }
-            player.sendMessage(ChatUtils.format("&e&lTeamSize: &3" + (GameManager.get().isIsTeam() ? TeamManager.getInstance().getTeamSize() : "FFA")));
+            player.sendMessage(ChatUtils.format("&e&lTeamSize: &3" + (gameManager.isIsTeam() ? TeamManager.getInstance().getTeamSize() : "FFA")));
 
             player.sendMessage(" ");
-            player.sendMessage(ChatUtils.format("&e&lFinal Heal Time: &3" + GameManager.get().getFinalHealTime() / 60 + " minutes"));
-            player.sendMessage(ChatUtils.format("&e&lPvP Time: &3" + GameManager.get().getPvpTime() / 60 + " minutes"));
-            player.sendMessage(ChatUtils.format("&e&lMeetup Time: &3" + GameManager.get().getBorderTime() / 60 + " minutes"));
+            player.sendMessage(ChatUtils.format("&e&lFinal Heal Time: &3" + gameManager.getFinalHealTime() / 60 + " minutes"));
+            player.sendMessage(ChatUtils.format("&e&lPvP Time: &3" + gameManager.getPvpTime() / 60 + " minutes"));
+            player.sendMessage(ChatUtils.format("&e&lMeetup Time: &3" + gameManager.getBorderTime() / 60 + " minutes"));
             player.sendMessage(" ");
             player.sendMessage(ChatUtils.format("&e&lMatchpost: &3" + Core.get().getMatchpost()));
 
@@ -173,7 +182,7 @@ public class JoinListener implements Listener {
         }
     }
 
-    @EventHandler (priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onLeave(PlayerQuitEvent e) {
         UHC.get().getScoreboardManager().removeFromPlayerCache(e.getPlayer());
 
@@ -236,7 +245,7 @@ public class JoinListener implements Listener {
     public void onLogin(PlayerLoginEvent e) {
         Player p = e.getPlayer();
         NSPlayer user = NSPlayer.get(p);
-        if (GameManager.get().isWhitelistEnabled()) {
+        if (gameManager.isWhitelistEnabled()) {
 
             System.out.println(user.getRank().toString());
             if (user.getRank().getValue() >= Rank.TRIAL.getValue()) {
@@ -244,14 +253,14 @@ public class JoinListener implements Listener {
                 return;
             }
 
-            if (GameManager.get().getRespawnQueue().contains(e.getPlayer().getName().toLowerCase())) {
+            if (gameManager.getRespawnQueue().contains(e.getPlayer().getName().toLowerCase())) {
                 e.allow();
                 LoggerManager.getInstance().getDeadLoggers().remove(p.getUniqueId());
                 return;
             }
 
-            if (!GameManager.get().getWhitelist().contains(e.getPlayer().getName().toLowerCase()) && !LoggerManager.getInstance().getDeadLoggers().contains(p.getUniqueId())) {
-                if (GameManager.get().getRespawnQueue().contains(e.getPlayer().getName().toLowerCase())) {
+            if (!gameManager.getWhitelist().contains(e.getPlayer().getName().toLowerCase()) && !LoggerManager.getInstance().getDeadLoggers().contains(p.getUniqueId())) {
+                if (gameManager.getRespawnQueue().contains(e.getPlayer().getName().toLowerCase())) {
                     e.allow();
                     return;
                 }
@@ -260,7 +269,7 @@ public class JoinListener implements Listener {
                 e.allow();
             }
 
-            if (GameManager.get().getDeathBans().contains(p.getUniqueId())) {
+            if (gameManager.getDeathBans().contains(p.getUniqueId())) {
                 e.disallow(PlayerLoginEvent.Result.KICK_WHITELIST, "You have already died!");
                 return;
             }
@@ -271,7 +280,7 @@ public class JoinListener implements Listener {
 
         }
 
-        if (Bukkit.getOnlinePlayers().size() == GameManager.get().getMaxPlayers()) {
+        if (Bukkit.getOnlinePlayers().size() == gameManager.getMaxPlayers()) {
             if (!user.hasRank(Rank.YOUTUBE)) {
                 e.disallow(PlayerLoginEvent.Result.KICK_FULL, "The server is full!");
             } else {

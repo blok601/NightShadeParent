@@ -4,6 +4,7 @@ import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.command.UHCCommand;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.util.MathUtil;
 import me.blok601.nightshadeuhc.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -38,7 +39,7 @@ public class WallsCommand implements UHCCommand{
                 return;
             }
 
-            if (!Util.isInt(args[0])) {
+            if (!MathUtil.isInt(args[0])) {
                 p.sendMessage(ChatUtils.message("&cPlease supply a number!"));
                 return;
             }
@@ -55,7 +56,7 @@ public class WallsCommand implements UHCCommand{
                 return;
             }
 
-            if (!Util.isInt(args[0])) {
+            if (!MathUtil.isInt(args[0])) {
                 p.sendMessage(ChatUtils.message("&cPlease supply a number!"));
                 return;
             }

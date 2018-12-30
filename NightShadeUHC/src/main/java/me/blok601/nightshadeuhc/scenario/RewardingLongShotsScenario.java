@@ -2,6 +2,7 @@ package me.blok601.nightshadeuhc.scenario;
 
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
+import me.blok601.nightshadeuhc.util.MathUtil;
 import me.blok601.nightshadeuhc.util.Util;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
@@ -36,18 +37,18 @@ public class RewardingLongShotsScenario extends Scenario{
                 if(a.getShooter() instanceof Player){
                     Player shooter = (Player) a.getShooter();
                     int distance = (int) shooter.getLocation().distance(p.getLocation());
-                    if(Util.isBetween(49, 30, distance)){
+                    if(MathUtil.isBetween(49, 30, distance)){
                         shooter.getInventory().addItem(new ItemStack(Material.IRON_INGOT));
                         shooter.sendMessage(ChatUtils.format(getPrefix() + "&eYou have gotten a longshot of &6" + distance + "&e! Your reward is &61 iron ingot&e."));
                     }
 
-                    if(Util.isBetween(99, 50, distance)){
+                    if(MathUtil.isBetween(99, 50, distance)){
                         shooter.getInventory().addItem(new ItemStack(Material.IRON_INGOT));
                         shooter.getInventory().addItem(new ItemStack(Material.GOLD_INGOT));
                         shooter.sendMessage(ChatUtils.format(getPrefix() + "&eYou have gotten a longshot of &6" + distance + "&e! Your reward is &61 gold ingot &eand &61 gold ingot&e."));
                     }
 
-                    if(Util.isBetween(199, 100, distance)){
+                    if(MathUtil.isBetween(199, 100, distance)){
                         shooter.getInventory().addItem(new ItemStack(Material.IRON_INGOT));
                         shooter.getInventory().addItem(new ItemStack(Material.GOLD_INGOT));
                         shooter.getInventory().addItem(new ItemStack(Material.DIAMOND));

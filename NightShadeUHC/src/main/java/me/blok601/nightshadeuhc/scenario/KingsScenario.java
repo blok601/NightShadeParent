@@ -8,7 +8,7 @@ import me.blok601.nightshadeuhc.entity.object.Team;
 import me.blok601.nightshadeuhc.manager.TeamManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
-import me.blok601.nightshadeuhc.util.MathUtils;
+import me.blok601.nightshadeuhc.util.MathUtil;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 import org.bukkit.Bukkit;
@@ -65,7 +65,7 @@ public class KingsScenario extends Scenario {
                             player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, 0));
                             player.getWorld().strikeLightningEffect(player.getLocation());
                             player.sendMessage(getPrefix() + "&&5You are the King, be careful. Your team depends on you to survive.");
-                            for (Location location : MathUtils.getCircle(player.getLocation(), 2.0, 1)) {
+                            for (Location location : MathUtil.getCircle(player.getLocation(), 2.0, 1)) {
                                 packetPlayOutWorldParticles = new PacketPlayOutWorldParticles(EnumParticle.LAVA, true, (float) location.getX(), (float) location.getY(), (float) location.getZ(), 0, 0, 0, 0, 0);
                                 for (String teamMemberName : teamEntry.getValue().getMembers()) {
                                     if (Bukkit.getPlayer(teamMemberName) != null) {

@@ -48,13 +48,13 @@ public class TopSpecCommand implements UHCCommand {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        p.sendMessage(ChatUtils.format("&5&m----------------------------"));
+                        p.sendMessage(ChatUtils.format("&f&m----------------------------"));
                         int i = 1;
                         for (NSPlayer n : times){
-                            p.sendMessage(ChatUtils.format("&e" + i +". &3" + n.getName() + " - "  + TimeUtils.formatSecondsToTime(n.getSpectatingTime())));
+                            p.sendMessage(ChatUtils.format("&f" + i +". &b" + n.getName() + " &f- &b"  + TimeUtils.formatSecondsToTime(n.getSpectatingTime(), "&b")));
                             i++;
                         }
-                        p.sendMessage(ChatUtils.format("&5&m----------------------------"));
+                        p.sendMessage(ChatUtils.format("&f&m----------------------------"));
                     }
                 }.runTask(UHC.get());
             }

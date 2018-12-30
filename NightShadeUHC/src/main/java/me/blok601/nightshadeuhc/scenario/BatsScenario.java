@@ -2,6 +2,7 @@ package me.blok601.nightshadeuhc.scenario;
 
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
+import me.blok601.nightshadeuhc.util.MathUtil;
 import me.blok601.nightshadeuhc.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -31,7 +32,7 @@ public class BatsScenario extends Scenario{
 
 
         if(e.getEntity() instanceof Bat){
-            if(Util.getChance(95)){
+            if(MathUtil.getChance(95)){
                 e.getEntity().getWorld().dropItemNaturally(e.getEntity().getLocation(), new ItemBuilder(Material.GOLDEN_APPLE).make());
             }else{
                 if(e.getEntity().getKiller() instanceof Player){

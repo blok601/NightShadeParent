@@ -2,6 +2,7 @@ package me.blok601.nightshadeuhc.component;
 
 import com.google.common.collect.ImmutableList;
 import me.blok601.nightshadeuhc.manager.GameManager;
+import me.blok601.nightshadeuhc.util.MathUtil;
 import me.blok601.nightshadeuhc.util.Util;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -39,8 +40,8 @@ public class ShearsComponent extends Component {
         }
 
         //Shears and leaves
-        if (Util.getChance(gameManager.getAppleRates())) {
-            if(Util.getChance(GameManager.get().getAppleRates())){
+        if (MathUtil.getChance(gameManager.getAppleRates())) {
+            if(MathUtil.getChance(GameManager.get().getAppleRates())){
                 e.getBlock().setType(Material.AIR);
                 e.getBlock().getDrops().clear();
                 e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), new ItemStack(Material.APPLE));

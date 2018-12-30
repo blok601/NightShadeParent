@@ -2,6 +2,7 @@ package me.blok601.nightshadeuhc.scenario;
 
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
+import me.blok601.nightshadeuhc.util.MathUtil;
 import me.blok601.nightshadeuhc.util.Util;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -27,21 +28,21 @@ public class AurophobiaScenario extends Scenario{
         Player p = e.getPlayer();
 
         if(e.getBlock().getType() == Material.GOLD_ORE){
-            if(Util.getChance(5)){
+            if(MathUtil.getChance(5)){
                 p.damage(2);
                 p.sendMessage(ChatUtils.format(getPrefix() + "&eYou were unlucky and took 1 heart of damage!"));
-            }else if(Util.getChance(5)){
+            }else if(MathUtil.getChance(5)){
                 p.getLocation().getWorld().spawnEntity(p.getLocation(), EntityType.SILVERFISH);
                 p.getLocation().getWorld().spawnEntity(p.getLocation(), EntityType.SILVERFISH);
                 p.sendMessage(ChatUtils.format(getPrefix() + "&eYou were unlucky and 2 silverfish were spawned!"));
-            }else if(Util.getChance(5)){
+            }else if(MathUtil.getChance(5)){
                 e.setCancelled(true);
                 e.getBlock().setType(Material.AIR);
                 p.sendMessage(ChatUtils.format(getPrefix() + "&eYou were unlucky lost the gold!"));
-            }else if(Util.getChance(5)){
+            }else if(MathUtil.getChance(5)){
                 p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 10, 2));
                 p.sendMessage(ChatUtils.format(getPrefix() + "&eYou were unlucky and are now blinded!"));
-            }else if(Util.getChance(3)){
+            }else if(MathUtil.getChance(3)){
                 p.getLocation().getWorld().spawnEntity(p.getLocation(), EntityType.CAVE_SPIDER);
                 p.sendMessage(ChatUtils.format(getPrefix() + "&eYou were unlucky and a cave spider appeared!"));
             }

@@ -39,7 +39,7 @@ commands:
   feedall:
     description: Feed all players
   freezeall:
-    description: Freeze all players
+    description: FreezeUtil all players
   health:
     description: Get the health of another player
     aliases: [h, hp]

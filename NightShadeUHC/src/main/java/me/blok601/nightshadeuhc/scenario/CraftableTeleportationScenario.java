@@ -3,7 +3,7 @@ package me.blok601.nightshadeuhc.scenario;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
-import me.blok601.nightshadeuhc.util.MathUtils;
+import me.blok601.nightshadeuhc.util.MathUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -55,10 +55,10 @@ public class CraftableTeleportationScenario extends Scenario{
 
                     if(tempPlayer != null){ //found him
                         boolean goodY = false;
-                        double x = MathUtils.getRand((int) (tempPlayer.getLocation().getX() + 25), (int) (tempPlayer.getLocation().getX() - 25));
-                        double z = MathUtils.getRand((int) (tempPlayer.getLocation().getZ() + 25), (int) (tempPlayer.getLocation().getZ() - 25));
+                        double x = MathUtil.getRand((int) (tempPlayer.getLocation().getX() + 25), (int) (tempPlayer.getLocation().getX() - 25));
+                        double z = MathUtil.getRand((int) (tempPlayer.getLocation().getZ() + 25), (int) (tempPlayer.getLocation().getZ() - 25));
                         while(!goodY){
-                            double y = MathUtils.getRand((int) (tempPlayer.getLocation().getY() + 25), (int) tempPlayer.getLocation().getY() - 25);
+                            double y = MathUtil.getRand((int) (tempPlayer.getLocation().getY() + 25), (int) tempPlayer.getLocation().getY() - 25);
                             Block block = tempPlayer.getWorld().getBlockAt((int) x, (int)y, (int)z);
                             if(block != null && block.getType() != Material.WATER && block.getType() != Material.LAVA && block.getType() != Material.AIR){
                                 if(block.getWorld().getBlockAt(block.getX(), block.getY()+1, block.getZ()).getType() == Material.AIR){

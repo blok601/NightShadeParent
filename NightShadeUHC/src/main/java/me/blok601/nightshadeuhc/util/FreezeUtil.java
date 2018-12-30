@@ -5,7 +5,7 @@ import com.nightshadepvp.core.entity.NSPlayer;
 import com.nightshadepvp.core.entity.NSPlayerColl;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 
-public class Freeze {
+public class FreezeUtil {
 
     public static void start(){
         UHCPlayer uhcPlayer;

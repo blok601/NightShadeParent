@@ -61,7 +61,7 @@ public class CutCleanScenario extends Scenario {
         } else if (en.getType() == EntityType.COW) {
             e.getDrops().clear();
             en.getLocation().getWorld().dropItemNaturally(en.getLocation().add(1, 0, 0), new ItemStack(Material.COOKED_BEEF, 3));
-            en.getLocation().getWorld().dropItemNaturally(en.getLocation().add(1, 0, 0), new ItemStack(Material.LEATHER, 1));
+            en.getLocation().getWorld().dropItemNaturally(en.getLocation().add(1, 0, 0), new ItemStack(Material.LEATHER, 2));
         } else if (en.getType() == EntityType.SHEEP) {
             e.getDrops().clear();
             en.getLocation().getWorld().dropItemNaturally(en.getLocation().add(1, 0, 0), new ItemStack(Material.COOKED_BEEF, 3));
@@ -69,6 +69,12 @@ public class CutCleanScenario extends Scenario {
             e.getDrops().clear();
             en.getLocation().getWorld().dropItemNaturally(en.getLocation().add(1, 0, 0), new ItemStack(Material.COOKED_CHICKEN, 3));
             en.getLocation().getWorld().dropItemNaturally(en.getLocation().add(1, 0, 0), new ItemStack(Material.FEATHER, 2));
+        }else if(en.getType() == EntityType.RABBIT){
+            e.getDrops().clear();
+            en.getLocation().getWorld().dropItemNaturally(en.getLocation().add(1, 0, 0), new ItemStack(Material.COOKED_MUTTON, 3));
+            en.getLocation().getWorld().dropItemNaturally(en.getLocation().add(1, 0, 0), new ItemStack(Material.LEATHER, 2));
+        }else if(en.getType() == EntityType.HORSE){
+            en.getLocation().getWorld().dropItemNaturally(en.getLocation().add(1, 0, 0), new ItemStack(Material.LEATHER, 3));
         }
     }
 }

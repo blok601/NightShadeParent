@@ -34,6 +34,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.stream.Collectors;
@@ -190,7 +191,7 @@ public class GameSetupInventoryClick implements Listener {
             } else if (slot == 30) {
                 ArrayList<ItemStack> items = new ArrayList<>();
 
-                for(Scenario scenario :  ScenarioManager.getScenarios()){
+                for (Scenario scenario : ScenarioManager.getScenarios()) {
                     ItemStack i = new ItemBuilder(scenario.getItem()).name(scenario.isEnabled() ? ChatUtils.format("&a" + scenario.getName()) : ChatUtils.format("&c" + scenario.getName())).make();
                     items.add(i);
                 }
@@ -416,6 +417,22 @@ public class GameSetupInventoryClick implements Listener {
                                 if (world == null) {
                                     p.sendMessage(ChatUtils.message("&cThere was an error trying to load your world..."));
                                     p.sendMessage(ChatUtils.message("&cTry recreating it to make sure!"));
+
+                                    p.sendMessage(ChatUtils.message("&eAttempting to clear your world folders..."));
+                                    new BukkitRunnable() {
+                                        @Override
+                                        public void run() {
+                                            HashSet<File> files = Util.worldFoldersFromString("UHC" + p.getName());
+                                            if (files == null || files.isEmpty()) {
+                                                p.sendMessage(ChatUtils.message("&cYou don't have any world folders! You should be good to go!"));
+                                                return;
+                                            }
+
+                                            files.stream().filter(File::exists).forEach(File::delete);
+                                            p.sendMessage(ChatUtils.message("&eWorld folders have been cleared! Try again now..."));
+                                        }
+                                    }.runTaskAsynchronously(uhc);
+                                    return;
                                 }
                                 gameManager.setWorld(world);
                                 PregenQueue queue = new PregenQueue();

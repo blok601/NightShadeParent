@@ -8,7 +8,7 @@ import me.blok601.nightshadeuhc.entity.object.PlayerStatus;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.util.ActionBarUtil;
 import me.blok601.nightshadeuhc.util.ChatUtils;
-import me.blok601.nightshadeuhc.util.Freeze;
+import me.blok601.nightshadeuhc.util.FreezeUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -20,11 +20,13 @@ import java.util.ArrayList;
  */
 public class GameCountdownTask extends BukkitRunnable {
 
-    int counter = 180;
-    UHC uhc;
+    private int counter = 180;
+    private UHC uhc;
+    private GameManager gameManager;
 
-    public GameCountdownTask(UHC uhc) {
+    public GameCountdownTask(UHC uhc, GameManager gameManager) {
         this.uhc = uhc;
+        this.gameManager = gameManager;
     }
 
     @Override
@@ -43,10 +45,10 @@ public class GameCountdownTask extends BukkitRunnable {
                 }
             }
 
-            GameManager.get().getWorld().setTime(20);
+            gameManager.getWorld().setTime(20);
             ChatUtils.setChatFrozen(true);
             Bukkit.broadcastMessage(ChatUtils.message("&eUse /helpop or message any online staff members if you need help!"));
-            Freeze.start();
+            FreezeUtil.start();
             UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isInArena).forEach(UHCPlayer::leaveArena);
             GameState.setState(GameState.STARTING);
             Bukkit.getOnlinePlayers().forEach(o -> {
@@ -54,7 +56,7 @@ public class GameCountdownTask extends BukkitRunnable {
                 o.getInventory().clear();
                 o.getInventory().setArmorContents(null);
             });
-            new ScatterTask(valid, GameManager.get().getWorld(), GameManager.get().getSetupRadius(), GameManager.get().getHost(), GameManager.get().getFinalHealTime(), GameManager.get().getPvpTime(), GameManager.get().getBorderTime(), GameManager.get().isIsTeam(), GameManager.get().getFirstShrink(), GameManager.get().getMeetupTime()).runTaskTimer(UHC.get(), 0, 4);
+            new ScatterTask(valid, gameManager.getWorld(), gameManager.getSetupRadius(), gameManager.getHost(), gameManager.getFinalHealTime(), gameManager.getPvpTime(), gameManager.getBorderTime(), gameManager.isIsTeam(), gameManager.getFirstShrink(), gameManager.getMeetupTime(), gameManager).runTaskTimer(UHC.get(), 0, 4);
             return;
         }
 

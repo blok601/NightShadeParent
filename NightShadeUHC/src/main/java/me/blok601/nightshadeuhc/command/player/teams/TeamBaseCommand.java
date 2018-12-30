@@ -16,6 +16,7 @@ import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
 import me.blok601.nightshadeuhc.scoreboard.ScoreboardManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.util.MathUtil;
 import me.blok601.nightshadeuhc.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -151,6 +152,8 @@ public class TeamBaseCommand implements UHCCommand{
                     }
                 }else if(args[0].equalsIgnoreCase("color")){
                     if(user.hasRank(Rank.TRIALHOST)){
+
+
                         ScoreboardManager scoreboardManager = UHC.get().getScoreboardManager();
                         Scoreboard scoreboard;
                         for (Team team : TeamManager.getInstance().getTeams()){
@@ -376,7 +379,7 @@ public class TeamBaseCommand implements UHCCommand{
                     }
                 }else if(args[0].equalsIgnoreCase("limit")){
                     if(user.hasRank(Rank.HOST)){
-                        if(Util.isInt(args[1])){
+                        if(MathUtil.isInt(args[1])){
                             TeamManager.getInstance().setTeamSize(Integer.parseInt(args[1]));
                             p.sendMessage(ChatUtils.message("&eSet the team size to " + args[1]));
                             return;

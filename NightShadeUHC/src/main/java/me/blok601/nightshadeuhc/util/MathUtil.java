@@ -5,12 +5,13 @@ import org.bukkit.World;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by Blok on 6/23/2018.
  */
-public class MathUtils {
+public class MathUtil {
 
     public static String formatDoubleToPercet(double percent){
         DecimalFormat df = new DecimalFormat("##.#");
@@ -38,6 +39,25 @@ public class MathUtils {
             locations.add(new Location(world, x, center.getY(), z)); //center will be player location
         }
         return locations;
+    }
+
+    public static boolean isInt(String s){
+        try{
+            Integer.parseInt(s);
+            return true;
+        }catch(Exception e){
+            return false;
+        }
+    }
+
+    public static boolean getChance(double c) {
+        Random random = new Random();
+        double r = random.nextDouble();
+        return r * 100 < c;
+    }
+
+    public static boolean isBetween(int max, int min, int val){
+        return min < val && val < max;
     }
 
 }
