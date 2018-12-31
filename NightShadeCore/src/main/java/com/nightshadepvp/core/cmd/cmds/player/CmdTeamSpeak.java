@@ -20,7 +20,7 @@ public class CmdTeamSpeak extends NightShadeCoreCommand {
     @Override
     public void perform() throws MassiveException {
         NSPlayer nsPlayer = NSPlayer.get(sender);
-        nsPlayer.msg(ChatUtils.message("&cCome on... who still uses TeamSpeak? &eJoin our discord&8: &bdiscord.me/NightShadeMC"));
+        nsPlayer.msg(ChatUtils.message("&cAlthough our Discord &7(&bdiscord.me/NightShadeMC&7) &cis our preferred communication method, you can join our TeamSpeak @ &bts.nightshadepvp.com"));
     }
 
 }

@@ -56,10 +56,10 @@ public class MathUtil {
         return r * 100 < c;
     }
 
-    public static float calculateXPBuff(int initial) {
+    public static float calculateXPBuff(double initial) {
         //1.25 buff
-        float add = (initial / 4);
-        return initial + add;
+        double add = (initial / 10F);
+        return (float) (initial + add);
 
     }
 

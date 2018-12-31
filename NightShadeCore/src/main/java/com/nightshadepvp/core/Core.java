@@ -1,7 +1,5 @@
 package com.nightshadepvp.core;
 
-import co.aikar.timings.Timing;
-import co.aikar.timings.TimingsManager;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
 import com.massivecraft.massivecore.MassivePlugin;
@@ -16,16 +14,12 @@ import com.nightshadepvp.core.store.NSStoreConf;
 import com.nightshadepvp.core.ubl.UBLHandler;
 import com.nightshadepvp.core.utils.ChatUtils;
 import litebans.api.Events;
-import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Scoreboard;
 import redis.clients.jedis.Jedis;
-
-import java.io.File;
-import java.io.IOException;
 
 public class Core extends MassivePlugin implements PluginMessageListener {
 
@@ -106,36 +100,6 @@ public class Core extends MassivePlugin implements PluginMessageListener {
         return i;
     }
 
-    private boolean transferFiles() {
-        File pluginsDir = new File(Core.get().getServer().getWorldContainer() + "/plugins/");
-        File templateDir = new File("/home/dhillon/minecraft/template/");
-        if (!pluginsDir.isDirectory()) {
-            Core.get().getLogManager().log(Logger.LogType.SEVERE, "Couldn't properly location plugins directory!");
-            return false;
-        }
-
-        if (!templateDir.isDirectory() || templateDir.listFiles() == null) {
-            Core.get().getLogManager().log(Logger.LogType.SEVERE, "Couldn't properly location template directory!");
-            return false;
-        }
-
-        for (File file : templateDir.listFiles()) {
-            if (file == null || !file.exists()) {
-                continue;
-            }
-
-            try {
-                FileUtils.copyFileToDirectory(file, pluginsDir);
-            } catch (IOException e) {
-                Core.get().getLogManager().log(Logger.LogType.SEVERE, "IO Exception when copying files!");
-                e.printStackTrace();
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     public Logger getLogManager() {
         return this.logger;
     }
@@ -180,4 +144,6 @@ public class Core extends MassivePlugin implements PluginMessageListener {
     public UBLHandler getUblHandler() {
         return ublHandler;
     }
+
+
 }
