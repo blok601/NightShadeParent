@@ -8,7 +8,6 @@ import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.cmd.NightShadeCoreCommand;
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.nightshadepvp.core.utils.ChatUtils;
-import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
 import redis.clients.jedis.Jedis;
 
@@ -38,7 +37,7 @@ public class CmdLinkDiscord extends NightShadeCoreCommand {
             return;
         }
 
-        jedis.expire(code, 20);
+        jedis.expire(code, 10);
         Long id = Long.parseLong(string);
 
         nsPlayer.setDiscordID(id);
@@ -53,7 +52,7 @@ public class CmdLinkDiscord extends NightShadeCoreCommand {
                 jsonObject.addProperty("rank", nsPlayer.getRank().getDiscordRankName());
                 jsonObject.addProperty("username", nsPlayer.getName());
 
-                jedis.publish("playerLink", ChatColor.stripColor(jsonObject.toString())); //To remove special chars
+                jedis.publish("playerLink", jsonObject.toString()); //To remove special chars
             }
         }.runTaskAsynchronously(Core.get());
     }

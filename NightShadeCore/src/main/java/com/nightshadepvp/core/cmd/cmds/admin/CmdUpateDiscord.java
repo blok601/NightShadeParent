@@ -3,12 +3,10 @@ package com.nightshadepvp.core.cmd.cmds.admin;
 import com.google.gson.JsonObject;
 import com.massivecraft.massivecore.MassiveException;
 import com.massivecraft.massivecore.command.type.primitive.TypeString;
-import com.massivecraft.massivecore.store.SenderEntity;
 import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Logger;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.cmd.NightShadeCoreCommand;
-import com.nightshadepvp.core.cmd.cmds.admin.ubl.CmdUBLUpdate;
 import com.nightshadepvp.core.cmd.req.ReqRankHasAtLeast;
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.nightshadepvp.core.entity.NSPlayerColl;
@@ -29,7 +27,7 @@ public class CmdUpateDiscord extends NightShadeCoreCommand {
     public CmdUpateDiscord() {
         this.addAliases("updatediscord");
         this.addRequirements(ReqRankHasAtLeast.get(Rank.HEADADMIN));
-        this.addParameter(TypeString.get(), "<player//ALL>");
+        this.addParameter(TypeString.get(), "player/ALL");
     }
 
     @Override
@@ -75,7 +73,7 @@ public class CmdUpateDiscord extends NightShadeCoreCommand {
 
                     long end = System.currentTimeMillis();
 
-                    long total = start - end;
+                    long total = end - start;
                     int mins = (int) total % 60;
                     int seconds = (int) total / 60;
                     nsPlayer.msg(ChatUtils.message("&bFinished udpdating &a" + updated + " &bdiscord users &8(&a" + mins + "." + seconds + "s&8)"));
