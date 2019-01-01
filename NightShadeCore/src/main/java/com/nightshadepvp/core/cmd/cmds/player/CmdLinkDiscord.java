@@ -38,7 +38,7 @@ public class CmdLinkDiscord extends NightShadeCoreCommand {
             return;
         }
 
-        jedis.set(code, null);
+        jedis.expire(code, 20);
         Long id = Long.parseLong(string);
 
         nsPlayer.setDiscordID(id);
@@ -56,8 +56,5 @@ public class CmdLinkDiscord extends NightShadeCoreCommand {
                 jedis.publish("playerLink", ChatColor.stripColor(jsonObject.toString())); //To remove special chars
             }
         }.runTaskAsynchronously(Core.get());
-
-
-
     }
 }
