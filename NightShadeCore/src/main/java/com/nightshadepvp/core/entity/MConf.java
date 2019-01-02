@@ -19,6 +19,7 @@ public class MConf extends Entity<MConf> {
         super.load(that);
         this.setServerName(that.serverName);
         this.setExempt(that.exempt);
+        this.setMaintenance(that.isMaintenance());
         return this;
     }
 
@@ -28,6 +29,8 @@ public class MConf extends Entity<MConf> {
     public ServerType serverType = ServerType.PRACTICE;
     private String serverName;
     private ArrayList<String> exempt = new ArrayList<>();
+    private boolean maintenance = false;
+
 
     public String getServerName() {
         return serverName;
@@ -45,5 +48,13 @@ public class MConf extends Entity<MConf> {
     public void setExempt(ArrayList<String> exempt) {
         this.exempt = exempt;
         this.changed();
+    }
+
+    public boolean isMaintenance() {
+        return maintenance;
+    }
+
+    public void setMaintenance(boolean maintenance) {
+        this.maintenance = maintenance;
     }
 }

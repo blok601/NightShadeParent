@@ -1,0 +1,4 @@
+name: NightShadeProxy
+version: ${project.version}
+main: com.nightshadepvp.nightshadeproxy.NightShadeProxy
+description: NightShadePvP's Proxy plugin

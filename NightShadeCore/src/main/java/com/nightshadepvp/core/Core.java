@@ -39,6 +39,7 @@ public class Core extends MassivePlugin implements PluginMessageListener {
 
     private Jedis jedis;
 
+
     @Override
     public void onEnableInner() {
         NSStoreConf.get().load();
@@ -122,6 +123,41 @@ public class Core extends MassivePlugin implements PluginMessageListener {
             String msg = in.readUTF();
 
             NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> nsPlayer.hasRank(Rank.TRIAL)).forEach(nsPlayer -> nsPlayer.msg(ChatUtils.format("&8[&cStaff Chat&8] &a" + playerName + "&8: &r" + msg)));
+        }else if(channel.equalsIgnoreCase("BungeeCord")){
+            ByteArrayDataInput in = ByteStreams.newDataInput(message);
+            String playerName = in.readUTF();
+            boolean state = in.readBoolean();
+
+            if(MConf.get().isMaintenance() == state) return;
+
+            MConf.get().setMaintenance(state);
+
+            if(state){
+                if(!MConf.get().isMaintenance()){
+                    Bukkit.broadcastMessage(ChatUtils.format("&5Proxy&8 » &b" + playerName + " &ahas enabled maintenance mode!"));
+                    Bukkit.broadcastMessage(ChatUtils.format("&5Proxy&8 » &aThe server will enter maintenance mode in 5 seconds..."));
+                    MConf.get().setMaintenance(true);
+                    MConf.get().changed();
+                    new BukkitRunnable(){
+                        @Override
+                        public void run() {
+                            NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> !nsPlayer.hasRank(Rank.TRIAL)).forEach(nsPlayer -> {
+                                nsPlayer.getPlayer().kickPlayer("§cThe Server is under maintenance!");
+                                Bukkit.broadcastMessage(ChatUtils.format("&5Proxy&8 » &bMaintenance Mode &aenabled!"));
+                            });
+                        }
+                    }.runTaskLater(this, 100);
+                }
+            }else{
+                if(MConf.get().isMaintenance()){
+                    Bukkit.broadcastMessage(ChatUtils.format("&5Proxy&8 » &b" + playerName + " &chas disabled maintenance mode!"));
+                    Bukkit.broadcastMessage(ChatUtils.format("&5Proxy&8 » &cThe server will exit maintenance mode..."));
+                    MConf.get().setMaintenance(false);
+                    MConf.get().changed();
+                    Bukkit.broadcastMessage(ChatUtils.format("&5Proxy&8 » &bMaintenance Mode &cdisabled!"));
+
+                }
+            }
         }
     }
 

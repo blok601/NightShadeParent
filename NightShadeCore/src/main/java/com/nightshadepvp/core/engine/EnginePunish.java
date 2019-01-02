@@ -2,6 +2,8 @@ package com.nightshadepvp.core.engine;
 
 import com.massivecraft.massivecore.Engine;
 import com.nightshadepvp.core.Core;
+import com.nightshadepvp.core.Rank;
+import com.nightshadepvp.core.entity.MConf;
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.nightshadepvp.core.ubl.UBLHandler;
 import org.bukkit.entity.Player;
@@ -104,6 +106,14 @@ public class EnginePunish extends Engine {
     @EventHandler
     public void preLogin(AsyncPlayerPreLoginEvent e) {
         UUID uuid = e.getUniqueId();
+
+        if(MConf.get().isMaintenance()){
+            if(!NSPlayer.get(uuid).hasRank(Rank.TRIAL)){
+                e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_WHITELIST, "§cThe Server is under maintenance!");
+                return;
+            }
+        }
+
         UBLHandler handler = Core.get().getUblHandler();
 
         if (handler.isUBLed(uuid) && !handler.isExempt(e.getName())) {
