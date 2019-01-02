@@ -125,12 +125,13 @@ public class Core extends MassivePlugin implements PluginMessageListener {
             String playerName = in.readUTF();
             boolean state = in.readBoolean();
 
-            if(MConf.get().isMaintenance() == state) return;
+            //if(MConf.get().isMaintenance() == state) return;
 
             MConf.get().setMaintenance(state);
+            MConf.get().changed();
 
             if(state){
-                if(!MConf.get().isMaintenance()){
+                if(MConf.get().isMaintenance()){
                     Bukkit.broadcastMessage(ChatUtils.format("&5Proxy&8 » &b" + playerName + " &ahas enabled maintenance mode!"));
                     Bukkit.broadcastMessage(ChatUtils.format("&5Proxy&8 » &aThe server will enter maintenance mode in 5 seconds..."));
                     MConf.get().setMaintenance(true);
@@ -146,7 +147,7 @@ public class Core extends MassivePlugin implements PluginMessageListener {
                     }.runTaskLater(this, 100);
                 }
             }else{
-                if(MConf.get().isMaintenance()){
+                if(!MConf.get().isMaintenance()){
                     Bukkit.broadcastMessage(ChatUtils.format("&5Proxy&8 » &b" + playerName + " &chas disabled maintenance mode!"));
                     Bukkit.broadcastMessage(ChatUtils.format("&5Proxy&8 » &cThe server will exit maintenance mode..."));
                     MConf.get().setMaintenance(false);
