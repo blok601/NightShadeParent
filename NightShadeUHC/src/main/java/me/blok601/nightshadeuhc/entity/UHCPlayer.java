@@ -690,7 +690,7 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
             return 0;
         }
 
-        if (this.deaths == 0) {
+        if (this.arenaDeaths == 0) {
             return this.arenaKills;
         }
 

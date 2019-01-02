@@ -36,8 +36,8 @@ public class ArenaProvider extends ScoreboardProvider {
         lines.add(new ScoreboardText(ChatUtils.format("&f&m--------------")));
         lines.add(new ScoreboardText(ChatUtils.format("&bYour Stats:")));
         lines.add(new ScoreboardText(ChatUtils.format("&fKills: &b" + uhcPlayer.getArenaKills())));
-        lines.add(new ScoreboardText(ChatUtils.format("&fDeaths: &b" + uhcPlayer.getArenaKills())));
-        lines.add(new ScoreboardText(ChatUtils.format("&fHighest KillStreak: &b" + uhcPlayer.getArenaKills())));
+        lines.add(new ScoreboardText(ChatUtils.format("&fDeaths: &b" + uhcPlayer.getArenaDeaths())));
+        lines.add(new ScoreboardText(ChatUtils.format("&fHighest KillStreak: &b" + uhcPlayer.getHighestArenaKillStreak())));
         lines.add(new ScoreboardText(ChatUtils.format("&fK/DR: &b" + ArenaSession.DECIMAL_FORMAT.format(uhcPlayer.getArenaKDR()))));
         lines.add(new ScoreboardText(ChatUtils.format("&f&m--------------")));
         lines.add(new ScoreboardText(ChatUtils.format("&bCurrent Session:")));
