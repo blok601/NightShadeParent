@@ -134,15 +134,13 @@ public class Core extends MassivePlugin implements PluginMessageListener {
                 if(MConf.get().isMaintenance()){
                     Bukkit.broadcastMessage(ChatUtils.format("&5Proxy&8 » &b" + playerName + " &ahas enabled maintenance mode!"));
                     Bukkit.broadcastMessage(ChatUtils.format("&5Proxy&8 » &aThe server will enter maintenance mode in 5 seconds..."));
-                    MConf.get().setMaintenance(true);
-                    MConf.get().changed();
                     new BukkitRunnable(){
                         @Override
                         public void run() {
                             NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> !nsPlayer.hasRank(Rank.TRIAL)).forEach(nsPlayer -> {
                                 nsPlayer.getPlayer().kickPlayer("§cThe Server is under maintenance!");
-                                Bukkit.broadcastMessage(ChatUtils.format("&5Proxy&8 » &bMaintenance Mode &aenabled!"));
                             });
+                            Bukkit.broadcastMessage(ChatUtils.format("&5Proxy&8 » &bMaintenance Mode &aenabled!"));
                         }
                     }.runTaskLater(this, 100);
                 }

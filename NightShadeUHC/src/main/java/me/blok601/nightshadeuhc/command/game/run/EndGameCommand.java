@@ -135,7 +135,10 @@ public class EndGameCommand implements UHCCommand {
 
 //                user.setPrefix(ChatColor.RED + "[Winner] ");
                     gamePlayer.setGamesWon(gamePlayer.getGamesWon() + 1);
-                    gamePlayer.addPoints(10 / targetTeam.getMembers().size());
+                    double toAdd = 10 / targetTeam.getMembers().size();
+                    gamePlayer.addPoints(toAdd);
+                    double curr = GameManager.get().getPointChanges().get(gamePlayer.getUuid());
+                    GameManager.get().getPointChanges().put(gamePlayer.getUuid(), curr + toAdd);
                     if (user.getRank() == Rank.PLAYER) {
                         if (gamePlayer.getGamesWon() >= 10) {
                             user.setPrefix(ChatUtils.format("&8[&c★&8]"));
@@ -178,6 +181,8 @@ public class EndGameCommand implements UHCCommand {
 
             gamePlayer.setGamesWon(gamePlayer.getGamesWon() + 1);
             gamePlayer.addPoints(10);
+            double curr = GameManager.get().getPointChanges().get(gamePlayer.getUuid());
+            GameManager.get().getPointChanges().put(gamePlayer.getUuid(), curr + 10);
             if (user.getRank() == Rank.PLAYER) {
                 if (gamePlayer.getGamesWon() >= 10) {
                     user.setPrefix(ChatUtils.format("&8[&c★&8]"));

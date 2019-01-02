@@ -84,6 +84,10 @@ public class ArenaListener implements Listener {
         if (e.getDamage() == 0 || e.getFinalDamage() == 0) return;
         if (e.isCancelled()) return;
 
+        if (!(e.getEntity() instanceof Player)) {
+            return;
+        }
+
         if (!(e.getDamager() instanceof Player)) {
             if (e.getDamager() instanceof Arrow) {
                 Arrow arrow = (Arrow) e.getDamager();
@@ -92,10 +96,6 @@ public class ArenaListener implements Listener {
                     shooter.getArenaSession().setBowHits(shooter.getArenaSession().getBowHits() + 1);
                 }
             }
-        }
-
-        if (!(e.getDamager() instanceof Player)) {
-            return;
         }
 
         Player p = (Player) e.getEntity();

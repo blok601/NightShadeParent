@@ -10,6 +10,7 @@ import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.command.staff.SpectatorCommand;
 import me.blok601.nightshadeuhc.entity.object.ArenaSession;
 import me.blok601.nightshadeuhc.entity.object.PlayerStatus;
+import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
 import me.blok601.nightshadeuhc.scoreboard.provider.type.ArenaProvider;
 import me.blok601.nightshadeuhc.scoreboard.provider.type.UHCProvider;
@@ -131,7 +132,9 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         if(block.getType() == Material.DIAMOND_ORE){
             this.diamondsMined++;
             addPoints(0.1);
-            this.setChangedLevel(this.getChangedLevel() + 0.5);
+            double curr = GameManager.get().getPointChanges().get(this.getUuid());
+            GameManager.get().getPointChanges().put(this.getUuid(), curr + 0.1);
+            this.setChangedLevel(this.getChangedLevel() + 0.1);
         }else if(block.getType() == Material.GOLD_ORE){
             this.goldMined++;
             this.setChangedLevel(this.getChangedLevel() + 0.25);
