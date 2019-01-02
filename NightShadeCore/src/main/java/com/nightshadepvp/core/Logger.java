@@ -8,7 +8,6 @@ import org.bukkit.Bukkit;
  */
 public class Logger {
 
-    public Logger (){}
 
     public void log(LogType type, String message){
         Bukkit.getConsoleSender().sendMessage(type.getPrefix() + type.getColor() + ChatUtils.format(message));

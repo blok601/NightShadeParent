@@ -18,7 +18,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scoreboard.Scoreboard;
 import redis.clients.jedis.Jedis;
 
 public class Core extends MassivePlugin implements PluginMessageListener {
@@ -31,7 +30,6 @@ public class Core extends MassivePlugin implements PluginMessageListener {
         Core.i = this;
     }
 
-    private static Scoreboard board;
     private UBLHandler ublHandler = new UBLHandler(this);
 
     private Logger logger;
@@ -49,7 +47,6 @@ public class Core extends MassivePlugin implements PluginMessageListener {
         this.activateAuto();
 
         logger = new Logger();
-        board = Bukkit.getScoreboardManager().getMainScoreboard();
 
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         Bukkit.getMessenger().registerIncomingPluginChannel(this, "BungeeCord", this);

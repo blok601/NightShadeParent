@@ -13,5 +13,6 @@
         <module>NightShadeCore</module>
         <module>NightShadeUHC</module>
         <module>NightShadePluginManager</module>
+        <module>NightShadeProxy</module>
     </modules>
 </project>

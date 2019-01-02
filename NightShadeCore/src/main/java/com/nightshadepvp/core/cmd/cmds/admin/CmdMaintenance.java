@@ -10,6 +10,7 @@ import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.cmd.NightShadeCoreCommand;
 import com.nightshadepvp.core.cmd.req.ReqRankHasAtLeast;
 import com.nightshadepvp.core.entity.NSPlayer;
+import com.nightshadepvp.core.utils.ChatUtils;
 
 /**
  * Created by Blok on 1/2/2019.
@@ -39,6 +40,8 @@ public class CmdMaintenance extends NightShadeCoreCommand {
         if (nsPlayer.isPlayer()) {
             nsPlayer.getPlayer().sendPluginMessage(Core.get(), "BungeeCord", out.toByteArray());
         }
+
+        nsPlayer.msg(ChatUtils.message("&eMaintenance mode " + (state ? "&astarting..." : "&cstopped")));
 
     }
 }
