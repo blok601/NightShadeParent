@@ -103,7 +103,6 @@ public class RespawnCommand implements UHCCommand{
         targetUHCPlayer.setPlayerStatus(PlayerStatus.PLAYING);
         target.sendMessage(ChatUtils.message("&eYou have been respawned by &a" + p.getName()));
         p.sendMessage(ChatUtils.message("&eYou have respawned &a" + target.getName()));
-
     }
 
     @Override

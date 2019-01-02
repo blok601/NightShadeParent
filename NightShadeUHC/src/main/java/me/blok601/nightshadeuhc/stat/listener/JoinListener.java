@@ -6,12 +6,12 @@ import com.nightshadepvp.core.entity.NSPlayer;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.object.*;
+import me.blok601.nightshadeuhc.event.PlayerJoinGameLateEvent;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.manager.LoggerManager;
 import me.blok601.nightshadeuhc.manager.TeamManager;
 import me.blok601.nightshadeuhc.scenario.Scenario;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
-import me.blok601.nightshadeuhc.scenario.interfaces.StarterItems;
 import me.blok601.nightshadeuhc.scoreboard.ScoreboardManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.PlayerUtils;
@@ -119,6 +119,7 @@ public class JoinListener implements Listener {
             //UHC.players.add(player.getUniqueId());
             gameManager.getInvs().remove(player.getUniqueId());
             player.sendMessage(ChatUtils.message("&aYou have been respawned!"));
+            Bukkit.getPluginManager().callEvent(new PlayerJoinGameLateEvent(player));
         }
 
         if (gameManager.getLateScatter().contains(player.getName().toLowerCase())) {
@@ -130,21 +131,12 @@ public class JoinListener implements Listener {
             player.setLevel(0);
             player.setExp(0F);
             player.getInventory().addItem(new ItemStack(Material.COOKED_BEEF, 10));
-            for (Scenario scenario : ScenarioManager.getEnabledScenarios()) {
-                if (scenario instanceof StarterItems) {
-
-                    StarterItems starterItems = (StarterItems) scenario;
-
-                    for (ItemStack stack : starterItems.getStarterItems()) {
-                        PlayerUtils.giveItem(stack, player);
-                    }
-                }
-            }
             ScatterUtil.scatterPlayer(gameManager.getWorld(), (int) gameManager.getBorderSize(), player);
             gamePlayer.setPlayerStatus(PlayerStatus.PLAYING);
             player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 5, 5);
             player.sendMessage(ChatUtils.message("&eYou were scattered!"));
             gameManager.getLateScatter().remove(player.getName().toLowerCase());
+            Bukkit.getPluginManager().callEvent(new PlayerJoinGameLateEvent(player));
         }
 
 

@@ -11,16 +11,16 @@ import me.blok601.nightshadeuhc.entity.object.CachedColor;
 import me.blok601.nightshadeuhc.entity.object.PlayerRespawn;
 import me.blok601.nightshadeuhc.entity.object.SetupStage;
 import me.blok601.nightshadeuhc.task.*;
-import me.blok601.nightshadeuhc.task.TimerTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.UUID;
 
 /**
  * Created by Blok on 8/5/2017.
@@ -72,7 +72,6 @@ public class GameManager {
     private  HashMap<UUID, Integer> kills = new HashMap<>();
     @Getter
     public World world;
-    private  String date;
     @Getter
     private HashMap<Player, SetupStage> setupStageHashMap = new HashMap<>();
     @Getter@Setter
@@ -114,11 +113,6 @@ public class GameManager {
     // ---------------------------------------
 
 
-    public void setDate(){
-        DateFormat format = new SimpleDateFormat("MM/dd/yyyy:HH");
-        Date date = new Date();
-        this.date = format.format(date);
-    }
     public int getFinalHealTime() {
         return finalHealTime;
     }
@@ -178,10 +172,6 @@ public class GameManager {
 
     public void setWorld(World world) {
         this.world = world;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
 
     public ArrayList<String> getWhitelist() {

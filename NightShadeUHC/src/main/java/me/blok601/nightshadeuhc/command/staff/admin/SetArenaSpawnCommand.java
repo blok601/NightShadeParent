@@ -1,4 +1,4 @@
-package me.blok601.nightshadeuhc.command.staff;
+package me.blok601.nightshadeuhc.command.staff.admin;
 
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.command.UHCCommand;

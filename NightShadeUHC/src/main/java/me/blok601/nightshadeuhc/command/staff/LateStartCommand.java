@@ -4,12 +4,9 @@ import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.command.UHCCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.object.PlayerStatus;
+import me.blok601.nightshadeuhc.event.PlayerJoinGameLateEvent;
 import me.blok601.nightshadeuhc.manager.GameManager;
-import me.blok601.nightshadeuhc.scenario.Scenario;
-import me.blok601.nightshadeuhc.scenario.ScenarioManager;
-import me.blok601.nightshadeuhc.scenario.interfaces.StarterItems;
 import me.blok601.nightshadeuhc.util.ChatUtils;
-import me.blok601.nightshadeuhc.util.PlayerUtils;
 import me.blok601.nightshadeuhc.util.ScatterUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -70,22 +67,12 @@ public class LateStartCommand implements UHCCommand{
         target.setLevel(0);
         target.setExp(0F);
         target.getInventory().addItem(new ItemStack(Material.COOKED_BEEF, 10));
-        for (Scenario scenario : ScenarioManager.getEnabledScenarios()) {
-            if (scenario instanceof StarterItems) {
-
-                StarterItems starterItems = (StarterItems) scenario;
-
-                //UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> PlayerUtils.giveBulkItems(uhcPlayer.getPlayer(), starterItems.getStarterItems
-                for (ItemStack stack : starterItems.getStarterItems()) {
-                    PlayerUtils.giveItem(stack, target);
-                }
-            }
-        }
         ScatterUtil.scatterPlayer(GameManager.get().getWorld(), (int) GameManager.get().getBorderSize(), target);
         targetUHCPlayer.setPlayerStatus(PlayerStatus.PLAYING);
         target.playSound(target.getLocation(), Sound.CHICKEN_EGG_POP, 5, 5);
         p.sendMessage(ChatUtils.message("&aYou have scattered &e" + target.getName()));
         target.sendMessage(ChatUtils.message("&eYou were scattered!"));
+        Bukkit.getPluginManager().callEvent(new PlayerJoinGameLateEvent(target));
 
     }
 

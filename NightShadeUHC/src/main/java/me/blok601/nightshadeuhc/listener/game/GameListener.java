@@ -6,24 +6,26 @@ import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.component.ComponentHandler;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
-import me.blok601.nightshadeuhc.event.GameEndEvent;
-import me.blok601.nightshadeuhc.event.GameStartEvent;
-import me.blok601.nightshadeuhc.event.MeetupStartEvent;
-import me.blok601.nightshadeuhc.event.PvPEnableEvent;
+import me.blok601.nightshadeuhc.event.*;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.manager.TeamManager;
+import me.blok601.nightshadeuhc.scenario.Scenario;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
+import me.blok601.nightshadeuhc.scenario.interfaces.StarterItems;
 import me.blok601.nightshadeuhc.stat.CachedGame;
 import me.blok601.nightshadeuhc.stat.handler.StatsHandler;
 import me.blok601.nightshadeuhc.task.WorldBorderTask;
 import me.blok601.nightshadeuhc.util.ActionBarUtil;
 import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.util.PlayerUtils;
 import me.blok601.nightshadeuhc.util.ScatterUtil;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -137,6 +139,23 @@ public class GameListener implements Listener {
             }
         }
         ComponentHandler.getInstance().getComponent("Nether").setEnabled(false);
+    }
+
+    @EventHandler
+    public void onLateStart(PlayerJoinGameLateEvent e){
+        Player player = e.getPlayer();
+        GameManager.get().getPointChanges().put(player.getUniqueId(), 0D);
+        for (Scenario scenario : ScenarioManager.getEnabledScenarios()) {
+            if (scenario instanceof StarterItems) {
+
+                StarterItems starterItems = (StarterItems) scenario;
+
+                //UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> PlayerUtils.giveBulkItems(uhcPlayer.getPlayer(), starterItems.getStarterItems
+                for (ItemStack stack : starterItems.getStarterItems()) {
+                    PlayerUtils.giveItem(stack, player);
+                }
+            }
+        }
     }
 
     private String get(int i){

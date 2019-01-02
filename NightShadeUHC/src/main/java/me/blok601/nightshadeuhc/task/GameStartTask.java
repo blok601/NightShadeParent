@@ -93,8 +93,6 @@ public class GameStartTask extends BukkitRunnable {
                        }
                        ((CraftPlayer) uhcPlayer.getPlayer()).getHandle().playerConnection.sendPacket(packet);
                    }
-                    gameManager.world = world;
-                    gameManager.setDate();
                     PvPCommand.disablePvP();
                     FreezeUtil.stop();
 
@@ -104,6 +102,7 @@ public class GameStartTask extends BukkitRunnable {
                     Bukkit.getOnlinePlayers().forEach(o -> o.setLevel(0));
                     Bukkit.getOnlinePlayers().forEach(o -> o.setExp(0));
 
+                    UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> gameManager.getPointChanges().put(uhcPlayer.getUuid(), 0D));
 
 
                     Core.get().getLogManager().log(Logger.LogType.INFO, "Everyone has been healed and fed!");
