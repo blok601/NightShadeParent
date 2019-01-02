@@ -365,6 +365,18 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         return usingOldVersion;
     }
 
+    public double getPointsAverage() {
+        if (this.gamesPlayed == 0) {
+            return this.points;
+        }
+
+        if (this.points == 0) {
+            return 0;
+        }
+
+        return this.points / this.gamesPlayed;
+    }
+
     public void setUsingOldVersion(boolean usingOldVersion) {
         this.usingOldVersion = usingOldVersion;
     }

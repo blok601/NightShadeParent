@@ -6,6 +6,9 @@ import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
+
+import java.text.DecimalFormat;
 
 /**
  * Created by Blok on 7/4/2018.
@@ -18,6 +21,8 @@ public class StatsGUI {
         builder.rows(6);
 
         ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+        SkullMeta skullMeta = (SkullMeta) head.getItemMeta();
+        skullMeta.setOwner(target.getName());
         ItemBuilder skullBuilder = new ItemBuilder(head).name("&e" + target.getName());
 
         ItemBuilder kills = new ItemBuilder(Material.DIAMOND_SWORD).name("&eKills&8» &5" + target.getKills());
@@ -37,7 +42,9 @@ public class StatsGUI {
         ItemBuilder emerald = new ItemBuilder(Material.EMERALD_ORE).name("&eEmeralds Mined&8» &5" + target.getEmeraldsMined());
         ItemBuilder oresBroken = new ItemBuilder(Material.QUARTZ_ORE).name("&eOres Mined&8» &5" + target.getOresMined());
 
-        //ItemBuilder rating = new ItemBuilder(Material.PAPER).name("&eRating&8» &5" + new DecimalFormat("#.##").format(target.getPointsAverage()))/*.lore(Place: place)*/;
+
+        ItemBuilder rating = new ItemBuilder(Material.PAPER).name("&eRating&8» &5" + new DecimalFormat("#.##").format(target.getPointsAverage()))/*.lore(Place: place)*/;
+
 
         builder.item(0, skullBuilder.make());
         builder.item(1, kills.make());
@@ -54,7 +61,7 @@ public class StatsGUI {
         builder.item(15, iron.make());
         builder.item(16, lapis.make());
         builder.item(17, emerald.make());
-        //builder.item(40, rating.make());
+        builder.item(31, rating.make());
 
         toOpen.openInventory(builder.make());
         toOpen.updateInventory();

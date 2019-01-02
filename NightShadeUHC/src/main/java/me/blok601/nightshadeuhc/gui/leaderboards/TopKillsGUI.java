@@ -38,6 +38,9 @@ public class TopKillsGUI {
             index++;
         }
 
+        ItemBuilder back = new ItemBuilder(Material.ARROW).name("&cBack");
+        builder.item(45, back.make());
+
         player.openInventory(builder.make());
         player.updateInventory();
 

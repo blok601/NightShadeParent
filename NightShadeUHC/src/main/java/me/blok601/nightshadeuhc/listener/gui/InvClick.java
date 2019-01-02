@@ -1,6 +1,7 @@
 package me.blok601.nightshadeuhc.listener.gui;
 
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
+import me.blok601.nightshadeuhc.gui.leaderboards.LeaderBoardMainGUI;
 import me.blok601.nightshadeuhc.gui.leaderboards.StatsGUI;
 import me.blok601.nightshadeuhc.gui.leaderboards.TopKillsGUI;
 import me.blok601.nightshadeuhc.gui.leaderboards.TopWinnersGUI;
@@ -49,6 +50,11 @@ public class InvClick implements Listener {
         if(e.getInventory().getName().equalsIgnoreCase(ChatColor.YELLOW + "Top 10 Winners")){
             e.setCancelled(true);
 
+            if (e.getSlot() == 45) {
+                new LeaderBoardMainGUI(p);
+                return;
+            }
+
             ItemStack item = e.getCurrentItem();
             if(item.getType() != Material.SKULL_ITEM){
                 return;
@@ -63,11 +69,17 @@ public class InvClick implements Listener {
                 return;
             }
 
+
             new StatsGUI(gamePlayer, p);
         }
 
         if(e.getInventory().getName().equalsIgnoreCase(ChatColor.YELLOW + "Top 10 Killers")){
             e.setCancelled(true);
+
+            if (e.getSlot() == 45) {
+                new LeaderBoardMainGUI(p);
+                return;
+            }
 
             ItemStack item = e.getCurrentItem();
             if(item.getType() != Material.SKULL_ITEM){
