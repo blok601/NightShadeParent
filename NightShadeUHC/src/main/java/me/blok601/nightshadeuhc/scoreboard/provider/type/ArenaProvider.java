@@ -42,7 +42,7 @@ public class ArenaProvider extends ScoreboardProvider {
         lines.add(new ScoreboardText(ChatUtils.format("&f&m--------------")));
         lines.add(new ScoreboardText(ChatUtils.format("&bCurrent Session:")));
         lines.add(new ScoreboardText(ChatUtils.format("&fKills: &b" + uhcPlayer.getArenaSession().getKills())));
-        lines.add(new ScoreboardText(ChatUtils.format("&fDeaths: &b" + uhcPlayer.getArenaSession().getKills())));
+        lines.add(new ScoreboardText(ChatUtils.format("&fDeaths: &b" + uhcPlayer.getArenaSession().getDeaths())));
         lines.add(new ScoreboardText(ChatUtils.format("&fKillStreak: &b" + uhcPlayer.getArenaSession().getKillstreak())));
         lines.add(new ScoreboardText(ChatUtils.format("&f&m--------------")));
         lines.add(new ScoreboardText(ChatUtils.format("&bdiscord.me/NightShadeMC")));

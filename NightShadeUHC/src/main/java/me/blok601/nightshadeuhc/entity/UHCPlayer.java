@@ -6,9 +6,13 @@ import com.massivecraft.massivecore.store.SenderEntity;
 import com.massivecraft.massivecore.util.MUtil;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
+import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.command.staff.SpectatorCommand;
 import me.blok601.nightshadeuhc.entity.object.ArenaSession;
 import me.blok601.nightshadeuhc.entity.object.PlayerStatus;
+import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
+import me.blok601.nightshadeuhc.scoreboard.provider.type.ArenaProvider;
+import me.blok601.nightshadeuhc.scoreboard.provider.type.UHCProvider;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
 import me.blok601.nightshadeuhc.util.Util;
@@ -511,7 +515,7 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
     public void joinArena() {
         Player p = getPlayer();
         this.setArenaSession(new ArenaSession());
-        //UHC.get().getScoreboardManager().getPlayerScoreboards().put(p, new PlayerScoreboard(new ArenaProvider(), p));
+        UHC.get().getScoreboardManager().getPlayerScoreboards().put(p, new PlayerScoreboard(new ArenaProvider(), p));
         p.getInventory().clear();
         p.getInventory().setArmorContents(null);
         p.setAllowFlight(false);
@@ -554,7 +558,7 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         session.setEnd(new Timestamp(System.currentTimeMillis()));
         updateStats(session);
         this.playerStatus = PlayerStatus.LOBBY;
-        //UHC.get().getScoreboardManager().getPlayerScoreboards().put(p, new PlayerScoreboard(new UHCProvider(), p));
+        UHC.get().getScoreboardManager().getPlayerScoreboards().put(p, new PlayerScoreboard(new UHCProvider(), p));
         p.getInventory().clear();
         p.getInventory().setArmorContents(null);
         p.teleport(MConf.get().getSpawnLocation().asBukkitLocation(true));
@@ -574,6 +578,21 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         jsonObject.addProperty("startTime", session.getStart().getTime());
         jsonObject.addProperty("endTime", session.getEnd().getTime());
         this.pastArenaSessions.add(jsonObject.toString());
+    }
+
+    public void handleArenaKill() {
+        ArenaSession session = this.arenaSession;
+        session.setKills(session.getKills() + 1);
+        session.setKillstreak(session.getKillstreak() + 1);
+    }
+
+    public void handleArenaDeath() {
+        ArenaSession session = this.arenaSession;
+        session.setDeaths(session.getDeaths() + 1);
+        if (session.getKillstreak() > this.highestArenaKillStreak) {
+            this.highestArenaKillStreak = session.getKillstreak();
+        }
+        session.setKillstreak(0);
     }
 
     public boolean isReceivingToggleSneakAlerts() {

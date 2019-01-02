@@ -33,7 +33,7 @@ public class CmdLinkDiscord extends NightShadeCoreCommand {
         Jedis jedis = Core.get().getJedis();
         String string = jedis.get(code);
         if (string == null) {
-            nsPlayer.msg(ChatUtils.message("&cThat code couldn't be found! It may have expired!"));
+            nsPlayer.msg(ChatUtils.message("&cThat code couldn't be found! It may have expired."));
             return;
         }
 

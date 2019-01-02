@@ -38,7 +38,9 @@ public class ArenaListener implements Listener {
         }.runTaskLater(UHC.get(), 2);
         UHCPlayer uhcPlayer = UHCPlayer.get(p);
         if(uhcPlayer.isInArena()){
+            uhcPlayer.handleArenaDeath();
             if(p.getKiller() != null){
+                UHCPlayer.get(p.getKiller()).handleArenaKill();
                 p.getKiller().setHealth(p.getKiller().getMaxHealth());
                 p.getKiller().sendMessage(ChatUtils.sendArenaMessage("&eYou killed &9" + p.getName()));
                 ChatUtils.broadcastArenaMessage("&e" + p.getKiller().getName() + " &9killed &e" + p.getName());
