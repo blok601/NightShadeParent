@@ -1,19 +1,22 @@
 package me.blok601.nightshadeuhc.listener.game;
 
-import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.entity.MConf;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
+import me.blok601.nightshadeuhc.entity.object.ArenaSession;
+import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -61,6 +64,74 @@ public class ArenaListener implements Listener {
     }
 
     @EventHandler
+    public void onAnimation(PlayerAnimationEvent e) {
+        Player p = e.getPlayer();
+        if (GameState.gameHasStarted()) return;
+        if (e.getAnimationType() == PlayerAnimationType.ARM_SWING) {
+            if (p.getItemInHand().getType() == Material.IRON_SWORD) {
+                UHCPlayer uhcPlayer = UHCPlayer.get(p);
+                if (uhcPlayer.isInArena()) {
+                    uhcPlayer.getArenaSession().setSwordSwings(uhcPlayer.getArenaSession().getSwordSwings() + 1);
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onEntityDamage(EntityDamageByEntityEvent e) {
+        if (GameState.gameHasStarted()) return;
+
+        if (e.getDamage() == 0 || e.getFinalDamage() == 0) return;
+        if (e.isCancelled()) return;
+
+        if (!(e.getDamager() instanceof Player)) {
+            if (e.getDamager() instanceof Arrow) {
+                Arrow arrow = (Arrow) e.getDamager();
+                UHCPlayer shooter = UHCPlayer.get(arrow.getShooter());
+                if (shooter.isInArena()) {
+                    shooter.getArenaSession().setBowHits(shooter.getArenaSession().getBowHits() + 1);
+                }
+            }
+        }
+
+        if (!(e.getDamager() instanceof Player)) {
+            return;
+        }
+
+        Player p = (Player) e.getEntity();
+        UHCPlayer uhcPlayer = UHCPlayer.get(p);
+        if (uhcPlayer.isInArena()) {
+            uhcPlayer.getArenaSession().setSwordHits(uhcPlayer.getArenaSession().getSwordHits() + 1);
+        }
+    }
+
+    @EventHandler
+    public void onConsume(PlayerItemConsumeEvent e) {
+        if (GameState.gameHasStarted()) return;
+        ItemStack itemStack = e.getItem();
+        if (itemStack.getType() != Material.GOLDEN_APPLE) return;
+        UHCPlayer uhcPlayer = UHCPlayer.get(e.getPlayer());
+        if (uhcPlayer.isInArena()) {
+            uhcPlayer.getArenaSession().setGapplesEaten(uhcPlayer.getArenaSession().getGapplesEaten() + 1);
+        }
+    }
+
+    @EventHandler
+    public void onShoot(ProjectileLaunchEvent e) {
+        if (GameState.gameHasStarted()) return;
+        if (!(e.getEntity() instanceof Arrow)) return;
+        if (!(e.getEntity().getShooter() instanceof Player)) return;
+
+        Arrow arrow = (Arrow) e.getEntity();
+        Player p = (Player) arrow.getShooter();
+        UHCPlayer uhcPlayer = UHCPlayer.get(p);
+        if (uhcPlayer.isInArena()) {
+            ArenaSession arenaSession = uhcPlayer.getArenaSession();
+            arenaSession.setBowAttempts(arenaSession.getBowHits() + 1);
+        }
+    }
+
+    @EventHandler
     public void onRespawn(PlayerRespawnEvent e){
         if(GameState.gameHasStarted()){
             return;
@@ -94,5 +165,4 @@ public class ArenaListener implements Listener {
             }
         }.runTaskLater(UHC.get(), 2);
     }
-
 }

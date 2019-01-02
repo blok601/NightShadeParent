@@ -65,6 +65,11 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
     private int arenaDeaths = 0;
     private int highestArenaKillStreak = 0;
     private ArrayList<String> pastArenaSessions = new ArrayList<>();
+    private int arenaSwordHits = 0;
+    private int arenaSwordSwings = 0;
+    private int arenaGapplesEaten = 0;
+    private int arenaBowAttempts = 0;
+    private int arenaBowHits = 0;
     private transient ArenaSession arenaSession;
 
 
@@ -99,6 +104,11 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         this.setOresMined(that.oresMined);
         this.setLapisMined(that.lapisMined);
         this.setEmeraldsMined(that.emeraldsMined);
+        this.setArenaSwordHits(that.arenaSwordHits);
+        this.setArenaSwordSwings(that.arenaSwordSwings);
+        this.setArenaGapplesEaten(that.arenaGapplesEaten);
+        this.setArenaBowAttempts(that.arenaBowAttempts);
+        this.setArenaBowHits(that.arenaBowHits);
 
         this.setGamesPlayed(that.gamesPlayed);
         this.setGamesWon(that.gamesWon);
@@ -570,11 +580,19 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         if(this.highestArenaKillStreak < session.getKillstreak()){
             this.highestArenaKillStreak = session.getKillstreak();
         }
+        this.arenaSwordHits += session.getSwordHits();
+        this.arenaSwordSwings += session.getSwordSwings();
+        this.arenaGapplesEaten += session.getGapplesEaten();
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("kills", session.getKills());
         jsonObject.addProperty("deaths", session.getDeaths());
         jsonObject.addProperty("highestKillStreak", session.getKillstreak());
+        jsonObject.addProperty("swordHits", session.getSwordHits());
+        jsonObject.addProperty("swordSwings", session.getSwordSwings());
+        jsonObject.addProperty("gapplesEaten", session.getGapplesEaten());
+        jsonObject.addProperty("bowAttempts", session.getBowAttempts());
+        jsonObject.addProperty("bowHits", session.getBowHits());
         jsonObject.addProperty("startTime", session.getStart().getTime());
         jsonObject.addProperty("endTime", session.getEnd().getTime());
         this.pastArenaSessions.add(jsonObject.toString());
@@ -673,7 +691,7 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         }
 
         if (this.deaths == 0) {
-            return this.arenaDeaths;
+            return this.arenaKills;
         }
 
         return this.arenaKills / this.arenaDeaths;
@@ -693,5 +711,45 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
 
     public void setPastArenaSessions(ArrayList<String> pastArenaSessions) {
         this.pastArenaSessions = pastArenaSessions;
+    }
+
+    public int getArenaSwordHits() {
+        return arenaSwordHits;
+    }
+
+    public void setArenaSwordHits(int arenaSwordHits) {
+        this.arenaSwordHits = arenaSwordHits;
+    }
+
+    public int getArenaSwordSwings() {
+        return arenaSwordSwings;
+    }
+
+    public void setArenaSwordSwings(int arenaSwordSwings) {
+        this.arenaSwordSwings = arenaSwordSwings;
+    }
+
+    public int getArenaGapplesEaten() {
+        return arenaGapplesEaten;
+    }
+
+    public void setArenaGapplesEaten(int arenaGapplesEaten) {
+        this.arenaGapplesEaten = arenaGapplesEaten;
+    }
+
+    public int getArenaBowAttempts() {
+        return arenaBowAttempts;
+    }
+
+    public void setArenaBowAttempts(int arenaBowAttempts) {
+        this.arenaBowAttempts = arenaBowAttempts;
+    }
+
+    public int getArenaBowHits() {
+        return arenaBowHits;
+    }
+
+    public void setArenaBowHits(int arenaBowHits) {
+        this.arenaBowHits = arenaBowHits;
     }
 }

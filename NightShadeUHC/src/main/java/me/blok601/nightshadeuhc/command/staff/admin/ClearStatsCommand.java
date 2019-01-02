@@ -6,7 +6,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class TransferStatsCommand implements UHCCommand {
+public class ClearStatsCommand implements UHCCommand {
     @Override
     public String[] getNames() {
         return new String[]{
@@ -22,16 +22,16 @@ public class TransferStatsCommand implements UHCCommand {
 
     @Override
     public boolean playerOnly() {
-        return false;
+        return true;
     }
 
     @Override
     public Rank getRequiredRank() {
-        return null;
+        return Rank.OWNER;
     }
 
     @Override
     public boolean hasRequiredRank() {
-        return false;
+        return true;
     }
 }

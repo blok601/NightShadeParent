@@ -16,11 +16,22 @@ public class ArenaSession {
     private int kills;
     private int deaths;
 
+    private int gapplesEaten;
+    private int bowAttempts;
+    private int bowHits;
+    private int swordSwings;
+    private int swordHits;
+
     public ArenaSession() {
         this.start = new Timestamp(System.currentTimeMillis());
         this.killstreak = 0;
         this.kills = 0;
         this.deaths = 0;
+        this.gapplesEaten = 0;
+        this.bowAttempts = 0;
+        this.bowHits = 0;
+        this.swordSwings = 0;
+        this.swordHits = 0;
     }
 
     public Timestamp getStart() {
@@ -74,4 +85,45 @@ public class ArenaSession {
 
         return this.kills / this.deaths;
     }
+
+    public int getGapplesEaten() {
+        return gapplesEaten;
+    }
+
+    public void setGapplesEaten(int gapplesEaten) {
+        this.gapplesEaten = gapplesEaten;
+    }
+
+    public int getBowAttempts() {
+        return bowAttempts;
+    }
+
+    public void setBowAttempts(int bowAttemps) {
+        this.bowAttempts = bowAttemps;
+    }
+
+    public int getBowHits() {
+        return bowHits;
+    }
+
+    public void setBowHits(int bowHits) {
+        this.bowHits = bowHits;
+    }
+
+    public int getSwordSwings() {
+        return swordSwings;
+    }
+
+    public void setSwordSwings(int swordSwings) {
+        this.swordSwings = swordSwings;
+    }
+
+    public int getSwordHits() {
+        return swordHits;
+    }
+
+    public void setSwordHits(int swordHits) {
+        this.swordHits = swordHits;
+    }
+
 }
