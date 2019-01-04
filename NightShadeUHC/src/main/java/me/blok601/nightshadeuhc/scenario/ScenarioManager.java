@@ -80,7 +80,6 @@ public class ScenarioManager implements UHCCommand, Listener {
         addScen(new NoFurnaceScenario());
         addScen(new NoFallScenario(), "NF");
         addScen(new NoTalkingScenario(), "NT");
-        //addScen(new NoTalkingScenario(), "NT");
         addScen(new OneHealScenario(), "OH");
         addScen(new OneHundredHeartsScenario(), "100H");
         addScen(new PermaKillScenario(), "PK");
