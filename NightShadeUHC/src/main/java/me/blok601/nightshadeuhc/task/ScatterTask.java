@@ -29,9 +29,9 @@ import java.util.ArrayList;
 public class ScatterTask extends BukkitRunnable {
 
     private ArrayList<Player> players;
-	private World world;
-	private int radius;
-	private Player host;
+    private World world;
+    private int radius;
+    private Player host;
     private int finalHealTime;
     private int pvpTime;
     private int borderTime;
@@ -41,7 +41,7 @@ public class ScatterTask extends BukkitRunnable {
     private GameManager gameManager;
 
 
-    public ScatterTask(ArrayList<Player> players, World world, int radius, Player host, int finalHealTime, int pvpTime, int borderTime, boolean isTeam, int firstShrink, int meeutpTime, GameManager gameManager){
+    public ScatterTask(ArrayList<Player> players, World world, int radius, Player host, int finalHealTime, int pvpTime, int borderTime, boolean isTeam, int firstShrink, int meeutpTime, GameManager gameManager) {
         this.world = world;
         this.players = players;
         this.radius = radius;
@@ -60,28 +60,28 @@ public class ScatterTask extends BukkitRunnable {
     }
 
     @Override
-    public void run(){
-        if(isTeam){
-            if(TeamManager.getInstance().isRvB()){
-                if(TeamManager.getInstance().getRvBScatterType() == 0) {
+    public void run() {
+        if (isTeam) {
+            if (TeamManager.getInstance().isRvB()) {
+                if (TeamManager.getInstance().getRvBScatterType() == 0) {
                     //Scatter like solos
                     Bukkit.getOnlinePlayers().forEach(o -> {
                         o.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1));
                         o.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, Integer.MAX_VALUE, 0));
                     });
-                    if(players.size() == 0){
+                    if (players.size() == 0) {
                         GameState.setState(GameState.STARTING);
 //                Util.staffLog("Scatter has finished");
                         Bukkit.getOnlinePlayers().forEach(o -> ActionBarUtil.sendActionBarMessage(o, "§5The scatter has finished!", 1, UHC.get()));
                         Bukkit.getOnlinePlayers().forEach(o -> o.removePotionEffect(PotionEffectType.WATER_BREATHING));
                         Bukkit.getOnlinePlayers().forEach(o -> o.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE));
-                        gameManager.IS_SCATTERING  = false;
+                        gameManager.IS_SCATTERING = false;
                         Bukkit.getOnlinePlayers().stream().filter(o -> !NSPlayer.get(o.getUniqueId()).hasRank(Rank.TRIAL)).forEach(o -> o.setGameMode(GameMode.SURVIVAL));
 
                         new GameStartTask(host, finalHealTime, pvpTime, borderTime, world, firstShrink, meetupTime, gameManager).runTaskTimer(UHC.get(), 0, Util.TICKS);
                         this.cancel();
                         return;
-                    }else{
+                    } else {
                         Player p = players.get(0);
                         ScatterUtil.scatterPlayer(world, radius, p);
                         UHCPlayer.get(p).setPlayerStatus(PlayerStatus.PLAYING);
@@ -92,7 +92,7 @@ public class ScatterTask extends BukkitRunnable {
                         p.sendMessage(ChatUtils.message("&bYou have been scattered!"));
                         players.remove(p);
                     }
-                }else{
+                } else {
 
                     Bukkit.getOnlinePlayers().forEach(o -> {
                         o.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1));
@@ -100,12 +100,12 @@ public class ScatterTask extends BukkitRunnable {
                     });
                     int tms = 0;
                     int solos = 0;
-                    for (Team team : TeamManager.getInstance().getTeams()){
+                    for (Team team : TeamManager.getInstance().getTeams()) {
                         ArrayList<Player> players = new ArrayList<>();
                         Player toScatter;
-                        for (String string : team.getMembers()){
+                        for (String string : team.getMembers()) {
                             toScatter = Bukkit.getPlayer(string);
-                            if(toScatter == null) continue;
+                            if (toScatter == null) continue;
 
                             players.add(toScatter);
                         }
@@ -125,13 +125,13 @@ public class ScatterTask extends BukkitRunnable {
                     Util.staffLog("&3Starting to scatter solos!");
 
                     UHCPlayer gamePlayer;
-                    for (Player player : Bukkit.getOnlinePlayers()){
+                    for (Player player : Bukkit.getOnlinePlayers()) {
                         gamePlayer = UHCPlayer.get(player.getUniqueId());
-                        if(TeamManager.getInstance().getTeam(player) != null){
+                        if (TeamManager.getInstance().getTeam(player) != null) {
                             continue;
                         }
 
-                        if(gamePlayer.isSpectator()) continue;
+                        if (gamePlayer.isSpectator()) continue;
 
                         ScatterUtil.scatterPlayer(world, radius, player);
                         gamePlayer.setPlayerStatus(PlayerStatus.PLAYING);
@@ -143,11 +143,11 @@ public class ScatterTask extends BukkitRunnable {
                     Bukkit.getOnlinePlayers().forEach(o -> ActionBarUtil.sendActionBarMessage(o, "§5The scatter has finished!", 1, UHC.get()));
                     Bukkit.getOnlinePlayers().forEach(o -> o.removePotionEffect(PotionEffectType.WATER_BREATHING));
                     Bukkit.getOnlinePlayers().forEach(o -> o.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE));
-                    gameManager.IS_SCATTERING  = false;
+                    gameManager.IS_SCATTERING = false;
                     new GameStartTask(host, finalHealTime, pvpTime, borderTime, world, firstShrink, meetupTime, gameManager).runTaskTimer(UHC.get(), 0, Util.TICKS);
                     this.cancel();
                 }
-            }else{
+            } else {
 
                 Bukkit.getOnlinePlayers().forEach(o -> {
                     o.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1));
@@ -155,12 +155,12 @@ public class ScatterTask extends BukkitRunnable {
                 });
                 int tms = 0;
                 int solos = 0;
-                for (Team team : TeamManager.getInstance().getTeams()){
+                for (Team team : TeamManager.getInstance().getTeams()) {
                     ArrayList<Player> players = new ArrayList<>();
                     Player toScatter;
-                    for (String string : team.getMembers()){
+                    for (String string : team.getMembers()) {
                         toScatter = Bukkit.getPlayer(string);
-                        if(toScatter == null) continue;
+                        if (toScatter == null) continue;
                         UHCPlayer.get(toScatter).setPlayerStatus(PlayerStatus.PLAYING);
 
                         players.add(toScatter);
@@ -174,13 +174,13 @@ public class ScatterTask extends BukkitRunnable {
                 Util.staffLog("&3Starting to scatter solos!");
 
                 UHCPlayer gamePlayer;
-                for (Player player : Bukkit.getOnlinePlayers()){
+                for (Player player : Bukkit.getOnlinePlayers()) {
                     gamePlayer = UHCPlayer.get(player.getUniqueId());
-                    if(TeamManager.getInstance().getTeam(player) != null){
+                    if (TeamManager.getInstance().getTeam(player) != null) {
                         continue;
                     }
 
-                    if(gamePlayer.isSpectator()) continue;
+                    if (gamePlayer.isSpectator()) continue;
 
                     ScatterUtil.scatterPlayer(world, radius, player);
                     gamePlayer.setPlayerStatus(PlayerStatus.PLAYING);
@@ -192,31 +192,30 @@ public class ScatterTask extends BukkitRunnable {
                 Bukkit.getOnlinePlayers().forEach(o -> ActionBarUtil.sendActionBarMessage(o, "§5The scatter has finished!", 1, UHC.get()));
                 Bukkit.getOnlinePlayers().forEach(o -> o.removePotionEffect(PotionEffectType.WATER_BREATHING));
                 Bukkit.getOnlinePlayers().forEach(o -> o.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE));
-                gameManager.IS_SCATTERING  = false;
+                gameManager.IS_SCATTERING = false;
                 new GameStartTask(host, finalHealTime, pvpTime, borderTime, world, firstShrink, meetupTime, gameManager).runTaskTimer(UHC.get(), 0, Util.TICKS);
                 this.cancel();
             }
 
 
-
-        }else{
+        } else {
             Bukkit.getOnlinePlayers().forEach(o -> {
                 o.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1));
                 o.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, Integer.MAX_VALUE, 0));
             });
-            if(players.size() == 0){
+            if (players.size() == 0) {
                 GameState.setState(GameState.STARTING);
 //                Util.staffLog("Scatter has finished");
                 Bukkit.getOnlinePlayers().forEach(o -> ActionBarUtil.sendActionBarMessage(o, "§5The scatter has finished!", 1, UHC.get()));
                 Bukkit.getOnlinePlayers().forEach(o -> o.removePotionEffect(PotionEffectType.WATER_BREATHING));
                 Bukkit.getOnlinePlayers().forEach(o -> o.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE));
-                gameManager.IS_SCATTERING  = false;
+                gameManager.IS_SCATTERING = false;
                 Bukkit.getOnlinePlayers().stream().filter(o -> !NSPlayer.get(o.getUniqueId()).hasRank(Rank.TRIAL)).forEach(o -> o.setGameMode(GameMode.SURVIVAL));
 
                 new GameStartTask(host, finalHealTime, pvpTime, borderTime, world, firstShrink, meetupTime, gameManager).runTaskTimer(UHC.get(), 0, Util.TICKS);
                 this.cancel();
                 return;
-            }else{
+            } else {
                 Player p = players.get(0);
                 ScatterUtil.scatterPlayer(world, radius, p);
                 UHCPlayer.get(p).setPlayerStatus(PlayerStatus.PLAYING);

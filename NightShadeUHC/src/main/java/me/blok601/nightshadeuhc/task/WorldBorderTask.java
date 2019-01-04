@@ -44,13 +44,13 @@ public class WorldBorderTask extends BukkitRunnable {
                 Bukkit.getOnlinePlayers().forEach((Consumer<Player>) player -> {
                     ActionBarUtil.sendActionBarMessage(player, "§5Shrink to " + gameManager.getFirstShrink() + "radius in " + get(counter), 1, UHC.get());
                 });
-            }else if(MathUtil.isBetween(10, 0, counter)){
+            } else if (MathUtil.isBetween(10, 0, counter)) {
                 ChatUtils.sendAll("The border will shrink to " + gameManager.getFirstShrink() + " radius in " + counter);
             }
         } else if (counter == 0) {
             bd.setRadius(first);
             gameManager.genWalls(first, gameManager.getWorld());
-            gameManager.setBorderID(gameManager.getBorderID()+1);
+            gameManager.setBorderID(gameManager.getBorderID() + 1);
             for (Player pls : Bukkit.getOnlinePlayers()) {
                 pls.playSound(pls.getLocation(), Sound.BAT_DEATH, 5, 1);
             }

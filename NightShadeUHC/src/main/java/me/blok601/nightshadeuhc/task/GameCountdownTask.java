@@ -42,7 +42,7 @@ public class GameCountdownTask extends BukkitRunnable {
             Bukkit.broadcastMessage(ChatUtils.message("&eScatter will begin in &b" + (counter / 60) + " &eminute&8(&es&8)..."));
         }
 
-        if(counter == 60){
+        if (counter == 60) {
             UHCPlayerColl.get().getAllOnline().forEach(UHCPlayer::leaveArena);
         }
 

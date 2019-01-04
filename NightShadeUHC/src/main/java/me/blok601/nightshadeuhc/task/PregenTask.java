@@ -32,7 +32,7 @@ public class PregenTask extends BukkitRunnable {
     @Override
     public void run() {
 
-        if(pregenQueue.isEmpty()) return;
+        if (pregenQueue.isEmpty()) return;
 
         PregenQueue queue = pregenQueue.get(0);
         if (queue == null) {
@@ -41,7 +41,7 @@ public class PregenTask extends BukkitRunnable {
 
         if (queue.isRunning()) {
             Bukkit.getOnlinePlayers().forEach(o -> {
-                if(NSPlayer.get(o).hasRank(Rank.TRIAL)){
+                if (NSPlayer.get(o).hasRank(Rank.TRIAL)) {
                     ActionBarUtil.sendActionBarMessage(o, get(Config.fillTask.getPercentageCompleted(), pregenQueue.get(0).getWorld().getName()), 3, UHC.get());
                 }
             });
@@ -51,7 +51,7 @@ public class PregenTask extends BukkitRunnable {
         if (RUNNING) {
 
             Bukkit.getOnlinePlayers().forEach(o -> {
-                if(NSPlayer.get(o).hasRank(Rank.TRIAL)){
+                if (NSPlayer.get(o).hasRank(Rank.TRIAL)) {
                     ActionBarUtil.sendActionBarMessage(o, get(Config.fillTask.getPercentageCompleted(), pregenQueue.get(0).getWorld().getName()), 3, UHC.get());
                 }
             });
@@ -59,18 +59,18 @@ public class PregenTask extends BukkitRunnable {
 
         Player p = Bukkit.getPlayer(queue.getStarter());
         if (queue.getWorld().getEnvironment() == World.Environment.NETHER) {
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb " + queue.getWorld().getName() + " set " + GameManager.get().getSetupNetherRadius() + " " + GameManager.get().getSetupNetherRadius() + " 0 0");
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb " + queue.getWorld().getName() + " fill 250");
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb fill confirm");
-                queue.setRunning(true);
-                RUNNING = true;
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb " + queue.getWorld().getName() + " set " + GameManager.get().getSetupNetherRadius() + " " + GameManager.get().getSetupNetherRadius() + " 0 0");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb " + queue.getWorld().getName() + " fill 250");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb fill confirm");
+            queue.setRunning(true);
+            RUNNING = true;
             NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> nsPlayer.hasRank(Rank.TRIAL)).forEach(nsPlayer -> nsPlayer.msg(ChatUtils.message("&aPregen in world &c" + queue.getWorld().getName() + " &ahas begun!")));
         } else if (queue.getWorld().getEnvironment() == World.Environment.NORMAL) {
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb " + queue.getWorld().getName() + " set " + GameManager.get().getSetupRadius() + " " + GameManager.get().getSetupRadius() + " 0 0");
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb " + queue.getWorld().getName() + " fill 250");
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb fill confirm");
-                queue.setRunning(true);
-                RUNNING = true;
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb " + queue.getWorld().getName() + " set " + GameManager.get().getSetupRadius() + " " + GameManager.get().getSetupRadius() + " 0 0");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb " + queue.getWorld().getName() + " fill 250");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb fill confirm");
+            queue.setRunning(true);
+            RUNNING = true;
             NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> nsPlayer.hasRank(Rank.TRIAL)).forEach(nsPlayer -> nsPlayer.msg(ChatUtils.message("&aPregen in world &b" + queue.getWorld().getName() + " &ehas begun!")));
         }
     }

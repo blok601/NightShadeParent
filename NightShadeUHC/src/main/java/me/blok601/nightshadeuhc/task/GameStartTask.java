@@ -75,24 +75,24 @@ public class GameStartTask extends BukkitRunnable {
             if (counter % 60 == 0 && counter != 0) {
                 ChatUtils.sendAll("The game will start in " + counter / 60 + " minute&8(s&8)&b!");
             } else if (counter <= 10) {
-               if (counter > 0) {
-                   PacketPlayOutTitle packet = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + counter + "\",\"color\":\"dark_aqua\",\"bold\":true}"), 0, 20, 0);
-                   for (UHCPlayer uhcPlayer : UHCPlayerColl.get().getAllOnline()) {
-                       if (uhcPlayer.isUsingOldVersion()) {
-                           uhcPlayer.msg(ChatUtils.message("&3The game will start in &e" + counter + " &3seconds"));
-                           continue;
-                       }
-                       ((CraftPlayer) uhcPlayer.getPlayer()).getHandle().playerConnection.sendPacket(packet);
-                   }
+                if (counter > 0) {
+                    PacketPlayOutTitle packet = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + counter + "\",\"color\":\"dark_aqua\",\"bold\":true}"), 0, 20, 0);
+                    for (UHCPlayer uhcPlayer : UHCPlayerColl.get().getAllOnline()) {
+                        if (uhcPlayer.isUsingOldVersion()) {
+                            uhcPlayer.msg(ChatUtils.message("&3The game will start in &e" + counter + " &3seconds"));
+                            continue;
+                        }
+                        ((CraftPlayer) uhcPlayer.getPlayer()).getHandle().playerConnection.sendPacket(packet);
+                    }
                 } else {
-                   PacketPlayOutTitle packet = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"Go!\",\"color\":\"dark_aqua\",\"bold\":true}"), 0, 20, 0);
-                   for (UHCPlayer uhcPlayer : UHCPlayerColl.get().getAllOnline()) {
-                       if (uhcPlayer.isUsingOldVersion()) {
-                           uhcPlayer.msg(ChatUtils.message("&3The game has started!"));
-                           continue;
-                       }
-                       ((CraftPlayer) uhcPlayer.getPlayer()).getHandle().playerConnection.sendPacket(packet);
-                   }
+                    PacketPlayOutTitle packet = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"Go!\",\"color\":\"dark_aqua\",\"bold\":true}"), 0, 20, 0);
+                    for (UHCPlayer uhcPlayer : UHCPlayerColl.get().getAllOnline()) {
+                        if (uhcPlayer.isUsingOldVersion()) {
+                            uhcPlayer.msg(ChatUtils.message("&3The game has started!"));
+                            continue;
+                        }
+                        ((CraftPlayer) uhcPlayer.getPlayer()).getHandle().playerConnection.sendPacket(packet);
+                    }
                     PvPCommand.disablePvP();
                     FreezeUtil.stop();
 
@@ -110,58 +110,58 @@ public class GameStartTask extends BukkitRunnable {
                     TimerTask timerTask = gameManager.getTimer();
                     timerTask.start();
                     Bukkit.getServer().getPluginManager().callEvent(new GameStartEvent());
-                    Bukkit.getOnlinePlayers().forEach(p ->{
+                    Bukkit.getOnlinePlayers().forEach(p -> {
                         p.sendMessage(ChatUtils.format("&f&m-----------------------------------"));
                         p.sendMessage(ChatUtils.format("&fHost: &5" + gameManager.getHost().getName()));
-                        if(ScenarioManager.getEnabledScenarios().size() == 0){
+                        if (ScenarioManager.getEnabledScenarios().size() == 0) {
                             p.sendMessage(ChatUtils.format("&fScenarios: &5None"));
-                        }else{
+                        } else {
                             p.sendMessage(ChatUtils.format("&fScenarios: &5" + Joiner.on("&7, &5").join(ScenarioManager.getEnabledScenarios().stream().map(Scenario::getName).collect(Collectors.toList()))));
                         }
 
                         p.sendMessage(" ");
-                        p.sendMessage(ChatUtils.format("&fFinal Heal Time: &5" + gameManager.getFinalHealTime() /60 + " minutes"));
-                        p.sendMessage(ChatUtils.format("&fPvP Time: &5" + gameManager.getPvpTime() /60 + " minutes"));
-                        p.sendMessage(ChatUtils.format("&fMeetup Time: &5" + gameManager.getBorderTime() /60 + " minutes"));
+                        p.sendMessage(ChatUtils.format("&fFinal Heal Time: &5" + gameManager.getFinalHealTime() / 60 + " minutes"));
+                        p.sendMessage(ChatUtils.format("&fPvP Time: &5" + gameManager.getPvpTime() / 60 + " minutes"));
+                        p.sendMessage(ChatUtils.format("&fMeetup Time: &5" + gameManager.getBorderTime() / 60 + " minutes"));
 
                         p.sendMessage(ChatUtils.format("&f&m-----------------------------------"));
 
                         p.playSound(p.getLocation(), Sound.BAT_DEATH, 5, 5);
                     });
 
-                   FinalHealTask task = new FinalHealTask(finalHealTime);
-                   if(finalHealTime >0){
-                       task.runTaskTimer(UHC.get(), 0, Util.TICKS);
-                   }
-                   gameManager.setFinalHealTask(task);
+                    FinalHealTask task = new FinalHealTask(finalHealTime);
+                    if (finalHealTime > 0) {
+                        task.runTaskTimer(UHC.get(), 0, Util.TICKS);
+                    }
+                    gameManager.setFinalHealTask(task);
 
-                   PvPTask pvpTask = new PvPTask(pvpTime, world);
-                   if(pvpTime > 0){
-                       pvpTask.runTaskTimer(UHC.get(), 0, Util.TICKS);
-                   }
-                   gameManager.setPvpTask(pvpTask);
-
-
-                   WorldBorderTask worldBorderTask = new WorldBorderTask(borderTime, world, firstShrink, gameManager);
-                   if(borderTime > 0){
-                       worldBorderTask.runTaskTimer(UHC.get(), 0, Util.TICKS);
-                   }
-                   gameManager.setWorldBorderTask(worldBorderTask);
-
-                   MeetupTask meetupTask = new MeetupTask(meetupTime);
-                   if (meetupTime > 0) {
-                       meetupTask.runTaskTimer(UHC.get(), 0, Util.TICKS);
-                   }
-                   gameManager.setMeetupTask(meetupTask);
+                    PvPTask pvpTask = new PvPTask(pvpTime, world);
+                    if (pvpTime > 0) {
+                        pvpTask.runTaskTimer(UHC.get(), 0, Util.TICKS);
+                    }
+                    gameManager.setPvpTask(pvpTask);
 
 
-                   GameState.setState(GameState.INGAME);
+                    WorldBorderTask worldBorderTask = new WorldBorderTask(borderTime, world, firstShrink, gameManager);
+                    if (borderTime > 0) {
+                        worldBorderTask.runTaskTimer(UHC.get(), 0, Util.TICKS);
+                    }
+                    gameManager.setWorldBorderTask(worldBorderTask);
+
+                    MeetupTask meetupTask = new MeetupTask(meetupTime);
+                    if (meetupTime > 0) {
+                        meetupTask.runTaskTimer(UHC.get(), 0, Util.TICKS);
+                    }
+                    gameManager.setMeetupTask(meetupTask);
+
+
+                    GameState.setState(GameState.INGAME);
                     for (Player p : Bukkit.getOnlinePlayers()) {
                         for (Player p2 : Bukkit.getOnlinePlayers()) {
                             UHCPlayer gamePlayer = UHCPlayer.get(p2.getUniqueId());
                             if (!gamePlayer.isSpectator()) {
                                 p.showPlayer(p2);
-                            }else{
+                            } else {
                                 p.hidePlayer(p2);
                             }
                         }

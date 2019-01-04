@@ -14,7 +14,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 /**
  * Created by Blok on 7/18/2017.
  */
-public class ShrinkTask extends BukkitRunnable{
+public class ShrinkTask extends BukkitRunnable {
 
     private World world;
 

@@ -27,26 +27,23 @@ public class ScoreboardHealthTask extends BukkitRunnable {
 
     @Override
     public void run() {
+
         Scoreboard scoreboard;
         Objective tab;
         Objective belowNameHealthObjective;
-        for (Map.Entry<Player, PlayerScoreboard> playerPlayerScoreboardEntry : scoreboardManager.getPlayerScoreboards().entrySet()){
-            if(playerPlayerScoreboardEntry.getValue() == null) continue;
+
+        for (Map.Entry<Player, PlayerScoreboard> playerPlayerScoreboardEntry : scoreboardManager.getPlayerScoreboards().entrySet()) {
+
+            if (playerPlayerScoreboardEntry.getValue() == null) continue;
+
             scoreboard = playerPlayerScoreboardEntry.getValue().getBukkitScoreboard();
-            if(scoreboard.getObjective("tabHealth") == null){
+
+            if (scoreboard.getObjective("tabHealth") == null) {
                 scoreboard.registerNewObjective("tabHealth", "dummy");
             }
+
             tab = scoreboard.getObjective("tabHealth");
             tab.setDisplaySlot(DisplaySlot.PLAYER_LIST);
-
-//            Player player;
-//            for (UUID uuid : UHC.players){
-//                player = Bukkit.getPlayer(uuid);
-//                if( player == null) continue;
-//
-//                double health = MathUtil.getPercentage(player.getHealth(),player.getMaxHealth());
-//                tab.getScore(player.getName()).setScore((int) health); //round it
-//            }
 
 
             for (UHCPlayer uhcPlayer : UHCPlayerColl.get().getAllPlaying()) {
@@ -60,7 +57,9 @@ public class ScoreboardHealthTask extends BukkitRunnable {
             // ----------------------
 
             scoreboard = playerPlayerScoreboardEntry.getValue().getBukkitScoreboard();
-            if(scoreboard.getObjective("health") != null) continue; //Don't worry about it, already registered
+
+            if (scoreboard.getObjective("health") != null) continue; //Don't worry about it, already registered
+
             belowNameHealthObjective = scoreboard.registerNewObjective("health", "health");
             belowNameHealthObjective.setDisplayName(ChatColor.RED + "❤");
             belowNameHealthObjective.setDisplaySlot(DisplaySlot.BELOW_NAME); //Done and registered for every player

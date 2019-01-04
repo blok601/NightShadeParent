@@ -16,26 +16,26 @@ import java.util.List;
 /**
  * Created by Blok on 3/30/2018.
  */
-public class WorldLoadTask extends BukkitRunnable{
+public class WorldLoadTask extends BukkitRunnable {
 
     private Runnable callback;
     private UHC instance;
     List<String> INVALID = Collections.unmodifiableList(Arrays.asList("timings", "plugins", "logs", "crash-reports"));
     private ArrayList<File> files;
 
-    public WorldLoadTask(Runnable callback, UHC instance){
+    public WorldLoadTask(Runnable callback, UHC instance) {
         this.callback = callback;
         this.instance = instance;
         files = new ArrayList<>();
 
 
-        for (File file : instance.getDataFolder().listFiles()){
+        for (File file : instance.getDataFolder().listFiles()) {
 
-            if(file == null) continue;
+            if (file == null) continue;
 
-            if(INVALID.contains(file.getName())) continue;
+            if (INVALID.contains(file.getName())) continue;
 
-            if(file.isDirectory() && file.getName().toLowerCase().contains("uhcworld")){
+            if (file.isDirectory() && file.getName().toLowerCase().contains("uhcworld")) {
                 files.add(file);
             }
         }
@@ -43,9 +43,9 @@ public class WorldLoadTask extends BukkitRunnable{
 
     @Override
     public void run() {
-        for (File file : files){
+        for (File file : files) {
 
-            if(Bukkit.getWorld(file.getName()) != null) continue;
+            if (Bukkit.getWorld(file.getName()) != null) continue;
 
             instance.getServer().createWorld(new WorldCreator(file.getName()));
             Core.get().getLogManager().log(Logger.LogType.DEBUG, "Loaded world:" + file.getName());

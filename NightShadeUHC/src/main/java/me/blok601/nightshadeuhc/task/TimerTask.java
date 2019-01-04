@@ -13,31 +13,32 @@ public class TimerTask {
     private boolean running;
     private int taskID;
 
-    public TimerTask(){
+    public TimerTask() {
     }
 
-    public void start(){
+    public void start() {
         this.running = true;
-        this.taskID =  new BukkitRunnable(){
+        this.taskID = new BukkitRunnable() {
             int mins = 0;
             int seconds = 0;
             String rt = "00:00";
+
             @Override
             public void run() {
-                if(running){
-                    seconds+=5;
-                    if(seconds >= 60){
+                if (running) {
+                    seconds += 5;
+                    if (seconds >= 60) {
                         mins++;
                         seconds = 0;
                     }
 
-                    if(seconds < 10){
+                    if (seconds < 10) {
                         rt = mins + ":0" + seconds;
-                    }else{
+                    } else {
                         rt = mins + ":" + seconds;
                     }
                     time = rt;
-                }else{
+                } else {
                     rt = "&3No Game Running!";
                     cancel();
                 }

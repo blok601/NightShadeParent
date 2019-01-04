@@ -26,27 +26,35 @@ public class MeetupTask extends BukkitRunnable {
 
     @Override
     public void run() {
+
+        if (counter <= -1) return;
+
         if (counter == 0) {
+
             Bukkit.getServer().getPluginManager().callEvent(new MeetupStartEvent());
             GameState.setState(GameState.MEETUP);
-            for (Player pl : Bukkit.getOnlinePlayers()) {
-               pl.sendMessage(ChatUtils.format("&5&m-----------------------------------"));
-               pl.sendMessage(ChatUtils.format("&3Meetup is now!"));
-               pl.sendMessage(ChatUtils.format("&3Head to 0,0!"));
-               pl.sendMessage(ChatUtils.format("&5&m-----------------------------------"));
-            }
-//            ChatUtils.sendAll("&cThe final heal has been given! Don't ask for another!");
+
             PacketPlayOutTitle title = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"Meetup!\",\"color\":\"dark_purple\",\"bold\":true}"), 0, 20, 0);
             PacketPlayOutTitle subtitle = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"Head Toward 0, 0 Now!\",\"color\":\"aqua\"}"), 0, 20, 0);
-            for (UHCPlayer uhcPlayer : UHCPlayerColl.get().getAllOnline()) {
-                ((CraftPlayer) uhcPlayer.getPlayer()).getHandle().playerConnection.sendPacket(title);
-                ((CraftPlayer) uhcPlayer.getPlayer()).getHandle().playerConnection.sendPacket(subtitle);
+
+            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+
+                onlinePlayer.sendMessage(ChatUtils.format("&5&m-----------------------------------"));
+                onlinePlayer.sendMessage(ChatUtils.format("&3Meetup is now!"));
+                onlinePlayer.sendMessage(ChatUtils.format("&3Head to 0,0!"));
+                onlinePlayer.sendMessage(ChatUtils.format("&5&m-----------------------------------"));
+
+                ((CraftPlayer) onlinePlayer).getHandle().playerConnection.sendPacket(title);
+                ((CraftPlayer) onlinePlayer).getHandle().playerConnection.sendPacket(subtitle);
+
             }
-            counter = -10;
+
+            counter = -1;
             cancel();
-        } else {
-            counter--;
+
         }
+
+        counter--;
 
     }
 

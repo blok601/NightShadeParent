@@ -1,5 +1,6 @@
 package me.blok601.nightshadeuhc.task;
 
+import com.massivecraft.massivecore.nms.NmsChat;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.command.staff.PvPCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
@@ -31,11 +32,18 @@ public class PvPTask extends BukkitRunnable {
 
     @Override
     public void run() {
+
+        if (counter <= -1) return;
+
         if (counter == 0) {
+
             PvPCommand.enablePvP(w);
             Bukkit.getServer().getPluginManager().callEvent(new PvPEnableEvent());
+
             PacketPlayOutTitle packet = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"PvP Has Been Enabled!\",\"color\":\"dark_aqua\",\"bold\":true}"));
+
             for (UHCPlayer uhcPlayer : UHCPlayerColl.get().getAllOnline()) {
+
                 if (uhcPlayer.isUsingOldVersion()) {
                     uhcPlayer.msg(ChatUtils.message("&3PvP has been enabled!"));
                     continue;
@@ -43,21 +51,26 @@ public class PvPTask extends BukkitRunnable {
 
                 ((CraftPlayer) uhcPlayer.getPlayer()).getHandle().playerConnection.sendPacket(packet);
             }
-            counter = -10;
+
+            counter = -1;
             this.cancel();
-        } else {
-            Bukkit.getOnlinePlayers().forEach((Consumer<Player>) player -> {
-                ActionBarUtil.sendActionBarMessage(player, "§5PvP enabled in " + get(counter), 1, UHC.get());
-            });
+
+            return;
         }
+
+        Bukkit.getOnlinePlayers().forEach((Consumer<Player>) player -> {
+            NmsChat.get().sendActionbarMessage(player, "§5PvP enabled in " + formatTime(counter));
+        });
+
+
         counter--;
 
 
     }
 
-    private String get(int i){
-        int m = i/60;
-        int s = i%60;
+    private String formatTime(int i) {
+        int m = i / 60;
+        int s = i % 60;
 
         return "§3" + m + "§5m§3" + s + "§5s";
     }
