@@ -63,9 +63,9 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         return i;
     }
 
-    private static Essentials ess;
-    private static DisguiseAPI api;
-    private static MultiverseCore multiverseCore;
+    private Essentials ess;
+    private DisguiseAPI api;
+    private MultiverseCore multiverseCore;
 
 
     private ScenarioManager sm;
@@ -270,14 +270,26 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
 
 
     public static Essentials getEssentials() {
-        return ess;
+        return get().getEss();
     }
 
     public static DisguiseAPI getApi() {
-        return api;
+        return get().getDisguiseAPI();
     }
 
     public static MultiverseCore getMultiverseCore() {
+        return get().getMultiverseCorePlugin();
+    }
+
+    public Essentials getEss() {
+        return ess;
+    }
+
+    public DisguiseAPI getDisguiseAPI() {
+        return api;
+    }
+
+    public MultiverseCore getMultiverseCorePlugin() {
         return multiverseCore;
     }
 
