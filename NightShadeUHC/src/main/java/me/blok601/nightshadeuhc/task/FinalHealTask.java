@@ -1,12 +1,9 @@
 package me.blok601.nightshadeuhc.task;
 
-import me.blok601.nightshadeuhc.entity.UHCPlayer;
+import com.massivecraft.massivecore.nms.NmsChat;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
 import me.blok601.nightshadeuhc.util.ChatUtils;
-import net.minecraft.server.v1_8_R3.IChatBaseComponent;
-import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
-import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -21,32 +18,40 @@ public class FinalHealTask extends BukkitRunnable {
         this.counter = counter;
     }
 
-
     @Override
     public void run() {
+
+        if (counter <= -1) return;
+
         if (counter == 0) {
-            for (Player pl : Bukkit.getOnlinePlayers()) {
-                pl.setHealth(pl.getMaxHealth());
-                pl.setFoodLevel(20);
-            }
-//            ChatUtils.sendAll("&cThe final heal has been given! Don't ask for another!");
-            PacketPlayOutTitle title = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"Final Heal Has Been Given!\",\"color\":\"dark_aqua\",\"bold\":true}"), 0, 20, 0);
-            PacketPlayOutTitle subtitle = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"Don't ask for another\",\"color\":\"dark_red\"}"), 0, 20, 0);
-            for (UHCPlayer uhcPlayer : UHCPlayerColl.get().getAllOnline()) {
+
+            UHCPlayerColl.get().getAllOnline().stream().filter(uhcPlayer -> {
+
+                Player player = uhcPlayer.getPlayer();
+
+                player.setHealth(player.getMaxHealth());
+                player.setFoodLevel(20);
+
                 if (uhcPlayer.isUsingOldVersion()) {
                     uhcPlayer.msg(ChatUtils.message("&3Final heal has been given!"));
-                    continue;
+                    return false;
                 }
-                ((CraftPlayer) uhcPlayer.getPlayer()).getHandle().playerConnection.sendPacket(title);
-                ((CraftPlayer) uhcPlayer.getPlayer()).getHandle().playerConnection.sendPacket(subtitle);
-            }
+
+                return true;
+
+            }).forEach(uhcPlayer -> NmsChat.get().sendTitleMessage(uhcPlayer.getPlayer(),
+                    10,
+                    30,
+                    10,
+                    ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "Final Heal Has Been Given!",
+                    ChatColor.DARK_RED + "Don't ask for another!"));
 
 
-            counter = -10;
+            counter = -1;
             cancel();
-        } else {
-            counter--;
         }
+
+        counter--;
 
     }
 

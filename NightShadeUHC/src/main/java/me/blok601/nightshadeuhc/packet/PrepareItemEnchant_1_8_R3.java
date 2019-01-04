@@ -1,4 +1,4 @@
-package me.blok601.nightshadeuhc.manager.packet;
+package me.blok601.nightshadeuhc.packet;
 
 import me.blok601.nightshadeuhc.UHC;
 import net.minecraft.server.v1_8_R3.ContainerEnchantTable;

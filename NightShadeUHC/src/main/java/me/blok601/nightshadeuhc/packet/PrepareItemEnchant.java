@@ -1,4 +1,4 @@
-package me.blok601.nightshadeuhc.manager.packet;
+package me.blok601.nightshadeuhc.packet;
 
 import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 

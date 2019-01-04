@@ -1,4 +1,4 @@
-package me.blok601.nightshadeuhc.manager.packet;
+package me.blok601.nightshadeuhc.packet;
 
 import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Logger;

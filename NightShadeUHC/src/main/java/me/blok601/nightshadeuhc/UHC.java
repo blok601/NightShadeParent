@@ -24,7 +24,7 @@ import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.manager.ListenerHandler;
 import me.blok601.nightshadeuhc.manager.LoggerManager;
 import me.blok601.nightshadeuhc.manager.SettingsManager;
-import me.blok601.nightshadeuhc.manager.packet.OldEnchanting;
+import me.blok601.nightshadeuhc.packet.OldEnchanting;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
 import me.blok601.nightshadeuhc.scoreboard.ScoreboardManager;
