@@ -36,7 +36,7 @@ public class GameCountdownTask extends BukkitRunnable {
     @Override
     public void run() {
 
-        if (counter <= 1) return;
+        if (counter <= -1) return;
 
         if (counter % 60 == 0) {
             Bukkit.broadcastMessage(ChatUtils.message("&eScatter will begin in &b" + (counter / 60) + " &eminute&8(&es&8)..."));
