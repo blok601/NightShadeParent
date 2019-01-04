@@ -74,53 +74,86 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
     private MongoCollection<Document> gameCollection;
 
     public static HashSet<UUID> players = new HashSet<>();
-
-    public static HashSet<UUID> loggedOutPlayers;
+    public static HashSet<UUID> loggedOutPlayers = new HashSet<>();
 
     @Override
     public void onEnableInner() {
+
+        if (!setupMultiverse()) {
+            Core.get().getLogManager().log(Logger.LogType.SEVERE, "Multiverse wasn't found! Disabling plugin!");
+            Bukkit.getPluginManager().disablePlugin(this);
+            return;
+        }
+
 
         this.activateAuto();
 
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         Bukkit.getMessenger().registerIncomingPluginChannel(this, "BungeeCord", this);
 
+        if (Bukkit.getPluginManager().getPlugin("ViaRewind") == null) {
+            GameManager.get().setServerType("UHC1");
+        } else {
+
+            GameManager.get().setServerType("UHC2");
+
+            hideEnchants();
+            new OldEnchanting(this);
+
+        }
+
+
         getConfig().options().copyDefaults(true);
         saveConfig();
 
+        Commands.setup();
         GameState.setState(GameState.WAITING);
         SettingsManager.getInstance().setup(this);
-
-        registerCommands();
-        registerListeners();
-
-        setupExtraDatabase();
-        GameManager.get().setup();
-        scoreboardManager = new ScoreboardManager();
-        Bukkit.getScheduler().runTaskTimer(this, () -> {
-            scoreboardManager.getPlayerScoreboards().values().forEach(PlayerScoreboard::update);
-        }, 0L, 35L);
-        new ScoreboardHealthTask(scoreboardManager).runTaskTimerAsynchronously(this, 0, 60);
-        Commands.setup();
-        new StaffTrackTask().runTaskTimer(this, 0, 100);
-        new PregenTask().runTaskTimer(this, 0, 40);
 
         ComponentHandler.getInstance().setup();
         StatsHandler.getInstance().setup();
 
+        scoreboardManager = new ScoreboardManager();
+
+        GameManager.get().setup();
+
         sm = new ScenarioManager();
         api = getServer().getServicesManager().getRegistration(DisguiseAPI.class).getProvider();
         ess = (Essentials) Bukkit.getServer().getPluginManager().getPlugin("Essentials");
-        if(!setupMultiverse()){
-            Core.get().getLogManager().log(Logger.LogType.SEVERE, "Multiverse wasn't found! Disabling plugin!");
-            Bukkit.getPluginManager().disablePlugin(this);
-        }
 
         new GoldenHeadRecipe();
-        sm.setup();
+
+        registerCommands();
+        registerListeners();
+        setupExtraDatabase();
+        setupTasks();
+
+        Bukkit.getConsoleSender().sendMessage(ChatUtils.message("&aNightShadePvPUHC " + getDescription().getVersion() + " has been successfully enabled!"));
+        Bukkit.getConsoleSender().sendMessage(ChatUtils.message("&eDetected Server&8: &3" + GameManager.get().getServerType()));
+
+    }
+
+
+
+    public void onDisable() {
+        //LoggerHandler.getInstance().getLoggers().forEach(combatLogger -> LoggerHandler.getInstance().removeLogger(combatLogger));
+        LoggerManager.getInstance().getLoggers().clear();
+        Bukkit.getMessenger().unregisterIncomingPluginChannel(this, "BungeeCord", this);
+        Bukkit.getMessenger().unregisterOutgoingPluginChannel(this, "BungeeCord");
+
+    }
+
+    private void setupTasks() {
+
+        new ScoreboardHealthTask(scoreboardManager).runTaskTimerAsynchronously(this, 0, 60);
+        new StaffTrackTask().runTaskTimer(this, 0, 100);
+        new PregenTask().runTaskTimer(this, 0, 40);
+
+        Bukkit.getScheduler().runTaskTimer(this, () -> {
+            scoreboardManager.getPlayerScoreboards().values().forEach(PlayerScoreboard::update);
+        }, 0L, 35L);
 
         new BukkitRunnable() {
-
             @Override
             public void run() {
                 if (Lag.getTPS() > 18) {
@@ -140,32 +173,6 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
 
         }, this).run();
 
-        if (Bukkit.getPluginManager().getPlugin("ViaRewind") != null) {
-            //UHC2
-            GameManager.get().setServerType("UHC2");
-        } else {
-            GameManager.get().setServerType("UHC1");
-        }
-
-
-        if(GameManager.get().getServerType().equalsIgnoreCase("UHC2")){
-            hideEnchants();
-            new OldEnchanting(this);
-        }
-
-        loggedOutPlayers = new HashSet<>();
-
-        Bukkit.getConsoleSender().sendMessage(ChatUtils.message("&aNightShadePvPUHC " + getDescription().getVersion() + " has been successfully enabled!"));
-        Bukkit.getConsoleSender().sendMessage(ChatUtils.message("&eDetected Server&8: &3" + GameManager.get().getServerType()));
-
-    }
-
-    public void onDisable() {
-        //LoggerHandler.getInstance().getLoggers().forEach(combatLogger -> LoggerHandler.getInstance().removeLogger(combatLogger));
-        LoggerManager.getInstance().getLoggers().clear();
-        Bukkit.getMessenger().unregisterIncomingPluginChannel(this, "BungeeCord", this);
-        Bukkit.getMessenger().unregisterOutgoingPluginChannel(this, "BungeeCord");
-
     }
 
     private void registerCommands() {
@@ -179,6 +186,36 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
             Bukkit.getServer().getPluginManager().registerEvents(listener, this);
         }
     }
+
+
+    private boolean setupMultiverse() {
+        Plugin plugin = getServer().getPluginManager().getPlugin("Multiverse-Core");
+
+        if (plugin instanceof MultiverseCore) {
+            multiverseCore = (MultiverseCore) plugin;
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public void onPluginMessageReceived(String channel, Player player, byte[] message) {
+
+    }
+
+
+    private void setupExtraDatabase() {
+        Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
+            final String URI = "mongodb://localhost:27017/network";
+            MongoClient mongoClient = new MongoClient(new MongoClientURI(URI));
+
+            MongoDatabase mongoDatabase = mongoClient.getDatabase("network");
+            this.gameCollection = mongoDatabase.getCollection("uhcGames");
+            Core.get().getLogManager().log(Logger.LogType.SERVER, "Successfully connected to Mongo DB!");
+        });
+    }
+
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (Commands.getCommands() == null) {
@@ -202,7 +239,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
                         }
                     }
 
-                    if(!(sender instanceof Player)){
+                    if (!(sender instanceof Player)) {
                         try {
                             ci.onCommand(sender, cmd, label, args);
                         } catch (Exception e) {
@@ -231,37 +268,13 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         return true;
     }
 
+
     public static Essentials getEssentials() {
         return ess;
     }
 
     public static DisguiseAPI getApi() {
         return api;
-    }
-
-
-    /**
-     * A method that will be thrown when a PluginMessageSource sends a i
-     * message on a registered channel.
-     *
-     * @param channel Channel that the message was sent through.
-     * @param player  Source of the message.
-     * @param message The raw message that was sent.
-     */
-    @Override
-    public void onPluginMessageReceived(String channel, Player player, byte[] message) {
-
-    }
-
-    private boolean setupMultiverse() {
-        Plugin plugin = getServer().getPluginManager().getPlugin("Multiverse-Core");
-
-        if (plugin instanceof MultiverseCore) {
-            multiverseCore = (MultiverseCore) plugin;
-            return true;
-        }
-
-        return false;
     }
 
     public static MultiverseCore getMultiverseCore() {
@@ -272,22 +285,11 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         return scoreboardManager;
     }
 
-    private void setupExtraDatabase() {
-        Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
-            final String URI = "mongodb://localhost:27017/network";
-            MongoClient mongoClient = new MongoClient(new MongoClientURI(URI));
-
-            MongoDatabase mongoDatabase = mongoClient.getDatabase("network");
-            this.gameCollection = mongoDatabase.getCollection("uhcGames");
-            Core.get().getLogManager().log(Logger.LogType.SERVER, "Successfully connected to Mongo DB!");
-        });
-    }
-
     public MongoCollection<Document> getGameCollection() {
         return gameCollection;
     }
 
-    private void hideEnchants(){
+    private void hideEnchants() {
         ProtocolLibrary.getProtocolManager().addPacketListener(new EnchantHider(this));
     }
 

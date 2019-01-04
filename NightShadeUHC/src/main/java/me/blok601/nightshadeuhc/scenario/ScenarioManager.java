@@ -30,6 +30,9 @@ import java.util.stream.Collectors;
  */
 public class ScenarioManager implements UHCCommand, Listener {
 
+    public ScenarioManager() {
+        setup();
+    }
 
     private static ArrayList<Scenario> scenarios = new ArrayList<>();
 
