@@ -8,13 +8,13 @@ public final class NightShadeProxy extends Plugin {
     public void onEnable() {
         getProxy().registerChannel("staffchat");
         getProxy().getPluginManager().registerListener(this, new ServerListener(this));
-        getProxy().registerChannel("BungeeCord");
+        getProxy().registerChannel("Maintenance");
 
     }
 
     @Override
     public void onDisable() {
         getProxy().unregisterChannel("staffchat");
-        getProxy().unregisterChannel("BungeeCord");
+        getProxy().unregisterChannel("Maintenance");
     }
 }

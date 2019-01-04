@@ -38,7 +38,7 @@ public class CmdMaintenance extends NightShadeCoreCommand {
         out.writeUTF(nsPlayer.getName()); // First is the name
         out.writeBoolean(state); //Second is state
         if (nsPlayer.isPlayer()) {
-            nsPlayer.getPlayer().sendPluginMessage(Core.get(), "BungeeCord", out.toByteArray());
+            nsPlayer.getPlayer().sendPluginMessage(Core.get(), "Maintenance", out.toByteArray());
         }
 
         nsPlayer.msg(ChatUtils.message("&eMaintenance mode " + (state ? "&astarting..." : "&cstopped")));

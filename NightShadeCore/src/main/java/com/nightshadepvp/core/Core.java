@@ -48,8 +48,8 @@ public class Core extends MassivePlugin implements PluginMessageListener {
 
         logger = new Logger();
 
-        Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-        Bukkit.getMessenger().registerIncomingPluginChannel(this, "BungeeCord", this);
+        Bukkit.getMessenger().registerOutgoingPluginChannel(this, "Maintenance");
+        Bukkit.getMessenger().registerIncomingPluginChannel(this, "Maintenance", this);
 
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "staffchat");
         Bukkit.getMessenger().registerIncomingPluginChannel(this, "staffchat", this);
@@ -120,7 +120,7 @@ public class Core extends MassivePlugin implements PluginMessageListener {
             String msg = in.readUTF();
 
             NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> nsPlayer.hasRank(Rank.TRIAL)).forEach(nsPlayer -> nsPlayer.msg(ChatUtils.format("&8[&cStaff Chat&8] &a" + playerName + "&8: &r" + msg)));
-        }else if(channel.equalsIgnoreCase("BungeeCord")){
+        }else if(channel.equalsIgnoreCase("Maintenance")){
             ByteArrayDataInput in = ByteStreams.newDataInput(message);
             String playerName = in.readUTF();
             boolean state = in.readBoolean();

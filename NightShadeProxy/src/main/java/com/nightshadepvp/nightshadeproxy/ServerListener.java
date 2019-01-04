@@ -49,7 +49,7 @@ public class ServerListener implements Listener {
                 serverInfo.sendData("staffchat", stream.toByteArray());
 
             }
-        }else if(ev.getTag().contains("BungeeCord")){
+        }else if(ev.getTag().contains("Maintenance")){
             ByteArrayDataInput in = ByteStreams.newDataInput(ev.getData());
             String player = in.readUTF();
             boolean state = in.readBoolean();
@@ -70,7 +70,7 @@ public class ServerListener implements Listener {
                     e.printStackTrace();
                 }
 
-                serverInfo.sendData("BungeeCord", stream.toByteArray());
+                serverInfo.sendData("Maintenance", stream.toByteArray());
             }
         }
     }
