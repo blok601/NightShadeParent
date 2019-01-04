@@ -67,8 +67,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
     private DisguiseAPI api;
     private MultiverseCore multiverseCore;
 
-
-    private ScenarioManager sm;
+    private ScenarioManager scenarioManager;
     private ScoreboardManager scoreboardManager;
 
     private MongoCollection<Document> gameCollection;
@@ -113,13 +112,12 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         ComponentHandler.getInstance().setup();
         StatsHandler.getInstance().setup();
 
-        scoreboardManager = new ScoreboardManager();
-
         GameManager.get().setup();
 
-        sm = new ScenarioManager();
+        scenarioManager = new ScenarioManager();
         api = getServer().getServicesManager().getRegistration(DisguiseAPI.class).getProvider();
         ess = (Essentials) Bukkit.getServer().getPluginManager().getPlugin("Essentials");
+        scoreboardManager = new ScoreboardManager();
 
         new GoldenHeadRecipe();
 
@@ -132,7 +130,6 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         Bukkit.getConsoleSender().sendMessage(ChatUtils.message("&eDetected Server&8: &3" + GameManager.get().getServerType()));
 
     }
-
 
 
     public void onDisable() {
@@ -268,6 +265,9 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         return true;
     }
 
+    private void hideEnchants() {
+        ProtocolLibrary.getProtocolManager().addPacketListener(new EnchantHider(this));
+    }
 
     public static Essentials getEssentials() {
         return get().getEss();
@@ -301,8 +301,9 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         return gameCollection;
     }
 
-    private void hideEnchants() {
-        ProtocolLibrary.getProtocolManager().addPacketListener(new EnchantHider(this));
+    public ScenarioManager getScenarioManager() {
+        return scenarioManager;
     }
+
 
 }
