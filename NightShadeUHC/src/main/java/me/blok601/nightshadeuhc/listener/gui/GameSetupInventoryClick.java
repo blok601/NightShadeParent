@@ -112,7 +112,7 @@ public class GameSetupInventoryClick implements Listener {
                 p.closeInventory();
                 p.sendMessage(ChatUtils.message("&eThe game will start in 3 minutes..."));
                 p.sendMessage(ChatUtils.message("&eDo /cancelgame at any time within those 3 minutes to cancel the start timer!"));
-                GameCountdownTask gameCountdownTask = new GameCountdownTask(uhc, gameManager);
+                GameCountdownTask gameCountdownTask = new GameCountdownTask(gameManager);
                 gameCountdownTask.runTaskTimer(uhc, 0, Util.TICKS);
                 gameManager.setGameCountdownTask(gameCountdownTask);
                 GameState.setState(GameState.PRE_SCATTER);

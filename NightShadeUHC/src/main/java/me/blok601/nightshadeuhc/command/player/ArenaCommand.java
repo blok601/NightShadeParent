@@ -4,6 +4,7 @@ import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.command.UHCCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
+import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -33,6 +34,12 @@ public class ArenaCommand implements UHCCommand {
             uhcPlayer.leaveArena();
             p.sendMessage(ChatUtils.message("&eYou have left the arena!"));
         } else {
+
+            if (GameManager.get().getGameCountdownTask() != null && GameManager.get().getGameCountdownTask().getCounter() <= 60) {
+                p.sendMessage(ChatUtils.message("&cYou can not join the arena at this time."));
+                return;
+            }
+
             uhcPlayer.joinArena();
             p.sendMessage(ChatUtils.message("&eYou have joined the arena!"));
         }

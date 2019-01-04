@@ -1,5 +1,6 @@
 package me.blok601.nightshadeuhc.task;
 
+import com.massivecraft.massivecore.nms.NmsChat;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
@@ -10,6 +11,7 @@ import me.blok601.nightshadeuhc.util.ActionBarUtil;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.FreezeUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -21,44 +23,20 @@ import java.util.ArrayList;
 public class GameCountdownTask extends BukkitRunnable {
 
     private int counter = 180;
-    private UHC uhc;
     private GameManager gameManager;
 
-    public GameCountdownTask(UHC uhc, GameManager gameManager) {
-        this.uhc = uhc;
+    public GameCountdownTask(GameManager gameManager) {
         this.gameManager = gameManager;
+    }
+
+    public int getCounter() {
+        return counter;
     }
 
     @Override
     public void run() {
-        if (counter <= 0) {
-            this.cancel();
-            ArrayList<Player> valid = new ArrayList<>();
-            UHCPlayer gp;
-            for (Player ps : Bukkit.getOnlinePlayers()) {
-                gp = UHCPlayer.get(ps.getUniqueId());
-                if (!gp.isSpectator()) {
-                    gp.setPlayerStatus(PlayerStatus.PLAYING);
-                    valid.add(ps);
-//                    if (UHC.players.contains(ps.getUniqueId())) continue;
-//                    UHC.players.add(ps.getUniqueId());
-                }
-            }
 
-            gameManager.getWorld().setTime(20);
-            ChatUtils.setChatFrozen(true);
-            Bukkit.broadcastMessage(ChatUtils.message("&eUse /helpop or message any online staff members if you need help!"));
-            FreezeUtil.start();
-            UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isInArena).forEach(UHCPlayer::leaveArena);
-            GameState.setState(GameState.STARTING);
-            Bukkit.getOnlinePlayers().forEach(o -> {
-                ActionBarUtil.sendActionBarMessage(o, "§5The scatter is beginning....");
-                o.getInventory().clear();
-                o.getInventory().setArmorContents(null);
-            });
-            new ScatterTask(valid, gameManager.getWorld(), gameManager.getSetupRadius(), gameManager.getHost(), gameManager.getFinalHealTime(), gameManager.getPvpTime(), gameManager.getBorderTime(), gameManager.isIsTeam(), gameManager.getFirstShrink(), gameManager.getMeetupTime(), gameManager).runTaskTimer(UHC.get(), 0, 4);
-            return;
-        }
+        if (counter <= 1) return;
 
         if (counter % 60 == 0) {
             Bukkit.broadcastMessage(ChatUtils.message("&eScatter will begin in &b" + (counter / 60) + " &eminute&8(&es&8)..."));
@@ -66,17 +44,50 @@ public class GameCountdownTask extends BukkitRunnable {
 
         if(counter == 60){
             UHCPlayerColl.get().getAllOnline().forEach(UHCPlayer::leaveArena);
-
         }
+
+        if (counter <= 0) {
+
+            ArrayList<Player> validPlayers = new ArrayList<>();
+
+            for (UHCPlayer uhcPlayer : UHCPlayerColl.get().getAllOnline()) {
+
+                if (uhcPlayer.isInArena()) {
+                    uhcPlayer.leaveArena();
+                }
+
+                NmsChat.get().sendActionbarMessage(uhcPlayer, ChatColor.translateAlternateColorCodes('&', "&5The scatter is beginning...."));
+
+                uhcPlayer.getPlayer().getInventory().clear();
+                uhcPlayer.getPlayer().getInventory().setArmorContents(null);
+
+                if (uhcPlayer.isSpectator()) continue;
+
+                uhcPlayer.setPlayerStatus(PlayerStatus.PLAYING);
+                validPlayers.add(uhcPlayer.getPlayer());
+
+            }
+
+            gameManager.getWorld().setTime(20);
+
+            Bukkit.broadcastMessage(ChatUtils.message("&eUse /helpop or message any online staff members if you need help!"));
+
+            ChatUtils.setChatFrozen(true);
+            FreezeUtil.start();
+            GameState.setState(GameState.STARTING);
+
+            new ScatterTask(validPlayers, gameManager.getWorld(), gameManager.getSetupRadius(), gameManager.getHost(), gameManager.getFinalHealTime(), gameManager.getPvpTime(), gameManager.getBorderTime(), gameManager.isIsTeam(), gameManager.getFirstShrink(), gameManager.getMeetupTime(), gameManager).runTaskTimer(UHC.get(), 0, 4);
+            counter = -1;
+            return;
+        }
+
         counter--;
 
-        Bukkit.getOnlinePlayers().forEach(o -> {
-            ActionBarUtil.sendActionBarMessage(o, "§5Scatter§8» " + get(counter), 1, uhc);
-        });
+        Bukkit.getOnlinePlayers().forEach(player -> NmsChat.get().sendActionbarMessage(player, "§5Scatter§8» " + formatTime(counter)));
 
     }
 
-    private String get(int i) {
+    private String formatTime(int i) {
         int m = i / 60;
         int s = i % 60;
 
