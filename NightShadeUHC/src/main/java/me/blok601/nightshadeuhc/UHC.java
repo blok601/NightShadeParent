@@ -57,7 +57,6 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
     private Essentials ess;
     private DisguiseAPI api;
     private MultiverseCore multiverseCore;
-    private Core core;
 
     private ScenarioManager scenarioManager;
     private ScoreboardManager scoreboardManager;
@@ -111,14 +110,16 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         new GoldenHeadRecipe();
 
 
-        scoreboardManager = new ScoreboardManager();
+        this.scoreboardManager = new ScoreboardManager();
         this.gameManager = new GameManager();
         this.scenarioManager = new ScenarioManager();
+        scenarioManager.setup();
         this.componentHandler = new ComponentHandler(gameManager, scenarioManager);
+        this.componentHandler.setup();
         this.commandHandler = new CommandHandler(this, gameManager, scenarioManager);
         this.listenerHandler = new ListenerHandler(this, Core.get(), scenarioManager, gameManager, componentHandler);
         this.listenerHandler.complete();
-        this.componentHandler.setup();
+
 
         Bukkit.getConsoleSender().sendMessage(ChatUtils.message("&aNightShadePvPUHC " + getDescription().getVersion() + " has been successfully enabled!"));
         Bukkit.getConsoleSender().sendMessage(ChatUtils.message("&eDetected Server&8: &3" + GameManager.get().getServerType()));
