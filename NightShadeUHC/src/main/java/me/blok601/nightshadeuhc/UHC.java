@@ -116,7 +116,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         this.gameManager = new GameManager();
         this.scoreboardManager = new ScoreboardManager();
         this.scenarioManager = new ScenarioManager();
-        scenarioManager.setup();
+        this.scenarioManager.setup();
         this.componentHandler = new ComponentHandler(GameManager.get(), scenarioManager);
         this.componentHandler.setup();
         this.commandHandler = new CommandHandler(this, GameManager.get(), scenarioManager);

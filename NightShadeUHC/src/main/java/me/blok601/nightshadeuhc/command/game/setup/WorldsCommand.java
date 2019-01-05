@@ -25,7 +25,6 @@ public class WorldsCommand implements UHCCommand{
     @Override
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
-        p.sendMessage(ChatUtils.message("&eWorlds List:"));
 
         p.sendMessage(ChatUtils.message("&eWorlds List: &b" + Joiner.on("&7, &b").join(Bukkit.getWorlds().stream().filter(world -> world.getName().toLowerCase().startsWith("UHC")).collect(Collectors.toList()))));
 

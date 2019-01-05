@@ -30,7 +30,15 @@ import java.util.stream.Collectors;
  */
 public class ScenarioManager implements UHCCommand, Listener {
 
-    private ArrayList<Scenario> scenarios = new ArrayList<>();
+    private UHC uhc;
+    private ArrayList<Scenario> scenarios;
+
+    public ScenarioManager(UHC uhc) {
+        this.uhc = uhc;
+        scenarios = new ArrayList<>();
+    }
+
+
 
     public void setup(){
         addScen(new AssaultAndBatteryScenario(), "AAB");
@@ -124,14 +132,17 @@ public class ScenarioManager implements UHCCommand, Listener {
 
 
     private void addScen(Scenario s){
-        addScen(s, null);
+        scenarios.add(s);
+        s.setScenarioManager(this);
+        Bukkit.getPluginManager().registerEvents(s, uhc);
     }
 
     private void addScen(Scenario s, String abbreviation){
         scenarios.add(s);
+        if(s.getAbbreviation() != null)
         s.setAbbreviation(abbreviation);
         s.setScenarioManager(this);
-        Bukkit.getPluginManager().registerEvents(s, UHC.get());
+        Bukkit.getPluginManager().registerEvents(s, uhc);
     }
 
     public Scenario getScen(String name){
