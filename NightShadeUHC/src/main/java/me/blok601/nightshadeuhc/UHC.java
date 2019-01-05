@@ -9,9 +9,11 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Logger;
+import com.nightshadepvp.core.entity.NSPlayer;
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import de.robingrether.idisguise.api.DisguiseAPI;
 import me.blok601.nightshadeuhc.command.CommandHandler;
+import me.blok601.nightshadeuhc.command.UHCCommand;
 import me.blok601.nightshadeuhc.component.ComponentHandler;
 import me.blok601.nightshadeuhc.component.GoldenHeadRecipe;
 import me.blok601.nightshadeuhc.entity.object.GameState;
@@ -34,13 +36,14 @@ import me.blok601.nightshadeuhc.util.Lag;
 import me.blok601.nightshadeuhc.util.Util;
 import org.bson.Document;
 import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashSet;
-import java.util.UUID;
+import java.util.*;
 
 public class UHC extends MassivePlugin implements PluginMessageListener {
 
@@ -186,6 +189,57 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
 
     }
 
+    @Override
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        if (this.commandHandler.getCommands() == null || this.commandHandler.getCommands().isEmpty()) {
+            new CommandHandler(this, gameManager, scenarioManager);
+        }
+
+        for (UHCCommand ci : this.commandHandler.getCommands()) {
+            List<String> cmds = new ArrayList<String>();
+            if (ci.getNames() != null) {
+                //Add all the possible aliases
+                cmds.addAll(Arrays.asList(ci.getNames()));
+            }
+
+            for (String n : cmds) {
+                if (cmd.getName().equalsIgnoreCase(n)) {
+                    if (ci.playerOnly()) {
+                        if (!(sender instanceof Player)) {
+                            sender.sendMessage(ChatUtils.message("&cThis is a player only command!"));
+                            return false;
+                        }
+                    }
+
+                    if (!(sender instanceof Player)) {
+                        try {
+                            ci.onCommand(sender, cmd, label, args);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        return true;
+                    }
+
+                    Player p = (Player) sender;
+                    NSPlayer user = NSPlayer.get(p.getUniqueId());
+                    if (ci.hasRequiredRank()) {
+                        if (!(user.hasRank(ci.getRequiredRank()))) {
+                            p.sendMessage(com.nightshadepvp.core.utils.ChatUtils.message("&cYou require the " + ci.getRequiredRank().getPrefix() + "&crank to do this command!"));
+                            return false;
+                        }
+                    }
+
+                    try {
+                        ci.onCommand(sender, cmd, label, args);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
 
     private void setupExtraDatabase() {
         Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
@@ -233,6 +287,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
     public MongoCollection<Document> getGameCollection() {
         return gameCollection;
     }
+
 
 
 

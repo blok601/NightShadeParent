@@ -2,7 +2,6 @@ package me.blok601.nightshadeuhc.command;
 
 import com.google.common.collect.Sets;
 import com.nightshadepvp.core.Core;
-import com.nightshadepvp.core.entity.NSPlayer;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.command.game.run.*;
 import me.blok601.nightshadeuhc.command.game.setup.*;
@@ -18,21 +17,13 @@ import me.blok601.nightshadeuhc.scenario.cmd.*;
 import me.blok601.nightshadeuhc.scenario.cmd.mole.*;
 import me.blok601.nightshadeuhc.stat.command.LeaderboardsCommand;
 import me.blok601.nightshadeuhc.stat.command.StatsCommand;
-import me.blok601.nightshadeuhc.util.ChatUtils;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 
 /**
  * Created by Blok on 6/26/2017.
  */
-public class CommandHandler implements CommandExecutor {
+public class CommandHandler  {
 
 
     private Core core;
@@ -170,55 +161,4 @@ public class CommandHandler implements CommandExecutor {
 //        return this.commands.stream().filter(uhcCommand -> uhc.getName().equalsIgnoreCase(test)).findFirst().orElse(null);
 //    }
 
-
-    @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (this.getCommands() == null || this.commands.isEmpty()) {
-            new CommandHandler(uhc, gameManager, scenarioManager);
-        }
-
-        for (UHCCommand ci : this.getCommands()) {
-            List<String> cmds = new ArrayList<String>();
-            if (ci.getNames() != null) {
-                //Add all the possible aliases
-                cmds.addAll(Arrays.asList(ci.getNames()));
-            }
-
-            for (String n : cmds) {
-                if (cmd.getName().equalsIgnoreCase(n)) {
-                    if (ci.playerOnly()) {
-                        if (!(sender instanceof Player)) {
-                            sender.sendMessage(ChatUtils.message("&cThis is a player only command!"));
-                            return false;
-                        }
-                    }
-
-                    if (!(sender instanceof Player)) {
-                        try {
-                            ci.onCommand(sender, cmd, label, args);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        return true;
-                    }
-
-                    Player p = (Player) sender;
-                    NSPlayer user = NSPlayer.get(p.getUniqueId());
-                    if (ci.hasRequiredRank()) {
-                        if (!(user.hasRank(ci.getRequiredRank()))) {
-                            p.sendMessage(com.nightshadepvp.core.utils.ChatUtils.message("&cYou require the " + ci.getRequiredRank().getPrefix() + "&crank to do this command!"));
-                            return false;
-                        }
-                    }
-
-                    try {
-                        ci.onCommand(sender, cmd, label, args);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-        return true;
-    }
 }
