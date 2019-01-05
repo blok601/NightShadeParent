@@ -27,9 +27,17 @@ import java.util.UUID;
  */
 public class GameManager {
 
-    /*
-    This class is ALL static and is only used for storage purposes
-     */
+    public GameManager() {
+        setTimer(new TimerTask());
+        setMaxPlayers(60);
+
+        shrinks = new int[]{
+                500, 300, 200, 100, 50, 25, 10, 0, 0
+        };
+
+        colors = new HashSet<>();
+        Core.get().getLogManager().log(Logger.LogType.INFO, "GameManager has been setup!");
+    }
 
     private static GameManager i = new GameManager();
     public static GameManager get() {
@@ -214,20 +222,6 @@ public class GameManager {
     public HashMap<UUID, PlayerRespawn> getInvs() {
         return invs;
     }
-
-
-    public void setup(){
-        setTimer(new TimerTask());
-        setMaxPlayers(60);
-
-        shrinks = new int[]{
-                500, 300, 200, 100, 50, 25, 10, 0, 0
-        };
-
-        colors = new HashSet<>();
-        Core.get().getLogManager().log(Logger.LogType.INFO, "GameManager has been setup!");
-    }
-
 
     public ArrayList<UUID> getDeathBans() {
         return deathBans;

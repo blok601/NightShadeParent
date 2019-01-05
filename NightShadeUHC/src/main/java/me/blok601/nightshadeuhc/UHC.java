@@ -62,8 +62,8 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
     private ScoreboardManager scoreboardManager;
     private ListenerHandler listenerHandler;
     private CommandHandler commandHandler;
-    private GameManager gameManager;
     private ComponentHandler componentHandler;
+    private GameManager gameManager;
 
 
     private MongoCollection<Document> gameCollection;
@@ -110,14 +110,14 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         new GoldenHeadRecipe();
 
 
-        this.scoreboardManager = new ScoreboardManager();
         this.gameManager = new GameManager();
+        this.scoreboardManager = new ScoreboardManager();
         this.scenarioManager = new ScenarioManager();
         scenarioManager.setup();
-        this.componentHandler = new ComponentHandler(gameManager, scenarioManager);
+        this.componentHandler = new ComponentHandler(GameManager.get(), scenarioManager);
         this.componentHandler.setup();
-        this.commandHandler = new CommandHandler(this, gameManager, scenarioManager);
-        this.listenerHandler = new ListenerHandler(this, Core.get(), scenarioManager, gameManager, componentHandler);
+        this.commandHandler = new CommandHandler(this, GameManager.get(), scenarioManager);
+        this.listenerHandler = new ListenerHandler(this, Core.get(), scenarioManager, GameManager.get(), componentHandler);
         this.listenerHandler.complete();
 
 
