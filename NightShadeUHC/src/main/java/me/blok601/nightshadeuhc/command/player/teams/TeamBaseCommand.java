@@ -17,7 +17,6 @@ import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
 import me.blok601.nightshadeuhc.scoreboard.ScoreboardManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.MathUtil;
-import me.blok601.nightshadeuhc.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -29,11 +28,15 @@ import org.bukkit.scoreboard.Scoreboard;
 import java.util.*;
 
 public class TeamBaseCommand implements UHCCommand{
-	
-	public static HashMap<String, String> invites = new HashMap<>();
 
+    private ScenarioManager scenarioManager;
 
-	
+    public TeamBaseCommand(ScenarioManager scenarioManager) {
+        this.scenarioManager = scenarioManager;
+    }
+
+    private HashMap<String, String> invites = new HashMap<>();
+
 	public void sendHelp(Player p){
         p.sendMessage(ChatUtils.message("&aTeam Commands"));
         p.sendMessage(ChatUtils.message("&a/team create"));
@@ -452,7 +455,7 @@ public class TeamBaseCommand implements UHCCommand{
                     }
                 } else if (args[0].equalsIgnoreCase("list")) {
 
-                    Scenario scenario = ScenarioManager.getScen("Secret Teams");
+                    Scenario scenario = scenarioManager.getScen("Secret Teams");
                     if (scenario != null && scenario.isEnabled()) {
                         p.sendMessage(ChatUtils.format(scenario.getPrefix() + "&cYou can't view other player's teams in Secret Teams!"));
                         return;

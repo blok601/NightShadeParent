@@ -16,6 +16,14 @@ import java.util.UUID;
  * Created by Blok on 7/6/2018.
  */
 public class MoleChatCommand implements UHCCommand{
+
+
+    private ScenarioManager scenarioManager;
+
+    public MoleChatCommand(ScenarioManager scenarioManager) {
+        this.scenarioManager = scenarioManager;
+    }
+
     @Override
     public String[] getNames() {
         return new String[]{
@@ -27,7 +35,7 @@ public class MoleChatCommand implements UHCCommand{
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
         if(!MolesScenario.moles.containsKey(p.getUniqueId())){
-            p.sendMessage(ChatUtils.format(ScenarioManager.getScen("Moles").getPrefix() + "&cYou are not a mole!"));
+            p.sendMessage(ChatUtils.format(scenarioManager.getScen("Moles").getPrefix() + "&cYou are not a mole!"));
             return;
 
         }

@@ -17,7 +17,8 @@ import org.bukkit.inventory.ItemStack;
 /**
  * Created by Blok on 6/17/2017.
  */
-public class CutCleanScenario extends Scenario {
+public class CutCleanScenario extends Scenario{
+    
 
     public CutCleanScenario() {
         super("CutClean", "Everything is pre-smelted", new ItemBuilder(Material.COOKED_BEEF).name("CutClean").make());
@@ -36,7 +37,7 @@ public class CutCleanScenario extends Scenario {
         Location clone = new Location(b.getWorld(), b.getLocation().getBlockX() + 0.5D, b.getLocation().getBlockY(), b.getLocation().getBlockZ() + 0.5D); //XP ORB
 
         if (e.getBlock().getType().equals(Material.GOLD_ORE)) {
-            if (ScenarioManager.getScen("Goldless").isEnabled()) return;
+            if (getScenarioManager().getScen("Goldless").isEnabled()) return;
             e.setCancelled(true);
             b.setType(Material.AIR);
             PlayerUtils.giveItem(new ItemStack(Material.GOLD_INGOT, 1), p);

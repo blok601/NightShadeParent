@@ -9,13 +9,9 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Logger;
-import com.nightshadepvp.core.entity.NSPlayer;
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import de.robingrether.idisguise.api.DisguiseAPI;
-import me.blok601.nightshadeuhc.command.Commands;
-import me.blok601.nightshadeuhc.command.UHCCommand;
-import me.blok601.nightshadeuhc.command.player.teams.SendCoordsCommand;
-import me.blok601.nightshadeuhc.command.player.teams.TeamChatCommand;
+import me.blok601.nightshadeuhc.command.CommandHandler;
 import me.blok601.nightshadeuhc.component.ComponentHandler;
 import me.blok601.nightshadeuhc.component.GoldenHeadRecipe;
 import me.blok601.nightshadeuhc.entity.object.GameState;
@@ -38,17 +34,12 @@ import me.blok601.nightshadeuhc.util.Lag;
 import me.blok601.nightshadeuhc.util.Util;
 import org.bson.Document;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.UUID;
 
 public class UHC extends MassivePlugin implements PluginMessageListener {
@@ -66,9 +57,15 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
     private Essentials ess;
     private DisguiseAPI api;
     private MultiverseCore multiverseCore;
+    private Core core;
 
     private ScenarioManager scenarioManager;
     private ScoreboardManager scoreboardManager;
+    private ListenerHandler listenerHandler;
+    private CommandHandler commandHandler;
+    private GameManager gameManager;
+    private ComponentHandler componentHandler;
+
 
     private MongoCollection<Document> gameCollection;
 
@@ -101,34 +98,31 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
 
         }
 
-
-        getConfig().options().copyDefaults(true);
-        saveConfig();
-
-        Commands.setup();
-        GameState.setState(GameState.WAITING);
-        SettingsManager.getInstance().setup(this);
-
-        ComponentHandler.getInstance().setup();
-        StatsHandler.getInstance().setup();
-
-        GameManager.get().setup();
-
-        scenarioManager = new ScenarioManager();
         api = getServer().getServicesManager().getRegistration(DisguiseAPI.class).getProvider();
         ess = (Essentials) Bukkit.getServer().getPluginManager().getPlugin("Essentials");
-        scoreboardManager = new ScoreboardManager();
 
-        new GoldenHeadRecipe();
-
-        registerCommands();
-        registerListeners();
         setupExtraDatabase();
         setupTasks();
 
+        getConfig().options().copyDefaults(true);
+        saveConfig();
+        SettingsManager.getInstance().setup(this);
+        StatsHandler.getInstance().setup();
+        new GoldenHeadRecipe();
+
+
+        scoreboardManager = new ScoreboardManager();
+        this.gameManager = new GameManager();
+        this.scenarioManager = new ScenarioManager();
+        this.componentHandler = new ComponentHandler(gameManager, scenarioManager);
+        this.commandHandler = new CommandHandler(this, gameManager, scenarioManager);
+        this.listenerHandler = new ListenerHandler(this, Core.get(), scenarioManager, gameManager, componentHandler);
+        this.listenerHandler.complete();
+        this.componentHandler.setup();
+
         Bukkit.getConsoleSender().sendMessage(ChatUtils.message("&aNightShadePvPUHC " + getDescription().getVersion() + " has been successfully enabled!"));
         Bukkit.getConsoleSender().sendMessage(ChatUtils.message("&eDetected Server&8: &3" + GameManager.get().getServerType()));
-
+        GameState.setState(GameState.WAITING);
     }
 
 
@@ -172,18 +166,6 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
 
     }
 
-    private void registerCommands() {
-        getCommand("pm").setExecutor(new TeamChatCommand());
-        getCommand("pmcoords").setExecutor(new SendCoordsCommand());
-
-    }
-
-    private void registerListeners() {
-        for (Listener listener : ListenerHandler.getListeners()) {
-            Bukkit.getServer().getPluginManager().registerEvents(listener, this);
-        }
-    }
-
 
     private boolean setupMultiverse() {
         Plugin plugin = getServer().getPluginManager().getPlugin("Multiverse-Core");
@@ -211,58 +193,6 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
             this.gameCollection = mongoDatabase.getCollection("uhcGames");
             Core.get().getLogManager().log(Logger.LogType.SERVER, "Successfully connected to Mongo DB!");
         });
-    }
-
-
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (Commands.getCommands() == null) {
-            Commands.setup();
-        }
-
-        for (UHCCommand ci : Commands.getCommands()) {
-            List<String> cmds = new ArrayList<String>();
-            if (ci.getNames() != null) {
-                for (String name : ci.getNames()) {
-                    cmds.add(name); //Add all the possible aliases
-                }
-            }
-
-            for (String n : cmds) {
-                if (cmd.getName().equalsIgnoreCase(n)) {
-                    if (ci.playerOnly()) {
-                        if (!(sender instanceof Player)) {
-                            sender.sendMessage(ChatUtils.message("&cPlayer only!"));
-                            return false;
-                        }
-                    }
-
-                    if (!(sender instanceof Player)) {
-                        try {
-                            ci.onCommand(sender, cmd, label, args);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        return true;
-                    }
-
-                    Player p = (Player) sender;
-                    NSPlayer user = NSPlayer.get(p.getUniqueId());
-                    if (ci.hasRequiredRank()) {
-                        if (!(user.hasRank(ci.getRequiredRank()))) {
-                            p.sendMessage(com.nightshadepvp.core.utils.ChatUtils.message("&cYou require the " + ci.getRequiredRank().getPrefix() + "&crank to do this command!"));
-                            return false;
-                        }
-                    }
-
-                    try {
-                        ci.onCommand(sender, cmd, label, args);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-        return true;
     }
 
     private void hideEnchants() {
@@ -301,9 +231,6 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         return gameCollection;
     }
 
-    public ScenarioManager getScenarioManager() {
-        return scenarioManager;
-    }
 
 
 }

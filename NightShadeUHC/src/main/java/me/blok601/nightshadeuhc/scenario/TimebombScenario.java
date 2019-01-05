@@ -57,7 +57,7 @@ public class TimebombScenario extends Scenario{
             c.getInventory().addItem(is);
         }
         ItemStack apple = new ItemBuilder(Material.GOLDEN_APPLE).name(ChatUtils.format("&6Golden Head")).make();
-        if (ScenarioManager.getScen("Golden Retriever").isEnabled()) c.getInventory().addItem(apple);
+        if (getScenarioManager().getScen("Golden Retriever").isEnabled()) c.getInventory().addItem(apple);
 
         c.getInventory().addItem(apple);
 

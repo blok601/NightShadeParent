@@ -14,6 +14,7 @@ import me.blok601.nightshadeuhc.entity.object.Team;
 import me.blok601.nightshadeuhc.gui.setup.HostGUI;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.manager.TeamManager;
+import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -40,9 +41,11 @@ import org.bukkit.event.player.PlayerMoveEvent;
 public class PlayerListener implements Listener {
 
     GameManager gameManager;
+    ScenarioManager scenarioManager;
 
-    public PlayerListener(GameManager gameManager) {
+    public PlayerListener(GameManager gameManager, ScenarioManager scenarioManager) {
         this.gameManager = gameManager;
+        this.scenarioManager = scenarioManager;
     }
 
     @EventHandler
@@ -181,7 +184,7 @@ public class PlayerListener implements Listener {
                 Core.get().setMatchpost(e.getMessage());
                 p.sendMessage(ChatUtils.message("&eThe matchpost is now: &a" + e.getMessage()));
                 GameManager.get().getSetupStageHashMap().remove(p);
-                new HostGUI(p, gameManager);
+                new HostGUI(p, gameManager, scenarioManager);
                 return;
             } else if (stage == SetupStage.SEED) {
                 if (e.getMessage().toLowerCase().startsWith("cancel")) {
@@ -193,7 +196,7 @@ public class PlayerListener implements Listener {
                 GameManager.get().setSetupSeed(e.getMessage());
                 p.sendMessage(ChatUtils.message("&eThe seed is now&8: &b" + e.getMessage()));
                 GameManager.get().getSetupStageHashMap().remove(p);
-                new HostGUI(p, gameManager);
+                new HostGUI(p, gameManager, scenarioManager);
                 return;
             }
         }

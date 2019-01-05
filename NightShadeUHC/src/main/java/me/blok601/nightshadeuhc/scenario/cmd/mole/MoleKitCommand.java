@@ -15,6 +15,13 @@ import org.bukkit.entity.Player;
  * Created by Blok on 7/6/2018.
  */
 public class MoleKitCommand implements UHCCommand{
+
+    private ScenarioManager scenarioManager;
+
+    public MoleKitCommand(ScenarioManager scenarioManager) {
+        this.scenarioManager = scenarioManager;
+    }
+
     @Override
     public String[] getNames() {
         return new String[]{
@@ -25,7 +32,7 @@ public class MoleKitCommand implements UHCCommand{
     @Override
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
-        if(!ScenarioManager.getScen("Moles").isEnabled()){
+        if(!scenarioManager.getScen("Moles").isEnabled()){
             p.sendMessage(ChatUtils.message("&cMoles isn't enabled!"));
             return;
         }
@@ -41,11 +48,11 @@ public class MoleKitCommand implements UHCCommand{
         }
 
         if(MolesScenario.moles.get(p.getUniqueId())){
-            p.sendMessage(ChatUtils.format(ScenarioManager.getScen("Moles").getPrefix() + "&cYou have already redeemed your mole kit!"));
+            p.sendMessage(ChatUtils.format(scenarioManager.getScen("Moles").getPrefix() + "&cYou have already redeemed your mole kit!"));
             return;
         }
 
-        p.sendMessage(ChatUtils.format(ScenarioManager.getScen("Moles").getPrefix() + "&eOpening mole kits..."));
+        p.sendMessage(ChatUtils.format(scenarioManager.getScen("Moles").getPrefix() + "&eOpening mole kits..."));
         new MoleKitGUI(p);
     }
 

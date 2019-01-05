@@ -14,6 +14,13 @@ import org.bukkit.entity.Player;
  * Created by Blok on 8/3/2018.
  */
 public class AnonymousNameCommand implements UHCCommand {
+
+    private ScenarioManager scenarioManager;
+
+    public AnonymousNameCommand(ScenarioManager scenarioManager) {
+        this.scenarioManager = scenarioManager;
+    }
+
     @Override
     public String[] getNames() {
         return new String[]{
@@ -30,7 +37,7 @@ public class AnonymousNameCommand implements UHCCommand {
             return;
         }
 
-        if(!ScenarioManager.getScen("Anonymous").isEnabled()){
+        if(!scenarioManager.getScen("Anonymous").isEnabled()){
             p.sendMessage(ChatUtils.message("&cAnonymous isn't enabled!"));
             return;
         }

@@ -16,6 +16,12 @@ import org.bukkit.entity.Player;
  */
 public class BackpackCommand implements UHCCommand{
 
+    private ScenarioManager scenarioManager;
+
+    public BackpackCommand(ScenarioManager scenarioManager) {
+        this.scenarioManager = scenarioManager;
+    }
+
     @Override
     public String[] getNames() {
         return new String[]{
@@ -28,7 +34,7 @@ public class BackpackCommand implements UHCCommand{
         Player p = (Player) s;
         NSPlayer user= NSPlayer.get(p.getUniqueId());
 
-        if(!ScenarioManager.getScen("BackPack").isEnabled()){
+        if(!scenarioManager.getScen("BackPack").isEnabled()){
             s.sendMessage(ChatUtils.message("&cBackpacks isn't enabled!"));
             return;
         }

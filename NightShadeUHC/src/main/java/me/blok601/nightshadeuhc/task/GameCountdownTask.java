@@ -7,7 +7,7 @@ import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
 import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.entity.object.PlayerStatus;
 import me.blok601.nightshadeuhc.manager.GameManager;
-import me.blok601.nightshadeuhc.util.ActionBarUtil;
+import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.FreezeUtil;
 import org.bukkit.Bukkit;
@@ -24,9 +24,11 @@ public class GameCountdownTask extends BukkitRunnable {
 
     private int counter = 180;
     private GameManager gameManager;
+    private ScenarioManager scenarioManager;
 
-    public GameCountdownTask(GameManager gameManager) {
+    public GameCountdownTask(GameManager gameManager, ScenarioManager scenarioManager) {
         this.gameManager = gameManager;
+        this.scenarioManager = scenarioManager;
     }
 
     public int getCounter() {
@@ -76,7 +78,7 @@ public class GameCountdownTask extends BukkitRunnable {
             FreezeUtil.start();
             GameState.setState(GameState.STARTING);
 
-            new ScatterTask(validPlayers, gameManager.getWorld(), gameManager.getSetupRadius(), gameManager.getHost(), gameManager.getFinalHealTime(), gameManager.getPvpTime(), gameManager.getBorderTime(), gameManager.isIsTeam(), gameManager.getFirstShrink(), gameManager.getMeetupTime(), gameManager).runTaskTimer(UHC.get(), 0, 4);
+            new ScatterTask(validPlayers, gameManager.getWorld(), gameManager.getSetupRadius(), gameManager.getHost(), gameManager.getFinalHealTime(), gameManager.getPvpTime(), gameManager.getBorderTime(), gameManager.isIsTeam(), gameManager.getFirstShrink(), gameManager.getMeetupTime(), gameManager, scenarioManager).runTaskTimer(UHC.get(), 0, 4);
             counter = -1;
             return;
         }

@@ -17,6 +17,13 @@ import org.bukkit.entity.Player;
  * Created by Blok on 9/24/2017.
  */
 public class TeamsCommand implements UHCCommand{
+
+    private ScenarioManager scenarioManager;
+
+    public TeamsCommand(ScenarioManager scenarioManager) {
+        this.scenarioManager = scenarioManager;
+    }
+
     @Override
     public String[] getNames() {
         return new String[]{
@@ -33,7 +40,7 @@ public class TeamsCommand implements UHCCommand{
             return;
         }
 
-        Scenario scenario = ScenarioManager.getScen("Secret Teams");
+        Scenario scenario = scenarioManager.getScen("Secret Teams");
         if(scenario != null && scenario.isEnabled()){
             p.sendMessage(ChatUtils.format(scenario.getPrefix() + "&cYou can't view the teams in Secret Teams!"));
             return;

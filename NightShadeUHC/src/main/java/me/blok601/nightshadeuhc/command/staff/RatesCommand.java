@@ -1,12 +1,11 @@
 package me.blok601.nightshadeuhc.command.staff;
 
 import com.nightshadepvp.core.Rank;
+import me.blok601.nightshadeuhc.command.UHCCommand;
 import me.blok601.nightshadeuhc.manager.GameManager;
+import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.MathUtil;
-import me.blok601.nightshadeuhc.util.Util;
-import me.blok601.nightshadeuhc.command.UHCCommand;
-import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -21,6 +20,15 @@ import org.bukkit.inventory.ItemStack;
  * Created by Blok on 2/10/2018.
  */
 public class RatesCommand implements UHCCommand, Listener{
+
+    private GameManager gameManager;
+    private ScenarioManager scenarioManager;
+
+    public RatesCommand(GameManager gameManager, ScenarioManager scenarioManager) {
+        this.gameManager = gameManager;
+        this.scenarioManager = scenarioManager;
+    }
+
     @Override
     public String[] getNames() {
         return new String[]{
@@ -28,15 +36,13 @@ public class RatesCommand implements UHCCommand, Listener{
         };
     }
 
-
-
     @Override
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
         if(args.length ==0){
            p.sendMessage(ChatUtils.message("&eApple and Flint Rates&8:"));
-           p.sendMessage(ChatUtils.format("&3Apple Rates&8: &5" + GameManager.get().getAppleRates()));
-            p.sendMessage(ChatUtils.format("&3Flint Rates&8: &5" + GameManager.get().getFlintRates()));
+           p.sendMessage(ChatUtils.format("&3Apple Rates&8: &5" + gameManager.getAppleRates()));
+            p.sendMessage(ChatUtils.format("&3Flint Rates&8: &5" + gameManager.getFlintRates()));
         }
 
         if(args.length != 0 && args.length != 2){
@@ -54,7 +60,7 @@ public class RatesCommand implements UHCCommand, Listener{
                 return;
             }
 
-            GameManager.get().setAppleRates(rate);
+            gameManager.setAppleRates(rate);
             p.sendMessage(ChatUtils.message("&eUpdated apple rates to &6" + rate + "&e."));
         }else if(args[0].equalsIgnoreCase("flint")){
             String arg = args[1];
@@ -66,7 +72,7 @@ public class RatesCommand implements UHCCommand, Listener{
                 return;
             }
 
-            GameManager.get().setFlintRates(rate);
+            gameManager.setFlintRates(rate);
             p.sendMessage(ChatUtils.message("&eUpdated flint rates to &6" + rate + "&e."));
         }else{
             p.sendMessage(ChatUtils.message("&cUsage: /rates <apple/flint> <number>"));
@@ -79,14 +85,14 @@ public class RatesCommand implements UHCCommand, Listener{
     public void onBreak(BlockBreakEvent e){
         if(e.getBlock().getType() == Material.GRAVEL){
 
-            if(ScenarioManager.getScen("CutClean").isEnabled()){
+            if(scenarioManager.getScen("CutClean").isEnabled()){
                 e.getBlock().setType(Material.AIR);
                 e.getBlock().getDrops().clear();
                 e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(), new ItemStack(Material.FLINT));
                 return;
             }
 
-            if(MathUtil.getChance(GameManager.get().getFlintRates())){
+            if(MathUtil.getChance(gameManager.getFlintRates())){
                 e.getBlock().setType(Material.AIR);
                 e.getBlock().getDrops().clear();
                 e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(), new ItemStack(Material.FLINT));
@@ -101,7 +107,7 @@ public class RatesCommand implements UHCCommand, Listener{
     public void decay(LeavesDecayEvent e){
         if(e.getBlock().getType() == Material.LEAVES || e.getBlock().getType() == Material.LEAVES_2){
 
-            if(MathUtil.getChance(GameManager.get().getAppleRates())){
+            if(MathUtil.getChance(gameManager.getAppleRates())){
                 e.getBlock().setType(Material.AIR);
                 e.getBlock().getDrops().clear();
                 e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), new ItemStack(Material.APPLE));

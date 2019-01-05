@@ -20,6 +20,7 @@ public class Scenario implements Listener {
     private String abbreviation;
 
     private ArrayList<String> commands;
+    private ScenarioManager scenarioManager;
 
     public Scenario(String name, String desc, ItemStack item){
         this.name = name;
@@ -85,4 +86,11 @@ public class Scenario implements Listener {
 
     public void onToggle(boolean newState){}
 
+    public ScenarioManager getScenarioManager() {
+        return scenarioManager;
+    }
+
+    public void setScenarioManager(ScenarioManager scenarioManager) {
+        this.scenarioManager = scenarioManager;
+    }
 }

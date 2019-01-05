@@ -23,6 +23,12 @@ import org.bukkit.potion.PotionType;
 
 public class InvClick implements Listener {
 
+    private ScenarioManager scenarioManager;
+
+    public InvClick(ScenarioManager scenarioManager) {
+        this.scenarioManager = scenarioManager;
+    }
+
     @EventHandler
     public void onClick(InventoryClickEvent e) {
         Player p = (Player) e.getWhoClicked();
@@ -103,7 +109,7 @@ public class InvClick implements Listener {
         }
 
         if(e.getInventory().getName().equalsIgnoreCase(ChatColor.DARK_AQUA + "Mole Kit Selector")){
-            Scenario scenario = ScenarioManager.getScen("Moles");
+            Scenario scenario = scenarioManager.getScen("Moles");
             if(scenario == null || !scenario.isEnabled()){
                 p.sendMessage(ChatUtils.message("&cMoles isn't enabled!"));
                 return;
@@ -114,7 +120,7 @@ public class InvClick implements Listener {
             }
             
             if(MolesScenario.moles.get(p.getUniqueId())){
-                p.sendMessage(ChatUtils.format(ScenarioManager.getScen("Moles").getPrefix() + "&cYou have already gotten your mole kit!"));
+                p.sendMessage(ChatUtils.format(scenarioManager.getScen("Moles").getPrefix() + "&cYou have already gotten your mole kit!"));
                 return;
             }
 

@@ -15,6 +15,13 @@ import org.bukkit.entity.Player;
  * Created by Blok on 8/4/2018.
  */
 public class AssaultAndBatteryRoleCommand implements UHCCommand {
+
+    private ScenarioManager scenarioManager;
+
+    public AssaultAndBatteryRoleCommand(ScenarioManager scenarioManager) {
+        this.scenarioManager = scenarioManager;
+    }
+
     @Override
     public String[] getNames() {
         return new String[]{
@@ -31,7 +38,7 @@ public class AssaultAndBatteryRoleCommand implements UHCCommand {
             return;
         }
 
-        if (!ScenarioManager.getScen("Assault and Battery").isEnabled()) {
+        if (!scenarioManager.getScen("Assault and Battery").isEnabled()) {
             p.sendMessage(ChatUtils.message("&cAssault and Battery is not enabled!"));
             return;
         }

@@ -28,6 +28,12 @@ import java.util.UUID;
  */
 public class SpectatorInfoListener implements Listener {
 
+    private ScenarioManager scenarioManager;
+
+    public SpectatorInfoListener(ScenarioManager scenarioManager) {
+        this.scenarioManager = scenarioManager;
+    }
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void onDamage(EntityDamageEvent e) {
         if (!GameState.gameHasStarted()) return;
@@ -42,7 +48,7 @@ public class SpectatorInfoListener implements Listener {
         if (e.getCause() == EntityDamageEvent.DamageCause.FALL) {
             UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).forEach(uhcPlayer -> fancyMessage.text(SpecInfoData.translate(p, p.getHealth(), null, SpecInfoData.DAMAGE_FALL)).send(uhcPlayer.getPlayer()));
         } else if (e.getCause() == EntityDamageEvent.DamageCause.FIRE || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK || e.getCause() == EntityDamageEvent.DamageCause.LAVA || e.getCause() == EntityDamageEvent.DamageCause.MELTING) {
-            if (!ScenarioManager.getScen("Fireless").isEnabled()) {
+            if (!scenarioManager.getScen("Fireless").isEnabled()) {
                 UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).forEach(uhcPlayer -> fancyMessage.text(SpecInfoData.translate(p, p.getHealth(), null, SpecInfoData.DAMAGE_BURN)).send(uhcPlayer.getPlayer()));
             }
         } else if (e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK || e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) {

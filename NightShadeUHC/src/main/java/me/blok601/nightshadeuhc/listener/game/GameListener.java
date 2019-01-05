@@ -38,9 +38,13 @@ import java.util.UUID;
 public class GameListener implements Listener {
 
     private GameManager gameManager;
+    private ScenarioManager scenarioManager;
+    private ComponentHandler componentHandler;
 
-    public GameListener(GameManager gameManager) {
+    public GameListener(GameManager gameManager, ScenarioManager scenarioManager, ComponentHandler componentHandler) {
         this.gameManager = gameManager;
+        this.scenarioManager = scenarioManager;
+        this.componentHandler = componentHandler;
     }
 
     @EventHandler
@@ -73,7 +77,7 @@ public class GameListener implements Listener {
                 }
             }
             cachedGame.setWinners(winners);
-            ScenarioManager.getEnabledScenarios().forEach(scenario -> scenarios.add(scenario.getName()));
+            scenarioManager.getEnabledScenarios().forEach(scenario -> scenarios.add(scenario.getName()));
             cachedGame.setScenarios(scenarios);
 
             for (UUID winner : e.getWinners()) {
@@ -138,14 +142,14 @@ public class GameListener implements Listener {
                 uhcPlayer.msg(ChatUtils.message("&eYou have been scattered out of the nether!"));
             }
         }
-        ComponentHandler.getInstance().getComponent("Nether").setEnabled(false);
+        componentHandler.getComponent("Nether").setEnabled(false);
     }
 
     @EventHandler
     public void onLateStart(PlayerJoinGameLateEvent e){
         Player player = e.getPlayer();
         GameManager.get().getPointChanges().put(player.getUniqueId(), 0D);
-        for (Scenario scenario : ScenarioManager.getEnabledScenarios()) {
+        for (Scenario scenario : scenarioManager.getEnabledScenarios()) {
             if (scenario instanceof StarterItems) {
 
                 StarterItems starterItems = (StarterItems) scenario;

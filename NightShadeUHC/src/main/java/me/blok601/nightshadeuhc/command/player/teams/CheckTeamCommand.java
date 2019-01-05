@@ -16,6 +16,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class CheckTeamCommand implements UHCCommand {
+
+    private ScenarioManager scenarioManager;
+
+    public CheckTeamCommand(ScenarioManager scenarioManager) {
+        this.scenarioManager = scenarioManager;
+    }
+
     @Override
     public String[] getNames() {
         return new String[]{
@@ -47,7 +54,7 @@ public class CheckTeamCommand implements UHCCommand {
             uhcPlayer.msg(ChatUtils.format("&aYour Team&8: &e" + Joiner.on("&7, &e").join(t.getMembers())));
             uhcPlayer.msg(ChatUtils.format("&b&m---------------------------------"));
         } else {
-            Scenario scenario = ScenarioManager.getScen("Secret Teams");
+            Scenario scenario = scenarioManager.getScen("Secret Teams");
             if (scenario != null && scenario.isEnabled()) {
                 uhcPlayer.msg(ChatUtils.format(scenario.getPrefix() + "&cYou can't view other player's teams in Secret Teams!"));
                 return;

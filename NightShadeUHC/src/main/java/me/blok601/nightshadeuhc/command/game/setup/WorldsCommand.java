@@ -1,5 +1,6 @@
 package me.blok601.nightshadeuhc.command.game.setup;
 
+import com.google.common.base.Joiner;
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.command.UHCCommand;
@@ -26,7 +27,7 @@ public class WorldsCommand implements UHCCommand{
         Player p = (Player) s;
         p.sendMessage(ChatUtils.message("&eWorlds List:"));
 
-        Bukkit.getWorlds().stream().filter(world -> world.getName().toLowerCase().contains("uhcworld")).collect(Collectors.toList()).forEach(world -> p.sendMessage(ChatUtils.format("&8 - &e" + world.getName())));
+        p.sendMessage(ChatUtils.message("&eWorlds List: &b" + Joiner.on("&7, &b").join(Bukkit.getWorlds().stream().filter(world -> world.getName().toLowerCase().startsWith("UHC")).collect(Collectors.toList()))));
 
     }
 

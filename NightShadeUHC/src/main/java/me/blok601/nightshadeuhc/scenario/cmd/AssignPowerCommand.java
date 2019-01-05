@@ -19,6 +19,13 @@ import java.util.concurrent.ThreadLocalRandom;
  * Created by Blok on 7/17/2018.
  */
 public class AssignPowerCommand implements UHCCommand{
+
+    private ScenarioManager scenarioManager;
+
+    public AssignPowerCommand(ScenarioManager scenarioManager) {
+        this.scenarioManager = scenarioManager;
+    }
+
     @Override
     public String[] getNames() {
         return new String[]{
@@ -35,7 +42,7 @@ public class AssignPowerCommand implements UHCCommand{
             return;
         }
 
-        if(!ScenarioManager.getScen("Superheroes").isEnabled()){
+        if(!scenarioManager.getScen("Superheroes").isEnabled()){
             p.sendMessage(ChatUtils.message("&cSuperheroes isn't enabled!"));
             return;
         }

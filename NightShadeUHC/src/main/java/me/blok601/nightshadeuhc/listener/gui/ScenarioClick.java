@@ -22,13 +22,18 @@ import java.util.UUID;
  */
 public class ScenarioClick implements Listener  {
 
-    private static ScenarioClick i = new ScenarioClick();
-    public static ScenarioClick get() { return i; }
+//    private static ScenarioClick i = new ScenarioClick();
+//    public static ScenarioClick get() { return i; }
 
+    private ScenarioManager scenarioManager;
 
-    public HashMap<UUID, PagedInventory> users = new HashMap<UUID, PagedInventory>();
+    public ScenarioClick(ScenarioManager scenarioManager) {
+        this.scenarioManager = scenarioManager;
+    }
 
-    public HashMap<UUID, PagedInventory> getUsers() {
+    private static HashMap<UUID, PagedInventory> users = new HashMap<UUID, PagedInventory>();
+
+    public static HashMap<UUID, PagedInventory> getUsers() {
         return users;
     }
 
@@ -76,7 +81,7 @@ public class ScenarioClick implements Listener  {
             ItemStack is = event.getCurrentItem();
             if(event.getInventory().getName().equalsIgnoreCase(ChatColor.GOLD + "Scenarios")) {
                 if (is != null && is.hasItemMeta() && is.getItemMeta().hasDisplayName()) {
-                    Scenario scenario = ScenarioManager.getScen(is);
+                    Scenario scenario = scenarioManager.getScen(is);
 
                     if (scenario == null) return;
 

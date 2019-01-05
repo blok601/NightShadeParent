@@ -34,6 +34,12 @@ import java.util.function.Consumer;
  * Created by Blok on 7/20/2017.
  */
 public class EndGameCommand implements UHCCommand {
+
+    private ScenarioManager scenarioManager;
+    public EndGameCommand(ScenarioManager scenarioManager){
+        this.scenarioManager = scenarioManager;
+    }
+
     @Override
     public String[] getNames() {
         return new String[]{
@@ -61,7 +67,7 @@ public class EndGameCommand implements UHCCommand {
 
             if (args[0].equalsIgnoreCase("moles")) {
                 //The moles won
-                if (!ScenarioManager.getScen("Moles").isEnabled()) {
+                if (!scenarioManager.getScen("Moles").isEnabled()) {
                     p.sendMessage(ChatUtils.message("&cMoles must be enabled to do this!"));
                     return;
                 }

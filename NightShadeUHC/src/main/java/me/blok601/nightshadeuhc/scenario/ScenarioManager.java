@@ -30,11 +30,7 @@ import java.util.stream.Collectors;
  */
 public class ScenarioManager implements UHCCommand, Listener {
 
-    public ScenarioManager() {
-        setup();
-    }
-
-    private static ArrayList<Scenario> scenarios = new ArrayList<>();
+    private ArrayList<Scenario> scenarios = new ArrayList<>();
 
     public void setup(){
         addScen(new AssaultAndBatteryScenario(), "AAB");
@@ -121,28 +117,28 @@ public class ScenarioManager implements UHCCommand, Listener {
         sortScenarios();
     }
 
-    private static void sortScenarios() {
+    private void sortScenarios() {
         scenarios.sort(Comparator.comparing(Scenario::getName));
     }
 
 
 
     private void addScen(Scenario s){
-        scenarios.add(s);
-        Bukkit.getPluginManager().registerEvents(s, UHC.get());
+        addScen(s, null);
     }
 
     private void addScen(Scenario s, String abbreviation){
         scenarios.add(s);
         s.setAbbreviation(abbreviation);
+        s.setScenarioManager(this);
         Bukkit.getPluginManager().registerEvents(s, UHC.get());
     }
 
-    public static Scenario getScen(String name){
+    public Scenario getScen(String name){
         return scenarios.stream().filter(scem -> scem.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
 
-    public void openScenarioGUI(Player player){
+    private void openScenarioGUI(Player player){
 
         ArrayList<ItemStack> items = new ArrayList<>();
 
@@ -155,7 +151,7 @@ public class ScenarioManager implements UHCCommand, Listener {
 
     }
 
-    public static Scenario getScen(ItemStack itemStack){
+    public Scenario getScen(ItemStack itemStack){
         for (Scenario scenario : getScenarios()){
             if(scenario.getItem().equals(itemStack)){
                 return scenario;
@@ -165,11 +161,11 @@ public class ScenarioManager implements UHCCommand, Listener {
     }
 
 
-    public static ArrayList<Scenario> getScenarios() {
+    public ArrayList<Scenario> getScenarios() {
         return scenarios;
     }
 
-    public static Collection<Scenario> getEnabledScenarios() {
+    public Collection<Scenario> getEnabledScenarios() {
         return scenarios.stream().filter(Scenario::isEnabled).collect(Collectors.toList());
     }
 
@@ -190,7 +186,7 @@ public class ScenarioManager implements UHCCommand, Listener {
                 return;
             }else if(args.length == 1){
                 if(args[0].equalsIgnoreCase("clear")){
-                    ScenarioManager.getEnabledScenarios().forEach(scenario -> scenario.setEnabled(false));
+                   getEnabledScenarios().forEach(scenario -> scenario.setEnabled(false));
                     p.sendMessage(ChatUtils.message("&eAll scenarios have been disabled!"));
                     return;
                 }
@@ -205,7 +201,7 @@ public class ScenarioManager implements UHCCommand, Listener {
                     String f = builder.toString().trim();
 
 
-                    Scenario scenario = ScenarioManager.getScen(f);
+                    Scenario scenario = this.getScen(f);
                     if(scenario == null){
                         p.sendMessage(ChatUtils.message("That scenario couldn't be found!"));
                         return;
@@ -223,7 +219,7 @@ public class ScenarioManager implements UHCCommand, Listener {
                     String f = builder.toString().trim();
 
 
-                    Scenario scenario = ScenarioManager.getScen(f);
+                    Scenario scenario = this.getScen(f);
                     if(scenario == null){
                         p.sendMessage(ChatUtils.message("That scenario couldn't be found!"));
                         return;

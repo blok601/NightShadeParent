@@ -17,9 +17,11 @@ import org.bukkit.entity.Player;
 public class DoubleDatesCommand implements UHCCommand {
 
     private GameManager gameManager;
+    private ScenarioManager scenarioManager;
 
-    public DoubleDatesCommand(GameManager gameManager) {
+    public DoubleDatesCommand(GameManager gameManager, ScenarioManager scenarioManager) {
         this.gameManager = gameManager;
+        this.scenarioManager = scenarioManager;
     }
 
     @Override
@@ -33,7 +35,7 @@ public class DoubleDatesCommand implements UHCCommand {
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
 
-        if (!ScenarioManager.getScen("Double Dates").isEnabled()) {
+        if (!scenarioManager.getScen("Double Dates").isEnabled()) {
             p.sendMessage(ChatUtils.message("&cDouble Dates is not enabled!"));
             return;
         }

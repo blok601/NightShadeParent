@@ -17,6 +17,13 @@ import java.util.Collection;
  * Created by Blok on 3/7/2018.
  */
 public class ScenariosCommand implements UHCCommand{
+
+    private ScenarioManager scenarioManager;
+
+    public ScenariosCommand(ScenarioManager scenarioManager) {
+        this.scenarioManager = scenarioManager;
+    }
+
     @Override
     public String[] getNames() {
         return new String[]{
@@ -27,7 +34,7 @@ public class ScenariosCommand implements UHCCommand{
     @Override
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
-        Collection<Scenario> scenarios = ScenarioManager.getEnabledScenarios();
+        Collection<Scenario> scenarios = scenarioManager.getEnabledScenarios();
         FancyMessage fancyMessage = new FancyMessage(ChatUtils.format("&eEnabled Scenarios&8» "));
         for (Scenario scenario : scenarios){
             //builder.append("&3").append(scenario.getName()).append("&8,");

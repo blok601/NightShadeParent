@@ -49,7 +49,7 @@ public class VeinminerScenario extends Scenario{
             }
 
             if(blocks.size() == 0) return;
-            if(ScenarioManager.getScen("CutClean").isEnabled()){
+            if(getScenarioManager().getScen("CutClean").isEnabled()){
                 p.getInventory().addItem(new ItemStack(Material.IRON_INGOT, blocks.size()));
             }else{
                 p.getInventory().addItem(new ItemStack(Material.IRON_ORE, blocks.size()));
@@ -66,7 +66,7 @@ public class VeinminerScenario extends Scenario{
 
             if(blocks.size() == 0) return;
 
-            if(ScenarioManager.getScen("CutClean").isEnabled()){
+            if(getScenarioManager().getScen("CutClean").isEnabled()){
                 p.getInventory().addItem(new ItemStack(Material.GOLD_INGOT, blocks.size()));
             }else{
                 p.getInventory().addItem(new ItemStack(Material.GOLD_ORE, blocks.size()));

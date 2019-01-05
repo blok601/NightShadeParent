@@ -17,7 +17,7 @@ import org.bukkit.inventory.ItemStack;
  */
 public class SettingsGUI {
 
-    public SettingsGUI(String name, int rows, Player player) {
+    public SettingsGUI(String name, int rows, Player player, ScenarioManager scenarioManager) {
         GuiBuilder guiBuilder = new GuiBuilder();
         guiBuilder.name(name);
         guiBuilder.rows(rows);
@@ -62,7 +62,7 @@ public class SettingsGUI {
         isTeam.lore(GameManager.get().isIsTeam() ? ChatUtils.format("&aYes") : ChatUtils.format("&cNo"));
 
         ItemBuilder scenarios = new ItemBuilder(Material.WATCH).name(ChatUtils.format("&eScenarios"));
-        for (Scenario scenario : ScenarioManager.getEnabledScenarios()){
+        for (Scenario scenario : scenarioManager.getEnabledScenarios()){
             scenarios.lore(ChatUtils.format("&6" + scenario.getName()));
         }
 

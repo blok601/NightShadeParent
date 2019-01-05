@@ -14,6 +14,13 @@ import org.bukkit.entity.Player;
  * Created by Blok on 7/17/2018.
  */
 public class PowerCommand implements UHCCommand{
+
+    private ScenarioManager scenarioManager;
+
+    public PowerCommand(ScenarioManager scenarioManager) {
+        this.scenarioManager = scenarioManager;
+    }
+
     @Override
     public String[] getNames() {
         return new String[]{
@@ -24,7 +31,7 @@ public class PowerCommand implements UHCCommand{
     @Override
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
-        if(!ScenarioManager.getScen("Superheroes").isEnabled()){
+        if(!scenarioManager.getScen("Superheroes").isEnabled()){
             p.sendMessage(ChatUtils.message("&cSuperheroes isn't enabled!"));
             return;
         }

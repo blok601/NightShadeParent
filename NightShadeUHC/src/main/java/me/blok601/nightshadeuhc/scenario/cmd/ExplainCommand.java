@@ -13,6 +13,13 @@ import org.bukkit.entity.Player;
  * Created by Blok on 2/10/2018.
  */
 public class ExplainCommand implements UHCCommand{
+
+    private ScenarioManager scenarioManager;
+
+    public ExplainCommand(ScenarioManager scenarioManager) {
+        this.scenarioManager = scenarioManager;
+    }
+
     @Override
     public String[] getNames() {
         return new String[]{
@@ -34,7 +41,7 @@ public class ExplainCommand implements UHCCommand{
         }
 
         String scen = builder.toString().trim();
-        Scenario scenario = ScenarioManager.getScen(scen);
+        Scenario scenario = scenarioManager.getScen(scen);
         if(scenario == null){
             p.sendMessage(ChatUtils.message("&cThat scenario couldn't be found!"));
             return;

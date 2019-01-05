@@ -17,6 +17,15 @@ import org.bukkit.entity.Player;
  * Created by Blok on 9/28/2018.
  */
 public class TeamInventoryCommand implements UHCCommand {
+
+    private ScenarioManager scenarioManager;
+    private String prefix;
+
+    public TeamInventoryCommand(ScenarioManager scenarioManager) {
+        this.scenarioManager = scenarioManager;
+        prefix = scenarioManager.getScen("Team Inventory").getPrefix();
+    }
+
     @Override
     public String[] getNames() {
         return new String[]{
@@ -32,7 +41,7 @@ public class TeamInventoryCommand implements UHCCommand {
             return;
         }
 
-        if(!ScenarioManager.getScen("Team Inventory").isEnabled()){
+        if(!scenarioManager.getScen("Team Inventory").isEnabled()){
             p.sendMessage(ChatUtils.message("&cTeam Inventory isn't enabled!"));
             return;
         }
@@ -43,24 +52,24 @@ public class TeamInventoryCommand implements UHCCommand {
             if(TeamInventoryScenario.soloInventories.containsKey(p.getUniqueId())){
                 // They already got an inventory in there
                 p.openInventory(TeamInventoryScenario.soloInventories.get(p.getUniqueId()));
-                p.sendMessage(ChatUtils.format(ScenarioManager.getScen("Team Inventory").getPrefix() + "&eOpening your team inventory..."));
+                p.sendMessage(ChatUtils.format(prefix + "&eOpening your team inventory..."));
                 return;
             }
 
             //Create and open
             TeamInventoryScenario.soloInventories.put(p.getUniqueId(), Bukkit.createInventory(null, 27, "Team Inventory"));
             p.openInventory(TeamInventoryScenario.soloInventories.get(p.getUniqueId()));
-            p.sendMessage(ChatUtils.format(ScenarioManager.getScen("Team Inventory").getPrefix() + "&eOpening your team inventory..."));
+            p.sendMessage(ChatUtils.format(prefix + "&eOpening your team inventory..."));
         }else{
             //Team
             if(TeamInventoryScenario.teamInventories.containsKey(team)){
                 //Have a inventory
                 p.openInventory(TeamInventoryScenario.teamInventories.get(team));
-                p.sendMessage(ChatUtils.format(ScenarioManager.getScen("Team Inventory").getPrefix() + "&eOpening your team inventory..."));
+                p.sendMessage(ChatUtils.format(prefix + "&eOpening your team inventory..."));
             }else{
                 TeamInventoryScenario.teamInventories.put(team, Bukkit.createInventory(null, 27, "Team Inventory"));
                 p.openInventory(TeamInventoryScenario.teamInventories.get(team));
-                p.sendMessage(ChatUtils.format(ScenarioManager.getScen("Team Inventory").getPrefix() + "&eOpening your team inventory..."));
+                p.sendMessage(ChatUtils.format(prefix + "&eOpening your team inventory..."));
             }
         }
 

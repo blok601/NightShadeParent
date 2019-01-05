@@ -12,13 +12,13 @@ import org.bukkit.entity.Player;
  */
 public class ComponentGUI {
 
-    public ComponentGUI(Player player){
+    public ComponentGUI(Player player, ComponentHandler componentHandler){
         GuiBuilder builder = new GuiBuilder();
         builder.name("&eToggleable Options");
         builder.rows(3);
 
         int slot = 0;
-        for (Component component : ComponentHandler.getInstance().getComponents()){
+        for (Component component : componentHandler.getComponents()){
             ItemBuilder itemBuilder = new ItemBuilder(component.getMaterial());
             itemBuilder.name("&e" + component.getName());
             itemBuilder.lore(component.isEnabled() ? "&aEnabled" : "&cDisabled");

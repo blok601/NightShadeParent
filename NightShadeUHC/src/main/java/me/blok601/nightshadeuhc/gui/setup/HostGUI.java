@@ -19,7 +19,7 @@ import org.bukkit.inventory.ItemStack;
  */
 public class HostGUI {
 
-    public HostGUI(Player player, GameManager gameManager) {
+    public HostGUI(Player player, GameManager gameManager, ScenarioManager scenarioManager) {
         Inventory inventory = Bukkit.createInventory(null, 54, ChatUtils.format("&5UHC Game Setup"));
 
         ItemBuilder post = new ItemBuilder(new ItemStack(Material.WOOL, 1, DyeColor.ORANGE.getWoolData()))
@@ -72,7 +72,7 @@ public class HostGUI {
 
         ItemBuilder scenarios = new ItemBuilder(Material.WATCH)
                 .name("&5&lScenarios");
-        for (Scenario scenario : ScenarioManager.getEnabledScenarios()) {
+        for (Scenario scenario : scenarioManager.getEnabledScenarios()) {
             scenarios.lore("&6" + scenario.getName());
         }
 

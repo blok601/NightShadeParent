@@ -1,7 +1,6 @@
 package me.blok601.nightshadeuhc.listener.gui;
 
 import com.google.common.base.Joiner;
-import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.nightshadepvp.core.fanciful.FancyMessage;
 import com.onarandombox.MultiverseCore.api.MVWorldManager;
@@ -46,11 +45,15 @@ public class GameSetupInventoryClick implements Listener {
 
     private GameManager gameManager;
     private UHC uhc;
+    private ScenarioManager scenarioManager;
+    private ComponentHandler componentHandler;
 
 
-    public GameSetupInventoryClick(GameManager gameManager, UHC uhc) {
+    public GameSetupInventoryClick(GameManager gameManager, UHC uhc, ScenarioManager scenarioManager, ComponentHandler componentHandler) {
         this.gameManager = gameManager;
         this.uhc = uhc;
+        this.scenarioManager = scenarioManager;
+        this.componentHandler = componentHandler;
     }
 
     @SuppressWarnings("Duplicates")
@@ -80,7 +83,7 @@ public class GameSetupInventoryClick implements Listener {
 
         if (inventory.getName().equalsIgnoreCase(ChatColor.YELLOW + "Toggleable Options")) {
             e.setCancelled(true);
-            ComponentHandler.getInstance().handleClick(e.getCurrentItem(), e, e.getSlot());
+            componentHandler.handleClick(e.getCurrentItem(), e, e.getSlot());
         }
 
         if (inventory.getName().equalsIgnoreCase(ChatColor.DARK_PURPLE + "UHC Game Setup")) {
@@ -105,14 +108,14 @@ public class GameSetupInventoryClick implements Listener {
                 p.sendMessage(ChatUtils.message("&eOpening the border configuration..."));
                 new BorderConfigGUI(p);
             } else if (slot == 6) {
-                new ComponentGUI(p);
+                new ComponentGUI(p, componentHandler);
             } else if (slot == 8) {
                 new TimerGUI(p);
             } else if (slot == 13) {
                 p.closeInventory();
                 p.sendMessage(ChatUtils.message("&eThe game will start in 3 minutes..."));
                 p.sendMessage(ChatUtils.message("&eDo /cancelgame at any time within those 3 minutes to cancel the start timer!"));
-                GameCountdownTask gameCountdownTask = new GameCountdownTask(gameManager);
+                GameCountdownTask gameCountdownTask = new GameCountdownTask(gameManager, scenarioManager);
                 gameCountdownTask.runTaskTimer(uhc, 0, Util.TICKS);
                 gameManager.setGameCountdownTask(gameCountdownTask);
                 GameState.setState(GameState.PRE_SCATTER);
@@ -191,7 +194,7 @@ public class GameSetupInventoryClick implements Listener {
             } else if (slot == 30) {
                 ArrayList<ItemStack> items = new ArrayList<>();
 
-                for (Scenario scenario : ScenarioManager.getScenarios()) {
+                for (Scenario scenario : scenarioManager.getScenarios()) {
                     ItemStack i = new ItemBuilder(scenario.getItem()).name(scenario.isEnabled() ? ChatUtils.format("&a" + scenario.getName()) : ChatUtils.format("&c" + scenario.getName())).make();
                     items.add(i);
                 }
@@ -317,7 +320,7 @@ public class GameSetupInventoryClick implements Listener {
             e.setCancelled(true);
             if (slot == 26) {
                 //back
-                new HostGUI(p, gameManager);
+                new HostGUI(p, gameManager, scenarioManager);
                 return;
             } else if (slot == 12) {
                 //Over world shit
@@ -635,7 +638,7 @@ public class GameSetupInventoryClick implements Listener {
 
 
             if (slot == 26) {
-                new HostGUI(p, gameManager);
+                new HostGUI(p, gameManager, scenarioManager);
                 return;
             }
 
@@ -794,7 +797,7 @@ public class GameSetupInventoryClick implements Listener {
                 inventory.setItem(e.getSlot(), builder.make());
                 p.updateInventory();
             } else if (slot == 8) { //back
-                new HostGUI(p, gameManager);
+                new HostGUI(p, gameManager, scenarioManager);
                 return;
             } else {
                 return;

@@ -43,7 +43,7 @@ public class PagedInventory {
 
         //open page 0 for the specified player
         p.openInventory(pages.get(currpage));
-        ScenarioClick.get().getUsers().put(p.getUniqueId(), this);
+        ScenarioClick.getUsers().put(p.getUniqueId(), this);
     }
 
 

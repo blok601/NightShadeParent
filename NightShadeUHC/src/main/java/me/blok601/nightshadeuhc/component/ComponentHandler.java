@@ -3,6 +3,7 @@ package me.blok601.nightshadeuhc.component;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.gui.setup.HostGUI;
 import me.blok601.nightshadeuhc.manager.GameManager;
+import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -17,15 +18,12 @@ import java.util.Comparator;
  */
 public class ComponentHandler {
 
-    private static ComponentHandler ourInstance = new ComponentHandler();
+    private GameManager gameManager;
+    private ScenarioManager scenarioManager;
 
-    public static ComponentHandler getInstance() {
-        return ourInstance;
-    }
-
-    public GameManager gameManager;
-
-    private ComponentHandler() {
+    public ComponentHandler(GameManager gameManager, ScenarioManager scenarioManager) {
+        this.gameManager = gameManager;
+        this.scenarioManager = scenarioManager;
     }
 
     private ArrayList<Component> components;
@@ -76,7 +74,7 @@ public class ComponentHandler {
     public boolean handleClick(ItemStack stack, InventoryClickEvent e, int slot){
 
         if (slot == 26) { //main menu slot
-            new HostGUI((Player) e.getWhoClicked(), gameManager);
+            new HostGUI((Player) e.getWhoClicked(), gameManager, scenarioManager);
         }
 
         if (getComponent(stack.getType()) != null) {

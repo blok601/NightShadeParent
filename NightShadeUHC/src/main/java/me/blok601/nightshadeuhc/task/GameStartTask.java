@@ -45,8 +45,9 @@ public class GameStartTask extends BukkitRunnable {
     private int counter;
     private int meetupTime;
     private GameManager gameManager;
+    private ScenarioManager scenarioManager;
 
-    public GameStartTask(Player p, int finalHealTime, int pvpTime, int borderTime, World world, int firstShrink, int meetupTime, GameManager gameManager) {
+    public GameStartTask(Player p, int finalHealTime, int pvpTime, int borderTime, World world, int firstShrink, int meetupTime, GameManager gameManager, ScenarioManager scenarioManager) {
         this.finalHealTime = finalHealTime;
         this.pvpTime = pvpTime;
         this.world = world;
@@ -55,8 +56,9 @@ public class GameStartTask extends BukkitRunnable {
         this.meetupTime = meetupTime;
         this.counter = 120;
         this.gameManager = gameManager;
+        this.scenarioManager = scenarioManager;
         TeamManager.getInstance().setTeamManagement(false);
-        Scenario scenario = ScenarioManager.getScen("Secret Teams");
+        Scenario scenario = scenarioManager.getScen("Secret Teams");
         if (scenario != null && !scenario.isEnabled()) {
             if (gameManager.isIsTeam()) {
                 if (gameManager.getHost() == null) {
@@ -113,10 +115,10 @@ public class GameStartTask extends BukkitRunnable {
                     Bukkit.getOnlinePlayers().forEach(p -> {
                         p.sendMessage(ChatUtils.format("&f&m-----------------------------------"));
                         p.sendMessage(ChatUtils.format("&fHost: &5" + gameManager.getHost().getName()));
-                        if (ScenarioManager.getEnabledScenarios().size() == 0) {
+                        if (scenarioManager.getEnabledScenarios().size() == 0) {
                             p.sendMessage(ChatUtils.format("&fScenarios: &5None"));
                         } else {
-                            p.sendMessage(ChatUtils.format("&fScenarios: &5" + Joiner.on("&7, &5").join(ScenarioManager.getEnabledScenarios().stream().map(Scenario::getName).collect(Collectors.toList()))));
+                            p.sendMessage(ChatUtils.format("&fScenarios: &5" + Joiner.on("&7, &5").join(scenarioManager.getEnabledScenarios().stream().map(Scenario::getName).collect(Collectors.toList()))));
                         }
 
                         p.sendMessage(" ");

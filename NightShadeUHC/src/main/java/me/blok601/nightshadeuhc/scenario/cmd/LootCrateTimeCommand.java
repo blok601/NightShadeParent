@@ -12,6 +12,13 @@ import org.bukkit.command.CommandSender;
  * Created by Blok on 6/29/2017.
  */
 public class LootCrateTimeCommand implements UHCCommand{
+
+    private ScenarioManager scenarioManager;
+
+    public LootCrateTimeCommand(ScenarioManager scenarioManager) {
+        this.scenarioManager = scenarioManager;
+    }
+
     @Override
     public String[] getNames() {
         return new String[]{
@@ -21,7 +28,7 @@ public class LootCrateTimeCommand implements UHCCommand{
 
     @Override
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
-            if(!ScenarioManager.getScen("LootCrates").isEnabled()){
+            if(!scenarioManager.getScen("LootCrates").isEnabled()){
                 s.sendMessage(ChatUtils.message("&cLootCrates isn't enabled!"));
                 return;
             }

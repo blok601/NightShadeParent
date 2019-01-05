@@ -38,9 +38,11 @@ import org.bukkit.scoreboard.Team;
 public class JoinListener implements Listener {
 
     private GameManager gameManager;
+    private ScenarioManager scenarioManager;
 
-    public JoinListener(GameManager gameManager) {
+    public JoinListener(GameManager gameManager, ScenarioManager scenarioManager) {
         this.gameManager = gameManager;
+        this.scenarioManager = scenarioManager;
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -55,7 +57,7 @@ public class JoinListener implements Listener {
         scoreboardManager.addToPlayerCache(player);
 
         Scoreboard scoreboard = scoreboardManager.getPlayerScoreboard(player).getBukkitScoreboard();
-        Scenario scen = ScenarioManager.getScen("Secret Teams");
+        Scenario scen = scenarioManager.getScen("Secret Teams");
         if(scen != null && !scen.isEnabled()){
             for (CachedColor cachedColor : gameManager.getColors()) {
                 if (scoreboard.getTeam(cachedColor.getId()) != null) continue;
@@ -148,7 +150,7 @@ public class JoinListener implements Listener {
                 gamePlayer.setPlayerStatus(PlayerStatus.LOBBY);
             }
             StringBuilder builder = new StringBuilder();
-            ScenarioManager.getEnabledScenarios().forEach(scenario -> builder.append(scenario.getName()).append(", "));
+            scenarioManager.getEnabledScenarios().forEach(scenario -> builder.append(scenario.getName()).append(", "));
             String scenarios = builder.toString().trim();
             player.sendMessage(ChatUtils.format("&5&m-----------------------------------"));
             player.sendMessage(ChatUtils.format("&e&lHost: &3" + gameManager.getHost().getName()));
