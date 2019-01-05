@@ -101,7 +101,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         ess = (Essentials) Bukkit.getServer().getPluginManager().getPlugin("Essentials");
 
         setupExtraDatabase();
-        setupTasks();
+
 
         getConfig().options().copyDefaults(true);
         saveConfig();
@@ -119,6 +119,8 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         this.commandHandler = new CommandHandler(this, GameManager.get(), scenarioManager);
         this.listenerHandler = new ListenerHandler(this, Core.get(), scenarioManager, GameManager.get(), componentHandler);
         this.listenerHandler.complete();
+
+        setupTasks();
 
 
         Bukkit.getConsoleSender().sendMessage(ChatUtils.message("&aNightShadePvPUHC " + getDescription().getVersion() + " has been successfully enabled!"));
