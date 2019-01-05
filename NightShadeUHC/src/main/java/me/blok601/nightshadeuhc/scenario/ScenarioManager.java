@@ -31,14 +31,12 @@ import java.util.stream.Collectors;
 public class ScenarioManager implements UHCCommand, Listener {
 
     private UHC uhc;
-    private ArrayList<Scenario> scenarios;
+    private final ArrayList<Scenario> scenarios = new ArrayList<>();
 
     public ScenarioManager(UHC uhc) {
         this.uhc = uhc;
-        scenarios = new ArrayList<>();
+
     }
-
-
 
     public void setup(){
         addScen(new AssaultAndBatteryScenario(), "AAB");
