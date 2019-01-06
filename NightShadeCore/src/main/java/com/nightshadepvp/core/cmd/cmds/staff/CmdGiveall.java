@@ -26,7 +26,7 @@ public class CmdGiveall extends NightShadeCoreCommand {
     public CmdGiveall() {
         this.addAliases("giveall");
         this.setDesc("Gives everyone the item in your hand, with the amount specified");
-        this.addRequirements(ReqRankHasAtLeast.get(Rank.TRIALHOST));
+        this.addRequirements(ReqRankHasAtLeast.get(Rank.TRIAL));
         this.addRequirements(RequirementIsPlayer.get());
     }
 

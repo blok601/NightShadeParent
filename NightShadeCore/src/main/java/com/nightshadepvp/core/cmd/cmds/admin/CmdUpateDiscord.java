@@ -26,7 +26,7 @@ public class CmdUpateDiscord extends NightShadeCoreCommand {
 
     public CmdUpateDiscord() {
         this.addAliases("updatediscord");
-        this.addRequirements(ReqRankHasAtLeast.get(Rank.HEADADMIN));
+        this.addRequirements(ReqRankHasAtLeast.get(Rank.MANAGER));
         this.addParameter(TypeString.get(), "player/ALL");
     }
 

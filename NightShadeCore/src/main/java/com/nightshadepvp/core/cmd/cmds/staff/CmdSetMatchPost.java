@@ -22,7 +22,7 @@ public class CmdSetMatchPost extends NightShadeCoreCommand {
 
     public CmdSetMatchPost() {
         this.addAliases("setmatchpost", "setpost");
-        this.addRequirements(ReqRankHasAtLeast.get(Rank.TRIALHOST));
+        this.addRequirements(ReqRankHasAtLeast.get(Rank.TRIAL));
         this.addParameter(TypeString.get());
     }
 

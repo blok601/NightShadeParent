@@ -29,7 +29,7 @@ public class CmdStartVote extends NightShadeCoreCommand {
 
     public CmdStartVote() {
         this.addAliases("startvote");
-        this.addRequirements(ReqRankHasAtLeast.get(Rank.HOST));
+        this.addRequirements(ReqRankHasAtLeast.get(Rank.TRIAL));
         this.addParameter(TypeString.get(), "Vote Message", true);
     }
 
