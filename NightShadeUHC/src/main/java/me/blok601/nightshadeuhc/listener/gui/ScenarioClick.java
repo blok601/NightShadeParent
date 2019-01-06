@@ -31,7 +31,7 @@ public class ScenarioClick implements Listener  {
         this.scenarioManager = scenarioManager;
     }
 
-    private static HashMap<UUID, PagedInventory> users = new HashMap<UUID, PagedInventory>();
+    private static HashMap<UUID, PagedInventory> users = new HashMap<>();
 
     public static HashMap<UUID, PagedInventory> getUsers() {
         return users;

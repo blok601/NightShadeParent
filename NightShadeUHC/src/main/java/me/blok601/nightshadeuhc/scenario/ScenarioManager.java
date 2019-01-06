@@ -1,5 +1,6 @@
 package me.blok601.nightshadeuhc.scenario;
 
+import com.google.common.base.Joiner;
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.command.UHCCommand;
@@ -23,6 +24,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.stream.Collectors;
 
 /**
@@ -35,7 +37,6 @@ public class ScenarioManager implements UHCCommand, Listener {
 
     public ScenarioManager(UHC uhc) {
         this.uhc = uhc;
-
     }
 
     public void setup(){
@@ -130,13 +131,13 @@ public class ScenarioManager implements UHCCommand, Listener {
 
 
     private void addScen(Scenario s){
-        scenarios.add(s);
+        this.scenarios.add(s);
         s.setScenarioManager(this);
         Bukkit.getPluginManager().registerEvents(s, uhc);
     }
 
     private void addScen(Scenario s, String abbreviation){
-        scenarios.add(s);
+        this.scenarios.add(s);
         if(s.getAbbreviation() != null)
         s.setAbbreviation(abbreviation);
         s.setScenarioManager(this);
@@ -148,10 +149,10 @@ public class ScenarioManager implements UHCCommand, Listener {
     }
 
     private void openScenarioGUI(Player player){
-
+        System.out.println("Current Scens: " + this.scenarios.size());
         ArrayList<ItemStack> items = new ArrayList<>();
 
-        for(Scenario scenario :  getScenarios()){
+        for(Scenario scenario :  this.scenarios){
            ItemStack item = new ItemBuilder(scenario.getItem()).name(scenario.isEnabled() ? ChatUtils.format("&a" + scenario.getName()) : ChatUtils.format("&c" + scenario.getName())).make();
             items.add(item);
         }
@@ -197,7 +198,12 @@ public class ScenarioManager implements UHCCommand, Listener {
                 if(args[0].equalsIgnoreCase("clear")){
                    getEnabledScenarios().forEach(scenario -> scenario.setEnabled(false));
                     p.sendMessage(ChatUtils.message("&eAll scenarios have been disabled!"));
-                    return;
+                }else if(args[0].equalsIgnoreCase("list")){
+                    HashSet<String> names = this.scenarios.stream().map(Scenario::getName).collect(Collectors.toCollection(HashSet::new));
+                    p.sendMessage(ChatUtils.message("&eScenarios: &b" + Joiner.on("&7, &b").join(names)));
+                }else{
+                    p.sendMessage(ChatUtils.message("&cUsage: /scen"));
+                    p.sendMessage(ChatUtils.message("&cUsage: /scen <enable/disable> <scenario>"));
                 }
             }else {
                 if(args[0].equalsIgnoreCase("enable")){
