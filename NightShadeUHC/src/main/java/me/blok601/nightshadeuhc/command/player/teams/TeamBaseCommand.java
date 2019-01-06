@@ -147,14 +147,14 @@ public class TeamBaseCommand implements UHCCommand{
                         return;
                     }
                 }else if(args[0].equalsIgnoreCase("reset")){
-                    if(user.hasRank(Rank.HOST)){
+                    if(user.hasRank(Rank.TRIAL)){
                         TeamManager.getInstance().resetTeams();
                         p.sendMessage(ChatUtils.message("&eTeams have been reset!"));
                     }else{
                         p.sendMessage(ChatUtils.message("&cYou require the HOST rank to do this command!"));
                     }
                 }else if(args[0].equalsIgnoreCase("color")){
-                    if(user.hasRank(Rank.TRIALHOST)){
+                    if(user.hasRank(Rank.TRIAL)){
 
 
                         ScoreboardManager scoreboardManager = UHC.get().getScoreboardManager();
@@ -355,7 +355,7 @@ public class TeamBaseCommand implements UHCCommand{
                     }
 
                 }else if(args[0].equalsIgnoreCase("man")){
-                    if(user.hasRank(Rank.HOST)){
+                    if(user.hasRank(Rank.TRIAL)){
                         if(args[1].equalsIgnoreCase("on")){
                             if(TeamManager.getInstance().isTeamManagement()){
                                 p.sendMessage(ChatUtils.message("&cTeam Management is already enabled!"));
@@ -381,7 +381,7 @@ public class TeamBaseCommand implements UHCCommand{
                         return;
                     }
                 }else if(args[0].equalsIgnoreCase("limit")){
-                    if(user.hasRank(Rank.HOST)){
+                    if(user.hasRank(Rank.TRIAL)){
                         if(MathUtil.isInt(args[1])){
                             TeamManager.getInstance().setTeamSize(Integer.parseInt(args[1]));
                             p.sendMessage(ChatUtils.message("&eSet the team size to " + args[1]));

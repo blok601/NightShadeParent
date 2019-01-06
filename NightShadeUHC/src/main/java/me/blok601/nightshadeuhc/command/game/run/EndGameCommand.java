@@ -259,7 +259,7 @@ public class EndGameCommand implements UHCCommand {
 
     @Override
     public Rank getRequiredRank() {
-        return Rank.HOST;
+        return Rank.TRIAL;
     }
 
     @Override

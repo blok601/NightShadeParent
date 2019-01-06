@@ -31,7 +31,7 @@ public class LoadPresetCommand implements UHCCommand{
 
     @Override
     public Rank getRequiredRank() {
-        return Rank.HOST;
+        return Rank.ADMIN;
     }
 
     @Override

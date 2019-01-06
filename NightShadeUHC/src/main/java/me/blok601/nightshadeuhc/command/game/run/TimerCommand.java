@@ -55,7 +55,7 @@ public class TimerCommand implements UHCCommand{
 
     @Override
     public Rank getRequiredRank() {
-        return Rank.HOST;
+        return Rank.STAFF;
     }
 
     @Override

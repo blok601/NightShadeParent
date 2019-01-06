@@ -264,7 +264,7 @@ public class ScenarioManager implements UHCCommand, Listener {
 
     @Override
     public Rank getRequiredRank() {
-        return Rank.HOST;
+        return Rank.TRIAL;
     }
 
     @Override
