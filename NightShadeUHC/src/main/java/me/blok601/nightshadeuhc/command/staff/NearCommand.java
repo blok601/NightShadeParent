@@ -8,6 +8,7 @@ import me.blok601.nightshadeuhc.command.UHCCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.object.PlayerStatus;
 import me.blok601.nightshadeuhc.util.ChatUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
@@ -55,15 +56,34 @@ public class NearCommand implements UHCCommand {
                 }
             }
 
+            if (players.size() == 0) {
+                p.sendMessage(ChatUtils.message("&cThere are no nearby players!"));
+                return;
+            }
             //Got our players
             HashMap<Player, Integer> distances = new HashMap<>();
             players.forEach(player -> distances.put(player, (int) p.getLocation().distance(player.getLocation())));
 
+
+            p.sendMessage(ChatUtils.message("&eNearby Players:"));
+            p.sendMessage(ChatUtils.format("&f&m-----------------------------------"));
+            p.sendMessage(ChatUtils.format(""));
             FancyMessage fancyMessage;
             for (Map.Entry<Player, Integer> entry : distances.entrySet()) {
-                fancyMessage = new FancyMessage("- ").then(entry.getKey().getName() + "&8(&b" + entry.getValue() + "m&8)").command("/tp " + entry.getKey().getName());
+                fancyMessage = new FancyMessage("- ")
+                        .color(ChatColor.WHITE)
+                        .then(entry.getKey().getName() + " ")
+                        .color(ChatColor.AQUA)
+                        .command("/tp " + entry.getKey().getName())
+                        .then("(").color(ChatColor.DARK_GRAY)
+                        .then(entry.getValue() + "m")
+                        .color(ChatColor.AQUA)
+                        .then(")")
+                        .color(ChatColor.DARK_GRAY)
+                        .command("/tp " + entry.getKey().getName());
                 fancyMessage.send(p);
             }
+            p.sendMessage(ChatUtils.format("&f&m-----------------------------------"));
 
             cooldown.add(p.getUniqueId());
             new BukkitRunnable(){
