@@ -51,11 +51,6 @@ public class CmdMigrateRanks extends NightShadeCoreCommand {
             public void run() {
                 Predicate<NSPlayer> where = nsPlayer1 -> nsPlayer1.hasRank(Rank.TRIAL);
                 for (NSPlayer target : NSPlayerColl.get().getAll(where)) {
-                    if (possible.get(Rank.TRIAL).contains(target.getRank())) {
-                        target.setRank(Rank.TRIAL);
-                        continue;
-                    }
-
                     for (Map.Entry<Rank, HashSet<Rank>> entry : possible.entrySet()) {
                         if (entry.getValue().contains(target.getRank())) {
                             target.setRank(entry.getKey());
