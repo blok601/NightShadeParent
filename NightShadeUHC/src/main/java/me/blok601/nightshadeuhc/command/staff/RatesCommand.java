@@ -7,6 +7,7 @@ import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.MathUtil;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -83,6 +84,9 @@ public class RatesCommand implements UHCCommand, Listener{
 
     @EventHandler
     public void onBreak(BlockBreakEvent e){
+
+        Block block = e.getBlock();
+
         if(e.getBlock().getType() == Material.GRAVEL){
 
             if(scenarioManager.getScen("CutClean").isEnabled()){

@@ -195,3 +195,5 @@ commands:
     aliases: [doubledate, dd, 2xdate]
   checkteam:
     description: /team list alias
+  near:
+    description: View near players in spec mode

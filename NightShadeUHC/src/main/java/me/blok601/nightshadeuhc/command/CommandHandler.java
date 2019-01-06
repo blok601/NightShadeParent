@@ -120,6 +120,7 @@ public class CommandHandler  {
         registerCommand(new CheckTeamCommand(scenarioManager));
         registerCommand(new TeamChatCommand());
         registerCommand(new SendCoordsCommand());
+        registerCommand(new NearCommand(uhc));
     }
 
 
