@@ -57,7 +57,7 @@ public class PlayerListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler (priority = EventPriority.LOWEST)
     public void onBreak(BlockBreakEvent e) {
         Player p = e.getPlayer();
         NSPlayer user = NSPlayer.get(p.getUniqueId());

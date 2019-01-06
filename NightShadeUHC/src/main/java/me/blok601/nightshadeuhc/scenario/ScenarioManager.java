@@ -132,13 +132,13 @@ public class ScenarioManager implements UHCCommand, Listener {
 
 
     private void addScen(Scenario s){
-        this.scenarios.add(s);
+        scenarios.add(s);
         s.setScenarioManager(this);
         Bukkit.getPluginManager().registerEvents(s, uhc);
     }
 
     private void addScen(Scenario s, String abbreviation){
-        this.scenarios.add(s);
+        scenarios.add(s);
         if(s.getAbbreviation() != null)
         s.setAbbreviation(abbreviation);
         s.setScenarioManager(this);
@@ -150,10 +150,10 @@ public class ScenarioManager implements UHCCommand, Listener {
     }
 
     private void openScenarioGUI(Player player){
-        System.out.println("Current Scens: " + this.scenarios.size());
+        System.out.println("Current Scens: " + scenarios.size());
         ArrayList<ItemStack> items = new ArrayList<>();
 
-        for(Scenario scenario :  this.scenarios){
+        for (Scenario scenario : scenarios) {
            ItemStack item = new ItemBuilder(scenario.getItem()).name(scenario.isEnabled() ? ChatUtils.format("&a" + scenario.getName()) : ChatUtils.format("&c" + scenario.getName())).make();
             items.add(item);
         }
@@ -200,7 +200,12 @@ public class ScenarioManager implements UHCCommand, Listener {
                    getEnabledScenarios().forEach(scenario -> scenario.setEnabled(false));
                     p.sendMessage(ChatUtils.message("&eAll scenarios have been disabled!"));
                 }else if(args[0].equalsIgnoreCase("list")){
-                    HashSet<String> names = this.scenarios.stream().map(Scenario::getName).collect(Collectors.toCollection(HashSet::new));
+                    HashSet<String> names = new HashSet<>();
+                    scenarios.stream().sorted(Comparator.comparing(Scenario::getName)).forEach(scenario -> {
+                        if (scenario.isEnabled()) {
+                            names.add("&a" + scenario.getName());
+                        }
+                    });
                     p.sendMessage(ChatUtils.message("&eScenarios: &b" + Joiner.on("&7, &b").join(names)));
                 }else{
                     p.sendMessage(ChatUtils.message("&cUsage: /scen"));
