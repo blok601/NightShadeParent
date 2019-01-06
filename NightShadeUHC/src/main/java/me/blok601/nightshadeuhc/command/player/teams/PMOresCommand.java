@@ -41,7 +41,7 @@ public class PMOresCommand implements UHCCommand {
         }
 
         if (sent.contains(p.getUniqueId())) {
-            p.sendMessage(ChatUtils.message("&cYou can only send your &eonce every minute&c!"));
+            p.sendMessage(ChatUtils.message("&cYou can only send your ores &eonce &cevery minute&c!"));
             return;
         }
 

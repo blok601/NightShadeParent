@@ -163,8 +163,18 @@ public class PlayerListener implements Listener {
         Player p = e.getPlayer();
         NSPlayer nsPlayer = NSPlayer.get(p);
         UHCPlayer uhcPlayer = UHCPlayer.get(p);
+        
+        String message = e.getMessage();
+        if(!ChatColor.stripColor(message).equalsIgnoreCase(message)){ //Check if its colored
+            if(!nsPlayer.hasRank(Rank.TRIAL)){
+                e.setCancelled(true);
+                p.sendMessage(ChatUtils.message("&cOnly staff can send colored messages, but you can purchase chat colors in our store!"));
+                return;
+            }
+        }
+        
 
-        if(e.getMessage().contains("&k") || e.getMessage().contains("&m")){
+        if(message.contains("&k") || message.contains("&m")){
             if(nsPlayer.hasRank(Rank.TRIAL)){
                 e.setCancelled(true);
                 p.sendMessage(ChatUtils.message("&cNormal players can't use those characters!"));
@@ -176,25 +186,25 @@ public class PlayerListener implements Listener {
             e.setCancelled(true);
             SetupStage stage = GameManager.get().getSetupStageHashMap().get(p);
             if (stage == SetupStage.MATCHPOST) {
-                if (e.getMessage().toLowerCase().startsWith("cancel")) {
+                if (message.toLowerCase().startsWith("cancel")) {
                     p.sendMessage(ChatUtils.message("&eYou have left the setup process."));
                     GameManager.get().getSetupStageHashMap().remove(p);
                     return;
                 }
-                Core.get().setMatchpost(e.getMessage());
-                p.sendMessage(ChatUtils.message("&eThe matchpost is now: &a" + e.getMessage()));
+                Core.get().setMatchpost(message);
+                p.sendMessage(ChatUtils.message("&eThe matchpost is now: &a" + message));
                 GameManager.get().getSetupStageHashMap().remove(p);
                 new HostGUI(p, gameManager, scenarioManager);
                 return;
             } else if (stage == SetupStage.SEED) {
-                if (e.getMessage().toLowerCase().startsWith("cancel")) {
+                if (message.toLowerCase().startsWith("cancel")) {
                     p.sendMessage(ChatUtils.message("&eYou have left the setup process."));
                     GameManager.get().getSetupStageHashMap().remove(p);
                     return;
                 }
 
-                GameManager.get().setSetupSeed(e.getMessage());
-                p.sendMessage(ChatUtils.message("&eThe seed is now&8: &b" + e.getMessage()));
+                GameManager.get().setSetupSeed(message);
+                p.sendMessage(ChatUtils.message("&eThe seed is now&8: &b" + message));
                 GameManager.get().getSetupStageHashMap().remove(p);
                 new HostGUI(p, gameManager, scenarioManager);
                 return;
@@ -203,7 +213,7 @@ public class PlayerListener implements Listener {
 
         if (SpectatorChatCommand.specc.contains(p.getUniqueId())) {
             e.setCancelled(true);
-            UHCPlayerColl.get().getSpectators().forEach(uhcPlayer1 -> uhcPlayer1.msg(ChatUtils.format("&8[&3SpecChat&8] &e" + p.getName() + ": &6" + e.getMessage())));
+            UHCPlayerColl.get().getSpectators().forEach(uhcPlayer1 -> uhcPlayer1.msg(ChatUtils.format("&8[&3SpecChat&8] &e" + p.getName() + ": &6" + message)));
             return;
         }
 
@@ -219,7 +229,7 @@ public class PlayerListener implements Listener {
         if (uhcPlayer.isDisguised()) {
             e.setCancelled(true);
             for (Player pl : e.getRecipients()) {
-                pl.sendMessage(uhcPlayer.getDisguisedName() + ": " + ChatColor.GRAY + e.getMessage());
+                pl.sendMessage(uhcPlayer.getDisguisedName() + ": " + ChatColor.GRAY + message);
             }
             return;
         }
@@ -230,7 +240,7 @@ public class PlayerListener implements Listener {
                 if (nsPlayer.getCurrentTag() != PlayerTag.DEFAULT) { //Tag
                     //They have all 3 here
                     for (Player rec : e.getRecipients()) {
-                        rec.sendMessage(ChatUtils.format(nsPlayer.getPrefix() + nsPlayer.getRank().getNameColor() + " " + p.getName() + " " + nsPlayer.getCurrentTag().getFormatted() + ": " + nsPlayer.getColor().getColor() + e.getMessage()));
+                        rec.sendMessage(ChatUtils.format(nsPlayer.getPrefix() + nsPlayer.getRank().getNameColor() + " " + p.getName() + " " + nsPlayer.getCurrentTag().getFormatted() + ": " + nsPlayer.getColor().getColor() + message));
                     }
                     return;
                 }
@@ -238,7 +248,7 @@ public class PlayerListener implements Listener {
 
                 //Only a prefix here
                 for (Player rec : e.getRecipients()){
-                    rec.sendMessage(ChatUtils.format(nsPlayer.getPrefix() + nsPlayer.getRank().getNameColor() + " " + p.getName() +  ": " + nsPlayer.getColor().getColor() + e.getMessage()));
+                    rec.sendMessage(ChatUtils.format(nsPlayer.getPrefix() + nsPlayer.getRank().getNameColor() + " " + p.getName() +  ": " + nsPlayer.getColor().getColor() + ChatColor.stripColor(message)));
                 }
                 return;
 
@@ -247,11 +257,11 @@ public class PlayerListener implements Listener {
             //Just a rank here
             if (nsPlayer.getCurrentTag() != PlayerTag.DEFAULT) {
                 for (Player rec : e.getRecipients()) {
-                    rec.sendMessage(ChatUtils.format(nsPlayer.getRank().getPrefix() + nsPlayer.getRank().getNameColor() + p.getName() + " " + nsPlayer.getCurrentTag().getFormatted() + ": " + nsPlayer.getColor().getColor() + e.getMessage()));
+                    rec.sendMessage(ChatUtils.format(nsPlayer.getRank().getPrefix() + nsPlayer.getRank().getNameColor() + p.getName() + " " + nsPlayer.getCurrentTag().getFormatted() + ": " + nsPlayer.getColor().getColor() +ChatColor.stripColor(message)));
                 }
             } else {
                 for (Player rec : e.getRecipients()) {
-                    rec.sendMessage(ChatUtils.format(nsPlayer.getRank().getPrefix() + nsPlayer.getRank().getNameColor() + p.getName() + ": " + nsPlayer.getColor().getColor() + e.getMessage()));
+                    rec.sendMessage(ChatUtils.format(nsPlayer.getRank().getPrefix() + nsPlayer.getRank().getNameColor() + p.getName() + ": " + nsPlayer.getColor().getColor() + ChatColor.stripColor(message)));
                 }
             }
 
@@ -262,11 +272,11 @@ public class PlayerListener implements Listener {
             e.setCancelled(true);
             for (Player rec : e.getRecipients()) {
                 if (nsPlayer.getCurrentTag() != PlayerTag.DEFAULT) {//Prefix and tag
-                    rec.sendMessage(ChatUtils.format(nsPlayer.getPrefix() + nsPlayer.getRank().getNameColor() + " " + p.getName() + " " + nsPlayer.getCurrentTag().getFormatted() + ": " + nsPlayer.getColor().getColor() + e.getMessage()));
+                    rec.sendMessage(ChatUtils.format(nsPlayer.getPrefix() + nsPlayer.getRank().getNameColor() + " " + p.getName() + " " + nsPlayer.getCurrentTag().getFormatted() + ": " + nsPlayer.getColor().getColor() + message));
                     continue;
                 }
                 //Just prefix
-                rec.sendMessage(ChatUtils.format(nsPlayer.getPrefix() + nsPlayer.getRank().getNameColor() + " " + p.getName() +  ": " + nsPlayer.getColor().getColor() + e.getMessage()));
+                rec.sendMessage(ChatUtils.format(nsPlayer.getPrefix() + nsPlayer.getRank().getNameColor() + " " + p.getName() +  ": " + nsPlayer.getColor().getColor() + message));
             }
             return; //Cool
         }
@@ -274,11 +284,11 @@ public class PlayerListener implements Listener {
         e.setCancelled(true);
         for (Player rec : e.getRecipients()){ //Possibly just tag
             if (nsPlayer.getCurrentTag() != PlayerTag.DEFAULT) {
-                rec.sendMessage(ChatUtils.format(nsPlayer.getCurrentTag().getFormatted() + nsPlayer.getRank().getNameColor() + " " + p.getName()  + ": " + nsPlayer.getColor().getColor() + e.getMessage()));
+                rec.sendMessage(ChatUtils.format(nsPlayer.getCurrentTag().getFormatted() + nsPlayer.getRank().getNameColor() + " " + p.getName()  + ": " + nsPlayer.getColor().getColor() + message));
                 continue;
             }
 
-            rec.sendMessage(ChatUtils.format(p.getName() + ": " + nsPlayer.getColor().getColor() + e.getMessage()));
+            rec.sendMessage(ChatUtils.format(p.getName() + ": " + nsPlayer.getColor().getColor() + message));
         }
         return;
     }

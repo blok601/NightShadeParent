@@ -50,9 +50,15 @@ public class CutCleanScenario extends Scenario{
         }else if(b.getType().equals(Material.DIAMOND_ORE)){
             e.setExpToDrop(4);
         }else if(b.getType().equals(Material.REDSTONE_ORE) || b.getType().equals(Material.GLOWING_REDSTONE_ORE)){
-            e.setExpToDrop(2);
+            e.setCancelled(true);
+            e.getBlock().setType(Material.AIR);
+            PlayerUtils.giveItem(new ItemStack(Material.REDSTONE, 3), p);
+            b.getWorld().spawn(clone, ExperienceOrb.class).setExperience(3);
         }else if(b.getType().equals(Material.LAPIS_ORE)){
-            e.setExpToDrop(2);
+            e.setCancelled(true);
+            e.getBlock().setType(Material.AIR);
+            PlayerUtils.giveItem(new ItemStack(Material.INK_SACK, 4, (short) 4), p);
+            b.getWorld().spawn(clone, ExperienceOrb.class).setExperience(3);
         }
     }
 

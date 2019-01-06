@@ -121,6 +121,7 @@ public class CommandHandler  {
         registerCommand(new TeamChatCommand());
         registerCommand(new SendCoordsCommand());
         registerCommand(new NearCommand(uhc));
+        registerCommand(new SetWorldCommand(gameManager)); //idk this wasnt there before
     }
 
 
