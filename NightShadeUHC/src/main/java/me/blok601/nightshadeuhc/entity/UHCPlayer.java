@@ -590,6 +590,9 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
     }
 
     private void updateStats(ArenaSession session) {
+
+        if(session.getKills() == 0 && session.getDeaths() == 0) return;
+
         this.arenaKills += session.getKills();
         this.arenaDeaths += session.getDeaths();
         if(this.highestArenaKillStreak < session.getKillstreak()){

@@ -153,28 +153,30 @@ public class GameDeathListener implements Listener {
             uhcPlayer.setDeaths(uhcPlayer.getDeaths() + 1);
             uhcPlayer.setGamesPlayed(uhcPlayer.getGamesPlayed() + 1);
             double points = -0.25;
-            if (GameManager.get().getKills().containsKey(p.getUniqueId())) {
-                points += GameManager.get().getKills().get(p.getUniqueId());
+            if(GameManager.get().getPointChanges().containsKey(p.getUniqueId())){
+                if (GameManager.get().getKills().containsKey(p.getUniqueId())) {
+                    points += GameManager.get().getKills().get(p.getUniqueId());
+                }
+                //points += uhcPlayer.getChangedLevel();
+
+                DecimalFormat decimalFormat = new DecimalFormat("##.##");
+                double curr = GameManager.get().getPointChanges().get(uhcPlayer.getUuid());
+                GameManager.get().getPointChanges().put(uhcPlayer.getUuid(), curr + points);
+                String changed = decimalFormat.format(curr + points);
+                uhcPlayer.addPoints(points);
+                uhcPlayer.changed();
+
+                p.sendMessage(ChatUtils.message("&eYou have died! Thank you for playing on NightShadePvP!"));
+                p.sendMessage(ChatUtils.message("&eJoin the Discord at discord.me/NightShadePvP for updates and more!"));
+                p.sendMessage(ChatUtils.format("&f&m----------------------------"));
+                p.playSound(p.getLocation(), Sound.LEVEL_UP, 5F, 5F);
+                p.sendMessage(ChatUtils.message("&bYour Game Stats:"));
+                p.sendMessage(ChatUtils.format("      " + (curr + points >= 0 ? "&a&o+" + changed + " points" : "&c&o-" + changed + " points")));
+                p.sendMessage(ChatUtils.format("      &bCurrent Points: &f" + decimalFormat.format(uhcPlayer.getPoints())));
+                p.sendMessage(ChatUtils.format("      &bKills: " + GameManager.get().getKills().get(uhcPlayer.getUuid())));
+                p.sendMessage(ChatUtils.format("&f&m----------------------------"));
+                GameManager.get().getPointChanges().remove(p.getUniqueId());
             }
-            //points += uhcPlayer.getChangedLevel();
-
-            DecimalFormat decimalFormat = new DecimalFormat("##.##");
-            double curr = GameManager.get().getPointChanges().get(uhcPlayer.getUuid());
-            GameManager.get().getPointChanges().put(uhcPlayer.getUuid(), curr + points);
-            String changed = decimalFormat.format(curr + points);
-            uhcPlayer.addPoints(points);
-            uhcPlayer.changed();
-
-            p.sendMessage(ChatUtils.message("&eYou have died! Thank you for playing on NightShadePvP!"));
-            p.sendMessage(ChatUtils.message("&eJoin the Discord at discord.me/NightShadePvP for updates and more!"));
-            p.sendMessage(ChatUtils.format("&f&m----------------------------"));
-            p.playSound(p.getLocation(), Sound.LEVEL_UP, 5F, 5F);
-            p.sendMessage(ChatUtils.message("&bYour Game Stats:"));
-            p.sendMessage(ChatUtils.format("      " + (curr + points >= 0 ? "&a&o+" + changed + " points" : "&c&o-" + changed + " points")));
-            p.sendMessage(ChatUtils.format("      &bCurrent Points: &f" + decimalFormat.format(uhcPlayer.getPoints())));
-            p.sendMessage(ChatUtils.format("      &bKills: " + GameManager.get().getKills().get(uhcPlayer.getUuid())));
-            p.sendMessage(ChatUtils.format("&f&m----------------------------"));
-            GameManager.get().getPointChanges().remove(p.getUniqueId());
 
             if (user.hasRank(Rank.DRAGON)) { //Dragon and above can spectate the games, otherwise kick
                 p.setAllowFlight(true);
@@ -300,23 +302,26 @@ public class GameDeathListener implements Listener {
         }
         //points += uhcPlayer.getChangedLevel();
 
-        DecimalFormat decimalFormat = new DecimalFormat("##.##");
-        double curr = GameManager.get().getPointChanges().get(uhcPlayer.getUuid());
-        GameManager.get().getPointChanges().put(uhcPlayer.getUuid(), curr + points);
-        String changed = decimalFormat.format(curr + points);
-        uhcPlayer.addPoints(points);
-        uhcPlayer.changed();
+        if(GameManager.get().getPointChanges().containsKey(p.getUniqueId())){
+            DecimalFormat decimalFormat = new DecimalFormat("##.##");
+            double curr = GameManager.get().getPointChanges().get(uhcPlayer.getUuid());
+            GameManager.get().getPointChanges().put(uhcPlayer.getUuid(), curr + points);
+            String changed = decimalFormat.format(curr + points);
+            uhcPlayer.addPoints(points);
+            uhcPlayer.changed();
 
-        p.sendMessage(ChatUtils.message("&eYou have died! Thank you for playing on NightShadePvP!"));
-        p.sendMessage(ChatUtils.message("&eJoin the Discord at discord.me/NightShadePvP for updates and more!"));
-        p.sendMessage(ChatUtils.format("&f&m----------------------------"));
-        p.playSound(p.getLocation(), Sound.LEVEL_UP, 5F, 5F);
-        p.sendMessage(ChatUtils.message("&bYour Game Stats:"));
-        p.sendMessage(ChatUtils.format("      " + (curr + points >= 0 ? "&a&o+" + changed + " points" : "&c&o-" + changed + " points")));
-        p.sendMessage(ChatUtils.format("      &bCurrent Points: &f" + decimalFormat.format(uhcPlayer.getPoints())));
-        p.sendMessage(ChatUtils.format("      &bKills: " + GameManager.get().getKills().get(uhcPlayer.getUuid())));
-        p.sendMessage(ChatUtils.format("&f&m----------------------------"));
-        GameManager.get().getPointChanges().remove(p.getUniqueId());
+            p.sendMessage(ChatUtils.message("&eYou have died! Thank you for playing on NightShadePvP!"));
+            p.sendMessage(ChatUtils.message("&eJoin the Discord at discord.me/NightShadePvP for updates and more!"));
+            p.sendMessage(ChatUtils.format("&f&m----------------------------"));
+            p.playSound(p.getLocation(), Sound.LEVEL_UP, 5F, 5F);
+            p.sendMessage(ChatUtils.message("&bYour Game Stats:"));
+            p.sendMessage(ChatUtils.format("      " + (curr + points >= 0 ? "&a&o+" + changed + " points" : "&c&o-" + changed + " points")));
+            p.sendMessage(ChatUtils.format("      &bCurrent Points: &f" + decimalFormat.format(uhcPlayer.getPoints())));
+            p.sendMessage(ChatUtils.format("      &bKills: " + GameManager.get().getKills().get(uhcPlayer.getUuid())));
+            p.sendMessage(ChatUtils.format("&f&m----------------------------"));
+            GameManager.get().getPointChanges().remove(p.getUniqueId());
+        }
+
 
         if (user.hasRank(Rank.YOUTUBE)) { //YouTube and above can spectate the games, otherwise kick
             p.setAllowFlight(true);

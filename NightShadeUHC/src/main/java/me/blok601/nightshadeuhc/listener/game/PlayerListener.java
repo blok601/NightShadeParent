@@ -173,7 +173,6 @@ public class PlayerListener implements Listener {
             }
         }
         
-
         if(message.contains("&k") || message.contains("&m")){
             if(nsPlayer.hasRank(Rank.TRIAL)){
                 e.setCancelled(true);

@@ -23,7 +23,7 @@ public class DeathLightningComponent extends Component {
         if (e.isCancelled()) return;
 
         World world = e.getLocation().getWorld();
-        world.strikeLightningEffect(e.getLocation());
+        world.strikeLightningEffect(e.getLocation().add(0, 10, 0));
 
     }
 }
