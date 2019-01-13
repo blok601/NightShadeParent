@@ -78,13 +78,8 @@ public class RespawnCommand implements UHCCommand{
 
         PlayerRespawn obj = GameManager.get().getInvs().get(target.getUniqueId());
 
-        target.teleport(obj.getLocation());
-        target.getInventory().setArmorContents(obj.getArmor());
-        target.getInventory().setContents(obj.getItems());
-        if(targetUHCPlayer.isSpectator()){
-            targetUHCPlayer.unspec();
-        }
 
+        if(targetUHCPlayer.isVanished()) targetUHCPlayer.unVanish();
         if(targetUHCPlayer.isStaffMode()){
             Bukkit.getOnlinePlayers().forEach(o -> o.showPlayer(p));
             target.getActivePotionEffects().forEach(potionEffect -> p.removePotionEffect(potionEffect.getType()));
@@ -94,17 +89,21 @@ public class RespawnCommand implements UHCCommand{
             target.chat("/rea");
         }
 
-        if(targetUHCPlayer.isVanished()) targetUHCPlayer.unVanish();
+
 
         target.setGameMode(GameMode.SURVIVAL);
+        target.teleport(obj.getLocation());
+        target.getInventory().setArmorContents(obj.getArmor());
+        target.getInventory().setContents(obj.getItems());
+        if (targetUHCPlayer.isSpectator()) {
+            targetUHCPlayer.unspec();
+        }
 
         GameManager.get().getInvs().remove(target.getUniqueId());
-        //UHC.players.add(target.getUniqueId());
         targetUHCPlayer.setPlayerStatus(PlayerStatus.PLAYING);
         targetUHCPlayer.setChangedLevel(0);
         target.sendMessage(ChatUtils.message("&eYou have been respawned by &a" + p.getName()));
         p.sendMessage(ChatUtils.message("&eYou have respawned &a" + target.getName()));
-        //GameManager.get().getPointChanges().put(target.getUniqueId(), 0D);
     }
 
     @Override
