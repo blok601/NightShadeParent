@@ -140,16 +140,18 @@ public class EndGameCommand implements UHCCommand {
                     winners.add(pl.getUniqueId());
 
 //                user.setPrefix(ChatColor.RED + "[Winner] ");
+                    double toAdd = 0;
                     gamePlayer.setGamesWon(gamePlayer.getGamesWon() + 1);
-                    double toAdd = 10 / targetTeam.getMembers().size();
+                    gamePlayer.setGamesPlayed(gamePlayer.getGamesPlayed() + 1);
+                    toAdd += (10 / targetTeam.getMembers().size());
                     gamePlayer.addPoints(toAdd);
-                    double curr = GameManager.get().getPointChanges().get(gamePlayer.getUuid());
-                    GameManager.get().getPointChanges().put(gamePlayer.getUuid(), curr + toAdd);
+//                    double curr = GameManager.get().getPointChanges().get(gamePlayer.getUuid());
+//                    GameManager.get().getPointChanges().put(gamePlayer.getUuid(), curr + toAdd);
                     if (user.getRank() == Rank.PLAYER) {
                         if (gamePlayer.getGamesWon() >= 10) {
                             user.setPrefix(ChatUtils.format("&8[&c★&8]"));
                         } else {
-                            user.setPrefix(ChatUtils.format("&8[&c★&8]"));
+                            user.setPrefix(ChatUtils.format("&8[&cWinner&8]"));
                         }
                     }
                     gamePlayer.changed();
@@ -172,10 +174,10 @@ public class EndGameCommand implements UHCCommand {
                 PacketPlayOutTitle newTitle = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"Game Over!\",\"color\":\"dark_aqua\",\"bold\":true}"), 0, 60, 0);
 
 
-                Bukkit.getOnlinePlayers().forEach((Consumer<Player>) lamba -> {
-                    ((CraftPlayer) lamba).getHandle().playerConnection.sendPacket(subtitle);
-                    if (!targetTeam.getMembers().contains(lamba.getName())) {
-                        ((CraftPlayer) lamba).getHandle().playerConnection.sendPacket(newTitle);
+                Bukkit.getOnlinePlayers().forEach((Consumer<Player>) lambda -> {
+                    ((CraftPlayer) lambda).getHandle().playerConnection.sendPacket(subtitle);
+                    if (!targetTeam.getMembers().contains(lambda.getName())) {
+                        ((CraftPlayer) lambda).getHandle().playerConnection.sendPacket(newTitle);
                     }
 
                 });
@@ -184,11 +186,15 @@ public class EndGameCommand implements UHCCommand {
             NSPlayer user = NSPlayer.get(target.getUniqueId());
             UHCPlayer gamePlayer = UHCPlayer.get(target.getUniqueId());
 
-
+            double points = 0;
             gamePlayer.setGamesWon(gamePlayer.getGamesWon() + 1);
-            gamePlayer.addPoints(10);
-            double curr = GameManager.get().getPointChanges().get(gamePlayer.getUuid());
-            GameManager.get().getPointChanges().put(gamePlayer.getUuid(), curr + 10);
+            gamePlayer.setGamesPlayed(gamePlayer.getGamesPlayed() + 1);
+            if (GameManager.get().getKills().containsKey(p.getUniqueId())) {
+                points += GameManager.get().getKills().get(p.getUniqueId());
+            }
+            gamePlayer.addPoints(10 + points);
+//            double curr = GameManager.get().getPointChanges().get(gamePlayer.getUuid());
+//            GameManager.get().getPointChanges().put(gamePlayer.getUuid(), curr + 10);
             if (user.getRank() == Rank.PLAYER) {
                 if (gamePlayer.getGamesWon() >= 10) {
                     user.setPrefix(ChatUtils.format("&8[&c★&8]"));

@@ -148,7 +148,8 @@ public class GameListener implements Listener {
     @EventHandler
     public void onLateStart(PlayerJoinGameLateEvent e){
         Player player = e.getPlayer();
-        GameManager.get().getPointChanges().put(player.getUniqueId(), 0D);
+        UHCPlayer uhcPlayer = UHCPlayer.get(player);
+        uhcPlayer.setChangedLevel(0);
         for (Scenario scenario : scenarioManager.getEnabledScenarios()) {
             if (scenario instanceof StarterItems) {
 

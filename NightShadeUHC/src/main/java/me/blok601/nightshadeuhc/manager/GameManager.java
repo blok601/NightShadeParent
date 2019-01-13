@@ -98,8 +98,6 @@ public class GameManager {
     private World netherWorld = null;
     @Getter
     private HashSet<UUID> toCancel = new HashSet<>();
-    @Getter
-    private HashMap<UUID, Double> pointChanges = new HashMap<>();
 
 
 

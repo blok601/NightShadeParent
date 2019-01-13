@@ -104,7 +104,7 @@ public class GameStartTask extends BukkitRunnable {
                     Bukkit.getOnlinePlayers().forEach(o -> o.setLevel(0));
                     Bukkit.getOnlinePlayers().forEach(o -> o.setExp(0));
 
-                    UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> gameManager.getPointChanges().put(uhcPlayer.getUuid(), 0D));
+                    UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> uhcPlayer.setChangedLevel(0));
 
 
                     Core.get().getLogManager().log(Logger.LogType.INFO, "Everyone has been healed and fed!");
