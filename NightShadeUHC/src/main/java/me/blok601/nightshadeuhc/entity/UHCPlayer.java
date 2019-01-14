@@ -833,7 +833,7 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
 
     public String getArenaSwingAccuracyFormatted(){
         DecimalFormat format = new DecimalFormat("##.##");
-        return format.format(this.getArenaSwingAccuracyFormatted());
+        return format.format(this.getArenaSwordAccuracy());
     }
 
 }
