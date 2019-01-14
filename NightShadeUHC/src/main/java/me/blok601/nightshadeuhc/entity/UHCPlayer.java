@@ -142,15 +142,6 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         this.setDeaths(0);
         this.setPoints(0);
         this.setLevel(0);
-        this.setArenaSwordSwings(0);
-        this.setArenaSwordHits(0);
-        this.setArenaGapplesEaten(0);
-        this.setArenaBowHits(0);
-        this.setArenaBowAttempts(0);
-        this.setArenaKills(0);
-        this.setArenaDeaths(0);
-        this.setHighestArenaKillStreak(0);
-        this.setPastArenaSessions(null);
     }
 
     public void handleBlockBreak(Block block){
@@ -799,5 +790,38 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         this.arenaBowHits = arenaBowHits;
     }
 
+    public double getArenaBowAccuracy() {
+        if (this.arenaBowHits == 0) {
+            return 0;
+        }
+
+        if (this.arenaBowAttempts == 0) {
+            return this.arenaBowHits;
+        }
+
+        return this.arenaBowHits / this.arenaBowAttempts;
+    }
+
+    public String getArenaBowAccuracyFormatted() {
+        DecimalFormat format = new DecimalFormat("##.##");
+        return format.format(this.getArenaBowAccuracy());
+    }
+
+    public double getArenaSwordAccuracy(){
+        if(this.arenaSwordHits == 0){
+            return 0;
+        }
+
+        if(this.arenaSwordSwings == 0){
+            return this.arenaSwordHits;
+        }
+
+        return this.arenaSwordHits/this.arenaSwordSwings;
+    }
+
+    public String getArenaSwingAccuracyFormatted(){
+        DecimalFormat format = new DecimalFormat("##.##");
+        return format.format(this.getArenaSwingAccuracyFormatted());
+    }
 
 }

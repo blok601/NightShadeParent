@@ -2,6 +2,8 @@ package me.blok601.nightshadeuhc.listener.gui;
 
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
+import com.nightshadepvp.core.fanciful.FancyMessage;
+import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.gui.leaderboards.LeaderBoardMainGUI;
 import me.blok601.nightshadeuhc.gui.leaderboards.StatsGUI;
@@ -12,8 +14,11 @@ import me.blok601.nightshadeuhc.scenario.Scenario;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
+import me.blok601.nightshadeuhc.util.PlayerUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,13 +27,18 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionType;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.UUID;
 
 public class InvClick implements Listener {
 
     private ScenarioManager scenarioManager;
+    private UHC uhc;
 
-    public InvClick(ScenarioManager scenarioManager) {
+    public InvClick(ScenarioManager scenarioManager, UHC uhc) {
         this.scenarioManager = scenarioManager;
+        this.uhc = uhc;
     }
 
     @EventHandler
@@ -116,6 +126,42 @@ public class InvClick implements Listener {
             if(slot == 0){
                 //Modify
             }else if(slot == 8){
+                if (nsPlayer.hasRank(Rank.ADMIN)) {
+                    p.sendMessage(ChatUtils.message("&cOnly players with the " + Rank.ADMIN.getPrefix() + " can wipe player's stats!"));
+                    return;
+                }
+
+                String[] strings = e.getInventory().getName().split(" "); //Stats,Of, NAME
+                String name = strings[2];
+                Player target = Bukkit.getPlayer(name);
+                UUID query;
+                if (target == null) {
+                    OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(name);
+                    if (offlinePlayer == null) {
+                        p.sendMessage(ChatUtils.message("&cThere was an issue looking up that player's stats. Please try again later..."));
+                        return;
+                    }
+
+                    query = offlinePlayer.getUniqueId();
+                } else {
+                    query = target.getUniqueId();
+                }
+
+                UHCPlayer targetUHCPlayer = UHCPlayer.get(query);
+                FancyMessage fancyMessage = new FancyMessage("Please confirm within 10 seconds by doing /confirm or clicking this message");
+                fancyMessage.color(ChatColor.YELLOW).command("/confirm");
+                fancyMessage.send(p);
+                PlayerUtils.getToConfirm().put(p.getUniqueId(), () -> {
+                    targetUHCPlayer.resetStats();
+                    p.sendMessage(ChatUtils.message("&b" + targetUHCPlayer.getName() + "'s &estats have been cleared!"));
+                });
+
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        PlayerUtils.getToConfirm().remove(p.getUniqueId());
+                    }
+                }.runTaskLater(uhc, 20 * 10);
 
             }
 

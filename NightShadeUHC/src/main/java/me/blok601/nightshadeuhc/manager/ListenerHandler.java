@@ -51,7 +51,7 @@ public class ListenerHandler {
         addListener(new Undisguise());
         addListener(new JoinListener(gameManager, scenarioManager));
 
-        addListener(new InvClick(scenarioManager));
+        addListener(new InvClick(scenarioManager, uhc));
         addListener(new GameSetupInventoryClick(gameManager, uhc, scenarioManager, componentHandler));
         addListener(new ScenarioClick(scenarioManager));
 

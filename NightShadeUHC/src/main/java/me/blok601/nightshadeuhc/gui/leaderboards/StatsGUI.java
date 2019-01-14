@@ -19,7 +19,7 @@ public class StatsGUI {
 
     public StatsGUI(UHCPlayer target, Player toOpen){
         GuiBuilder builder = new GuiBuilder();
-        builder.name(target.getName() + "'s Stats");
+        builder.name("Stats of " + target.getName());
         builder.rows(6);
 
         ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
@@ -60,15 +60,20 @@ public class StatsGUI {
                 .lore(" ")
                 .lore("&5Arena Sword Hits &8» &b" + target.getArenaSwordHits())
                 .lore(" ")
+                .lore("&5Arena Sword Swing Accuracy &8» &b" + target.getArenaSwingAccuracyFormatted() + "%")
+                .lore(" ")
                 .lore("&5Arena Highest KillStreak &8» &b" + target.getHighestArenaKillStreak());
         ItemBuilder arenaHeals = new ItemBuilder(Material.GOLDEN_APPLE).name("&eArena Heals &8»")
                 .lore("&5Gapples Eaten &8» &b" + target.getArenaGapplesEaten());
         ItemBuilder bow = new ItemBuilder(Material.BOW).name("&eArena Bow")
                 .lore("&5Arena Bow Attempts &8» &b" + target.getArenaBowAttempts())
                 .lore(" ")
-                .lore("&5Arena Bow Hits &8» &b" + target.getArenaBowHits());
+                .lore("&5Arena Bow Hits &8» &b" + target.getArenaBowHits())
+                .lore(" ")
+                .lore("&5Arena Bow Accuracy &8» &b" + target.getArenaBowAccuracyFormatted() + "%");
         ItemBuilder sessions = new ItemBuilder(Material.SIGN).name("&eArena Sessions")
-                .lore("&6Click to view past arena sessions");
+                .lore("&6Click to view past arena sessions")
+                .lore("&a&lComing soon...");
 
 
         builder.item(4, skullBuilder.make());
