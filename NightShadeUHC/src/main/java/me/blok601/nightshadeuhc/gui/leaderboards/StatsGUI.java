@@ -45,7 +45,7 @@ public class StatsGUI {
         ItemBuilder iron = new ItemBuilder(Material.IRON_ORE).name("&eIron Mined &8» &5" + target.getIronMined());
         ItemBuilder lapis = new ItemBuilder(Material.LAPIS_ORE).name("&eLapis Mined &8» &5" + target.getLapisMined());
         ItemBuilder emerald = new ItemBuilder(Material.EMERALD_ORE).name("&eEmeralds Mined &8» &5" + target.getEmeraldsMined());
-        ItemBuilder oresBroken = new ItemBuilder(Material.QUARTZ_ORE).name("&eOres Mined& 8» &5" + target.getOresMined());
+        ItemBuilder oresBroken = new ItemBuilder(Material.QUARTZ_ORE).name("&eOres Mined &8» &5" + target.getOresMined());
         ItemBuilder rating = new ItemBuilder(Material.PAPER).name("&eRating &8» &5" + new DecimalFormat("#.##").format(target.getPointsAverage()));
 
         ItemBuilder arenaLabel = new ItemBuilder(Material.NAME_TAG).name("&eArena Stats &8»");
@@ -93,7 +93,6 @@ public class StatsGUI {
         builder.item(33, lapis.make());
         builder.item(34, emerald.make());
         builder.item(35, oresBroken.make());
-        builder.item(31, rating.make());
         builder.item(45, arenaLabel.make());
         builder.item(46, arenaKills.make());
         builder.item(47, arenaPvP.make());

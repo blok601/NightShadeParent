@@ -124,9 +124,9 @@ public class InvClick implements Listener {
             }
             int slot = e.getSlot();
             if(slot == 0){
-                //Modify
+                //
             }else if(slot == 8){
-                if (nsPlayer.hasRank(Rank.ADMIN)) {
+                if (!nsPlayer.hasRank(Rank.ADMIN)) {
                     p.sendMessage(ChatUtils.message("&cOnly players with the " + Rank.ADMIN.getPrefix() + " can wipe player's stats!"));
                     return;
                 }
