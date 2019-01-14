@@ -1,5 +1,7 @@
 package me.blok601.nightshadeuhc.listener.gui;
 
+import com.nightshadepvp.core.Rank;
+import com.nightshadepvp.core.entity.NSPlayer;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.gui.leaderboards.LeaderBoardMainGUI;
 import me.blok601.nightshadeuhc.gui.leaderboards.StatsGUI;
@@ -106,6 +108,18 @@ public class InvClick implements Listener {
 
         if(e.getInventory().getName().toLowerCase().contains("stats")){
             e.setCancelled(true);
+            NSPlayer nsPlayer = NSPlayer.get(p);
+            if(!nsPlayer.hasRank(Rank.TRIAL)){
+                return;
+            }
+            int slot = e.getSlot();
+            if(slot == 0){
+                //Modify
+            }else if(slot == 8){
+
+            }
+
+
         }
 
         if(e.getInventory().getName().equalsIgnoreCase(ChatColor.DARK_AQUA + "Mole Kit Selector")){

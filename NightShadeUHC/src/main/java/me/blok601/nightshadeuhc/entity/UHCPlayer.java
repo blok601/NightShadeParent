@@ -127,6 +127,32 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         return this;
     }
 
+    public void resetStats() {
+        this.setBlocksMined(0);
+        this.setDiamondsMined(0);
+        this.setCoalMined(0);
+        this.setGoldMined(0);
+        this.setIronMined(0);
+        this.setOresMined(0);
+        this.setLapisMined(0);
+        this.setEmeraldsMined(0);
+        this.setGamesPlayed(0);
+        this.setGamesWon(0);
+        this.setKills(0);
+        this.setDeaths(0);
+        this.setPoints(0);
+        this.setLevel(0);
+        this.setArenaSwordSwings(0);
+        this.setArenaSwordHits(0);
+        this.setArenaGapplesEaten(0);
+        this.setArenaBowHits(0);
+        this.setArenaBowAttempts(0);
+        this.setArenaKills(0);
+        this.setArenaDeaths(0);
+        this.setHighestArenaKillStreak(0);
+        this.setPastArenaSessions(null);
+    }
+
     public void handleBlockBreak(Block block){
         if(block.getType() == Material.DIAMOND_ORE){
             this.diamondsMined++;
@@ -772,4 +798,6 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
     public void setArenaBowHits(int arenaBowHits) {
         this.arenaBowHits = arenaBowHits;
     }
+
+
 }
