@@ -10,6 +10,7 @@ import me.blok601.nightshadeuhc.command.player.disguise.RandomDisguiseCommand;
 import me.blok601.nightshadeuhc.command.player.teams.*;
 import me.blok601.nightshadeuhc.command.server.eWhitelistCommand;
 import me.blok601.nightshadeuhc.command.staff.*;
+import me.blok601.nightshadeuhc.command.staff.admin.ResetStatsCommand;
 import me.blok601.nightshadeuhc.command.staff.admin.SetArenaSpawnCommand;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
@@ -122,6 +123,7 @@ public class CommandHandler  {
         registerCommand(new SendCoordsCommand());
         registerCommand(new NearCommand(uhc));
         registerCommand(new SetWorldCommand(gameManager)); //idk this wasnt there before
+        registerCommand(new ResetStatsCommand(uhc));
     }
 
 

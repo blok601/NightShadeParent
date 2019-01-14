@@ -144,6 +144,18 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         this.setLevel(0);
     }
 
+    public void resetArenaStats(){
+        this.setArenaDeaths(0);
+        this.setArenaKills(0);
+        this.setArenaBowAttempts(0);
+        this.setArenaBowHits(0);
+        this.setArenaGapplesEaten(0);
+        this.setArenaGapplesEaten(0);
+        this.setArenaSwordHits(0);
+        this.setArenaSwordSwings(0);
+        this.setPastArenaSessions(null);
+    }
+
     public void handleBlockBreak(Block block){
         if(block.getType() == Material.DIAMOND_ORE){
             this.diamondsMined++;

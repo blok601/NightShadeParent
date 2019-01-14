@@ -197,3 +197,5 @@ commands:
     description: /team list alias
   near:
     description: View near players in spec mode
+  resetstats:
+    description: Owner command to reset all player's stats
