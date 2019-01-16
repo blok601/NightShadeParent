@@ -33,11 +33,12 @@ public class SuperheroesScenario extends Scenario {
         Random random = ThreadLocalRandom.current();
         UHCPlayerColl.get().getAllOnline().stream().filter(uhcPlayer -> !uhcPlayer.isSpectator()).forEach(uhcPlayer ->{
             SuperHeroType type = SuperHeroType.values()[random.nextInt(SuperHeroType.values().length)];
-            powers.put(uhcPlayer.getUuid(), type);
             if(powers.containsKey(uhcPlayer.getUuid())) {
                 return;
             }
 
+            powers.put(uhcPlayer.getUuid(), type);
+            
             Player p = uhcPlayer.getPlayer();
             if (type == SuperHeroType.HEALTH) {
                 p.setMaxHealth(40);
