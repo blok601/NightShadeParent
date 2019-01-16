@@ -17,7 +17,7 @@ public class StaffTrackTask extends BukkitRunnable {
 
         if (!GameState.gameHasStarted()) return;
 
-        NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> !nsPlayer.isAFK() && nsPlayer.hasRank(Rank.TRIAL) && UHCPlayer.get(nsPlayer.getPrefix()).getPlayerStatus() == PlayerStatus.SPECTATING).forEach(nsPlayer ->
+        NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> !nsPlayer.isAFK() && nsPlayer.hasRank(Rank.TRIAL) && UHCPlayer.get(nsPlayer.getPlayer()).getPlayerStatus() == PlayerStatus.SPECTATING).forEach(nsPlayer ->
                 nsPlayer.setSpectatingTime(nsPlayer.getSpectatingTime() + 5));
 
     }
