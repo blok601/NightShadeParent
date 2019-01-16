@@ -1,12 +1,10 @@
 package me.blok601.nightshadeuhc.task;
 
 import com.nightshadepvp.core.Rank;
-import com.nightshadepvp.core.entity.NSPlayer;
 import com.nightshadepvp.core.entity.NSPlayerColl;
-import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
-import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
-import org.bukkit.Bukkit;
+import me.blok601.nightshadeuhc.entity.object.GameState;
+import me.blok601.nightshadeuhc.entity.object.PlayerStatus;
 import org.bukkit.scheduler.BukkitRunnable;
 
 /**
@@ -19,7 +17,7 @@ public class StaffTrackTask extends BukkitRunnable {
 
         if (!GameState.gameHasStarted()) return;
 
-        NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> !nsPlayer.isAFK() &&  nsPlayer.hasRank(Rank.TRIAL) && UHCPlayer.get(nsPlayer.getPrefix()).isSpectator()).forEach(nsPlayer ->
+        NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> !nsPlayer.isAFK() && nsPlayer.hasRank(Rank.TRIAL) && UHCPlayer.get(nsPlayer.getPrefix()).getPlayerStatus() == PlayerStatus.SPECTATING).forEach(nsPlayer ->
                 nsPlayer.setSpectatingTime(nsPlayer.getSpectatingTime() + 5));
 
     }

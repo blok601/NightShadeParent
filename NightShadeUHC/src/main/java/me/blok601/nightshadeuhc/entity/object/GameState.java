@@ -16,7 +16,7 @@ public enum GameState {
 	}
 
 	public static  boolean gameHasStarted(){
-		return (state != WAITING && state != STARTING && state != PRE_SCATTER);
+		return state != WAITING && state != PRE_SCATTER && state != STARTING;
 	}
 	
 }
