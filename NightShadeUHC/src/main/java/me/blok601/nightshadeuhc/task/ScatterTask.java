@@ -70,6 +70,9 @@ public class ScatterTask extends BukkitRunnable {
                 if (TeamManager.getInstance().getRvBScatterType() == 0) {
                     //Scatter like solos
                     Bukkit.getOnlinePlayers().forEach(o -> {
+                        for(PotionEffect effect: o.getActivePotionEffects()){
+                            o.removePotionEffect(effect.getType());
+                        }
                         o.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1));
                         o.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, Integer.MAX_VALUE, 0));
                     });
@@ -99,6 +102,9 @@ public class ScatterTask extends BukkitRunnable {
                 } else {
 
                     Bukkit.getOnlinePlayers().forEach(o -> {
+                        for(PotionEffect effect: o.getActivePotionEffects()){
+                            o.removePotionEffect(effect.getType());
+                        }
                         o.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1));
                         o.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, Integer.MAX_VALUE, 0));
                     });
@@ -154,6 +160,9 @@ public class ScatterTask extends BukkitRunnable {
             } else {
 
                 Bukkit.getOnlinePlayers().forEach(o -> {
+                    for(PotionEffect effect: o.getActivePotionEffects()){
+                        o.removePotionEffect(effect.getType());
+                    }
                     o.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1));
                     o.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, Integer.MAX_VALUE, 0));
                 });
@@ -204,6 +213,9 @@ public class ScatterTask extends BukkitRunnable {
 
         } else {
             Bukkit.getOnlinePlayers().forEach(o -> {
+                for(PotionEffect effect: o.getActivePotionEffects()){
+                    o.removePotionEffect(effect.getType());
+                }
                 o.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1));
                 o.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, Integer.MAX_VALUE, 0));
             });
