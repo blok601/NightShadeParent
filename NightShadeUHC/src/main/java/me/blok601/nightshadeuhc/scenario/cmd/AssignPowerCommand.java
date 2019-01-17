@@ -65,10 +65,11 @@ public class AssignPowerCommand implements UHCCommand{
 
         Random random = ThreadLocalRandom.current();
         SuperheroesScenario.SuperHeroType type = SuperheroesScenario.SuperHeroType.values()[random.nextInt(SuperheroesScenario.SuperHeroType.values().length)];
-        SuperheroesScenario.powers.put(target.getUniqueId(), type);
+        SuperheroesScenario.powers.put(p.getUniqueId(), type);
 
         if (type == SuperheroesScenario.SuperHeroType.HEALTH) {
             p.setMaxHealth(40);
+
             p.setHealth(40);
         } else {
             for (PotionEffect effect : type.getEffecst()) {

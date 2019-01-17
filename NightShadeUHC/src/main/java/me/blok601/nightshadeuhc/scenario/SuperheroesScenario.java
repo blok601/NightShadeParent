@@ -31,7 +31,7 @@ public class SuperheroesScenario extends Scenario {
     public void onGameStart(GameStartEvent e){
         if(!isEnabled()) return;
         Random random = ThreadLocalRandom.current();
-        UHCPlayerColl.get().getAllOnline().stream().filter(uhcPlayer -> !uhcPlayer.isSpectator()).forEach(uhcPlayer ->{
+        UHCPlayerColl.get().getAllOnline().stream().ftilter(uhcPlayer -> !uhcPlayer.isSpectator()).forEach(uhcPlayer ->{
             SuperHeroType type = SuperHeroType.values()[random.nextInt(SuperHeroType.values().length)];
             if(powers.containsKey(uhcPlayer.getUuid())) {
                 return;
