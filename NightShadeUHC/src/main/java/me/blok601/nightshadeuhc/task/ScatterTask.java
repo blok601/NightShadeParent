@@ -61,6 +61,8 @@ public class ScatterTask extends BukkitRunnable {
         Bukkit.getOnlinePlayers().stream().filter(o -> !gameManager.getWhitelist().contains(o.getName().toLowerCase())).forEach(o -> gameManager.getWhitelist().add(o.getName().toLowerCase()));
         gameManager.setWhitelistEnabled(true);
         Util.staffLog("Everyone has been added to the whitelist and whitelist has been enabled!");
+
+
     }
 
     @Override
