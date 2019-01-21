@@ -18,10 +18,7 @@ import me.blok601.nightshadeuhc.component.ComponentHandler;
 import me.blok601.nightshadeuhc.component.GoldenHeadRecipe;
 import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.listener.gui.EnchantHider;
-import me.blok601.nightshadeuhc.manager.GameManager;
-import me.blok601.nightshadeuhc.manager.ListenerHandler;
-import me.blok601.nightshadeuhc.manager.LoggerManager;
-import me.blok601.nightshadeuhc.manager.SettingsManager;
+import me.blok601.nightshadeuhc.manager.*;
 import me.blok601.nightshadeuhc.packet.OldEnchanting;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
@@ -124,6 +121,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         this.commandHandler = new CommandHandler(this, GameManager.get(), scenarioManager);
         this.listenerHandler = new ListenerHandler(this, Core.get(), scenarioManager, GameManager.get(), componentHandler);
         this.listenerHandler.complete();
+        TeamManager.getInstance().setup();
 
         setupTasks();
 
