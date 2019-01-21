@@ -171,7 +171,7 @@ public class GameListener implements Listener {
     public void onSpectate(PlayerStartSpectatingEvent e) {
         Player p = e.getPlayer();
 
-        UHCPlayerColl.get().getAllOnline().forEach(u -> {
+        UHCPlayerColl.get().getAllOnlinePlayers().forEach(u -> {
             PlayerScoreboard playerScoreboard = UHC.get().getScoreboardManager().getPlayerScoreboard(u.getPlayer());
             org.bukkit.scoreboard.Team specTeam = playerScoreboard.getBukkitScoreboard().getTeam("spec");
             specTeam.addEntry(p.getName());
@@ -197,7 +197,7 @@ public class GameListener implements Listener {
         }
 
         //Now update every player's board
-        UHCPlayerColl.get().getAllOnline().forEach(uhcPlayer -> {
+        UHCPlayerColl.get().getAllOnlinePlayers().forEach(uhcPlayer -> {
             PlayerScoreboard playerScoreboard = UHC.get().getScoreboardManager().getPlayerScoreboard(uhcPlayer.getPlayer());
             Team newTeam;
             String name;
