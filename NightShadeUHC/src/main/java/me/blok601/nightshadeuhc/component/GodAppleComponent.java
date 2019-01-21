@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 public class GodAppleComponent extends Component{
 
     public GodAppleComponent() {
-        super("God Apples", Material.GOLD_BLOCK, false);
+        super("God Apples", Material.GOLD_BLOCK, false, "Toggle whether god apples can be craftable or not");
     }
 
     @EventHandler

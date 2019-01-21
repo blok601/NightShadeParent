@@ -17,7 +17,7 @@ public class NetherQuartzXPNerfFeature extends Component {
     private GameManager gameManager;
 
     public NetherQuartzXPNerfFeature(GameManager gameManager) {
-        super("Nether Quartz XP Nerf", Material.QUARTZ_ORE, true);
+        super("Nether Quartz XP Nerf", Material.QUARTZ_ORE, true, "Toggle the nether quartz XP nerf for the nether");
 
         this.gameManager = gameManager;
     }

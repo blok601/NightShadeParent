@@ -12,9 +12,9 @@ public class SpecInfoData {
 
     public static String translate(Player player, double health, Player damager, String string){
         if(damager!= null){
-            return ChatUtils.format(string.replaceAll("%player%", player.getName()).replaceAll("%health%", format.format(health/2).replaceAll("%damager%", damager.getName())));
+            return ChatUtils.format(string.replaceAll("%player%", player.getName()).replaceAll("%health%", format.format(health/2).replaceAll("%d%", damager.getName())));
         }else{
-            return ChatUtils.format(string.replaceAll("%player%", player.getName()).replaceAll("%health%", format.format(health/2)).replaceAll("%damager%", ""));
+            return ChatUtils.format(string.replaceAll("%player%", player.getName()).replaceAll("%health%", format.format(health/2)).replaceAll("%d%", ""));
         }
 
     }
@@ -23,7 +23,7 @@ public class SpecInfoData {
     public static final String DAMAGE_BURN = "&5PvE&8»&c%player%&8<-&bBurn &8[&a%health%&c❤&8]";
     public static final String DAMAGE_OTHER = "&5PvE&8»&c%player%&8<-&bPvE &8[&a%health% &c❤&8]";
     public static final String DAMAGE_MOB = "&5PvE&8»&c%player%&8<-&bMob &8[&a%health% &c❤&8]";
-    public static final String DAMAGE_PLAYER = "&5PvP&8»&c%player%&8<-&b%damager% &8[&a%health% &c❤&8]";
+    public static final String DAMAGE_PLAYER = "&5PvP&8»&c%player%&8<-&b%d% &8[&a%health% &c❤&8]";
     public static final DecimalFormat format = new DecimalFormat("##.##");
 
 }

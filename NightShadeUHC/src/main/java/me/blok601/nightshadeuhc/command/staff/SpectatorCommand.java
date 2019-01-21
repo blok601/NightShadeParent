@@ -19,14 +19,16 @@ public class SpectatorCommand implements UHCCommand {
     @Override
     public void onCommand(CommandSender sender, Command cmd, String arg2, String[] args) {
         Player p = (Player) sender;
-        UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
+        UHCPlayer gamePlayer = UHCPlayer.get(p);
         if (gamePlayer.isSpectator()) {
             //Remove from spec
-            unSpec(p);
+            gamePlayer.unspec();
+
             return;
         } else {
             //set spec
-            setSpec(p);
+
+            gamePlayer.spec();
             return;
         }
     }
@@ -45,26 +47,4 @@ public class SpectatorCommand implements UHCCommand {
     public boolean hasRequiredRank() {
         return true;
     }
-    public static void setSpec(Player p) {
-        UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
-        if (gamePlayer == null) return;
-
-        //UHC.players.remove(p.getUniqueId());
-
-        gamePlayer.spec();
-
-    }
-
-    public static void unSpec(Player p) {
-        UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
-        if (!gamePlayer.isSpectator()) {
-            return;
-        }
-
-        //UHC.players.add(p.getUniqueId());
-        gamePlayer.unspec();
-    }
-
-
-
 }

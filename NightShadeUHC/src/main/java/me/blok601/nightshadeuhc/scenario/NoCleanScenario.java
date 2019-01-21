@@ -7,6 +7,7 @@ import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -63,7 +64,6 @@ public class NoCleanScenario extends Scenario{
             return;
         }
 
-        if(!(e.getDamager() instanceof Player)) return;
         if(!(e.getEntity() instanceof Player)) return;
         if(e.getDamage() == 0) return;
         if(e.isCancelled()) return;
@@ -74,6 +74,12 @@ public class NoCleanScenario extends Scenario{
             if(gamePlayer.isNoClean()){ //They have a timer
                 e.setCancelled(true);
             }
+        }
+
+        if (e.getDamager() instanceof Projectile) {
+            Projectile projectile = (Projectile) e.getDamager();
+            if (!(projectile.getShooter() instanceof Player)) e.setCancelled(true); //only players can damage them
+
         }
 
         if(e.getDamager() instanceof Player){

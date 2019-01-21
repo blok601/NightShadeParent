@@ -40,7 +40,7 @@ public class SuperheroesScenario extends Scenario {
     public void onGameStart(GameStartEvent e){
         if(!isEnabled()) return;
         Random random = ThreadLocalRandom.current();
-        SuperHeroType type = SuperHeroType.values()[random.nextInt(SuperHeroType.values().length)];
+
         if (gameManager.isIsTeam()) {
             Player tempPlayer;
             for (Team team : TeamManager.getInstance().getTeams()) {
@@ -71,6 +71,7 @@ public class SuperheroesScenario extends Scenario {
         }
         else {
             UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> {
+                SuperHeroType type = SuperHeroType.values()[random.nextInt(SuperHeroType.values().length)];
                 if (powers.containsKey(uhcPlayer.getUuid())) {
                     return;
                 }
@@ -88,7 +89,6 @@ public class SuperheroesScenario extends Scenario {
                 }
 
                 uhcPlayer.msg(ChatUtils.format(getPrefix() + "&eYour super power is: &3" + type.getName()));
-                return;
             });
         }
 

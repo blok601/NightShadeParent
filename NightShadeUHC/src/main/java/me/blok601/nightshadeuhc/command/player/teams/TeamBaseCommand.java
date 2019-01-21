@@ -9,7 +9,6 @@ import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
 import me.blok601.nightshadeuhc.entity.object.CachedColor;
 import me.blok601.nightshadeuhc.entity.object.Team;
-import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.manager.TeamManager;
 import me.blok601.nightshadeuhc.scenario.Scenario;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
@@ -159,40 +158,13 @@ public class TeamBaseCommand implements UHCCommand{
 
                         ScoreboardManager scoreboardManager = UHC.get().getScoreboardManager();
                         Scoreboard scoreboard;
-                        for (Team team : TeamManager.getInstance().getTeams()){
-                            String color = generateColor();
-                            for (Map.Entry<Player, PlayerScoreboard> playerPlayerScoreboardEntry : scoreboardManager.getPlayerScoreboards().entrySet()){
-                                if(playerPlayerScoreboardEntry.getValue() == null) continue;
-                                if(playerPlayerScoreboardEntry.getKey() == null) continue;
-
-                                scoreboard = playerPlayerScoreboardEntry.getValue().getBukkitScoreboard();
-                                if(scoreboard.getTeam(team.getName()) != null) {
-                                    scoreboard.getTeam(team.getName()).unregister();
-                                }
-
-                                org.bukkit.scoreboard.Team t = scoreboard.registerNewTeam(team.getName());
-                                t.setPrefix(color);
-//                                if(t.getPrefix().contains("&k") || t.getPrefix().endsWith("&r")){
-//                                    t.setPrefix(generateColor());
-//                                }
-
-                                for (String mem : team.getMembers()){
-                                    CachedColor cachedColor = new CachedColor(team.getName());
-                                    cachedColor.setColor(color);
-                                    t.addEntry(mem);
-                                    cachedColor.setPlayer(mem);
-                                    GameManager.get().getColors().add(cachedColor);
-                                }
-
-                            }
-
-                        }
+                        TeamManager.getInstance().colorAllTeams();
 
                         //Color solos
                         Player player;
                         String name;
-                        for (UHCPlayer uhcPlayer : UHCPlayerColl.get().getAllOnline()){
-                            String color = generateColor();
+                        for (UHCPlayer uhcPlayer : UHCPlayerColl.get().getAllPlaying()) {
+                            String color = ChatUtils.generateTeamColor();
                             player = uhcPlayer.getPlayer();
                             if(TeamManager.getInstance().getTeam(player) != null) continue; //Already colored
                             String playerString = player.getName().length() >= 13 ? player.getName().substring(0, 11) : player.getName();
@@ -208,14 +180,16 @@ public class TeamBaseCommand implements UHCCommand{
                                 }
 
                                 org.bukkit.scoreboard.Team t = scoreboard.registerNewTeam(name);
-                                t.setPrefix(color);
+                                t.setPrefix(ChatUtils.format(color));
                                 t.addEntry(player.getName());
                                 CachedColor cachedColor = new CachedColor(name);
                                 cachedColor.setColor(color);
                                 cachedColor.setPlayer(player.getName());
-                                GameManager.get().getColors().add(cachedColor);
+                                TeamManager.getInstance().getCachedColors().add(cachedColor);
                             }
                         }
+
+                        TeamManager.getInstance().updateSpectatorTeam();
 
                         p.sendMessage(ChatUtils.message("&eColored all teams and solos!"));
 
@@ -545,21 +519,6 @@ public class TeamBaseCommand implements UHCCommand{
         return false;
     }
 
-    private String generateColor(){
-        Random random = new Random();
-        ArrayList<ChatColor> colors = new ArrayList<>(Arrays.asList(ChatColor.values()));
-        colors.remove(ChatColor.MAGIC);
-        colors.remove(ChatColor.RESET);
-        Random random1 = new Random();
-        int amt = random1.nextInt(2) + 1;
-        if(amt == 1){
-            return String.valueOf(colors.get(random.nextInt(colors.size())));
-        }else {
-            String first = String.valueOf(colors.get(random.nextInt(colors.size())));
-            String second = String.valueOf(colors.get(random.nextInt(colors.size())));
-            return first + second;
-        }
-    }
 
     private static <T> List<List<T>> splitList(List<T> list, int size) {
         Iterator<T> iterator = list.iterator();

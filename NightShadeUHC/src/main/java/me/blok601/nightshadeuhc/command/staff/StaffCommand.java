@@ -27,7 +27,7 @@ public class StaffCommand implements UHCCommand {
         Player p = (Player) commandSender;
         UHCPlayer uhcPlayer = UHCPlayer.get(p);
         if (uhcPlayer.isStaffMode()) {
-            SpectatorCommand.unSpec(p);
+            uhcPlayer.unspec();
             Bukkit.getOnlinePlayers().forEach(o -> o.showPlayer(p));
             p.getActivePotionEffects().forEach(potionEffect -> p.removePotionEffect(potionEffect.getType()));
             uhcPlayer.setStaffMode(false);

@@ -98,20 +98,21 @@ public class GameStartTask extends BukkitRunnable {
                     PvPCommand.disablePvP();
                     FreezeUtil.stop();
 
-                    Bukkit.getOnlinePlayers().forEach(o -> o.setMaxHealth(20.0));
-                    Bukkit.getOnlinePlayers().forEach(o -> o.setHealth(o.getMaxHealth()));
-                    Bukkit.getOnlinePlayers().forEach(o -> o.setFoodLevel(20));
-                    Bukkit.getOnlinePlayers().forEach(o -> o.setLevel(0));
-                    Bukkit.getOnlinePlayers().forEach(o -> o.setExp(0));
-
-                    UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> uhcPlayer.setChangedLevel(0));
-
+                    UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> {
+                        uhcPlayer.setChangedLevel(0);
+                        Player o = uhcPlayer.getPlayer();
+                        o.setMaxHealth(20.0);
+                        o.setHealth(o.getMaxHealth());
+                        o.setFoodLevel(20);
+                        o.setLevel(0);
+                        o.setExp(0);
+                        o.getActivePotionEffects().forEach(potionEffect -> o.removePotionEffect(potionEffect.getType()));
+                    });
 
                     Core.get().getLogManager().log(Logger.LogType.INFO, "Everyone has been healed and fed!");
                     Bukkit.getOnlinePlayers().forEach(o -> o.getInventory().addItem(new ItemStack(Material.COOKED_BEEF, gameManager.getStarterFood())));
                     TimerTask timerTask = gameManager.getTimer();
                     timerTask.start();
-                    Bukkit.getServer().getPluginManager().callEvent(new GameStartEvent());
                     Bukkit.getOnlinePlayers().forEach(p -> {
 
                         UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> {
@@ -123,13 +124,18 @@ public class GameStartTask extends BukkitRunnable {
                             p.hidePlayer(uhcPlayer.getPlayer());
                             uhcPlayer.getPlayer().showPlayer(p);
                         });
-
+                        Bukkit.getServer().getPluginManager().callEvent(new GameStartEvent());
                         p.sendMessage(ChatUtils.format("&f&m-----------------------------------"));
                         p.sendMessage(ChatUtils.format("&fHost: &5" + gameManager.getHost().getName()));
                         if (scenarioManager.getEnabledScenarios().size() == 0) {
                             p.sendMessage(ChatUtils.format("&fScenarios: &5None"));
                         } else {
-                            p.sendMessage(ChatUtils.format("&fScenarios: &5" + Joiner.on("&7, &5").join(scenarioManager.getEnabledScenarios().stream().map(Scenario::getName).collect(Collectors.toList()))));
+                            Scenario scenario = scenarioManager.getScen("Mystery Scenarios");
+                            if (scenario != null && scenario.isEnabled()) {
+                                p.sendMessage(ChatUtils.format("&fScenarios: &5" + scenario.getName()));
+                            } else {
+                                p.sendMessage(ChatUtils.format("&fScenarios: &5" + Joiner.on("&7, &5").join(scenarioManager.getEnabledScenarios().stream().map(Scenario::getName).collect(Collectors.toList()))));
+                            }
                         }
 
                         p.sendMessage(" ");

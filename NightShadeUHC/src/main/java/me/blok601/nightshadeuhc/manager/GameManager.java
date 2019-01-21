@@ -7,7 +7,6 @@ import com.wimbli.WorldBorder.BorderData;
 import lombok.Getter;
 import lombok.Setter;
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.entity.object.CachedColor;
 import me.blok601.nightshadeuhc.entity.object.PlayerRespawn;
 import me.blok601.nightshadeuhc.entity.object.SetupStage;
 import me.blok601.nightshadeuhc.task.*;
@@ -35,7 +34,6 @@ public class GameManager {
                 500, 300, 200, 100, 50, 25, 10, 0, 0
         };
 
-        colors = new HashSet<>();
         Core.get().getLogManager().log(Logger.LogType.INFO, "GameManager has been setup!");
     }
 
@@ -46,7 +44,6 @@ public class GameManager {
 
     private  HashMap<UUID, PlayerRespawn> invs = new HashMap<>();
     private  ArrayList<UUID> deathBans = new ArrayList<>();
-    private  HashSet<CachedColor> colors;//storing player names because teams don't store UUIDs ;(
     private  ArrayList<String> whitelist = new ArrayList<>();
     private  HashSet<String> respawnQueue = new HashSet<>(); // This saves names like whitelist and will check using ignore case
     @Getter
@@ -76,7 +73,6 @@ public class GameManager {
     private GameCountdownTask gameCountdownTask;
     private  int[] shrinks;
     private  int borderID;
-    private  String serverType;
     private  HashMap<UUID, Integer> kills = new HashMap<>();
     @Getter
     public World world;
@@ -300,18 +296,6 @@ public class GameManager {
             }
             i++;
         }
-    }
-
-    public String getServerType() {
-        return serverType;
-    }
-
-    public void setServerType(String serverType) {
-        this.serverType = serverType;
-    }
-
-    public HashSet<CachedColor> getColors() {
-        return colors;
     }
 
     public HashSet<String> getRespawnQueue() {

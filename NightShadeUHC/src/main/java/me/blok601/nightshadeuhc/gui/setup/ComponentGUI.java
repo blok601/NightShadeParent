@@ -22,6 +22,7 @@ public class ComponentGUI {
             ItemBuilder itemBuilder = new ItemBuilder(component.getMaterial());
             itemBuilder.name("&e" + component.getName());
             itemBuilder.lore(component.isEnabled() ? "&aEnabled" : "&cDisabled");
+            itemBuilder.lore("&7&o(&6&oi&7&o) &6&o" + component.getDescription());
             builder.item(slot, itemBuilder.make());
             slot++;
         }

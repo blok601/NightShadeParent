@@ -1,10 +1,16 @@
 package me.blok601.nightshadeuhc.entity.object;
 
+import me.blok601.nightshadeuhc.UHC;
+import me.blok601.nightshadeuhc.manager.TeamManager;
+import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
+import me.blok601.nightshadeuhc.scoreboard.ScoreboardManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -105,5 +111,34 @@ public class Team {
 
     public void setBow(UUID bow) {
         this.bow = bow;
+    }
+
+    public void color() {
+        String color = ChatUtils.generateTeamColor();
+        ScoreboardManager scoreboardManager = UHC.get().getScoreboardManager();
+        Scoreboard scoreboard;
+        for (Map.Entry<Player, PlayerScoreboard> playerPlayerScoreboardEntry : scoreboardManager.getPlayerScoreboards().entrySet()) {
+            if (playerPlayerScoreboardEntry.getValue() == null) continue;
+            if (playerPlayerScoreboardEntry.getKey() == null) continue;
+
+            scoreboard = playerPlayerScoreboardEntry.getValue().getBukkitScoreboard();
+            if (scoreboard.getTeam(this.getName()) != null) {
+                scoreboard.getTeam(this.getName()).unregister();
+            }
+
+            org.bukkit.scoreboard.Team t = scoreboard.registerNewTeam(this.getName());
+            t.setPrefix(ChatUtils.format(color));
+//                                if(t.getPrefix().contains("&k") || t.getPrefix().endsWith("&r")){
+//                                    t.setPrefix(generateColor());
+//                                }
+
+            for (String mem : getMembers()) {
+                CachedColor cachedColor = new CachedColor(this.getName());
+                cachedColor.setColor(color);
+                t.addEntry(mem);
+                cachedColor.setPlayer(mem);
+                TeamManager.getInstance().getCachedColors().add(cachedColor);
+            }
+        }
     }
 }

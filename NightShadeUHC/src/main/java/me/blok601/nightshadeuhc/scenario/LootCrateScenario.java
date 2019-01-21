@@ -74,7 +74,7 @@ public class LootCrateScenario extends Scenario{
                     for (Player player : Bukkit.getOnlinePlayers()){
                         Random r = new Random();
                         player.getInventory().addItem(chests.get(r.nextInt(chests.size())));
-                        player.sendMessage(ChatUtils.message(getPrefix() + "&eYou have been given your lootcrate!"));
+                        player.sendMessage(ChatUtils.format(getPrefix() + "&eYou have been given your lootcrate!"));
                     }
                 }
             }
@@ -93,8 +93,9 @@ public class LootCrateScenario extends Scenario{
 
         if(e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR){
             Player p = e.getPlayer();
-            if(e.getItem().getType() == Material.CHEST){
-                if(e.getItem().getAmount() > 1){
+            ItemStack itemStack = p.getItemInHand();
+            if(itemStack.getType() == Material.CHEST){
+                if(itemStack.getAmount() > 1){
                     p.sendMessage(ChatUtils.message("&cYou can only open one lootcrate at a time!"));
                     return;
                 }
@@ -103,8 +104,8 @@ public class LootCrateScenario extends Scenario{
                 p.getInventory().setItemInHand(null);
                 p.getInventory().addItem(stack);
                 p.sendMessage(ChatUtils.format(getPrefix() + "&eYou have gotten " + stack.getAmount() + " &b" + stack.getType().name() + " &efrom your lootcrate!"));
-            }else if(e.getItem().getType() == Material.ENDER_CHEST){
-                if(e.getItem().getAmount() > 1){
+            }else if(itemStack.getType() == Material.ENDER_CHEST){
+                if(itemStack.getAmount() > 1){
                     p.sendMessage(ChatUtils.message("&cYou can only open one lootcrate at a time!"));
                     return;
                 }

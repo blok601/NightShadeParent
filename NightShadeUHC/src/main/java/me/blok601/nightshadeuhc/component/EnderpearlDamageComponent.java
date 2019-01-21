@@ -13,7 +13,7 @@ public class EnderpearlDamageComponent extends Component{
 
 
     public EnderpearlDamageComponent() {
-        super("Enderpearl Damage", Material.ENDER_PEARL, true);
+        super("Enderpearl Damage", Material.ENDER_PEARL, true, "Toggle enderpearl damage");
     }
 
 

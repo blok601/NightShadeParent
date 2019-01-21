@@ -60,7 +60,7 @@ public class JoinListener implements Listener {
         Scoreboard scoreboard = scoreboardManager.getPlayerScoreboard(player).getBukkitScoreboard();
         Scenario scen = scenarioManager.getScen("Secret Teams");
         if(scen != null && !scen.isEnabled()){
-            for (CachedColor cachedColor : gameManager.getColors()) {
+            for (CachedColor cachedColor : TeamManager.getInstance().getCachedColors()) {
                 if (scoreboard.getTeam(cachedColor.getId()) != null) continue;
                 Team team = scoreboard.registerNewTeam(cachedColor.getId());
                 team.setPrefix(cachedColor.getColor());

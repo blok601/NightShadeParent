@@ -3,7 +3,6 @@ package me.blok601.nightshadeuhc.listener.misc;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.command.staff.SpectatorCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
 import me.blok601.nightshadeuhc.manager.GameManager;
@@ -330,7 +329,7 @@ public class StaffListener implements Listener {
         Player p = e.getPlayer();
         UHCPlayer uhcPlayer = UHCPlayer.get(p);
         if (uhcPlayer.isStaffMode()) {
-            SpectatorCommand.unSpec(p);
+            uhcPlayer.unspec();
             Bukkit.getOnlinePlayers().forEach(o -> o.showPlayer(p));
             p.chat("/rea");
             p.getActivePotionEffects().forEach(potionEffect -> p.removePotionEffect(potionEffect.getType()));

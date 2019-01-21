@@ -5,6 +5,6 @@ package me.blok601.nightshadeuhc.entity.object;
  */
 public enum PlayerStatus {
 
-    LOBBY, ARENA, PLAYING, SPECTATING;
+    LOBBY, ARENA, PLAYING, SPECTATING, DEAD;
 
 }

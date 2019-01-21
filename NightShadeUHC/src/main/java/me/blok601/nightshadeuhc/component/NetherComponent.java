@@ -14,7 +14,7 @@ import org.bukkit.event.player.PlayerPortalEvent;
 public class NetherComponent extends Component {
 
     public NetherComponent() {
-        super("Nether", Material.NETHERRACK, false);
+        super("Nether", Material.NETHERRACK, false, "Toggle player's traveling to the nether");
     }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)

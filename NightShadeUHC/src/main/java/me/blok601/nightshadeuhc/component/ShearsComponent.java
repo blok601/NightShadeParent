@@ -3,7 +3,6 @@ package me.blok601.nightshadeuhc.component;
 import com.google.common.collect.ImmutableList;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.util.MathUtil;
-import me.blok601.nightshadeuhc.util.Util;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -21,7 +20,7 @@ public class ShearsComponent extends Component {
     protected ImmutableList list;
 
     public ShearsComponent(GameManager gameManager) {
-        super("Shears", Material.SHEARS, false);
+        super("Shears", Material.SHEARS, false, "Toggle whether shears work for apples or not");
         this.gameManager = gameManager;
 
         list = ImmutableList.of(Material.LEAVES, Material.LEAVES_2);

@@ -7,9 +7,10 @@ import com.massivecraft.massivecore.util.MUtil;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.command.staff.SpectatorCommand;
 import me.blok601.nightshadeuhc.entity.object.ArenaSession;
 import me.blok601.nightshadeuhc.entity.object.PlayerStatus;
+import me.blok601.nightshadeuhc.event.PlayerStartSpectatingEvent;
+import me.blok601.nightshadeuhc.event.PlayerStopSpectatingEvent;
 import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
 import me.blok601.nightshadeuhc.scoreboard.provider.type.ArenaProvider;
 import me.blok601.nightshadeuhc.scoreboard.provider.type.UHCProvider;
@@ -472,6 +473,7 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         p.setFlySpeed(0.2F);
         p.sendMessage(ChatUtils.message("&6You are now a spectator!"));
         Util.staffLog("&2" + p.getName()+ " is now a spectator!");
+        Bukkit.getServer().getPluginManager().callEvent(new PlayerStartSpectatingEvent(p));
     }
 
     public void unspec(){
@@ -493,6 +495,7 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         p.getInventory().setArmorContents(null);
         p.sendMessage(ChatUtils.message("&5You are no longer a spectator!"));
         Util.staffLog("&2" + p.getName()+ " is no longer a spectator!");
+        Bukkit.getServer().getPluginManager().callEvent(new PlayerStopSpectatingEvent(p));
     }
 
     public boolean isInArena() {
@@ -521,7 +524,7 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         ItemStack inspect = new ItemBuilder(Material.BOOK).name(ChatUtils.format("&cPlayer Inventory")).make();
 
         if (!isSpectator()) {
-            SpectatorCommand.setSpec(player);
+            this.spec();
             player.sendMessage(ChatUtils.message("&aYou are now a spectator"));
         }
 

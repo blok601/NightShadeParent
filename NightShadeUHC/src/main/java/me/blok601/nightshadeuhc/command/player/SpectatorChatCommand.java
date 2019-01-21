@@ -55,7 +55,7 @@ public class SpectatorChatCommand implements UHCCommand{
             }
 
             String f = stringBuilder.toString().trim();
-            UHCPlayerColl.get().getSpectators().forEach(uhcPlayer -> uhcPlayer.msg(ChatUtils.format("&8[&3SpecChat&8] &e" + p.getName() + ": &6" + f)));
+            UHCPlayerColl.get().getSpectators().forEach(uhcPlayer -> uhcPlayer.msg(ChatUtils.format("&8[&3Spec&8] &e" + p.getName() + ": &6" + f)));
         }
 
     }

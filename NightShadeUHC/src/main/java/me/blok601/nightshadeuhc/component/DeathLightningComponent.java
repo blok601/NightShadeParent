@@ -11,7 +11,7 @@ import org.bukkit.event.EventHandler;
 public class DeathLightningComponent extends Component {
 
     public DeathLightningComponent() {
-        super("Death Lightning", Material.FENCE, true);
+        super("Death Lightning", Material.FENCE, true, "Toggle the lightning effect on player's death");
     }
 
     @EventHandler

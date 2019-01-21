@@ -18,12 +18,14 @@ public abstract class Component implements Listener {
     private boolean locked;
     private Material material;
     private boolean defaultState;
+    private String description;
 
-    public Component(String name, Material material, boolean defaultState) {
+    public Component(String name, Material material, boolean defaultState, String description) {
         this.name = name;
         this.material = material;
         this.defaultState = defaultState;
         this.enabled = defaultState;
+        this.description = description;
     }
 
     public String getName() {
@@ -65,6 +67,7 @@ public abstract class Component implements Listener {
 
         ItemBuilder builder = new ItemBuilder(material).name("&e" + name);
         builder.lore(isEnabled() ? ChatUtils.format("&aEnabled") : ChatUtils.format("&cDisabled"), true);
+        builder.lore("&7&o(&6&oi&7&o) &6&o" + description);
 
         e.getInventory().setItem(slot, builder.make());
         p.updateInventory();
@@ -88,5 +91,13 @@ public abstract class Component implements Listener {
 
     public void onToggle(boolean newState, Player p) {
 
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

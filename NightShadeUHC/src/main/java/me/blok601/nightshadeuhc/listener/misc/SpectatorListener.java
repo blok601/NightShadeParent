@@ -2,7 +2,6 @@ package me.blok601.nightshadeuhc.listener.misc;
 
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
-import me.blok601.nightshadeuhc.command.staff.SpectatorCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
 import me.blok601.nightshadeuhc.util.ChatUtils;
@@ -102,9 +101,9 @@ public class SpectatorListener implements Listener {
 
 	@EventHandler (priority = EventPriority.NORMAL)
 	public void leave(PlayerQuitEvent e) {
-		UHCPlayer gamePlayer = UHCPlayer.get(e.getPlayer().getUniqueId());
+		UHCPlayer gamePlayer = UHCPlayer.get(e.getPlayer());
 		if (gamePlayer.isSpectator()) {
-			SpectatorCommand.unSpec(e.getPlayer());
+			gamePlayer.unspec();
 		}
 	}
 

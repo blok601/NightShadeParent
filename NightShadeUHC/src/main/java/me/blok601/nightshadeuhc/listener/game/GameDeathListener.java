@@ -134,7 +134,7 @@ public class GameDeathListener implements Listener {
 
             //Calculate points and changes
             //UHC.players.remove(p.getUniqueId());
-            uhcPlayer.setPlayerStatus(PlayerStatus.LOBBY);
+            uhcPlayer.setPlayerStatus(PlayerStatus.DEAD);
 
             if (damager != null) {
                 gamePlayer1.addKill(1);
@@ -279,7 +279,7 @@ public class GameDeathListener implements Listener {
 
         //Calculate points and changes
         //UHC.players.remove(p.getUniqueId());
-        uhcPlayer.setPlayerStatus(PlayerStatus.LOBBY);
+        uhcPlayer.setPlayerStatus(PlayerStatus.DEAD);
 
         if (damager != null) {
             gamePlayer1.addKill(1);

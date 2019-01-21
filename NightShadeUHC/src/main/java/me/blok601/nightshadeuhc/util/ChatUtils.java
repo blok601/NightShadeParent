@@ -4,10 +4,13 @@ import com.nightshadepvp.core.fanciful.FancyMessage;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
+import me.blok601.nightshadeuhc.manager.TeamManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.Random;
 
 
 /**
@@ -102,5 +105,10 @@ public class ChatUtils {
    public static String sendArenaMessage(String msg){
        return format("&5Arena &8» &b" + msg);
    }
+
+    public static String generateTeamColor() {
+        Random random = new Random(TeamManager.getInstance().getPossibleColors().size());
+        return TeamManager.getInstance().getPossibleColors().get(random.nextInt());
+    }
 
 }

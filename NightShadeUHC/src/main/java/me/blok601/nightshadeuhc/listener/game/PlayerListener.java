@@ -9,6 +9,7 @@ import me.blok601.nightshadeuhc.entity.MConf;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
 import me.blok601.nightshadeuhc.entity.object.GameState;
+import me.blok601.nightshadeuhc.entity.object.PlayerStatus;
 import me.blok601.nightshadeuhc.entity.object.SetupStage;
 import me.blok601.nightshadeuhc.entity.object.Team;
 import me.blok601.nightshadeuhc.gui.setup.HostGUI;
@@ -212,7 +213,7 @@ public class PlayerListener implements Listener {
 
         if (SpectatorChatCommand.specc.contains(p.getUniqueId())) {
             e.setCancelled(true);
-            UHCPlayerColl.get().getSpectators().forEach(uhcPlayer1 -> uhcPlayer1.msg(ChatUtils.format("&8[&3SpecChat&8] &e" + p.getName() + ": &6" + message)));
+            UHCPlayerColl.get().getSpectators().forEach(uhcPlayer1 -> uhcPlayer1.msg(ChatUtils.format("&8[&3Spec&8] &e" + p.getName() + ": &6" + message)));
             return;
         }
 
@@ -223,6 +224,10 @@ public class PlayerListener implements Listener {
                 p.sendMessage(ChatUtils.message("&cThe chat is currently frozen!"));
                 return;
             }
+        }
+
+        if(uhcPlayer.getPlayerStatus() == PlayerStatus.LOBBY && GameState.gameHasStarted()){
+            //They are booted and at the lobby
         }
 
         if (uhcPlayer.isDisguised()) {

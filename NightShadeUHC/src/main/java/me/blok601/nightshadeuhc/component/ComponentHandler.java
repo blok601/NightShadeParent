@@ -42,6 +42,7 @@ public class ComponentHandler {
         addComponent(new NetherQuartzXPNerfFeature(gameManager));
         addComponent(new SaturationComponent());
         addComponent(new ShearsComponent(gameManager));
+        addComponent(new SportsmanshipComponent());
 
         this.components.sort(Comparator.comparing(Component::getName));
     }

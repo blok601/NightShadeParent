@@ -1,11 +1,11 @@
 package me.blok601.nightshadeuhc.listener.misc;
 
 import com.nightshadepvp.core.fanciful.FancyMessage;
-import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
-import me.blok601.nightshadeuhc.scenario.ScenarioManager;
+import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.entity.object.SpecInfoData;
+import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -41,6 +41,7 @@ public class SpectatorInfoListener implements Listener {
         Player p = (Player) e.getEntity();
 
         if (e.getFinalDamage() == 0) return;
+        if (e.isCancelled()) return;
         if (p.getHealth() - e.getFinalDamage() <= 0) return; //They died
 
         FancyMessage fancyMessage = new FancyMessage();

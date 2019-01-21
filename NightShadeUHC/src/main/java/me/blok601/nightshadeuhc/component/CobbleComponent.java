@@ -11,7 +11,7 @@ public class CobbleComponent extends Component{
 
 
     public CobbleComponent() {
-        super("1.8 Stone", Material.COBBLESTONE, true);
+        super("1.8 Stone", Material.COBBLESTONE, true, "Toggle whether 1.8 stone blocks drop cobblestone");
     }
 
     @EventHandler

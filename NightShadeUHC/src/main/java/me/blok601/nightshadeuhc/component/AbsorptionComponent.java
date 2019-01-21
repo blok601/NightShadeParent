@@ -14,7 +14,7 @@ public class AbsorptionComponent extends Component{
 
 
     public AbsorptionComponent() {
-        super("Absorption", Material.GOLDEN_APPLE, true);
+        super("Absorption", Material.GOLDEN_APPLE, true, "Toggle whether Golden Apples give absorption or not");
     }
 
     @EventHandler

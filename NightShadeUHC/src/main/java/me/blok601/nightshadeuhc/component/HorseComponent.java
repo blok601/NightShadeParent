@@ -16,7 +16,7 @@ import org.spigotmc.event.entity.EntityMountEvent;
 public class HorseComponent extends Component {
 
     public HorseComponent() {
-        super("Horses", Material.SADDLE, true);
+        super("Horses", Material.SADDLE, true, "Toggle whether horses can be ridden or not");
     }
 
     @EventHandler

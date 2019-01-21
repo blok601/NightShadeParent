@@ -74,6 +74,8 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
     public static HashSet<UUID> players = new HashSet<>();
     public static HashSet<UUID> loggedOutPlayers = new HashSet<>();
 
+    private static String serverType;
+
     @Override
     public void onEnableInner() {
 
@@ -90,10 +92,10 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         Bukkit.getMessenger().registerIncomingPluginChannel(this, "BungeeCord", this);
 
         if (Bukkit.getPluginManager().getPlugin("ViaRewind") == null) {
-            GameManager.get().setServerType("UHC1");
+            serverType = "UHC1";
         } else {
 
-            GameManager.get().setServerType("UHC2");
+            serverType = "UHC2";
 
             hideEnchants();
             new OldEnchanting(this);
@@ -127,7 +129,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
 
 
         Bukkit.getConsoleSender().sendMessage(ChatUtils.message("&aNightShadePvPUHC " + getDescription().getVersion() + " has been successfully enabled!"));
-        Bukkit.getConsoleSender().sendMessage(ChatUtils.message("&eDetected Server&8: &3" + GameManager.get().getServerType()));
+        Bukkit.getConsoleSender().sendMessage(ChatUtils.message("&eDetected Server&8: &3" + serverType));
         GameState.setState(GameState.WAITING);
     }
 

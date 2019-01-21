@@ -1,14 +1,19 @@
 package me.blok601.nightshadeuhc.manager;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import me.blok601.nightshadeuhc.UHC;
+import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
+import me.blok601.nightshadeuhc.entity.object.CachedColor;
 import me.blok601.nightshadeuhc.entity.object.Team;
 import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
 import me.blok601.nightshadeuhc.scoreboard.ScoreboardManager;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by Blok on 9/24/2017.
@@ -18,9 +23,11 @@ public class TeamManager {
     private boolean teamManagement = false;
     private int teamSize = 2;
     private boolean teamFriendlyFire = true;
-    private boolean isRvB = false;
-    private int RvBScatterType = 1; //1 - Teams, 0 is solo
+    private boolean rvb = false;
+    private int rvbScatterType = 1; //1 - Teams, 0 is solo
     private boolean randomTeams = false;
+    private HashSet<CachedColor> colors;//storing player names because teams don't store UUIDs ;(
+    private List<String> possibleColors;
 
     private static TeamManager ourInstance = new TeamManager();
 
@@ -29,6 +36,41 @@ public class TeamManager {
     }
 
     private TeamManager() {
+
+    }
+
+    public void setup() {
+        colors = Sets.newHashSet();
+        this.teamManagement = false;
+        this.teamSize = 2;
+        this.teamFriendlyFire = true;
+        this.rvb = false;
+        this.rvbScatterType = 1;
+        this.randomTeams = false;
+
+        this.possibleColors = Lists.newArrayList("&0", "&1", "&2", "&3", "&4", "&5", "&6",
+                "&7", "&8", "&9", "&a", "&b", "&c", "&d", "&e");
+
+        List<String> temp = Lists.newArrayList();
+        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&o").collect(Collectors.toList()));
+        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&n").collect(Collectors.toList()));
+        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&m").collect(Collectors.toList()));
+        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&l").collect(Collectors.toList()));
+        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&m&n").collect(Collectors.toList()));
+        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&o&n").collect(Collectors.toList()));
+        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&o&m").collect(Collectors.toList()));
+        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&o&n&m").collect(Collectors.toList()));
+        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&l&n").collect(Collectors.toList()));
+        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&l&m").collect(Collectors.toList()));
+        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&l&o").collect(Collectors.toList()));
+        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&l&o&n").collect(Collectors.toList()));
+        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&l&o&m").collect(Collectors.toList()));
+        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&l&o&n&m").collect(Collectors.toList()));
+
+        possibleColors.addAll(temp);
+
+        possibleColors.remove("&7&o");
+        Collections.shuffle(possibleColors); //Have all good color combos
     }
 
     private ArrayList<Team> teams = new ArrayList<>();
@@ -58,14 +100,7 @@ public class TeamManager {
     }
 
     public Team getTeam(Player player) {
-        for (Team team : this.teams) {
-            for (String member : team.getMembers()){
-                if(member.toLowerCase().equalsIgnoreCase(player.getName().toLowerCase())){
-                    return team;
-                }
-            }
-        }
-        return null;
+        return getTeambyPlayerOnTeam(player.getName());
     }
 
     public Team getTeambyPlayerOnTeam(String name){
@@ -105,19 +140,19 @@ public class TeamManager {
     }
 
     public boolean isRvB() {
-        return isRvB;
+        return rvb;
     }
 
     public void setRvB(boolean rvB) {
-        isRvB = rvB;
+        rvB = rvB;
     }
 
     public int getRvBScatterType() {
-        return RvBScatterType;
+        return rvbScatterType;
     }
 
     public void setRvBScatterType(int rvBScatterType) {
-        RvBScatterType = rvBScatterType;
+        rvBScatterType = rvBScatterType;
     }
 
     public boolean isRandomTeams() {
@@ -150,5 +185,41 @@ public class TeamManager {
                 }
             }
         }
+    }
+
+    public void colorAllTeams() {
+        for (Team team : this.teams) {
+            team.color();
+        }
+    }
+
+    public HashSet<CachedColor> getCachedColors() {
+        return colors;
+    }
+
+    public void updateSpectatorTeam() {
+        ScoreboardManager scoreboardManager = UHC.get().getScoreboardManager();
+        UHCPlayerColl.get().getSpectators().forEach(uhcPlayer -> {
+            Player player = uhcPlayer.getPlayer();
+            PlayerScoreboard playerScoreboard = scoreboardManager.getPlayerScoreboard(player);
+            if (playerScoreboard.getBukkitScoreboard().getTeam("spec") != null) {
+                playerScoreboard.getBukkitScoreboard().getTeam("spec").unregister(); //Removed all of those
+            }
+
+
+            org.bukkit.scoreboard.Team specTeam = playerScoreboard.getBukkitScoreboard().registerNewTeam("spec");
+            specTeam.setPrefix(ChatColor.GRAY + "" + ChatColor.ITALIC);
+
+            UHCPlayerColl.get().getSpectators().forEach(uhcPlayer1 -> {
+                specTeam.addEntry(uhcPlayer1.getName());
+                CachedColor cachedColor = new CachedColor(uhcPlayer1.getName());
+                cachedColor.setColor(ChatColor.GRAY + "" + ChatColor.ITALIC);
+                this.getCachedColors().add(cachedColor);
+            });
+        });
+    }
+
+    public List<String> getPossibleColors() {
+        return possibleColors;
     }
 }

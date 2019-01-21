@@ -12,12 +12,13 @@ import java.util.Random;
 
 /**
  * Created by Blok on 12/29/2017.
+ * @author Blok, some code from eluinhost
  */
 public class SaturationComponent extends Component{
 
 
     public SaturationComponent() {
-        super("Saturation Fix", Material.COOKED_BEEF, true);
+        super("Saturation Fix", Material.COOKED_BEEF, true, "Toggle the saturation fix");
     }
 
     @EventHandler
