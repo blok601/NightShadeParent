@@ -200,11 +200,14 @@ public class GameListener implements Listener {
         UHCPlayerColl.get().getAllOnline().forEach(uhcPlayer -> {
             PlayerScoreboard playerScoreboard = UHC.get().getScoreboardManager().getPlayerScoreboard(uhcPlayer.getPlayer());
             Team newTeam;
-            if (playerScoreboard.getBukkitScoreboard().getTeam("UHC" + p.getName().substring(0, 5)) != null) {
-                playerScoreboard.getBukkitScoreboard().getTeam("UHC" + p.getName().substring(0, 5)).unregister();
+            String name;
+            String playerString = p.getName().length() >= 13 ? p.getName().substring(0, 11) : p.getName();
+            name = "UHC" + playerString;
+            if (playerScoreboard.getBukkitScoreboard().getTeam(name) != null) {
+                playerScoreboard.getBukkitScoreboard().getTeam(name).unregister();
             }
 
-            newTeam = playerScoreboard.getBukkitScoreboard().registerNewTeam("UHC" + p.getName().substring(0, 5));
+            newTeam = playerScoreboard.getBukkitScoreboard().registerNewTeam(name);
 
             newTeam.setPrefix(ChatUtils.format("&7&o&m"));
             newTeam.addEntry(p.getName()); //Updated that for everyone
