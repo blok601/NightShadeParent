@@ -107,8 +107,8 @@ public class ChatUtils {
    }
 
     public static String generateTeamColor() {
-        Random random = new Random(TeamManager.getInstance().getPossibleColors().size());
-        return TeamManager.getInstance().getPossibleColors().get(random.nextInt());
+        Random random = new Random();
+        return TeamManager.getInstance().getPossibleColors().get(random.nextInt(TeamManager.getInstance().getPossibleColors().size()));
     }
 
 }
