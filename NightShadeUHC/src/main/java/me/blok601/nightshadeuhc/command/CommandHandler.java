@@ -58,7 +58,7 @@ public class CommandHandler  {
         registerCommand(new ManualGameCommand());
         registerCommand(new ClaimHostCommand());
         registerCommand(new SitCommand());
-        registerCommand(new ScenarioManager(uhc));
+        registerCommand(new ScenarioManager(uhc, gameManager));
         registerCommand(new TeamsCommand(scenarioManager));
         registerCommand(new TeamBaseCommand(scenarioManager));
         registerCommand(new MaxplayersCommand());

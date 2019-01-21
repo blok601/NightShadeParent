@@ -6,6 +6,7 @@ import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.command.UHCCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
 import me.blok601.nightshadeuhc.event.GameStartEvent;
+import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.scenario.interfaces.StarterItems;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
@@ -33,10 +34,12 @@ import java.util.stream.Collectors;
 public class ScenarioManager implements UHCCommand, Listener {
 
     private UHC uhc;
+    private GameManager gameManager;
     private static ArrayList<Scenario> scenarios;
 
-    public ScenarioManager(UHC uhc) {
+    public ScenarioManager(UHC uhc, GameManager gameManager) {
         this.uhc = uhc;
+        this.gameManager = gameManager;
     }
 
     public void setup(){
@@ -103,7 +106,7 @@ public class ScenarioManager implements UHCCommand, Listener {
         addScen(new SoupScenario());
         addScen(new SoupPlusScenario());
         addScen(new StockUpScenario());
-        addScen(new SuperheroesScenario());
+        addScen(new SuperheroesScenario(gameManager));
         addScen(new SwitcherooScenario());
         addScen(new TeamInventoryScenario(), "TI");
         addScen(new TimberScenario());
