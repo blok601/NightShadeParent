@@ -290,7 +290,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         return gameCollection;
     }
 
-
-
-
+    public static String getServerType() {
+        return serverType;
+    }
 }

@@ -96,7 +96,7 @@ public class GameListener implements Listener {
                 cachedGame.setTeamType("FFA");
             }
 
-            cachedGame.setServer(GameManager.get().getServerType());
+            cachedGame.setServer(UHC.getServerType());
 
             Document document = new Document("matchID", cachedGame.getMatchID());
             document.append("host", cachedGame.getHost());
@@ -107,7 +107,7 @@ public class GameListener implements Listener {
             document.append("teamType", cachedGame.getTeamType());
             document.append("startTime", cachedGame.getStart());
             document.append("endTime", cachedGame.getEnd());
-            document.append("server", GameManager.get().getServerType());
+            document.append("server", UHC.getServerType());
 
             UHC.get().getGameCollection().insertOne(document);
         });
