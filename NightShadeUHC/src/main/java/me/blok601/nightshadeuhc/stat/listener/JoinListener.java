@@ -5,6 +5,7 @@ import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
+import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
 import me.blok601.nightshadeuhc.entity.object.*;
 import me.blok601.nightshadeuhc.event.PlayerJoinGameLateEvent;
 import me.blok601.nightshadeuhc.manager.GameManager;
@@ -67,23 +68,8 @@ public class JoinListener implements Listener {
             }
         }
 
-        UHCPlayer gameP;
-        for (Player pl : Bukkit.getOnlinePlayers()) {
-            gameP = UHCPlayer.get(pl.getUniqueId());
-            if (gameP != null) {
-                if (gameP.isSpectator())
-                    player.hidePlayer(pl);
-            }
 
-        }
 
-        UHCPlayer gp;
-        for (Player pls : Bukkit.getOnlinePlayers()) {
-            gp = UHCPlayer.get(pls.getUniqueId());
-            if (gp.isSpectator()) {
-                player.hidePlayer(pls);
-            }
-        }
 
         if (gamePlayer.isSpectator()) return;
         if (GameState.getState() == GameState.INGAME || GameState.getState() == GameState.MEETUP) {
@@ -92,6 +78,17 @@ public class JoinListener implements Listener {
                 logger.remove();
             }
         }
+
+        //Hopefully fixed that stupid hidden player bullshit here
+        UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> {
+            uhcPlayer.getPlayer().showPlayer(player);
+            player.showPlayer(uhcPlayer.getPlayer());
+        }); //Show all the ingame players to the player, and update for the game player
+
+        UHCPlayerColl.get().getSpectators().forEach(uhcPlayer -> {
+            player.hidePlayer(uhcPlayer.getPlayer());
+            uhcPlayer.getPlayer().showPlayer(player);
+        });
 
         if (gameManager.getRespawnQueue().contains(player.getName().toLowerCase())) {
             // They should be respawned

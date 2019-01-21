@@ -113,6 +113,17 @@ public class GameStartTask extends BukkitRunnable {
                     timerTask.start();
                     Bukkit.getServer().getPluginManager().callEvent(new GameStartEvent());
                     Bukkit.getOnlinePlayers().forEach(p -> {
+
+                        UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> {
+                            uhcPlayer.getPlayer().showPlayer(p);
+                            p.showPlayer(uhcPlayer.getPlayer());
+                        }); //Show all the ingame players to the player, and update for the game player
+
+                        UHCPlayerColl.get().getSpectators().forEach(uhcPlayer -> {
+                            p.hidePlayer(uhcPlayer.getPlayer());
+                            uhcPlayer.getPlayer().showPlayer(p);
+                        });
+
                         p.sendMessage(ChatUtils.format("&f&m-----------------------------------"));
                         p.sendMessage(ChatUtils.format("&fHost: &5" + gameManager.getHost().getName()));
                         if (scenarioManager.getEnabledScenarios().size() == 0) {
