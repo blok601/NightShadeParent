@@ -21,7 +21,7 @@ public class LandMineScenario extends Scenario{
                 Player p = e.getPlayer();
                 final Location l = p.getLocation().clone();
 
-                l.getWorld().createExplosion(l.add(0.5, 0.5, 0.5), 5, false);
+                l.getWorld().createExplosion(l.add(0.5, 0.5, 0.5), 3, false);
 
             }
         }
