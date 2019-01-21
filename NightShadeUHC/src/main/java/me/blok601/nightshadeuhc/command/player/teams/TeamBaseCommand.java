@@ -1,5 +1,8 @@
 package me.blok601.nightshadeuhc.command.player.teams;
 
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
+import com.google.common.collect.Iterables;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.nightshadepvp.core.fanciful.FancyMessage;
@@ -163,7 +166,10 @@ public class TeamBaseCommand implements UHCCommand{
                         //Color solos
                         Player player;
                         String name;
-                        for (UHCPlayer uhcPlayer : UHCPlayerColl.get().getAllPlaying()) {
+                        Predicate<UHCPlayer> IS_SPEC = UHCPlayer::isSpectator;
+
+
+                        for (UHCPlayer uhcPlayer : Iterables.filter(UHCPlayerColl.get().getAllOnline(), Predicates.not(IS_SPEC))) {
                             String color = ChatUtils.generateTeamColor();
                             player = uhcPlayer.getPlayer();
                             if(TeamManager.getInstance().getTeam(player) != null) continue; //Already colored

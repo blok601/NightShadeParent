@@ -63,7 +63,7 @@ public class JoinListener implements Listener {
             for (CachedColor cachedColor : TeamManager.getInstance().getCachedColors()) {
                 if (scoreboard.getTeam(cachedColor.getId()) != null) continue;
                 Team team = scoreboard.registerNewTeam(cachedColor.getId());
-                team.setPrefix(cachedColor.getColor());
+                team.setPrefix(ChatUtils.format(cachedColor.getColor()));
                 team.addEntry(cachedColor.getPlayer());
             }
         }

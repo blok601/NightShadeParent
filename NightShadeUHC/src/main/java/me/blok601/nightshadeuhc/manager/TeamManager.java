@@ -199,7 +199,7 @@ public class TeamManager {
 
     public void updateSpectatorTeam() {
         ScoreboardManager scoreboardManager = UHC.get().getScoreboardManager();
-        UHCPlayerColl.get().getSpectators().forEach(uhcPlayer -> {
+        UHCPlayerColl.get().getAllOnline().forEach(uhcPlayer -> {
             Player player = uhcPlayer.getPlayer();
             PlayerScoreboard playerScoreboard = scoreboardManager.getPlayerScoreboard(player);
             if (playerScoreboard.getBukkitScoreboard().getTeam("spec") != null) {
@@ -214,6 +214,7 @@ public class TeamManager {
                 specTeam.addEntry(uhcPlayer1.getName());
                 CachedColor cachedColor = new CachedColor(uhcPlayer1.getName());
                 cachedColor.setColor(ChatColor.GRAY + "" + ChatColor.ITALIC);
+                cachedColor.setPlayer(uhcPlayer1.getName());
                 this.getCachedColors().add(cachedColor);
             });
         });
@@ -221,5 +222,31 @@ public class TeamManager {
 
     public List<String> getPossibleColors() {
         return possibleColors;
+    }
+
+    public Collection<CachedColor> getCachedColors(Player player) {
+        HashSet<CachedColor> temp = Sets.newHashSet();
+        for (CachedColor cachedColor : this.getCachedColors()) {
+            if (cachedColor.getId().equalsIgnoreCase(player.getName())) {
+                temp.add(cachedColor);
+            }
+
+            if (cachedColor.getPlayer().equalsIgnoreCase(player.getName())) {
+                temp.add(cachedColor);
+            }
+        }
+
+        return temp;
+    }
+
+    public Collection<CachedColor> getCachedColors(String id) {
+        HashSet<CachedColor> temp = Sets.newHashSet();
+        for (CachedColor cachedColor : this.getCachedColors()) {
+            if (cachedColor.getId().equalsIgnoreCase(id)) {
+                temp.add(cachedColor);
+            }
+        }
+
+        return temp;
     }
 }

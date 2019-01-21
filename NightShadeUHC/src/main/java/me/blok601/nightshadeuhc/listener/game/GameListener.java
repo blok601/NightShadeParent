@@ -6,12 +6,14 @@ import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.component.ComponentHandler;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
+import me.blok601.nightshadeuhc.entity.object.CachedColor;
 import me.blok601.nightshadeuhc.event.*;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.manager.TeamManager;
 import me.blok601.nightshadeuhc.scenario.Scenario;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.scenario.interfaces.StarterItems;
+import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
 import me.blok601.nightshadeuhc.stat.CachedGame;
 import me.blok601.nightshadeuhc.stat.handler.StatsHandler;
 import me.blok601.nightshadeuhc.task.WorldBorderTask;
@@ -27,8 +29,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scoreboard.Team;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -161,6 +165,49 @@ public class GameListener implements Listener {
                 }
             }
         }
+    }
+
+    @EventHandler
+    public void onSpectate(PlayerStartSpectatingEvent e) {
+        Player p = e.getPlayer();
+
+        UHCPlayerColl.get().getAllOnline().forEach(u -> {
+            PlayerScoreboard playerScoreboard = UHC.get().getScoreboardManager().getPlayerScoreboard(u.getPlayer());
+            org.bukkit.scoreboard.Team specTeam = playerScoreboard.getBukkitScoreboard().registerNewTeam("spec");
+            specTeam.addEntry(p.getName());
+            CachedColor cachedColor = new CachedColor(p.getName());
+            cachedColor.setColor("&7&o");
+            TeamManager.getInstance().getCachedColors().add(cachedColor);
+        });
+    }
+
+    @EventHandler
+    public void onStopSpectate(PlayerStopSpectatingEvent e) {
+        Player p = e.getPlayer();
+        UHCPlayerColl.get().getSpectators().forEach(u -> {
+            PlayerScoreboard playerScoreboard = UHC.get().getScoreboardManager().getPlayerScoreboard(u.getPlayer());
+            org.bukkit.scoreboard.Team specTeam = playerScoreboard.getBukkitScoreboard().registerNewTeam("spec");
+            specTeam.removeEntry(p.getName());
+        });
+
+        Collection<CachedColor> cachedColors = TeamManager.getInstance().getCachedColors(p);
+        if (!cachedColors.isEmpty()) {
+            TeamManager.getInstance().getCachedColors().removeAll(cachedColors); //Clear them out of there
+        }
+
+        //Now update every player's board
+        UHCPlayerColl.get().getAllOnline().forEach(uhcPlayer -> {
+            PlayerScoreboard playerScoreboard = UHC.get().getScoreboardManager().getPlayerScoreboard(uhcPlayer.getPlayer());
+            Team newTeam;
+            if (playerScoreboard.getBukkitScoreboard().getTeam("UHC" + p.getName().substring(0, 5)) != null) {
+                playerScoreboard.getBukkitScoreboard().getTeam("UHC" + p.getName().substring(0, 5)).unregister();
+            }
+
+            newTeam = playerScoreboard.getBukkitScoreboard().registerNewTeam("UHC" + p.getName().substring(0, 5));
+
+            newTeam.setPrefix(ChatUtils.format("&7&o&m"));
+            newTeam.addEntry(p.getName()); //Updated that for everyone
+        });
     }
 
     private String get(int i){

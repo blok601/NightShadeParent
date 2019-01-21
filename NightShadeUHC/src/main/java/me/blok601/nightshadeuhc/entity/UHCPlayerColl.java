@@ -57,4 +57,8 @@ public class UHCPlayerColl extends SenderColl<UHCPlayer> {
         return list;
     }
 
+    public Collection<UHCPlayer> getAllOnlinePlayers(){
+        return getAllOnline().stream().filter(SenderEntity::isPlayer).collect(Collectors.toList());
+    }
+
 }
