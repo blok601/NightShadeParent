@@ -24,11 +24,14 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class SuperheroesScenario extends Scenario {
 
+    private GameManager gameManager;
     public static HashMap<UUID, SuperHeroType> powers;
-    public static HashMap<UUID, SuperHeroType> teamPowers;
+    private static HashMap<UUID, SuperHeroType> teamPowers;
 
-    public SuperheroesScenario() {
+
+    public SuperheroesScenario(GameManager gameManager) {
         super("Superheroes", "Each player will gain a special ability. The powers are speed 1, strength 1, resistance 2, invisibility, 10 extra hearts, and jump boost 4.", new ItemBuilder(Material.BREWING_STAND_ITEM).name("Superheroes").make());
+        this.gameManager = gameManager;
         powers = new HashMap<>();
         teamPowers = new HashMap<>();
     }
@@ -38,17 +41,19 @@ public class SuperheroesScenario extends Scenario {
         if(!isEnabled()) return;
         Random random = ThreadLocalRandom.current();
         SuperHeroType type = SuperHeroType.values()[random.nextInt(SuperHeroType.values().length)];
-        if(GameManager.get().isIsTeam()) {
+        if (gameManager.isIsTeam()) {
             Player tempPlayer;
             for (Team team : TeamManager.getInstance().getTeams()) {
-                int times = team.getMembers().size();
-                for (int i = 0; i >= times - 1; i++) {
+                Collections.shuffle(team.getMembers());
+                int times = team.getMembers().size() - 1;
+                for (int i = 0; i >= times; i++){
                     tempPlayer = Bukkit.getPlayer(team.getMembers().get(i));
+                    if (tempPlayer == null) continue;
 
                     if(teamPowers.containsKey(tempPlayer.getUniqueId())) {
                         return;
                     }
-                    Collections.shuffle(team.getMembers());
+
                     SuperHeroType typeTeams = SuperHeroType.values()[i];
                     teamPowers.put(tempPlayer.getUniqueId(), typeTeams);
 
@@ -65,7 +70,7 @@ public class SuperheroesScenario extends Scenario {
             }
         }
         else {
-            UHCPlayerColl.get().getAllOnline().stream().filter(uhcPlayer -> !uhcPlayer.isSpectator()).forEach(uhcPlayer -> {
+            UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> {
                 if (powers.containsKey(uhcPlayer.getUuid())) {
                     return;
                 }
