@@ -81,6 +81,7 @@ public class ScenarioManager implements UHCCommand, Listener {
         addScen(new HobbitScenario());
         addScen(new InfiniteEnchanterScenario(), "IE");
         addScen(new KingsScenario());
+        addScen(new LandMineScenario());
         addScen(new LootCrateScenario(), "LC");
         addScen(new MysteryScenarios(), "MS");
         addScen(new NoCleanScenario(), "NC");

@@ -61,6 +61,8 @@ public class ScatterTask extends BukkitRunnable {
         Bukkit.getOnlinePlayers().stream().filter(o -> !gameManager.getWhitelist().contains(o.getName().toLowerCase())).forEach(o -> gameManager.getWhitelist().add(o.getName().toLowerCase()));
         gameManager.setWhitelistEnabled(true);
         Util.staffLog("Everyone has been added to the whitelist and whitelist has been enabled!");
+
+
     }
 
     @Override
@@ -70,6 +72,9 @@ public class ScatterTask extends BukkitRunnable {
                 if (TeamManager.getInstance().getRvBScatterType() == 0) {
                     //Scatter like solos
                     Bukkit.getOnlinePlayers().forEach(o -> {
+                        for(PotionEffect effect: o.getActivePotionEffects()){
+                            o.removePotionEffect(effect.getType());
+                        }
                         o.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1));
                         o.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, Integer.MAX_VALUE, 0));
                     });
@@ -99,6 +104,9 @@ public class ScatterTask extends BukkitRunnable {
                 } else {
 
                     Bukkit.getOnlinePlayers().forEach(o -> {
+                        for(PotionEffect effect: o.getActivePotionEffects()){
+                            o.removePotionEffect(effect.getType());
+                        }
                         o.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1));
                         o.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, Integer.MAX_VALUE, 0));
                     });
@@ -154,6 +162,9 @@ public class ScatterTask extends BukkitRunnable {
             } else {
 
                 Bukkit.getOnlinePlayers().forEach(o -> {
+                    for(PotionEffect effect: o.getActivePotionEffects()){
+                        o.removePotionEffect(effect.getType());
+                    }
                     o.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1));
                     o.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, Integer.MAX_VALUE, 0));
                 });
@@ -204,6 +215,9 @@ public class ScatterTask extends BukkitRunnable {
 
         } else {
             Bukkit.getOnlinePlayers().forEach(o -> {
+                for(PotionEffect effect: o.getActivePotionEffects()){
+                    o.removePotionEffect(effect.getType());
+                }
                 o.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1));
                 o.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, Integer.MAX_VALUE, 0));
             });
