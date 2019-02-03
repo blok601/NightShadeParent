@@ -1,5 +1,6 @@
 package me.blok601.nightshadeuhc.scenario;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
@@ -84,7 +85,13 @@ public class Scenario implements Listener {
         this.abbreviation = abbreviation;
     }
 
-    public void onToggle(boolean newState){}
+    public void onToggle(boolean newState) {
+        onToggle(newState, null);
+    }
+
+    public void onToggle(boolean newState, Player toggler) {
+        //Override method
+    }
 
     public ScenarioManager getScenarioManager() {
         return scenarioManager;

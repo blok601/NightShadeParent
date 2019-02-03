@@ -87,14 +87,14 @@ public class ScenarioClick implements Listener  {
 
                     if (scenario.isEnabled()) {
                         scenario.setEnabled(false);
-                        scenario.onToggle(false);
+                        scenario.onToggle(false, p);
                         p.sendMessage(ChatUtils.message("&cDisabled &e" + scenario.getName() + "!"));
                     } else {
                         ScenarioEnableEvent ev = new ScenarioEnableEvent(scenario, p);
                         Bukkit.getServer().getPluginManager().callEvent(ev);
                         if (!ev.isCancelled()) {
                             scenario.setEnabled(true);
-                            scenario.onToggle(false);
+                            scenario.onToggle(true, p);
                         }
                         p.sendMessage(ChatUtils.message("&aEnabled &e" + scenario.getName() + "!"));
                     }

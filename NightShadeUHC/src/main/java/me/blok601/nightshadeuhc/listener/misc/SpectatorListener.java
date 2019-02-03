@@ -1,5 +1,6 @@
 package me.blok601.nightshadeuhc.listener.misc;
 
+import com.massivecraft.massivecore.store.SenderEntity;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
@@ -26,7 +27,7 @@ public class SpectatorListener implements Listener {
 	@EventHandler
 	public void pickup(PlayerPickupItemEvent e) {
 		Player p = e.getPlayer();
-		UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
+		UHCPlayer gamePlayer = UHCPlayer.get(p);
 		if (gamePlayer.isSpectator()) {
 			e.setCancelled(true);
 		}
@@ -37,7 +38,7 @@ public class SpectatorListener implements Listener {
 		if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
 			Player p = (Player) e.getEntity();
 
-			UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
+			UHCPlayer gamePlayer = UHCPlayer.get(p);
 			if(gamePlayer.isInArena()){
 				return;
 			}
@@ -73,7 +74,7 @@ public class SpectatorListener implements Listener {
 
 	@EventHandler
 	public void drop(PlayerDropItemEvent e) {
-		UHCPlayer gamePlayer = UHCPlayer.get(e.getPlayer().getUniqueId());
+		UHCPlayer gamePlayer = UHCPlayer.get(e.getPlayer());
 		if (gamePlayer.isSpectator()) {
 			e.setCancelled(true);
 		}
@@ -82,7 +83,7 @@ public class SpectatorListener implements Listener {
 	@EventHandler
 	public void blockBreak(BlockBreakEvent e) {
 		Player p = e.getPlayer();
-		UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
+		UHCPlayer gamePlayer = UHCPlayer.get(p);
 		if (gamePlayer.isSpectator()) {
 			e.setCancelled(true);
 			p.sendMessage(ChatUtils.message("&cYou can't break items while in spectator mode!"));
@@ -92,7 +93,7 @@ public class SpectatorListener implements Listener {
 	@EventHandler
 	public void blockPlace(BlockPlaceEvent e) {
 		Player p = e.getPlayer();
-		UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
+		UHCPlayer gamePlayer = UHCPlayer.get(p);
 		if (gamePlayer.isSpectator()){
 			e.setCancelled(true);
 			p.sendMessage(ChatUtils.message("&cYou can't place items while in spectator mode!"));
@@ -110,11 +111,11 @@ public class SpectatorListener implements Listener {
 	@EventHandler
 	public void interact(PlayerInteractEvent e) {
 		Player p = e.getPlayer();
-		UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
+		UHCPlayer gamePlayer = UHCPlayer.get(p);
 
 		if (gamePlayer.isSpectator()) {
 			Random r = ThreadLocalRandom.current();
-			ArrayList<Player> players = UHCPlayerColl.get().getAllPlaying().stream().map(uhcPlayer -> uhcPlayer.getPlayer()).collect(Collectors.toCollection(ArrayList::new));
+			ArrayList<Player> players = UHCPlayerColl.get().getAllPlaying().stream().map(SenderEntity::getPlayer).collect(Collectors.toCollection(ArrayList::new));
 //			UHC.players.stream().filter(uuid -> Bukkit.getPlayer(uuid) != null).forEach(uuid -> players.add(Bukkit.getPlayer(uuid)));
 			if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
                 if (p.getItemInHand() == null || p.getItemInHand().getType() == Material.AIR) {

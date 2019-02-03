@@ -1,5 +1,5 @@
-name: NightShadeUHC
-version: 3.9.5
+name: UHC
+version: 4.0
 main: me.blok601.nightshadeuhc.UHC
 prefix: UHC
 authors: [blok601, Database]

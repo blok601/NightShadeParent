@@ -23,7 +23,6 @@ public class InfiniteEnchanterScenario extends Scenario implements StarterItems 
 
     @EventHandler
     public void onStart(GameStartEvent e){
-
         if(!isEnabled()){
             return;
         }

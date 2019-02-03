@@ -17,10 +17,21 @@ public class PluginManager extends JavaPlugin {
 
     private static PluginManager i;
 
+    private ServerType serverType;
+
     @Override
     public void onEnable() {
         i = this;
         getCommand("versions").setExecutor(new VersionsCommand());
+
+        File pluginsDir = new File(this.getServer().getWorldContainer() + "/plugins/");
+        for (File file : pluginsDir.listFiles()) {
+            if (file.getName().equalsIgnoreCase("UHC.jar")) {
+                serverType = ServerType.UHC;
+            } else if (file.getName().equalsIgnoreCase("Hub.jar")) {
+                serverType = ServerType.HUB;
+            }
+        }
     }
 
     @Override
@@ -53,6 +64,8 @@ public class PluginManager extends JavaPlugin {
             if (file == null || !file.exists()) {
                 continue;
             }
+
+            if (!serverType.getNeed().contains(file.getName())) continue;
 
             try {
                 FileUtils.copyFileToDirectory(file, pluginsDir);

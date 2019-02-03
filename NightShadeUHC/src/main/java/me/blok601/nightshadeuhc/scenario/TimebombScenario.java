@@ -61,7 +61,7 @@ public class TimebombScenario extends Scenario{
 
         c.getInventory().addItem(apple);
 
-        e.getItems().clear();
+//        e.getItems().clear();
         ArmorStand armorStand = p.getWorld().spawn(c.getLocation().clone().add(0.5, 1, 0), ArmorStand.class);
         armorStand.setCustomNameVisible(true);
         armorStand.setSmall(true);
@@ -81,6 +81,7 @@ public class TimebombScenario extends Scenario{
                     c.getWorld().strikeLightning(c.getLocation());
                     Bukkit.broadcastMessage(ChatUtils.format(getPrefix()+ "&6" + p.getName() + "'s corpse has exploded!"));
                     armorStand.setCustomNameVisible(false);
+                    armorStand.setVisible(false);
                     armorStand.remove();
                     cancel();
                     return;

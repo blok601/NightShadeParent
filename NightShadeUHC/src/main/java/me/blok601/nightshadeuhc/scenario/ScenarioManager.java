@@ -125,6 +125,10 @@ public class ScenarioManager implements UHCCommand, Listener {
         addScen(new AnonymousScenario(), "Anon"); //Put this at bottom to test alphabetical order
         addScen(new DoubleDatesScenario());
         addScen(new SecretTeamsScenario());
+        addScen(new StickyAndAfraidScenario());
+        addScen(new RottenApplesScenario());
+        addScen(new StrengtheningKillScenario());
+        addScen(new DependencyScenario(gameManager));
 
         sortScenarios();
     }
@@ -158,7 +162,7 @@ public class ScenarioManager implements UHCCommand, Listener {
         ArrayList<ItemStack> items = new ArrayList<>();
 
         for (Scenario scenario : scenarios) {
-           ItemStack item = new ItemBuilder(scenario.getItem()).name(scenario.isEnabled() ? ChatUtils.format("&a" + scenario.getName()) : ChatUtils.format("&c" + scenario.getName())).make();
+            ItemStack item = new ItemBuilder(scenario.getItem()).name(scenario.isEnabled() ? ChatUtils.format("&a" + scenario.getName()) : ChatUtils.format("&c" + scenario.getName())).lore(scenario.getDesc()).make();
             items.add(item);
         }
 
