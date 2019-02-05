@@ -57,7 +57,7 @@ public class DependencyScenario extends Scenario {
 
         if (team == null || team1 == null) return; //Make sure they are both on a team in the first place
         if (team.getMembers().contains(clicked.getName())) {
-            clicked.openWorkbench(clicked.getLocation(), true);
+            clicker.openWorkbench(clicked.getLocation(), true);
         }
     }
 }

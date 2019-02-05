@@ -161,7 +161,7 @@ public class ScenarioManager implements UHCCommand, Listener {
         System.out.println("Current Scens: " + scenarios.size());
         ArrayList<ItemStack> items = new ArrayList<>();
 
-        for (Scenario scenario : scenarios) {
+        for (Scenario scenario : ScenarioManager.scenarios) {
             ItemStack item = new ItemBuilder(scenario.getItem()).name(scenario.isEnabled() ? ChatUtils.format("&a" + scenario.getName()) : ChatUtils.format("&c" + scenario.getName())).lore(scenario.getDesc()).make();
             items.add(item);
         }
@@ -293,8 +293,6 @@ public class ScenarioManager implements UHCCommand, Listener {
                         PlayerUtils.giveItem(stack, player);
                     }
                 });
-
-
             }
         }
     }

@@ -20,7 +20,7 @@ public class RottenApplesScenario extends Scenario {
 
 
     public RottenApplesScenario() {
-        super("Rotten Apples", "Eating a golden apple has the 7.5% chance of giving nausea and slowness for 5 seconds", new ItemStack(Material.FERMENTED_SPIDER_EYE));
+        super("Rotten Apples", "Eating a golden apple has the 7.5% chance of giving nausea and slowness for 10 seconds", new ItemStack(Material.FERMENTED_SPIDER_EYE));
     }
 
     @EventHandler
@@ -34,9 +34,9 @@ public class RottenApplesScenario extends Scenario {
         if (e.getItem().getType() == Material.GOLDEN_APPLE) {
             Player p = e.getPlayer();
             if (UHCPlayer.get(p).getPlayerStatus() == PlayerStatus.PLAYING) {
-                if (MathUtil.getChance(7.5)) {
-                    p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 100, 0));
-                    p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 0));
+                if (MathUtil.getChance(10)) {
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 200, 0));
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 0));
                     p.sendMessage(ChatUtils.format(getPrefix() + "&cYou have received blindness and nausea for 10 seconds!"));
                 }
             }
