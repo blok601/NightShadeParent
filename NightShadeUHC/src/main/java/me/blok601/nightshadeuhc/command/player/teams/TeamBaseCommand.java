@@ -62,6 +62,7 @@ public class TeamBaseCommand implements UHCCommand{
         p.sendMessage(ChatUtils.message("&a/team reset"));
         p.sendMessage(ChatUtils.message("&a/team man <on/off>"));
         p.sendMessage(ChatUtils.message("&a/team ff <on/off>"));
+        p.sendMessage(ChatUtils.message("&a/team remove <player>"));
 	}
 
     @Override
@@ -477,6 +478,27 @@ public class TeamBaseCommand implements UHCCommand{
                         p.sendMessage(ChatUtils.format("&b&m---------------------------------"));
 
                     }
+                } else if (args[0].equalsIgnoreCase("remove")) {
+
+                    if (!user.hasRank(Rank.TRIAL)) {
+                        p.sendMessage(ChatUtils.message("&cYou require the " + Rank.TRIAL.getPrefix() + " &crank to use this command!"));
+                        return;
+                    }
+
+                    String target = args[1];
+                    Team team = TeamManager.getInstance().getTeambyPlayerOnTeam(target);
+                    if (team == null) {
+                        p.sendMessage(ChatUtils.message("&cThat player doesn't have a team!"));
+                        return;
+                    }
+
+                    for (Team t : TeamManager.getInstance().getTeams()){
+                        t.scheduleRemoval(target);
+                    }
+
+                    team.scheduleRemoval(target);
+                    p.sendMessage(ChatUtils.message("&b" + target + " &ewill be removed from all of their teams!"));
+
                 }
             }else if(args.length == 3){
                 if(args[0].equalsIgnoreCase("set")){

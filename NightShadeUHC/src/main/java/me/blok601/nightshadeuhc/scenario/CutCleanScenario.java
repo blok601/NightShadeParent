@@ -1,17 +1,13 @@
 package me.blok601.nightshadeuhc.scenario;
 
 import me.blok601.nightshadeuhc.util.ItemBuilder;
-import me.blok601.nightshadeuhc.util.PlayerUtils;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.ExperienceOrb;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -24,41 +20,30 @@ public class CutCleanScenario extends Scenario{
         super("CutClean", "Everything is pre-smelted", new ItemBuilder(Material.COOKED_BEEF).name("CutClean").make());
     }
 
-
     @EventHandler
-    public void onBreak(BlockBreakEvent e) {
-        if (!isEnabled()) {
+    public void on(ItemSpawnEvent event) {
+        Item drop = event.getEntity();
+        ItemStack item = drop.getItemStack();
+
+        if (item.getType() == Material.GOLD_ORE) {
+            drop.setItemStack(new ItemStack(Material.GOLD_INGOT, item.getAmount(), item.getDurability()));
             return;
         }
 
-        //Enabled
-        Block b = e.getBlock();
-        Player p = e.getPlayer();
-        Location clone = new Location(b.getWorld(), b.getLocation().getBlockX() + 0.5D, b.getLocation().getBlockY(), b.getLocation().getBlockZ() + 0.5D); //XP ORB
+        if (item.getType() == Material.IRON_ORE) {
+            drop.setItemStack(new ItemStack(Material.IRON_INGOT, item.getAmount(), item.getDurability()));
+            return;
+        }
 
-        if (e.getBlock().getType().equals(Material.GOLD_ORE)) {
-            if (getScenarioManager().getScen("Goldless").isEnabled()) return;
-            e.setCancelled(true);
-            b.setType(Material.AIR);
-            PlayerUtils.giveItem(new ItemStack(Material.GOLD_INGOT, 1), p);
-            b.getWorld().spawn(clone, ExperienceOrb.class).setExperience(2);
-        } else if (b.getType().equals(Material.IRON_ORE)) {
-            e.setCancelled(true);
-            e.getBlock().setType(Material.AIR);
-            PlayerUtils.giveItem(new ItemStack(Material.IRON_INGOT, 1), p);
-            b.getWorld().spawn(clone, ExperienceOrb.class).setExperience(1);
-        }else if(b.getType().equals(Material.DIAMOND_ORE)){
-            e.setExpToDrop(4);
-        }else if(b.getType().equals(Material.REDSTONE_ORE) || b.getType().equals(Material.GLOWING_REDSTONE_ORE)){
-            e.setCancelled(true);
-            e.getBlock().setType(Material.AIR);
-            PlayerUtils.giveItem(new ItemStack(Material.REDSTONE, 3), p);
-            b.getWorld().spawn(clone, ExperienceOrb.class).setExperience(3);
-        }else if(b.getType().equals(Material.LAPIS_ORE)){
-            e.setCancelled(true);
-            e.getBlock().setType(Material.AIR);
-            PlayerUtils.giveItem(new ItemStack(Material.INK_SACK, 4, (short) 4), p);
-            b.getWorld().spawn(clone, ExperienceOrb.class).setExperience(3);
+
+        if (item.getType() == Material.POTATO_ITEM) {
+            drop.setItemStack(new ItemStack(Material.BAKED_POTATO, item.getAmount(), item.getDurability()));
+        }
+
+        if (item.getType() == Material.RAW_FISH) {
+            if (item.getDurability() == 0 || item.getDurability() == 1) {
+                drop.setItemStack(new ItemStack(Material.COOKED_FISH, item.getAmount(), item.getDurability()));
+            }
         }
     }
 
@@ -78,7 +63,7 @@ public class CutCleanScenario extends Scenario{
             en.getLocation().getWorld().dropItemNaturally(en.getLocation().add(1, 0, 0), new ItemStack(Material.LEATHER, 2));
         } else if (en.getType() == EntityType.SHEEP) {
             e.getDrops().clear();
-            en.getLocation().getWorld().dropItemNaturally(en.getLocation().add(1, 0, 0), new ItemStack(Material.COOKED_BEEF, 3));
+            en.getLocation().getWorld().dropItemNaturally(en.getLocation().add(1, 0, 0), new ItemStack(Material.GRILLED_PORK, 3));
         } else if (en.getType() == EntityType.CHICKEN) {
             e.getDrops().clear();
             en.getLocation().getWorld().dropItemNaturally(en.getLocation().add(1, 0, 0), new ItemStack(Material.COOKED_CHICKEN, 3));

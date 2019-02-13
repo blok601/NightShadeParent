@@ -124,6 +124,7 @@ public class CommandHandler  {
         registerCommand(new NearCommand(uhc));
         registerCommand(new SetWorldCommand(gameManager)); //idk this wasnt there before
         registerCommand(new ResetStatsCommand(uhc));
+        registerCommand(new ClearPowerCommand(scenarioManager));
     }
 
 

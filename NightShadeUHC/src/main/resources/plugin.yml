@@ -199,3 +199,5 @@ commands:
     description: View near players in spec mode
   resetstats:
     description: Owner command to reset all player's stats
+  clearpower:
+    description: Clear a power in superheroes

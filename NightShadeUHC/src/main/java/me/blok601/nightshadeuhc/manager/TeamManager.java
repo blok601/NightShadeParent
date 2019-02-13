@@ -103,6 +103,7 @@ public class TeamManager {
         return getTeambyPlayerOnTeam(player.getName());
     }
 
+
     public Team getTeambyPlayerOnTeam(String name){
         for (Team team : this.teams){
             for (String member : team.getMembers()){

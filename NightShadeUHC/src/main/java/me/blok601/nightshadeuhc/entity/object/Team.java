@@ -7,6 +7,7 @@ import me.blok601.nightshadeuhc.scoreboard.ScoreboardManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.ArrayList;
@@ -141,4 +142,18 @@ public class Team {
             }
         }
     }
+
+    public void scheduleRemoval(String name) {
+        for (String n : this.getMembers()) {
+            if (n.equalsIgnoreCase(name)) {
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        getMembers().remove(n);
+                    }
+                }.runTaskLater(UHC.get(), 7);
+            }
+        }
+    }
+
 }

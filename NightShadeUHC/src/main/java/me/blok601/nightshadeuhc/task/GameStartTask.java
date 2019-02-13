@@ -10,11 +10,13 @@ import me.blok601.nightshadeuhc.command.staff.PvPCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
 import me.blok601.nightshadeuhc.entity.object.GameState;
+import me.blok601.nightshadeuhc.entity.object.PlayerStatus;
 import me.blok601.nightshadeuhc.event.GameStartEvent;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.manager.TeamManager;
 import me.blok601.nightshadeuhc.scenario.Scenario;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
+import me.blok601.nightshadeuhc.scenario.interfaces.StarterItems;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.FreezeUtil;
 import me.blok601.nightshadeuhc.util.Util;
@@ -125,6 +127,16 @@ public class GameStartTask extends BukkitRunnable {
                             uhcPlayer.getPlayer().showPlayer(p);
                         });
                         Bukkit.getServer().getPluginManager().callEvent(new GameStartEvent());
+                        UHCPlayerColl.get().getAllOnlinePlayers().stream().filter(uhcPlayer -> uhcPlayer.getPlayerStatus() == PlayerStatus.PLAYING).forEach(uhcPlayer -> {
+                            for (Scenario scenario : scenarioManager.getEnabledScenarios()) {
+                                if (scenario instanceof StarterItems) {
+                                    StarterItems starterItems = (StarterItems) scenario;
+
+                                    starterItems.getStarterItems().forEach(itemStack -> uhcPlayer.getPlayer().getInventory().addItem(itemStack));
+
+                                }
+                            }
+                        });
                         p.sendMessage(ChatUtils.format("&f&m-----------------------------------"));
                         p.sendMessage(ChatUtils.format("&fHost: &5" + gameManager.getHost().getName()));
                         if (scenarioManager.getEnabledScenarios().size() == 0) {
