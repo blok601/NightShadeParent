@@ -5,6 +5,7 @@ import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.command.UHCCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
+import me.blok601.nightshadeuhc.entity.object.PlayerStatus;
 import me.blok601.nightshadeuhc.event.GameStartEvent;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.scenario.interfaces.StarterItems;
@@ -286,10 +287,11 @@ public class ScenarioManager implements UHCCommand, Listener {
 
                 StarterItems starterItems = (StarterItems) scenario;
 
-                UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> {
-                    for (ItemStack stack : starterItems.getStarterItems()) {
-                        uhcPlayer.getPlayer().getInventory().addItem(stack);
-                    }
+
+                UHCPlayerColl.get().getAllOnlinePlayers().stream().filter(uhcPlayer -> uhcPlayer.getPlayerStatus() == PlayerStatus.PLAYING).forEach(uhcPlayer -> {
+
+                    starterItems.getStarterItems().forEach(itemStack -> uhcPlayer.getPlayer().getInventory().addItem(itemStack));
+
                 });
             }
         }
