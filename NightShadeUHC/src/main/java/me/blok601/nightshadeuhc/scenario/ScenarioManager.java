@@ -282,18 +282,15 @@ public class ScenarioManager implements UHCCommand, Listener {
 
     @EventHandler
     public void onGameStart(GameStartEvent e) {
-        for (Scenario scenario : getEnabledScenarios()) {
-            if (scenario instanceof StarterItems) {
-
-                StarterItems starterItems = (StarterItems) scenario;
-
-
-                UHCPlayerColl.get().getAllOnlinePlayers().stream().filter(uhcPlayer -> uhcPlayer.getPlayerStatus() == PlayerStatus.PLAYING).forEach(uhcPlayer -> {
+        UHCPlayerColl.get().getAllOnlinePlayers().stream().filter(uhcPlayer -> uhcPlayer.getPlayerStatus() == PlayerStatus.PLAYING).forEach(uhcPlayer -> {
+            for (Scenario scenario : getEnabledScenarios()) {
+                if (scenario instanceof StarterItems) {
+                    StarterItems starterItems = (StarterItems) scenario;
 
                     starterItems.getStarterItems().forEach(itemStack -> uhcPlayer.getPlayer().getInventory().addItem(itemStack));
 
-                });
+                }
             }
-        }
+        });
     }
 }
