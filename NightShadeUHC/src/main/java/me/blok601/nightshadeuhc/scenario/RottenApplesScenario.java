@@ -37,7 +37,7 @@ public class RottenApplesScenario extends Scenario {
                 if (MathUtil.getChance(10)) {
                     p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 200, 0));
                     p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 0));
-                    p.sendMessage(ChatUtils.format(getPrefix() + "&cYou have received blindness and nausea for 10 seconds!"));
+                    p.sendMessage(ChatUtils.format(getPrefix() + "&cYou have received slowness and nausea for 10 seconds!"));
                 }
             }
         }

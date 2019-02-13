@@ -11,7 +11,6 @@ import me.blok601.nightshadeuhc.scenario.interfaces.StarterItems;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
 import me.blok601.nightshadeuhc.util.PagedInventory;
-import me.blok601.nightshadeuhc.util.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -288,9 +287,8 @@ public class ScenarioManager implements UHCCommand, Listener {
                 StarterItems starterItems = (StarterItems) scenario;
 
                 UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> {
-                    Player player = uhcPlayer.getPlayer();
                     for (ItemStack stack : starterItems.getStarterItems()) {
-                        PlayerUtils.giveItem(stack, player);
+                        uhcPlayer.getPlayer().getInventory().addItem(stack);
                     }
                 });
             }
