@@ -115,8 +115,19 @@ public class GameStartTask extends BukkitRunnable {
                     Bukkit.getOnlinePlayers().forEach(o -> o.getInventory().addItem(new ItemStack(Material.COOKED_BEEF, gameManager.getStarterFood())));
                     TimerTask timerTask = gameManager.getTimer();
                     timerTask.start();
-                    Bukkit.getOnlinePlayers().forEach(p -> {
+                    Bukkit.getServer().getPluginManager().callEvent(new GameStartEvent());
+                    UHCPlayerColl.get().getAllOnlinePlayers().stream().filter(uhcPlayer -> uhcPlayer.getPlayerStatus() == PlayerStatus.PLAYING).forEach(uhcPlayer -> {
+                        for (Scenario scenario : scenarioManager.getEnabledScenarios()) {
+                            if (scenario instanceof StarterItems) {
+                                StarterItems starterItems = (StarterItems) scenario;
 
+                                starterItems.getStarterItems().forEach(itemStack -> uhcPlayer.getPlayer().getInventory().addItem(itemStack));
+
+                            }
+                        }
+                    });
+
+                    Bukkit.getOnlinePlayers().forEach(p -> {
                         UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> {
                             uhcPlayer.getPlayer().showPlayer(p);
                             p.showPlayer(uhcPlayer.getPlayer());
@@ -126,17 +137,8 @@ public class GameStartTask extends BukkitRunnable {
                             p.hidePlayer(uhcPlayer.getPlayer());
                             uhcPlayer.getPlayer().showPlayer(p);
                         });
-                        Bukkit.getServer().getPluginManager().callEvent(new GameStartEvent());
-                        UHCPlayerColl.get().getAllOnlinePlayers().stream().filter(uhcPlayer -> uhcPlayer.getPlayerStatus() == PlayerStatus.PLAYING).forEach(uhcPlayer -> {
-                            for (Scenario scenario : scenarioManager.getEnabledScenarios()) {
-                                if (scenario instanceof StarterItems) {
-                                    StarterItems starterItems = (StarterItems) scenario;
 
-                                    starterItems.getStarterItems().forEach(itemStack -> uhcPlayer.getPlayer().getInventory().addItem(itemStack));
 
-                                }
-                            }
-                        });
                         p.sendMessage(ChatUtils.format("&f&m-----------------------------------"));
                         p.sendMessage(ChatUtils.format("&fHost: &5" + gameManager.getHost().getName()));
                         if (scenarioManager.getEnabledScenarios().size() == 0) {
