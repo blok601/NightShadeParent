@@ -22,8 +22,12 @@ public class CutCleanScenario extends Scenario{
 
     @EventHandler
     public void on(ItemSpawnEvent event) {
+
+        if (!isEnabled()) return;
+
         Item drop = event.getEntity();
         ItemStack item = drop.getItemStack();
+
 
         if (item.getType() == Material.GOLD_ORE) {
             drop.setItemStack(new ItemStack(Material.GOLD_INGOT, item.getAmount(), item.getDurability()));

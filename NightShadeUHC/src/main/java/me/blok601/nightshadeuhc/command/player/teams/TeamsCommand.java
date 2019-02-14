@@ -46,6 +46,11 @@ public class TeamsCommand implements UHCCommand{
             return;
         }
 
+        if (TeamManager.getInstance().getTeams().size() == 0) {
+            p.sendMessage(ChatUtils.message("&cThere are no teams currently!"));
+            return;
+        }
+
         p.sendMessage(ChatUtils.format("&5&m-----------------------------------"));
         StringBuilder stringBuilder;
         for (Team team : TeamManager.getInstance().getTeams()){

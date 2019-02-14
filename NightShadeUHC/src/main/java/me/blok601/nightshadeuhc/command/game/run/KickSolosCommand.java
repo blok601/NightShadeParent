@@ -3,6 +3,7 @@ package me.blok601.nightshadeuhc.command.game.run;
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.command.UHCCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
+import me.blok601.nightshadeuhc.entity.object.Team;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.manager.TeamManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
@@ -26,7 +27,24 @@ public class KickSolosCommand implements UHCCommand {
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
         UHCPlayerColl.get().getAllOnline().stream().filter(uhcPlayer -> !uhcPlayer.isSpectator()).forEach(uhcPlayer -> {
-            if(TeamManager.getInstance().getTeam(uhcPlayer.getPlayer()) == null){
+
+            Team team = TeamManager.getInstance().getTeam(uhcPlayer.getName());
+            if (team == null) {
+                GameManager.get().getWhitelist().remove(uhcPlayer.getName().toLowerCase());
+                uhcPlayer.getPlayer().kickPlayer("Solo's aren't allowed in this game type!\n Join the discord for support @ \n discord.me/NightShadeMC");
+            } else {
+                if (team.getMembers().size() == 1) {
+                    GameManager.get().getWhitelist().remove(uhcPlayer.getName().toLowerCase());
+                    uhcPlayer.getPlayer().kickPlayer("Solo's aren't allowed in this game type!\n Join the discord for support @ \n discord.me/NightShadeMC");
+                    TeamManager.getInstance().removeTeam(team);
+                }
+            }
+
+
+            if (TeamManager.getInstance().getTeam(uhcPlayer.getPlayer()) == null || TeamManager.getInstance().getTeam(uhcPlayer.getName()).getMembers().size() == 1) {
+
+
+
                 GameManager.get().getWhitelist().remove(uhcPlayer.getName().toLowerCase());
                 uhcPlayer.getPlayer().kickPlayer("Solo's aren't allowed in this game type!\n Join the discord for support @ \n discord.me/NightShadeMC");
             }

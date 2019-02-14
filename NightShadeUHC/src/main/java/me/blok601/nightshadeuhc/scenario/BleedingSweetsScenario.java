@@ -30,5 +30,5 @@ public class BleedingSweetsScenario extends Scenario{
         e.getItems().add(arrows);
         e.getItems().add(string);
         e.getItems().add(book);
-    }
+}
 }

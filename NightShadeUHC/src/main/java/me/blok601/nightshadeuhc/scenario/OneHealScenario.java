@@ -34,8 +34,7 @@ public class OneHealScenario extends Scenario implements StarterItems {
                 ItemMeta meta = e.getItem().getItemMeta();
                 if(meta.getDisplayName().equalsIgnoreCase(ChatColor.YELLOW + "Magical Tool")){
                     e.getPlayer().setHealth(e.getPlayer().getMaxHealth());
-                    e.getPlayer().getInventory().remove(e.getItem());
-                    e.getPlayer().getItemInHand().setType(Material.AIR);
+                    e.getPlayer().setItemInHand(null);
                     e.getPlayer().sendMessage(ChatUtils.format(getPrefix() + "&eYou have redeemed your one heal!"));
                 }
             }
