@@ -94,7 +94,7 @@ public class Util {
 
     public static HashSet<File> worldFoldersFromString(String name) {
         File rootDirectory = UHC.get().getServer().getWorldContainer();
-        if (rootDirectory.isDirectory()) return Sets.newHashSet();
+        if (!rootDirectory.isDirectory()) return Sets.newHashSet();
         File[] files = rootDirectory.listFiles();
         if (files == null || files.length == 0) return Sets.newHashSet();
         HashSet<File> set = Sets.newHashSet();
