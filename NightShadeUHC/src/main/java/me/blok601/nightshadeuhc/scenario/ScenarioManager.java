@@ -101,6 +101,7 @@ public class ScenarioManager implements UHCCommand{
         addScen(new SoupPlusScenario());
         addScen(new StockUpScenario());
         addScen(new SuperheroesScenario(gameManager));
+        addScen(new SuperHeroesTeamScenario(gameManager));
         addScen(new SwitcherooScenario());
         addScen(new TeamInventoryScenario(), "TI");
         addScen(new TimberScenario());

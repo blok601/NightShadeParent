@@ -1,7 +1,6 @@
 package me.blok601.nightshadeuhc.scenario;
 
 import com.google.common.collect.Lists;
-import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
 import me.blok601.nightshadeuhc.entity.object.Team;
 import me.blok601.nightshadeuhc.event.GameStartEvent;
 import me.blok601.nightshadeuhc.manager.GameManager;
@@ -19,49 +18,49 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
-/**
- * Created by Blok on 7/17/2018.
- */
-public class SuperheroesScenario extends Scenario {
-
+public class SuperHeroesTeamScenario extends Scenario{
     private GameManager gameManager;
-    public static HashMap<UUID, SuperHeroType> powers;
-    private static HashMap<UUID, SuperHeroType> teamPowers;
+    public static HashMap<UUID, SuperheroesScenario.SuperHeroType> powers;
 
 
-    public SuperheroesScenario(GameManager gameManager) {
-        super("Superheroes", "Each player will gain a special ability. The powers are speed 1, strength 1, resistance 2, invisibility, 10 extra hearts, and jump boost 4.", new ItemBuilder(Material.BREWING_STAND_ITEM).name("Superheroes").make());
+
+    public SuperHeroesTeamScenario(GameManager gameManager) {
+        super("Superheroes Teams", "Each player will gain a special ability. The powers are speed 1, strength 1, resistance 2, invisibility, 10 extra hearts, and jump boost 4.", new ItemBuilder(Material.BREWING_STAND_ITEM).name("Superheroes").make());
         this.gameManager = gameManager;
         powers = new HashMap<>();
     }
+
 
     @EventHandler
     public void onGameStart(GameStartEvent e){
         if(!isEnabled()) return;
         Random random = ThreadLocalRandom.current();
-        {
-            UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> {
-                SuperHeroType type = SuperHeroType.values()[random.nextInt(SuperHeroType.values().length)];
-                if (powers.containsKey(uhcPlayer.getUuid())) {
+        Player tempPlayer;
+        for (Team team : TeamManager.getInstance().getTeams()) {
+            Collections.shuffle(team.getMembers());
+            int times = team.getMembers().size() - 1;
+            for (int i = 0; i >= times; i++){
+                tempPlayer = Bukkit.getPlayer(team.getMembers().get(i));
+
+                if(powers.containsKey(tempPlayer.getUniqueId())) {
                     return;
                 }
 
-                powers.put(uhcPlayer.getUuid(), type);
+                SuperheroesScenario.SuperHeroType type = SuperheroesScenario.SuperHeroType.values()[i];
 
-                Player p = uhcPlayer.getPlayer();
-                if (type == SuperHeroType.HEALTH) {
-                    p.setMaxHealth(40);
-                    p.setHealth(40);
+                powers.put(tempPlayer.getUniqueId(), type);
+
+                if (type == SuperheroesScenario.SuperHeroType.HEALTH) {
+                    tempPlayer.setMaxHealth(40);
+                    tempPlayer.setHealth(40);
                 } else {
                     for (PotionEffect effect : type.getEffecst()) {
-                        p.addPotionEffect(effect);
+                        tempPlayer.addPotionEffect(effect);
                     }
                 }
+            }
 
-                uhcPlayer.msg(ChatUtils.format(getPrefix() + "&eYour super power is: &3" + type.getName()));
-            });
         }
-
     }
 
     public enum SuperHeroType{
@@ -101,5 +100,7 @@ public class SuperheroesScenario extends Scenario {
             }
         }
     }
+
+}
 
 }

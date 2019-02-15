@@ -1,5 +1,7 @@
 package me.blok601.nightshadeuhc.scenario;
 
+import me.blok601.nightshadeuhc.entity.UHCPlayer;
+import me.blok601.nightshadeuhc.entity.object.PlayerStatus;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -19,9 +21,11 @@ public class LandMineScenario extends Scenario{
         if(e.getAction().equals(Action.PHYSICAL)) {
             if (e.getClickedBlock().getType() == Material.STONE_PLATE) {
                 Player p = e.getPlayer();
-                final Location l = p.getLocation().clone();
+                if (UHCPlayer.get(p).getPlayerStatus() == PlayerStatus.PLAYING) {
+                    final Location l = p.getLocation().clone();
 
-                l.getWorld().createExplosion(l.add(0.5, 0.5, 0.5), 3, false);
+                    l.getWorld().createExplosion(l.add(0.5, 0.5, 0.5), 3, false);
+                }
 
             }
         }
