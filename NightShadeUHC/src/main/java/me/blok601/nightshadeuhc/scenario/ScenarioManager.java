@@ -99,6 +99,7 @@ public class ScenarioManager implements UHCCommand{
         addScen(new SlutCleanScenario(), "SC");
         addScen(new SoupScenario());
         addScen(new SoupPlusScenario());
+        addScen(new SurpriseBombScenario());
         addScen(new StockUpScenario());
         addScen(new SuperheroesScenario(gameManager));
         addScen(new SuperHeroesTeamScenario(gameManager));
