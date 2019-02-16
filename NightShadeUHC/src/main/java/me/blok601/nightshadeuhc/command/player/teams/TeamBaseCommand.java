@@ -246,10 +246,9 @@ public class TeamBaseCommand implements UHCCommand{
                     //Check if their team size is less than the limit
                     if(TeamManager.getInstance().isTeamManagement()){
                         if(TeamManager.getInstance().getTeam(p) == null){
-                            FancyMessage fancyMessage = new FancyMessage(ChatUtils.message("&cYou don't have a team! &eDo "))
-                                    .then("/team create to make one!").color(ChatColor.YELLOW).command("/team create");
-                            fancyMessage.send(p);
-                            return;
+                            p.performCommand("team create");
+                            p.sendMessage(ChatUtils.message("&eNo team found, creating one for you."));
+
                         }
 
                         Team team = TeamManager.getInstance().getTeam(p);
