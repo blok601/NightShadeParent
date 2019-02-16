@@ -2,10 +2,13 @@ package me.blok601.nightshadeuhc.scenario;
 
 import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.inventory.ItemStack;
@@ -49,6 +52,27 @@ public class CutCleanScenario extends Scenario{
                 drop.setItemStack(new ItemStack(Material.COOKED_FISH, item.getAmount(), item.getDurability()));
             }
         }
+    }
+
+
+    /*
+    Fucking ass cunt dick
+     */
+
+    @EventHandler
+    public void onBreak(BlockBreakEvent e){
+        Player p = e.getPlayer();
+        Block b = e.getBlock();
+
+        if (b.getType() == Material.GOLD_ORE) {
+            p.giveExp(3);
+        }
+
+        if (b.getType() == Material.IRON_ORE) {
+            p.giveExp(3);
+        }
+
+
     }
 
     @EventHandler
