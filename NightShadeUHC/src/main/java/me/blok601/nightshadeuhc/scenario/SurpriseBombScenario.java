@@ -20,7 +20,7 @@ import static com.wimbli.WorldBorder.WorldBorder.plugin;
 
 public class SurpriseBombScenario extends Scenario{
     public SurpriseBombScenario() {
-        super("Timebomb", "When someone dies, there loot is placed in a chest that explodes in a random ammount of  seconds >:)", new ItemBuilder(Material.CHEST).name("Timebomb").make());
+        super("Surprise Bomb", "When someone dies, there loot is placed in a chest that explodes in a random ammount of  seconds >:)", new ItemBuilder(Material.CHEST).name("Surprise Bomb").make());
     }
 
     @EventHandler
