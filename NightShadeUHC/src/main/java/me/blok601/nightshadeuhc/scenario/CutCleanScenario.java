@@ -61,15 +61,23 @@ public class CutCleanScenario extends Scenario{
 
     @EventHandler
     public void onBreak(BlockBreakEvent e){
+
         Player p = e.getPlayer();
         Block b = e.getBlock();
+
+        if (b.getType() == Material.COAL_ORE) {
+            if (Math.random() * 10 + 1 >= 6) {
+                p.giveExp(2);
+            }
+        }
+        if (!isEnabled()) return;
 
         if (b.getType() == Material.GOLD_ORE) {
             p.giveExp(3);
         }
 
         if (b.getType() == Material.IRON_ORE) {
-            p.giveExp(3);
+            p.giveExp(2);
         }
 
 
