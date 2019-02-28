@@ -123,47 +123,33 @@ public class TeamBaseCommand implements UHCCommand{
                     p.sendMessage(ChatUtils.format("&b&m---------------------------------"));
                     p.sendMessage(ChatUtils.format("&aYour Team&8: " + f.substring(0, f.length() - 1)));
                     p.sendMessage(ChatUtils.format("&b&m---------------------------------"));
-                }else if(args[0].equalsIgnoreCase("leave")) {
-                    if (TeamManager.getInstance().isTeamManagement()) {
-                        if (TeamManager.getInstance().getTeam(p) == null) {
+                }else if(args[0].equalsIgnoreCase("leave")){
+                    if(TeamManager.getInstance().isTeamManagement()){
+                        if(TeamManager.getInstance().getTeam(p) == null){
                             p.sendMessage(ChatUtils.message("&cYou aren't on a team!"));
                             return;
                         }
 
                         Team t = TeamManager.getInstance().getTeam(p);
-                        if (t.getMembers().size() == 1) {
+                        if(t.getMembers().size() == 1){
                             t.removeMember(p);
                             TeamManager.getInstance().removeTeam(t);
                             p.sendMessage(ChatUtils.message("&eYour team has disbanded!"));
                             return;
-                        } else {
+                        }else{
                             t.removeMember(p);
                             p.sendMessage(ChatUtils.message("&eYou have left your team!"));
-                            for (String str : t.getMembers()) {
+                            for (String str : t.getMembers()){
                                 Bukkit.getPlayer(str).sendMessage(ChatUtils.message("&6" + p.getName() + " &ehas left the team!"));
                             }
                             return;
                         }
 
-                    } else {
+                    }else{
                         p.sendMessage(ChatUtils.message("&cTeam management is currently disabled!"));
                         return;
                     }
-                } else if (args[0].equalsIgnoreCase("delete")) {
-                    if(!user.hasRank(Rank.TRIAL)){
-                        p.sendMessage(ChatUtils.message("&cYou require the TRIAL rank to do this command!"));
-                        return;
-                    }
-                    Team targetTeam = TeamManager.getInstance().getTeambyPlayerOnTeam(args[1]);
-                    if(targetTeam == null){
-                        p.sendMessage(ChatUtils.message("&cThe specified team couldn't be found! Make sure you spelled the target team right!"));
-                        return;
-                    }
-                    TeamManager.getInstance().removeTeam(targetTeam);
-                    p.sendMessage("&e Target Team Successfully Removed");
-
-                }
-                else if(args[0].equalsIgnoreCase("reset")){
+                }else if(args[0].equalsIgnoreCase("reset")){
                     if(user.hasRank(Rank.TRIAL)){
                         TeamManager.getInstance().resetTeams();
                         p.sendMessage(ChatUtils.message("&eTeams have been reset!"));
