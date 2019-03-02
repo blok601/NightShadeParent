@@ -201,3 +201,7 @@ commands:
     description: Owner command to reset all player's stats
   clearpower:
     description: Clear a power in superheroes
+  show:
+    aliases: [fixinvis, showinvis]
+    description: Fix player visibility glitch
+

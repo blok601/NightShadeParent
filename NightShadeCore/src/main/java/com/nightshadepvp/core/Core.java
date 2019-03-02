@@ -33,9 +33,8 @@ public class Core extends MassivePlugin implements PluginMessageListener {
     private UBLHandler ublHandler = new UBLHandler(this);
 
     private Logger logger;
-
-
     private Jedis jedis;
+    private Announcer announcer;
 
 
     @Override
@@ -84,6 +83,7 @@ public class Core extends MassivePlugin implements PluginMessageListener {
 
         getLogManager().log(Logger.LogType.INFO, "Starting UBL Tasks...");
         ublHandler.setup();
+        this.announcer = new Announcer(this);
         Bukkit.getConsoleSender().sendMessage(ChatUtils.message("&eLoading NightShadeCore version: " + getDescription().getVersion() + ". Server Type: " + ServerType.getType().toString()));
     }
 
@@ -91,6 +91,7 @@ public class Core extends MassivePlugin implements PluginMessageListener {
     @Override
     public void onDisable() {
         i = null;
+        MConf.get().setAnnouncerMessages(this.announcer.getMessages());
     }
 
 
@@ -177,5 +178,7 @@ public class Core extends MassivePlugin implements PluginMessageListener {
         return ublHandler;
     }
 
-
+    public Announcer getAnnouncer() {
+        return announcer;
+    }
 }

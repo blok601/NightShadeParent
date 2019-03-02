@@ -24,7 +24,7 @@ public class SitCommand implements UHCCommand{
         Player p = (Player) s;
         p.sendMessage(ChatUtils.message("&eYou are now totally sitting."));
         return;
-        }
+    }
 
     @Override
     public boolean playerOnly() {
