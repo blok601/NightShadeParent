@@ -78,7 +78,7 @@ public class EnginePlayer extends Engine {
         } else if (nsPlayer.getToggleSneakVL() >= 10) {
             fancyMessage.text(ChatUtils.format("&c" + p.getName() + " &cmay be using ToggleSneak! &8[&c" + nsPlayer.getToggleSneakVL() + "&8] &8(&eType&8: &cInventory&8)"));
         } else if (nsPlayer.getToggleSneakVL() >= 5) {
-            fancyMessage.text(ChatUtils.format("&6" + p.getName() + " &ccmay be using ToggleSneak! &8[&c" + nsPlayer.getToggleSneakVL() + "&8] &8(&eType&8: &cInventory&8)"));
+            fancyMessage.text(ChatUtils.format("&6" + p.getName() + " &cmay be using ToggleSneak! &8[&c" + nsPlayer.getToggleSneakVL() + "&8] &8(&eType&8: &cInventory&8)"));
         } else if (nsPlayer.getToggleSneakVL() >= 1) {
             fancyMessage.text(ChatUtils.format("&a" + p.getName() + " &cmay be using ToggleSneak! &8[&a" + nsPlayer.getToggleSneakVL() + "&8] &8(&eType&8: &cInventory&8)"));
         }
@@ -108,7 +108,7 @@ public class EnginePlayer extends Engine {
             }else if(nsPlayer.getToggleSneakVL() >= 10){
                 nsPlayer1.msg(ChatUtils.format("&c" + p.getName() + " &cmay be using ToggleSneak! &8[&c" + nsPlayer.getToggleSneakVL() + "&8] &8(&eType&8: &cChat&8)"));
             }else if(nsPlayer.getToggleSneakVL() >= 5){
-                nsPlayer1.msg(ChatUtils.format("&6" + p.getName() + " ccmay be using ToggleSneak! &8[&c" + nsPlayer.getToggleSneakVL() + "&8] &8(&eType&8: &cChat&8)"));
+                nsPlayer1.msg(ChatUtils.format("&6" + p.getName() + " &cmay be using ToggleSneak! &8[&c" + nsPlayer.getToggleSneakVL() + "&8] &8(&eType&8: &cChat&8)"));
             }else if(nsPlayer.getToggleSneakVL() >= 1){
                 nsPlayer1.msg(ChatUtils.format("&a" + p.getName() + " &cmay be using ToggleSneak! &8[&a" + nsPlayer.getToggleSneakVL() + "&8] &8(&eType&8: &cChat&8)"));
             }
@@ -139,7 +139,7 @@ public class EnginePlayer extends Engine {
             }else if(nsPlayer.getToggleSneakVL() >= 10){
                 nsPlayer1.msg(ChatUtils.format("&c" + p.getName() + " &cmay be using ToggleSneak! &8[&c" + nsPlayer.getToggleSneakVL() + "&8] &8(&eType&8: &cInventory&8)"));
             }else if(nsPlayer.getToggleSneakVL() >= 5){
-                nsPlayer1.msg(ChatUtils.format("&6" + p.getName() + " ccmay be using ToggleSneak! &8[&c" + nsPlayer.getToggleSneakVL() + "&8] &8(&eType&8: &cInventory&8)"));
+                nsPlayer1.msg(ChatUtils.format("&6" + p.getName() + " &cmay be using ToggleSneak! &8[&c" + nsPlayer.getToggleSneakVL() + "&8] &8(&eType&8: &cInventory&8)"));
             }else if(nsPlayer.getToggleSneakVL() >= 1){
                 nsPlayer1.msg(ChatUtils.format("&a" + p.getName() + " &cmay be using ToggleSneak! &8[&a" + nsPlayer.getToggleSneakVL() + "&8] &8(&eType&8: &cInventory&8)"));
             }

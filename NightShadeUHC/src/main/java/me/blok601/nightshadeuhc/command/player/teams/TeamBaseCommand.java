@@ -241,7 +241,18 @@ public class TeamBaseCommand implements UHCCommand{
                     p.sendMessage(ChatUtils.message("&eFinished creating &6" + TeamManager.getInstance().getTeams().size() + " &eteams of &6" + TeamManager.getInstance().getTeamSize()));
                 }
             }else if(args.length == 2){
-                if(args[0].equalsIgnoreCase("invite")){
+                if (args[0].equalsIgnoreCase("delete")) {
+                    if(!user.hasRank(Rank.TRIAL)){
+                        p.sendMessage(ChatUtils.message("&cYou require the TRIAL rank to do this command!"));
+                        return;
+                    }
+                    final Player target = Bukkit.getPlayerExact(args[1]);
+                    Team t = TeamManager.getInstance().getTeam(target);
+                    TeamManager.getInstance().removeTeam(t);
+                    p.sendMessage(ChatUtils.message("&cDeleted " + target.getName() + "&c's team!"));
+
+                }
+                 else if(args[0].equalsIgnoreCase("invite")){
                     //Check if team management is on or off
                     //Check if their team size is less than the limit
                     if(TeamManager.getInstance().isTeamManagement()){

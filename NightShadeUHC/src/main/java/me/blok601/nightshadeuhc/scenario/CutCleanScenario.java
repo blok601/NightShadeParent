@@ -1,7 +1,9 @@
 package me.blok601.nightshadeuhc.scenario;
 
 import me.blok601.nightshadeuhc.util.ItemBuilder;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -34,6 +36,7 @@ public class CutCleanScenario extends Scenario{
 
         if (item.getType() == Material.GOLD_ORE) {
             drop.setItemStack(new ItemStack(Material.GOLD_INGOT, item.getAmount(), item.getDurability()));
+
             return;
         }
 
@@ -64,20 +67,28 @@ public class CutCleanScenario extends Scenario{
 
         Player p = e.getPlayer();
         Block b = e.getBlock();
+        Location loc = p.getLocation();
+
 
         if (b.getType() == Material.COAL_ORE) {
             if (Math.random() * 10 + 1 >= 6) {
                 p.giveExp(2);
+                p.playSound(loc, Sound.ORB_PICKUP, 1, 10);
+
             }
         }
         if (!isEnabled()) return;
 
         if (b.getType() == Material.GOLD_ORE) {
             p.giveExp(3);
+            p.playSound(loc, Sound.ORB_PICKUP, 1, 10);
+
         }
 
         if (b.getType() == Material.IRON_ORE) {
             p.giveExp(2);
+            p.playSound(loc, Sound.ORB_PICKUP, 1, 10);
+
         }
 
 

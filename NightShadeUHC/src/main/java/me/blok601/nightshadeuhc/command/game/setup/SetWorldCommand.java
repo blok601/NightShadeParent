@@ -2,6 +2,8 @@ package me.blok601.nightshadeuhc.command.game.setup;
 
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.utils.ChatUtils;
+import com.wimbli.WorldBorder.BorderData;
+import com.wimbli.WorldBorder.WorldBorder;
 import me.blok601.nightshadeuhc.command.UHCCommand;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import org.bukkit.command.Command;
@@ -31,8 +33,14 @@ public class SetWorldCommand implements UHCCommand {
         Player p = (Player) commandSender;
 
         gameManager.setWorld(p.getWorld());
+        BorderData r = WorldBorder.plugin.getWorldBorder(p.getWorld().getName());
+        if (r == null) {
+            p.sendMessage(ChatUtils.message("&c The border for that world has not been setup yet! Please do this now!"));
+            return;
+        }
+        gameManager.setSetupRadius(r.getRadiusX());
 
-        p.sendMessage(ChatUtils.message("&eYou have set the world to &a" + GameManager.get().getWorld().getName()));
+        p.sendMessage(ChatUtils.message("&eYou have set the world to &a" + gameManager.getWorld().getName()));
 
     }
 
