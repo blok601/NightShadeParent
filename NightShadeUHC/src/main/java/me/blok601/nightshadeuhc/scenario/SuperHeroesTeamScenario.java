@@ -15,8 +15,10 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 public class SuperHeroesTeamScenario extends Scenario{
     private GameManager gameManager;
@@ -34,7 +36,6 @@ public class SuperHeroesTeamScenario extends Scenario{
     @EventHandler
     public void onGameStart(GameStartEvent e){
         if(!isEnabled()) return;
-        Random random = ThreadLocalRandom.current();
         Player tempPlayer;
         for (Team team : TeamManager.getInstance().getTeams()) {
             Collections.shuffle(team.getMembers());
@@ -43,7 +44,7 @@ public class SuperHeroesTeamScenario extends Scenario{
                 tempPlayer = Bukkit.getPlayer(team.getMembers().get(i));
 
                 if(powers.containsKey(tempPlayer.getUniqueId())) {
-                    return;
+                    continue;
                 }
 
                 SuperheroesScenario.SuperHeroType type = SuperheroesScenario.SuperHeroType.values()[i];

@@ -11,6 +11,8 @@ import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.block.Chest;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -44,8 +46,15 @@ public class StaffListener implements Listener {
         Player p = e.getPlayer();
         UHCPlayer uhcPlayer = UHCPlayer.get(p);
         if(uhcPlayer.isStaffMode()){
-            if(e.getItem() == null){
+            if (p.getItemInHand() == null || e.getItem() == null) {
                 e.setCancelled(true);
+                return;
+            }
+
+            Block clickedBlock = e.getClickedBlock();
+            if (clickedBlock.getType() == Material.CHEST) {
+                Chest chest = (Chest) clickedBlock.getState();
+                p.openInventory(chest.getBlockInventory());
                 return;
             }
 

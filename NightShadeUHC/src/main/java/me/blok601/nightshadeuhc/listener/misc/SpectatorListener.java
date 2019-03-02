@@ -114,6 +114,7 @@ public class SpectatorListener implements Listener {
 		UHCPlayer gamePlayer = UHCPlayer.get(p);
 
 		if (gamePlayer.isSpectator()) {
+			e.setCancelled(true);
 			Random r = ThreadLocalRandom.current();
 			ArrayList<Player> players = UHCPlayerColl.get().getAllPlaying().stream().map(SenderEntity::getPlayer).collect(Collectors.toCollection(ArrayList::new));
 //			UHC.players.stream().filter(uuid -> Bukkit.getPlayer(uuid) != null).forEach(uuid -> players.add(Bukkit.getPlayer(uuid)));
