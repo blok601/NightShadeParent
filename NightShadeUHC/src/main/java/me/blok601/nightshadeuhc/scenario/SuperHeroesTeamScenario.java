@@ -40,7 +40,7 @@ public class SuperHeroesTeamScenario extends Scenario{
         for (Team team : TeamManager.getInstance().getTeams()) {
             Collections.shuffle(team.getMembers());
             int times = team.getMembers().size() - 1;
-            for (int i = 0; i >= times; i++){
+            for (int i = 0; i <= times; i++){
                 tempPlayer = Bukkit.getPlayer(team.getMembers().get(i));
 
                 if(powers.containsKey(tempPlayer.getUniqueId())) {

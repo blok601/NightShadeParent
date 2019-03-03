@@ -1,5 +1,7 @@
     package me.blok601.nightshadeuhc.scenario;
 
+    import com.massivecraft.massivecore.util.MUtil;
+    import me.blok601.nightshadeuhc.scenario.interfaces.StarterItems;
     import me.blok601.nightshadeuhc.util.ChatUtils;
     import me.blok601.nightshadeuhc.util.ItemBuilder;
     import org.bukkit.Location;
@@ -15,11 +17,12 @@
     import org.bukkit.inventory.ItemStack;
 
     import java.util.ArrayList;
+    import java.util.List;
     import java.util.Random;
     import java.util.concurrent.ThreadLocalRandom;
 
 
-    public class EggsScenario extends Scenario {
+    public class EggsScenario extends Scenario implements StarterItems {
         public EggsScenario() {
             super("Eggs", "Throwing an Egg Spawns a random mob, chickens have a change of dropping eggs on death.", new ItemBuilder(Material.EGG).name(ChatUtils.format("Eggs")).make());
         }
@@ -68,4 +71,9 @@
             e.getDrops().add(new ItemStack(Material.EGG));
 
         }
+        @Override
+        public List<ItemStack> getStarterItems() {
+            return MUtil.list(new ItemBuilder(Material.EGG).amount(16).make());
+        }
     }
+
