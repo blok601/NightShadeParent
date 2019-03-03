@@ -155,7 +155,8 @@ public class GameStartTask extends BukkitRunnable {
                         p.sendMessage(" ");
                         p.sendMessage(ChatUtils.format("&fFinal Heal Time: &5" + gameManager.getFinalHealTime() / 60 + " minutes"));
                         p.sendMessage(ChatUtils.format("&fPvP Time: &5" + gameManager.getPvpTime() / 60 + " minutes"));
-                        p.sendMessage(ChatUtils.format("&fMeetup Time: &5" + gameManager.getBorderTime() / 60 + " minutes"));
+                        p.sendMessage(ChatUtils.format("&fMeetup Time: &5" + gameManager.getMeetupTime() / 60 + " minutes"));
+                        p.sendMessage(ChatUtils.format("&fFirst Shrink Time: &5" + gameManager.getBorderTime() / 60 + " minutes"));
 
                         p.sendMessage(ChatUtils.format("&f&m-----------------------------------"));
 

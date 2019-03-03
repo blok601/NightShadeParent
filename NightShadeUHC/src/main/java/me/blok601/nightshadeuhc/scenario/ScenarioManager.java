@@ -157,8 +157,9 @@ public class ScenarioManager implements UHCCommand{
         System.out.println("Current Scens: " + scenarios.size());
         ArrayList<ItemStack> items = new ArrayList<>();
 
+        ItemStack item;
         for (Scenario scenario : ScenarioManager.scenarios) {
-            ItemStack item = new ItemBuilder(scenario.getItem()).name(scenario.isEnabled() ? ChatUtils.format("&a" + scenario.getName()) : ChatUtils.format("&c" + scenario.getName())).lore(scenario.getDesc()).make();
+            item = new ItemBuilder(scenario.getItem()).name(scenario.isEnabled() ? ChatUtils.format("&a" + scenario.getName()) : ChatUtils.format("&c" + scenario.getName())).lore(scenario.getDesc()).make();
             items.add(item);
         }
 

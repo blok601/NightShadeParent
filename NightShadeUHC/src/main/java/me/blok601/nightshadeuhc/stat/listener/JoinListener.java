@@ -8,6 +8,7 @@ import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
 import me.blok601.nightshadeuhc.entity.object.*;
 import me.blok601.nightshadeuhc.event.PlayerJoinGameLateEvent;
+import me.blok601.nightshadeuhc.manager.FakePlayerManager;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.manager.LoggerManager;
 import me.blok601.nightshadeuhc.manager.TeamManager;
@@ -89,6 +90,8 @@ public class JoinListener implements Listener {
             player.hidePlayer(uhcPlayer.getPlayer());
             uhcPlayer.getPlayer().showPlayer(player);
         });
+
+        FakePlayerManager.getInstance().getNpcs().forEach(fakePlayer -> fakePlayer.spawnFor(player));
 
         if (gameManager.getRespawnQueue().contains(player.getName().toLowerCase())) {
             // They should be respawned
@@ -179,7 +182,7 @@ public class JoinListener implements Listener {
 
         Player p = e.getPlayer();
         UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
-
+        FakePlayerManager.getInstance().getNpcs().forEach(fakePlayer -> fakePlayer.spawnFor(p));
         if (gamePlayer.isSpectator() || gamePlayer.isStaffMode()) {
             return;
         }
@@ -216,6 +219,8 @@ public class JoinListener implements Listener {
 
         Player p = e.getPlayer();
         UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
+        FakePlayerManager.getInstance().getNpcs().forEach(fakePlayer -> fakePlayer.spawnFor(p));
+
 
         if (gamePlayer.isSpectator() || gamePlayer.isStaffMode()) {
             return;

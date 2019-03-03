@@ -1,8 +1,10 @@
 package me.blok601.nightshadeuhc.gui;
 
+import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.utils.ItemBuilder;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -12,13 +14,23 @@ import org.bukkit.inventory.ItemStack;
  */
 public class ConfigGUI {
 
-    public ConfigGUI(Player player) {
+    public ConfigGUI(Player player, GameManager gameManager) {
         GuiBuilder menu = new GuiBuilder();
         menu.name(ChatUtils.format("&5Game Settings"));
         menu.rows(5);
 
-        ItemStack paper = new ItemBuilder(Material.PAPER).name(ChatUtils.format("&6Time Left")).lore(ChatUtils.format("&3Final Heal» &e" + GameManager.get().getFinalHealTime() / 60  + " minutes"))
-                .lore(ChatUtils.format("&3PvP Enabled» &e" + GameManager.get().getPvpTime() / 60  + " minutes")).lore(ChatUtils.format("&3Meetup» &e" + GameManager.get().getBorderTime() / 60 + " minutes")).make();
+        ItemBuilder post = new ItemBuilder(new ItemStack(Material.WOOL, 1, DyeColor.ORANGE.getWoolData()))
+                .name("&6&lMatchpost");
+        if (!Core.get().getMatchpost().equalsIgnoreCase("uhc.gg")) {//Its set
+            post.lore("&bCurrent &8» &f" + Core.get().getMatchpost());
+        }
+
+        ItemBuilder timers = new ItemBuilder(new ItemStack(Material.WOOL, 1, DyeColor.GREEN.getWoolData()))
+                .name("&2&lTimeleft")
+                .lore("&bFinal Heal &8» &f" + gameManager.getFinalHealTime() / 60)
+                .lore("&bPvP Time &8» &f" + gameManager.getPvpTime() / 60)
+                .lore("&bFirst Shrink Time &8» &f" + gameManager.getBorderTime() / 60)
+                .lore("&bMeetup Time &8» &f" + gameManager.getMeetupTime() / 60);
 
         ItemStack mining = new ItemBuilder(Material.IRON_PICKAXE).name(ChatUtils.format("&6Mining Information")).lore(ChatUtils.format("&3Stripmining» &eAbove y32 &cONLY")).lore(ChatUtils.format("&3Rollercoastering» &e&aAllowed"))
                 .make();
@@ -31,28 +43,19 @@ public class ConfigGUI {
 
         ItemStack combat = new ItemBuilder(Material.DIAMOND_SWORD).name(ChatUtils.format("&6PvP")).lore(ChatUtils.format("&3iPvP» &cNot Allowed")).lore(ChatUtils.format("&3iPvP» &eBannable")).make();
 
-        ItemStack bannable = new ItemBuilder(Material.ANVIL).name(ChatUtils.format("&6Bannable Offenses")).lore(ChatUtils.format("&3Hacked Clients» &e2 Months &8(&5Subject to UBL&8)")).lore(ChatUtils.format("&3Xray» &e2 Months &8(&5Subject to UBL&8)"))
-                .lore(ChatUtils.format("&3iPvP» &e3 days")).lore(ChatUtils.format("&3Chat Spam» &e15 minute mute")).lore(ChatUtils.format("&3Racism» &eMute (length + punishment type can change)")).make();
-
         ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
         me.blok601.nightshadeuhc.util.ItemBuilder newSkull = new me.blok601.nightshadeuhc.util.ItemBuilder(skull);
-        newSkull.name(ChatUtils.format("&6Host")).lore(ChatUtils.format("&3Host» &e" + GameManager.get().getHost().getName()));
+        newSkull.name(ChatUtils.format("&b&lHost")).lore(ChatUtils.format("&3Host» &e" + GameManager.get().getHost().getName()));
         newSkull.skullOwner(GameManager.get().getHost().getName());
 
-        ItemStack server = new ItemBuilder(Material.PAPER).name(ChatUtils.format("&6Server Information")).lore(ChatUtils.format("&3Owners» &eBL0K, Milan and CarterAimz"))
-                .lore(ChatUtils.format("&3Provider» &eOVH")).lore(ChatUtils.format("&3Developers» &eBL0K, Braidenn_, Database and Austin")).lore(ChatUtils.format("&3Website» &ewww.nightshadepvp.com")).lore(ChatUtils.format("&3Twitter» &e@NightShadePVPMC"))
+        ItemStack server = new ItemBuilder(Material.PAPER).name(ChatUtils.format("&6Server Information")).lore(ChatUtils.format("&3Owners» &eBL0K, @DiscoOzzy, Milan, and CarterAimz"))
+                .lore(ChatUtils.format("&3Provider» &eOVH")).lore(ChatUtils.format("&3Developers» &eBL0K, Ozzy, Database and Austin")).lore(ChatUtils.format("&3Website» &ewww.nightshadepvp.com")).lore(ChatUtils.format("&3Twitter» &e@NightShadePVPMC"))
                 .lore(ChatUtils.format("&3Discord» &5discord.me/NightShadeMC"))
                 .make();
 
-        menu.item(1, paper);
-        menu.item(4, mining);
-        menu.item(7, apples);
-        menu.item(19, healing);
-        menu.item(22, potions);
-        menu.item(25, combat);
-        menu.item(37, newSkull.make());
-        menu.item(40, server);
-        menu.item(43, bannable);
+        menu.item(3, post.make());
+        menu.item(4, newSkull.make());
+        menu.item(5, timers.make());
 
         player.openInventory(menu.make());
     }

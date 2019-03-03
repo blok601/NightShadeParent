@@ -58,9 +58,9 @@ public class Announcer {
                     return;
                 }
 
-                Bukkit.broadcastMessage(ChatUtils.format("&f&m----------------------------------"));
+                Bukkit.broadcastMessage(ChatUtils.format("&f&m--------------------------------------------"));
                 Bukkit.broadcastMessage(ChatUtils.message(messages.get(random.nextInt(messages.size()))));
-                Bukkit.broadcastMessage(ChatUtils.format("&f&m----------------------------------"));
+                Bukkit.broadcastMessage(ChatUtils.format("&f&m--------------------------------------------"));
             }
         }.runTaskTimer(core, 0, 3000L);
     }

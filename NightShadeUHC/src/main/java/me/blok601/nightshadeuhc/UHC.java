@@ -110,6 +110,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         SettingsManager.getInstance().setup(this);
         StatsHandler.getInstance().setup();
         new GoldenHeadRecipe();
+        FakePlayerManager.getInstance().setup();
 
 
         this.gameManager = new GameManager();

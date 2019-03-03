@@ -68,6 +68,10 @@
             <name>jcenter-bintray</name>
             <url>http://jcenter.bintray.com</url>
         </repository>
+        <repository>
+            <id>dmulloy2-repo</id>
+            <url>http://repo.dmulloy2.net/nexus/repository/public/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -109,6 +113,11 @@
             <version>0.3</version>
             <scope>system</scope>
             <systemPath>${basedir}/src/main/resources/libs/LiteBansAPI.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.comphenix.protocol</groupId>
+            <artifactId>ProtocolLib-API</artifactId>
+            <version>4.4.0</version>
         </dependency>
     </dependencies>
 
