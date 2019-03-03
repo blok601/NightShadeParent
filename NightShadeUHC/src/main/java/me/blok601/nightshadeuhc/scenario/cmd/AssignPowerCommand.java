@@ -42,7 +42,7 @@ public class AssignPowerCommand implements UHCCommand{
             return;
         }
 
-        if(!scenarioManager.getScen("Superheroes").isEnabled()){
+        if(!(scenarioManager.getScen("Superheroes").isEnabled() || scenarioManager.getScen("SuperheroesTeams").isEnabled())){
             p.sendMessage(ChatUtils.message("&cSuperheroes isn't enabled!"));
             return;
         }

@@ -1,6 +1,7 @@
 package me.blok601.nightshadeuhc.scenario;
 
 import com.google.common.collect.Lists;
+import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
 import me.blok601.nightshadeuhc.entity.object.Team;
 import me.blok601.nightshadeuhc.event.GameStartEvent;
 import me.blok601.nightshadeuhc.manager.GameManager;
@@ -15,10 +16,8 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class SuperHeroesTeamScenario extends Scenario{
     private GameManager gameManager;
@@ -62,6 +61,29 @@ public class SuperHeroesTeamScenario extends Scenario{
             }
 
         }
+        UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> {
+            Player p = (Player) uhcPlayer;
+            Random random = ThreadLocalRandom.current();
+
+            if (TeamManager.getInstance().getTeam(p) == null) {
+                SuperheroesScenario.SuperHeroType type = SuperheroesScenario.SuperHeroType.values()[random.nextInt(SuperheroesScenario.SuperHeroType.values().length)];
+                if (powers.containsKey(uhcPlayer.getUuid())) {
+                    return;
+                }
+
+                powers.put(uhcPlayer.getUuid(), type);
+                if (type == SuperheroesScenario.SuperHeroType.HEALTH) {
+                    p.setMaxHealth(40);
+                    p.setHealth(40);
+                } else {
+                    for (PotionEffect effect : type.getEffecst()) {
+                        p.addPotionEffect(effect);
+                    }
+                }
+
+                uhcPlayer.msg(ChatUtils.format(getPrefix() + "&eYour super power is: &3" + type.getName()));
+            }
+        });
     }
 
     public enum SuperHeroType{
