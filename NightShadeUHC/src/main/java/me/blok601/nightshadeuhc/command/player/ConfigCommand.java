@@ -13,6 +13,13 @@ import org.bukkit.entity.Player;
  * Created by Blok on 11/10/2017.
  */
 public class ConfigCommand implements UHCCommand{
+
+    private GameManager gameManager;
+
+    public ConfigCommand(GameManager gameManager) {
+        this.gameManager = gameManager;
+    }
+
     @Override
     public String[] getNames() {
         return new String[]{
@@ -30,7 +37,7 @@ public class ConfigCommand implements UHCCommand{
 
         p.sendMessage(ChatUtils.message("&eOpening the game config!"));
 
-        new ConfigGUI(p);
+        new ConfigGUI(p, gameManager);
 
     }
 

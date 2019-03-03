@@ -63,7 +63,7 @@ public class CommandHandler  {
         registerCommand(new TeamBaseCommand(scenarioManager));
         registerCommand(new MaxplayersCommand());
         registerCommand(new TimerCommand());
-        registerCommand(new ConfigCommand());
+        registerCommand(new ConfigCommand(gameManager));
         registerCommand(new LoadPresetCommand());
         registerCommand(new eWhitelistCommand());
         registerCommand(new RespawnCommand());
