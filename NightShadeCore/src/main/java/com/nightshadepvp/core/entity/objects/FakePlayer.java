@@ -102,6 +102,11 @@ public class FakePlayer {
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutEntityDestroy(entityHuman.getId()));
     }
 
+    public void hideName(){
+        this.entityHuman.setCustomName("Test");
+        this.entityHuman.setCustomNameVisible(false);
+    }
+
     /**
      * Check if the given player can see this NPC.
      *
