@@ -77,7 +77,10 @@ public class JoinListener implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                FakePlayerManager.getInstance().getNpcs().forEach(fakePlayer -> fakePlayer.spawnFor(player));
+                FakePlayerManager.getInstance().getNpcs().forEach(fakePlayer -> {
+                    fakePlayer.spawnFor(player);
+                    fakePlayer.hideName();
+                });
             }
         }.runTaskLater(uhc, 15L);
         
