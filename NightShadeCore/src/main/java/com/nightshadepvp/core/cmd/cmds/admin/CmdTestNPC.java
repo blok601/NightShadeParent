@@ -13,6 +13,13 @@ import org.bukkit.entity.Player;
  */
 public class CmdTestNPC extends NightShadeCoreCommand {
 
+    private static CmdTestNPC i = new CmdTestNPC();
+
+    public static CmdTestNPC get() {
+        return i;
+    }
+
+
     public CmdTestNPC() {
         this.addAliases("npctest");
         this.addRequirements(ReqRankHasAtLeast.get(Rank.OWNER));
