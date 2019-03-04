@@ -84,15 +84,15 @@ public class FakePlayer {
         PacketContainer packetContainer = PacketContainer.fromPacket(spawn);
         packetContainer.getSpecificModifier(UUID.class).write(0, player.getUniqueId());
         WrappedDataWatcher watcher;
-        if (this.getEntityHuman() != null) {
-            watcher = new WrappedDataWatcher(this.getEntityHuman().getBukkitEntity());
-        } else {
-            watcher = new WrappedDataWatcher();
-        }
-
-        watcher.setObject(8, WrappedDataWatcher.Registry.get(Integer.class), 0); //Hide potion effects
-        watcher.setObject(13, WrappedDataWatcher.Registry.get(Byte.class), (byte) 127); // Shows 3D skin parts/capes
-        packetContainer.getDataWatcherModifier().write(0, watcher);
+////        if (this.getEntityHuman() != null) {
+////            watcher = new WrappedDataWatcher(this.getEntityHuman().getBukkitEntity());
+////        } else {
+////            watcher = new WrappedDataWatcher();
+////        }
+////
+////        watcher.setObject(8, WrappedDataWatcher.Registry.get(Integer.class), 0); //Hide potion effects
+////        watcher.setObject(13, WrappedDataWatcher.Registry.get(Byte.class), (byte) 127); // Shows 3D skin parts/capes
+//        packetContainer.getDataWatcherModifier().write(0, watcher);
 
         CraftPlayer craftPlayer = (CraftPlayer) player;
         try {
