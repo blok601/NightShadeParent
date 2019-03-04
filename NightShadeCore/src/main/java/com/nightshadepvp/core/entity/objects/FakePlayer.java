@@ -6,7 +6,6 @@ import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher;
 import com.google.common.collect.Sets;
 import com.mojang.authlib.GameProfile;
-import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.packet.WrapperPlayServerEntityMetadata;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
@@ -17,6 +16,7 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.lang.reflect.InvocationTargetException;
@@ -36,14 +36,14 @@ public class FakePlayer {
     private final EntityHuman entityHuman;
     private Consumer<Player> whenClicked;
 
-    private Core plugin;
+    private JavaPlugin plugin;
 
     private static final ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
 
-    public FakePlayer(ItemStack[] armor, ItemStack itemInHand, Location loc, Core core) {
+    public FakePlayer(ItemStack[] armor, ItemStack itemInHand, Location loc, JavaPlugin plugin) {
         this.armor = armor;
         this.loc = loc;
-        this.plugin = core;
+        this.plugin = plugin;
 
         MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
         WorldServer world = ((CraftWorld) loc.getWorld()).getHandle();

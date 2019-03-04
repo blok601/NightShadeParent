@@ -2,6 +2,7 @@ package com.nightshadepvp.core.cmd.cmds.admin;
 
 import com.massivecraft.massivecore.MassiveException;
 import com.massivecraft.massivecore.command.Visibility;
+import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.cmd.NightShadeCoreCommand;
 import com.nightshadepvp.core.cmd.req.ReqRankHasAtLeast;
@@ -29,7 +30,7 @@ public class CmdTestNPC extends NightShadeCoreCommand {
     @Override
     public void perform() throws MassiveException {
         Player p = (Player) sender;
-        FakePlayer fakePlayer = new FakePlayer(null, null, p.getLocation());
+        FakePlayer fakePlayer = new FakePlayer(null, null, p.getLocation(), Core.get());
         fakePlayer.spawnFor(p);
         p.sendMessage("Appeared!");
     }
