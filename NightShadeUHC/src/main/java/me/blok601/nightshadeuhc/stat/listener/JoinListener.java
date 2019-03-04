@@ -1,6 +1,6 @@
 package me.blok601.nightshadeuhc.stat.listener;
 
-import com.nightshadepvp.core.Core;
+import com.google.common.base.Joiner;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
 import me.blok601.nightshadeuhc.UHC;
@@ -31,8 +31,11 @@ import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
+
+import java.util.stream.Collectors;
 
 /**
  * Created by Blok on 9/4/2017.
@@ -41,10 +44,12 @@ public class JoinListener implements Listener {
 
     private GameManager gameManager;
     private ScenarioManager scenarioManager;
+    private UHC uhc;
 
-    public JoinListener(GameManager gameManager, ScenarioManager scenarioManager) {
+    public JoinListener(GameManager gameManager, ScenarioManager scenarioManager, UHC uhc) {
         this.gameManager = gameManager;
         this.scenarioManager = scenarioManager;
+        this.uhc = uhc;
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -69,9 +74,13 @@ public class JoinListener implements Listener {
             }
         }
 
-
-
-
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                FakePlayerManager.getInstance().getNpcs().forEach(fakePlayer -> fakePlayer.spawnFor(player));
+            }
+        }.runTaskLater(uhc, 15L);
+        
         if (gamePlayer.isSpectator()) return;
         if (GameState.getState() == GameState.INGAME || GameState.getState() == GameState.MEETUP) {
             CombatLogger logger = LoggerManager.getInstance().getLogger(e.getPlayer().getName());
@@ -91,7 +100,6 @@ public class JoinListener implements Listener {
             uhcPlayer.getPlayer().showPlayer(player);
         });
 
-        FakePlayerManager.getInstance().getNpcs().forEach(fakePlayer -> fakePlayer.spawnFor(player));
 
         if (gameManager.getRespawnQueue().contains(player.getName().toLowerCase())) {
             // They should be respawned
@@ -151,24 +159,26 @@ public class JoinListener implements Listener {
             }
             StringBuilder builder = new StringBuilder();
             scenarioManager.getEnabledScenarios().forEach(scenario -> builder.append(scenario.getName()).append(", "));
-            String scenarios = builder.toString().trim();
-            player.sendMessage(ChatUtils.format("&5&m-----------------------------------"));
-            player.sendMessage(ChatUtils.format("&e&lHost: &3" + gameManager.getHost().getName()));
-            if (scenarios.length() > 0) {
-                player.sendMessage(ChatUtils.format("&e&lScenarios: &3" + scenarios.substring(0, builder.length() - 1)));
+            player.sendMessage(ChatUtils.format("&f&m-----------------------------------"));
+            player.sendMessage(ChatUtils.format("&fHost: &5" + gameManager.getHost().getName()));
+            if (scenarioManager.getEnabledScenarios().size() == 0) {
+                player.sendMessage(ChatUtils.format("&fScenarios: &5None"));
             } else {
-                player.sendMessage(ChatUtils.format("&e&lScenarios: &3None"));
+                Scenario scenario = scenarioManager.getScen("Mystery Scenarios");
+                if (scenario != null && scenario.isEnabled()) {
+                    player.sendMessage(ChatUtils.format("&fScenarios: &5" + scenario.getName()));
+                } else {
+                    player.sendMessage(ChatUtils.format("&fScenarios: &5" + Joiner.on("&7, &5").join(scenarioManager.getEnabledScenarios().stream().map(Scenario::getName).collect(Collectors.toList()))));
+                }
             }
-            player.sendMessage(ChatUtils.format("&e&lTeamSize: &3" + (gameManager.isIsTeam() ? TeamManager.getInstance().getTeamSize() : "FFA")));
 
             player.sendMessage(" ");
-            player.sendMessage(ChatUtils.format("&e&lFinal Heal Time: &3" + gameManager.getFinalHealTime() / 60 + " minutes"));
-            player.sendMessage(ChatUtils.format("&e&lPvP Time: &3" + gameManager.getPvpTime() / 60 + " minutes"));
-            player.sendMessage(ChatUtils.format("&e&lMeetup Time: &3" + gameManager.getBorderTime() / 60 + " minutes"));
-            player.sendMessage(" ");
-            player.sendMessage(ChatUtils.format("&e&lMatchpost: &3" + Core.get().getMatchpost()));
+            player.sendMessage(ChatUtils.format("&fFinal Heal Time: &5" + gameManager.getFinalHealTime() / 60 + " minutes"));
+            player.sendMessage(ChatUtils.format("&fPvP Time: &5" + gameManager.getPvpTime() / 60 + " minutes"));
+            player.sendMessage(ChatUtils.format("&fMeetup Time: &5" + gameManager.getMeetupTime() / 60 + " minutes"));
+            player.sendMessage(ChatUtils.format("&fFirst Shrink Time: &5" + gameManager.getBorderTime() / 60 + " minutes"));
 
-            player.sendMessage(ChatUtils.format("&5&m-----------------------------------"));
+            player.sendMessage(ChatUtils.format("&f&m-----------------------------------"));
 
         } else {
             player.getEnderChest().clear();
@@ -182,7 +192,7 @@ public class JoinListener implements Listener {
 
         Player p = e.getPlayer();
         UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
-        FakePlayerManager.getInstance().getNpcs().forEach(fakePlayer -> fakePlayer.spawnFor(p));
+        FakePlayerManager.getInstance().getNpcs().forEach(fakePlayer -> fakePlayer.despawnFor(p));
         if (gamePlayer.isSpectator() || gamePlayer.isStaffMode()) {
             return;
         }
@@ -204,22 +214,9 @@ public class JoinListener implements Listener {
     @EventHandler
     public void onKick(PlayerKickEvent e) {
         UHC.get().getScoreboardManager().removeFromPlayerCache(e.getPlayer());
-
-//        new BukkitRunnable() {
-//            @Override
-//            public void run() {
-//                if (SettingsManager.getInstance().getPlayers().contains(e.getPlayer().getUniqueId().toString())) {
-//                    Location location = LocationUtils.locationFromString(SettingsManager.getInstance().getPlayers().getString(e.getPlayer().getUniqueId().toString()));
-//                    e.getPlayer().teleport(location);
-//                    SettingsManager.getInstance().getPlayers().set(e.getPlayer().getUniqueId().toString(), null);
-//                    SettingsManager.getInstance().savePlayers();
-//                }
-//            }
-//        }.runTaskLater(UHC.get(), 20 * 5 * 60);
-
         Player p = e.getPlayer();
         UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
-        FakePlayerManager.getInstance().getNpcs().forEach(fakePlayer -> fakePlayer.spawnFor(p));
+        FakePlayerManager.getInstance().getNpcs().forEach(fakePlayer -> fakePlayer.despawnFor(p));
 
 
         if (gamePlayer.isSpectator() || gamePlayer.isStaffMode()) {
