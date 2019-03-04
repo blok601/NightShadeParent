@@ -104,7 +104,7 @@ public class FakePlayer {
 
     public void hideName(){
         this.entityHuman.setCustomName("Test");
-        this.entityHuman.setCustomNameVisible(false);
+        this.entityHuman.setCustomNameVisible(true);
     }
 
     /**
