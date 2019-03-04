@@ -1,6 +1,5 @@
 package com.nightshadepvp.meetup.task;
 
-import com.nightshadepvp.meetup.Meetup;
 import com.nightshadepvp.meetup.Settings;
 import com.nightshadepvp.meetup.entity.MPlayerColl;
 import com.nightshadepvp.meetup.utils.ChatUtils;
@@ -19,7 +18,7 @@ public class PlayerCheckTask extends BukkitRunnable {
         if (players >= Settings.MIN_PLAYERS) {
             cancel();
             Bukkit.broadcastMessage(ChatUtils.message("&eThe game will begin in &330 &eseconds..."));
-            new ScatterTask().runTaskTimer(Meetup.get(), 0, 4L);
+            //new ScatterTask().runTaskTimer(Meetup.get(), 0, 4L);
             return;
         }else{
             Bukkit.broadcastMessage(ChatUtils.message("&eThe game needs &3" + (Settings.MIN_PLAYERS - players) + " &emore players to start..."));

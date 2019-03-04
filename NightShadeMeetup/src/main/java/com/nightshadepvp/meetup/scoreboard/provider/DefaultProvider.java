@@ -3,7 +3,6 @@ package com.nightshadepvp.meetup.scoreboard.provider;
 
 import com.nightshadepvp.meetup.scoreboard.ScoreboardProvider;
 import com.nightshadepvp.meetup.scoreboard.ScoreboardText;
-import com.nightshadepvp.meetup.scoreboard.provider.type.LobbyScoreboard;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -16,7 +15,7 @@ public class DefaultProvider extends ScoreboardProvider {
     public DefaultProvider() {
         this.defaultProvider = new HashMap<>();
 
-        this.defaultProvider.put(ProviderType.LOBBY, new LobbyScoreboard());
+        //this.defaultProvider.put(ProviderType.LOBBY, new LobbyScoreboard());
         //this.defaultProvider.put(ProviderType.INGAME, new IngameScoreboard());
     }
 

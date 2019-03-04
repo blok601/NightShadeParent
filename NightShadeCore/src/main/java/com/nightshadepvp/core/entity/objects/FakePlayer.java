@@ -85,7 +85,7 @@ public class FakePlayer {
         packetContainer.getSpecificModifier(UUID.class).write(0, player.getUniqueId());
         WrappedDataWatcher watcher;
         if (this.getEntityHuman() != null) {
-            watcher = new WrappedDataWatcher(this.getEntityHuman());
+            watcher = new WrappedDataWatcher(this.getEntityHuman().getBukkitEntity());
         } else {
             watcher = new WrappedDataWatcher();
         }
@@ -142,7 +142,7 @@ public class FakePlayer {
 
     private void hideName(Player to) {
         WrapperPlayServerEntityMetadata metadataWrapper = new WrapperPlayServerEntityMetadata();
-        metadataWrapper.setEntityID(this.entityHuman.getId());
+        metadataWrapper.setEntityID(this.entityHuman.getBukkitEntity().getEntityId());
 
         WrappedDataWatcher metaWatcher = new WrappedDataWatcher();
 
