@@ -1,8 +1,13 @@
 package com.nightshadepvp.core.entity.objects;
 
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.wrappers.WrappedDataWatcher;
 import com.google.common.collect.Sets;
 import com.mojang.authlib.GameProfile;
+import com.nightshadepvp.core.Core;
+import com.nightshadepvp.core.packet.WrapperPlayServerEntityMetadata;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -12,7 +17,9 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -29,9 +36,14 @@ public class FakePlayer {
     private final EntityHuman entityHuman;
     private Consumer<Player> whenClicked;
 
-    public FakePlayer(ItemStack[] armor, ItemStack itemInHand, Location loc) {
+    private Core plugin;
+
+    private static final ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
+
+    public FakePlayer(ItemStack[] armor, ItemStack itemInHand, Location loc, Core core) {
         this.armor = armor;
         this.loc = loc;
+        this.plugin = core;
 
         MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
         WorldServer world = ((CraftWorld) loc.getWorld()).getHandle();
@@ -50,6 +62,7 @@ public class FakePlayer {
 
         PlayerInventory inventory = this.entityHuman.inventory;
         inventory.setItem(inventory.itemInHandIndex, CraftItemStack.asNMSCopy(itemInHand));
+
     }
 
     private Set<UUID> players = Sets.newHashSet();
@@ -67,10 +80,27 @@ public class FakePlayer {
         this.players.add(player.getUniqueId());
 
         PacketPlayOutNamedEntitySpawn spawn = new PacketPlayOutNamedEntitySpawn(entityHuman);
-        PacketContainer.fromPacket(spawn).getSpecificModifier(UUID.class).write(0, player.getUniqueId());
+
+        PacketContainer packetContainer = PacketContainer.fromPacket(spawn);
+        packetContainer.getSpecificModifier(UUID.class).write(0, player.getUniqueId());
+        WrappedDataWatcher watcher;
+        if (this.getEntityHuman() != null) {
+            watcher = new WrappedDataWatcher(this.getEntityHuman());
+        } else {
+            watcher = new WrappedDataWatcher();
+        }
+
+        watcher.setObject(8, WrappedDataWatcher.Registry.get(Integer.class), 0); //Hide potion effects
+        watcher.setObject(13, WrappedDataWatcher.Registry.get(Byte.class), (byte) 127); // Shows 3D skin parts/capes
+        packetContainer.getDataWatcherModifier().write(0, watcher);
+
         CraftPlayer craftPlayer = (CraftPlayer) player;
-        craftPlayer.getHandle().playerConnection.sendPacket(spawn);
-        craftPlayer.getHandle().playerConnection.sendPacket(new PacketPlayOutEntityHeadRotation(entityHuman, (byte) (int) (loc.getYaw() * 256.0F / 360.0F)));
+        try {
+            protocolManager.sendServerPacket(player, packetContainer);
+            craftPlayer.getHandle().playerConnection.sendPacket(new PacketPlayOutEntityHeadRotation(entityHuman, (byte) (int) (loc.getYaw() * 256.0F / 360.0F)));
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
 
 
         if (armor == null) {
@@ -86,6 +116,14 @@ public class FakePlayer {
 
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutEntityEquipment(entityHuman.getId(), i + 1, CraftItemStack.asNMSCopy(thisOne)));
         }
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                hideName(player);
+            }
+        }.runTaskLater(plugin, 20L);
+
     }
 
     /**
@@ -102,9 +140,22 @@ public class FakePlayer {
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutEntityDestroy(entityHuman.getId()));
     }
 
-    public void hideName(){
-        this.entityHuman.setCustomName("Test");
-        this.entityHuman.setCustomNameVisible(true);
+    private void hideName(Player to) {
+        WrapperPlayServerEntityMetadata metadataWrapper = new WrapperPlayServerEntityMetadata();
+        metadataWrapper.setEntityID(this.entityHuman.getId());
+
+        WrappedDataWatcher metaWatcher = new WrappedDataWatcher();
+
+        metaWatcher.setObject(2, WrappedDataWatcher.Registry.get(String.class), "");
+        metaWatcher.setObject(3, WrappedDataWatcher.Registry.get(Boolean.class), false, false);
+
+        metadataWrapper.setMetadata(metaWatcher.getWatchableObjects());
+
+        try {
+            protocolManager.sendServerPacket(to, metadataWrapper.getHandle());
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

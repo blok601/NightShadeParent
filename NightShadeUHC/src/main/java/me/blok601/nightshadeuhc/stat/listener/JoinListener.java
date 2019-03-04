@@ -80,7 +80,6 @@ public class JoinListener implements Listener {
                 public void run() {
                     FakePlayerManager.getInstance().getNpcs().forEach(fakePlayer -> {
                         fakePlayer.spawnFor(player);
-                        fakePlayer.hideName();
                     });
                 }
             }.runTaskLater(uhc, 15L);
