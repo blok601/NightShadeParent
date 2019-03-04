@@ -142,7 +142,7 @@ public class FakePlayer {
 
     private void hideName(Player to) {
         WrapperPlayServerEntityMetadata metadataWrapper = new WrapperPlayServerEntityMetadata();
-        metadataWrapper.setEntityID(this.entityHuman.getBukkitEntity().getEntityId());
+        metadataWrapper.setEntityID(this.getEntityID());
 
         WrappedDataWatcher metaWatcher = new WrappedDataWatcher();
 
@@ -150,7 +150,6 @@ public class FakePlayer {
         metaWatcher.setObject(3, WrappedDataWatcher.Registry.get(Boolean.class), false, false);
 
         metadataWrapper.setMetadata(metaWatcher.getWatchableObjects());
-
         try {
             protocolManager.sendServerPacket(to, metadataWrapper.getHandle());
         } catch (InvocationTargetException e) {
