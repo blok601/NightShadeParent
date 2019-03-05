@@ -73,7 +73,6 @@ public class CutCleanScenario extends Scenario{
         if (b.getType() == Material.COAL_ORE) {
             if (Math.random() * 10 + 1 >= 6) {
                 p.giveExp(2);
-                p.playSound(loc, Sound.ORB_PICKUP, 1, 10);
 
             }
         }
@@ -81,13 +80,11 @@ public class CutCleanScenario extends Scenario{
 
         if (b.getType() == Material.GOLD_ORE) {
             p.giveExp(3);
-            p.playSound(loc, Sound.ORB_PICKUP, 1, 10);
 
         }
 
         if (b.getType() == Material.IRON_ORE) {
             p.giveExp(2);
-            p.playSound(loc, Sound.ORB_PICKUP, 1, 10);
 
         }
 
