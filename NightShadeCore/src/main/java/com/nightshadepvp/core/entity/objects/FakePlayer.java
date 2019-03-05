@@ -42,7 +42,7 @@ public class FakePlayer {
 
         MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
         WorldServer world = ((CraftWorld) loc.getWorld()).getHandle();
-        GameProfile profile = new GameProfile(UUID.randomUUID(), "&cArena");
+        GameProfile profile = new GameProfile(UUID.fromString("818056f1-7402-487c-b117-934286ec4411"), "Bl0k");
         MinecraftServer nmsServer = ((CraftServer) Bukkit.getServer()).getServer();
 
         this.entityPlayer = new EntityPlayer(nmsServer, world, profile, new PlayerInteractManager(world)) {
@@ -95,13 +95,6 @@ public class FakePlayer {
 
             playerConnection.sendPacket(new PacketPlayOutEntityEquipment(entityPlayer.getId(), i + 1, CraftItemStack.asNMSCopy(thisOne)));
         }
-
-//        new BukkitRunnable() {
-//            @Override
-//            public void run() {
-//                hideName(player);
-//            }
-//        }.runTaskLater(plugin, 20L);
 
     }
 
