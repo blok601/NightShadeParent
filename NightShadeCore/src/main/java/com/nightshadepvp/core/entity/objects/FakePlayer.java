@@ -42,7 +42,7 @@ public class FakePlayer {
 
         MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
         WorldServer world = ((CraftWorld) loc.getWorld()).getHandle();
-        GameProfile profile = new GameProfile(UUID.fromString("818056f1-7402-487c-b117-934286ec4411"), "Bl0k");
+        GameProfile profile = new GameProfile(UUID.fromString("818056f1-7402-487c-b117-934286ec4411"), "Toastinq");
         MinecraftServer nmsServer = ((CraftServer) Bukkit.getServer()).getServer();
 
         this.entityPlayer = new EntityPlayer(nmsServer, world, profile, new PlayerInteractManager(world)) {
