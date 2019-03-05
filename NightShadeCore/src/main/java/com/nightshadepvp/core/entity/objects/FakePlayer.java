@@ -14,7 +14,6 @@ import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Set;
 import java.util.UUID;
@@ -77,7 +76,7 @@ public class FakePlayer {
 
         this.players.add(player.getUniqueId());
 
-       
+
         this.entityPlayer.setLocation(this.loc.getX(), this.loc.getY(), this.loc.getZ(), (loc.getPitch() * 256.0F / 360.0F), (loc.getYaw() * 256.0F / 360.0F));
         PlayerConnection playerConnection = ((CraftPlayer) player).getHandle().playerConnection;
         playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, this.entityPlayer));
@@ -97,12 +96,12 @@ public class FakePlayer {
             playerConnection.sendPacket(new PacketPlayOutEntityEquipment(entityPlayer.getId(), i + 1, CraftItemStack.asNMSCopy(thisOne)));
         }
 
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                hideName(player);
-            }
-        }.runTaskLater(plugin, 20L);
+//        new BukkitRunnable() {
+//            @Override
+//            public void run() {
+//                hideName(player);
+//            }
+//        }.runTaskLater(plugin, 20L);
 
     }
 
