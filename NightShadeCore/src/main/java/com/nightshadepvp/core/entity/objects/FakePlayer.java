@@ -43,7 +43,7 @@ public class FakePlayer {
 
         MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
         WorldServer world = ((CraftWorld) loc.getWorld()).getHandle();
-        GameProfile profile = new GameProfile(null, "Santa");
+        GameProfile profile = new GameProfile(UUID.randomUUID(), "&cArena");
         MinecraftServer nmsServer = ((CraftServer) Bukkit.getServer()).getServer();
 
         this.entityPlayer = new EntityPlayer(nmsServer, world, profile, new PlayerInteractManager(world)) {
@@ -77,8 +77,7 @@ public class FakePlayer {
 
         this.players.add(player.getUniqueId());
 
-        Player npcPlayer = this.entityPlayer.getBukkitEntity().getPlayer();
-        npcPlayer.setPlayerListName("TestNPC");
+       
         this.entityPlayer.setLocation(this.loc.getX(), this.loc.getY(), this.loc.getZ(), (loc.getPitch() * 256.0F / 360.0F), (loc.getYaw() * 256.0F / 360.0F));
         PlayerConnection playerConnection = ((CraftPlayer) player).getHandle().playerConnection;
         playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, this.entityPlayer));
