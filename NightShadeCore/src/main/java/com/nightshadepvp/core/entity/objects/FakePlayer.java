@@ -1,5 +1,6 @@
 package com.nightshadepvp.core.entity.objects;
 
+import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketContainer;
@@ -79,29 +80,43 @@ public class FakePlayer {
 
         this.players.add(player.getUniqueId());
 
-        PacketPlayOutNamedEntitySpawn spawn = new PacketPlayOutNamedEntitySpawn(entityHuman);
+//        PacketPlayOutNamedEntitySpawn spawn = new PacketPlayOutNamedEntitySpawn(entityHuman);
+//
+//        PacketContainer packetContainer = PacketContainer.fromPacket(spawn);
+//        packetContainer.getSpecificModifier(UUID.class).write(0, player.getUniqueId());
+//        WrappedDataWatcher watcher;
+//        CraftPlayer craftPlayer = (CraftPlayer) player;
+//        try {
+//            protocolManager.sendServerPacket(player, packetContainer);
+//            craftPlayer.getHandle().playerConnection.sendPacket(new PacketPlayOutEntityHeadRotation(entityHuman, (byte) (int) (loc.getYaw() * 256.0F / 360.0F)));
+//        } catch (InvocationTargetException e) {
+//            e.printStackTrace();
+//        }
 
-        PacketContainer packetContainer = PacketContainer.fromPacket(spawn);
-        packetContainer.getSpecificModifier(UUID.class).write(0, player.getUniqueId());
+        PacketContainer packet = new PacketContainer(PacketType.Play.Server.NAMED_ENTITY_SPAWN);
+        packet.getIntegers().write(0, this.getEntityID());
+        packet.getUUIDs().write(0, player.getUniqueId());
+        packet.getDoubles()
+                .write(0, this.loc.getX())
+                .write(1, this.loc.getY())
+                .write(2, this.loc.getZ());
+        packet.getBytes()
+                .write(0, (byte) (int) (loc.getYaw() * 256.0F / 360.0F))
+                .write(1, (byte) (int) (loc.getPitch() * 256.0F / 360.0F));
+
         WrappedDataWatcher watcher;
-////        if (this.getEntityHuman() != null) {
-////            watcher = new WrappedDataWatcher(this.getEntityHuman().getBukkitEntity());
-////        } else {
-////            watcher = new WrappedDataWatcher();
-////        }
-////
-////        watcher.setObject(8, WrappedDataWatcher.Registry.get(Integer.class), 0); //Hide potion effects
-////        watcher.setObject(13, WrappedDataWatcher.Registry.get(Byte.class), (byte) 127); // Shows 3D skin parts/capes
-//        packetContainer.getDataWatcherModifier().write(0, watcher);
+        if (this.getEntityHuman() != null) {
+            watcher = new WrappedDataWatcher(this.getEntityHuman());
+        } else {
+            watcher = new WrappedDataWatcher();
+        }
 
-        CraftPlayer craftPlayer = (CraftPlayer) player;
+        packet.getDataWatcherModifier().write(0, watcher);
         try {
-            protocolManager.sendServerPacket(player, packetContainer);
-            craftPlayer.getHandle().playerConnection.sendPacket(new PacketPlayOutEntityHeadRotation(entityHuman, (byte) (int) (loc.getYaw() * 256.0F / 360.0F)));
+            protocolManager.sendServerPacket(player, packet);
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
-
 
         if (armor == null) {
             return;
@@ -146,8 +161,8 @@ public class FakePlayer {
 
         WrappedDataWatcher metaWatcher = new WrappedDataWatcher();
 
-        metaWatcher.setObject(2, WrappedDataWatcher.Registry.get(String.class), "");
-        metaWatcher.setObject(3, WrappedDataWatcher.Registry.get(Boolean.class), false, false);
+        metaWatcher.setObject(1, WrappedDataWatcher.Registry.get(String.class), "");
+        metaWatcher.setObject(2, WrappedDataWatcher.Registry.get(Boolean.class), false, false);
 
         metadataWrapper.setMetadata(metaWatcher.getWatchableObjects());
         try {
