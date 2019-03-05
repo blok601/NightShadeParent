@@ -1,13 +1,9 @@
 package com.nightshadepvp.core.entity.objects;
 
-import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
-import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.wrappers.WrappedDataWatcher;
 import com.google.common.collect.Sets;
 import com.mojang.authlib.GameProfile;
-import com.nightshadepvp.core.packet.WrapperPlayServerEntityMetadata;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -20,7 +16,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -34,7 +29,7 @@ import java.util.function.Consumer;
 public class FakePlayer {
     private final ItemStack[] armor;
     private final Location loc;
-    private final EntityHuman entityHuman;
+    private final EntityPlayer entityPlayer;
     private Consumer<Player> whenClicked;
 
     private JavaPlugin plugin;
@@ -49,19 +44,21 @@ public class FakePlayer {
         MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
         WorldServer world = ((CraftWorld) loc.getWorld()).getHandle();
         GameProfile profile = new GameProfile(null, "Santa");
-        this.entityHuman = new EntityHuman(world, profile) {
+        MinecraftServer nmsServer = ((CraftServer) Bukkit.getServer()).getServer();
+
+        this.entityPlayer = new EntityPlayer(nmsServer, world, profile, new PlayerInteractManager(world)) {
             @Override
             public boolean isSpectator() {
                 return false;
             }
         };
-        this.entityHuman.setLocation(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
+        this.entityPlayer.setLocation(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
 
         if (itemInHand == null) {
             return;
         }
 
-        PlayerInventory inventory = this.entityHuman.inventory;
+        PlayerInventory inventory = this.entityPlayer.inventory;
         inventory.setItem(inventory.itemInHandIndex, CraftItemStack.asNMSCopy(itemInHand));
 
     }
@@ -80,43 +77,12 @@ public class FakePlayer {
 
         this.players.add(player.getUniqueId());
 
-//        PacketPlayOutNamedEntitySpawn spawn = new PacketPlayOutNamedEntitySpawn(entityHuman);
-//
-//        PacketContainer packetContainer = PacketContainer.fromPacket(spawn);
-//        packetContainer.getSpecificModifier(UUID.class).write(0, player.getUniqueId());
-//        WrappedDataWatcher watcher;
-//        CraftPlayer craftPlayer = (CraftPlayer) player;
-//        try {
-//            protocolManager.sendServerPacket(player, packetContainer);
-//            craftPlayer.getHandle().playerConnection.sendPacket(new PacketPlayOutEntityHeadRotation(entityHuman, (byte) (int) (loc.getYaw() * 256.0F / 360.0F)));
-//        } catch (InvocationTargetException e) {
-//            e.printStackTrace();
-//        }
-
-        PacketContainer packet = new PacketContainer(PacketType.Play.Server.NAMED_ENTITY_SPAWN);
-        packet.getIntegers().write(0, this.getEntityID());
-        packet.getUUIDs().write(0, player.getUniqueId());
-        packet.getDoubles()
-                .write(0, this.loc.getX())
-                .write(1, this.loc.getY())
-                .write(2, this.loc.getZ());
-        packet.getBytes()
-                .write(0, (byte) (int) (loc.getYaw() * 256.0F / 360.0F))
-                .write(1, (byte) (int) (loc.getPitch() * 256.0F / 360.0F));
-
-        WrappedDataWatcher watcher;
-        if (this.getEntityHuman() != null) {
-            watcher = new WrappedDataWatcher(this.getEntityHuman());
-        } else {
-            watcher = new WrappedDataWatcher();
-        }
-
-        packet.getDataWatcherModifier().write(0, watcher);
-        try {
-            protocolManager.sendServerPacket(player, packet);
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
+        Player npcPlayer = this.entityPlayer.getBukkitEntity().getPlayer();
+        npcPlayer.setPlayerListName("TestNPC");
+        this.entityPlayer.setLocation(this.loc.getX(), this.loc.getY(), this.loc.getZ(), (loc.getPitch() * 256.0F / 360.0F), (loc.getYaw() * 256.0F / 360.0F));
+        PlayerConnection playerConnection = ((CraftPlayer) player).getHandle().playerConnection;
+        playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, this.entityPlayer));
+        playerConnection.sendPacket(new PacketPlayOutNamedEntitySpawn(this.entityPlayer));
 
         if (armor == null) {
             return;
@@ -129,7 +95,7 @@ public class FakePlayer {
                 continue;
             }
 
-            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutEntityEquipment(entityHuman.getId(), i + 1, CraftItemStack.asNMSCopy(thisOne)));
+            playerConnection.sendPacket(new PacketPlayOutEntityEquipment(entityPlayer.getId(), i + 1, CraftItemStack.asNMSCopy(thisOne)));
         }
 
         new BukkitRunnable() {
@@ -152,24 +118,13 @@ public class FakePlayer {
         }
 
         this.players.remove(player.getUniqueId());
-        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutEntityDestroy(entityHuman.getId()));
+        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutEntityDestroy(entityPlayer.getId()));
     }
 
     private void hideName(Player to) {
-        WrapperPlayServerEntityMetadata metadataWrapper = new WrapperPlayServerEntityMetadata();
-        metadataWrapper.setEntityID(this.getEntityID());
+        PlayerConnection playerConnection = ((CraftPlayer) to).getHandle().playerConnection;
+        playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, this.entityPlayer)); //Should remove from tab
 
-        WrappedDataWatcher metaWatcher = new WrappedDataWatcher();
-
-        metaWatcher.setObject(1, WrappedDataWatcher.Registry.get(String.class), "");
-        metaWatcher.setObject(2, WrappedDataWatcher.Registry.get(Boolean.class), false, false);
-
-        metadataWrapper.setMetadata(metaWatcher.getWatchableObjects());
-        try {
-            protocolManager.sendServerPacket(to, metadataWrapper.getHandle());
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -197,7 +152,7 @@ public class FakePlayer {
      * @return The entity id.
      */
     public int getEntityID() {
-        return entityHuman.getId();
+        return entityPlayer.getId();
     }
 
     /**
@@ -206,7 +161,7 @@ public class FakePlayer {
      * @return The entity player.
      */
     public EntityHuman getEntityHuman() {
-        return entityHuman;
+        return entityPlayer;
     }
 
     public void setWhenClicked(Consumer<Player> consumer) {
