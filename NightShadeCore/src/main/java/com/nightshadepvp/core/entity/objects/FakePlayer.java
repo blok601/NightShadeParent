@@ -2,21 +2,28 @@ package com.nightshadepvp.core.entity.objects;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.google.common.collect.Sets;
 import com.mojang.authlib.GameProfile;
+import com.nightshadepvp.core.Core;
+import com.nightshadepvp.core.Logger;
+import com.nightshadepvp.core.utils.PacketUtils;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 /**
@@ -30,6 +37,7 @@ public class FakePlayer {
     private final Location loc;
     private final EntityPlayer entityPlayer;
     private Consumer<Player> whenClicked;
+    GameProfile gameProfile;
 
     private JavaPlugin plugin;
 
@@ -42,10 +50,10 @@ public class FakePlayer {
 
         MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
         WorldServer world = ((CraftWorld) loc.getWorld()).getHandle();
-        GameProfile profile = new GameProfile(UUID.fromString("818056f1-7402-487c-b117-934286ec4411"), "Toastinq");
+        this.gameProfile = new GameProfile(UUID.randomUUID(), "§9§lArena"); //UUID doesn't matter here since it will be changed w/ skin
         MinecraftServer nmsServer = ((CraftServer) Bukkit.getServer()).getServer();
 
-        this.entityPlayer = new EntityPlayer(nmsServer, world, profile, new PlayerInteractManager(world)) {
+        this.entityPlayer = new EntityPlayer(nmsServer, world, gameProfile, new PlayerInteractManager(world)) {
             @Override
             public boolean isSpectator() {
                 return false;
@@ -59,6 +67,7 @@ public class FakePlayer {
 
         PlayerInventory inventory = this.entityPlayer.inventory;
         inventory.setItem(inventory.itemInHandIndex, CraftItemStack.asNMSCopy(itemInHand));
+
 
     }
 
@@ -76,11 +85,11 @@ public class FakePlayer {
 
         this.players.add(player.getUniqueId());
 
+        this.setSkin(player.getUniqueId());
 
         this.entityPlayer.setLocation(this.loc.getX(), this.loc.getY(), this.loc.getZ(), (loc.getPitch() * 256.0F / 360.0F), (loc.getYaw() * 256.0F / 360.0F));
-        PlayerConnection playerConnection = ((CraftPlayer) player).getHandle().playerConnection;
-        playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, this.entityPlayer));
-        playerConnection.sendPacket(new PacketPlayOutNamedEntitySpawn(this.entityPlayer));
+        PacketUtils.sendPacket(player, new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, this.entityPlayer));
+        PacketUtils.sendPacket(player, new PacketPlayOutNamedEntitySpawn(this.entityPlayer));
 
         if (armor == null) {
             return;
@@ -93,8 +102,15 @@ public class FakePlayer {
                 continue;
             }
 
-            playerConnection.sendPacket(new PacketPlayOutEntityEquipment(entityPlayer.getId(), i + 1, CraftItemStack.asNMSCopy(thisOne)));
+            PacketUtils.sendPacket(player, new PacketPlayOutEntityEquipment(entityPlayer.getId(), i + 1, CraftItemStack.asNMSCopy(thisOne)));
         }
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                hideName(player);
+            }
+        }.runTaskLater(plugin, 20L);
 
     }
 
@@ -109,12 +125,11 @@ public class FakePlayer {
         }
 
         this.players.remove(player.getUniqueId());
-        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutEntityDestroy(entityPlayer.getId()));
+        PacketUtils.sendPacket(player, new PacketPlayOutEntityDestroy(entityPlayer.getId()));
     }
 
     private void hideName(Player to) {
-        PlayerConnection playerConnection = ((CraftPlayer) to).getHandle().playerConnection;
-        playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, this.entityPlayer)); //Should remove from tab
+        PacketUtils.sendPacket(to, new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, this.entityPlayer)); //Should remove from tab
 
     }
 
@@ -162,4 +177,29 @@ public class FakePlayer {
     public void onClick(Player player) {
         this.whenClicked.accept(player);
     }
+
+    public void setSkin(UUID skinId) {
+        GameProfile skinProfile;
+        if (Bukkit.getPlayer(skinId) != null) {
+            skinProfile = PacketUtils.getHandle(Bukkit.getPlayer(skinId)).getProfile();
+        } else {
+            skinProfile = properties.getUnchecked(skinId);
+        }
+        if (skinProfile.getProperties().containsKey("textures")) {
+            this.gameProfile.getProperties().removeAll("textures");
+            this.gameProfile.getProperties().putAll("textures", skinProfile.getProperties().get("textures"));
+        } else {
+            Core.get().getLogManager().log(Logger.LogType.SEVERE, "Skin with uuid not found: " + skinId);
+        }
+    }
+
+    private final LoadingCache<UUID, GameProfile> properties = CacheBuilder.newBuilder()
+            .expireAfterAccess(5, TimeUnit.MINUTES)
+            .build(new CacheLoader<UUID, GameProfile>() {
+
+                @Override
+                public GameProfile load(UUID uuid) throws Exception {
+                    return MinecraftServer.getServer().aD().fillProfileProperties(new GameProfile(uuid, null), true);
+                }
+            });
 }

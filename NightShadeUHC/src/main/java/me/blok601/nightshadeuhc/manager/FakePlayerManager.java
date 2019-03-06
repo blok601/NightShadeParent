@@ -3,12 +3,6 @@ package me.blok601.nightshadeuhc.manager;
 import com.google.common.collect.Sets;
 import com.nightshadepvp.core.entity.objects.FakePlayer;
 import me.blok601.nightshadeuhc.UHC;
-import me.blok601.nightshadeuhc.entity.MConf;
-import me.blok601.nightshadeuhc.util.ItemBuilder;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.HashSet;
 
@@ -31,13 +25,13 @@ public class FakePlayerManager {
         this.npcs = Sets.newHashSet();
 
 
-        ItemStack[] arenaArmor = new ItemStack[4];
-        arenaArmor[3] = new ItemBuilder(Material.IRON_HELMET).enchantment(Enchantment.PROTECTION_ENVIRONMENTAL).make();
-        arenaArmor[2] = new ItemBuilder(Material.IRON_CHESTPLATE).enchantment(Enchantment.PROTECTION_ENVIRONMENTAL).make();
-        arenaArmor[1] = new ItemBuilder(Material.IRON_LEGGINGS).enchantment(Enchantment.PROTECTION_ENVIRONMENTAL).make();
-        arenaArmor[0] = new ItemBuilder(Material.IRON_BOOTS).enchantment(Enchantment.PROTECTION_ENVIRONMENTAL).make();
-        FakePlayer arena = new FakePlayer(arenaArmor, new ItemBuilder(Material.IRON_SWORD).enchantment(Enchantment.DAMAGE_ALL).make(), new Location(MConf.get().getSpawnLocation().asBukkitLocation().getWorld(), 0, 11, 4), uhc);
-        this.npcs.add(arena);
+//        ItemStack[] arenaArmor = new ItemStack[4];
+//        arenaArmor[3] = new ItemBuilder(Material.IRON_HELMET).enchantment(Enchantment.PROTECTION_ENVIRONMENTAL).make();
+//        arenaArmor[2] = new ItemBuilder(Material.IRON_CHESTPLATE).enchantment(Enchantment.PROTECTION_ENVIRONMENTAL).make();
+//        arenaArmor[1] = new ItemBuilder(Material.IRON_LEGGINGS).enchantment(Enchantment.PROTECTION_ENVIRONMENTAL).make();
+//        arenaArmor[0] = new ItemBuilder(Material.IRON_BOOTS).enchantment(Enchantment.PROTECTION_ENVIRONMENTAL).make();
+//        FakePlayer arena = new FakePlayer(arenaArmor, new ItemBuilder(Material.IRON_SWORD).enchantment(Enchantment.DAMAGE_ALL).make(), new Location(MConf.get().getSpawnLocation().asBukkitLocation().getWorld(), 0, 11, 4), uhc);
+//        this.npcs.add(arena);
     }
 
     public HashSet<FakePlayer> getNpcs() {

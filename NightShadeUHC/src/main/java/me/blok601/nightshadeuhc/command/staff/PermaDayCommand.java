@@ -1,8 +1,8 @@
 package me.blok601.nightshadeuhc.command.staff;
 
 import com.nightshadepvp.core.Rank;
-import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.command.UHCCommand;
+import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import org.bukkit.World;
@@ -36,6 +36,8 @@ public class PermaDayCommand implements UHCCommand {
 
 
         world.setTime(100);
+        world.setThundering(false);
+        world.setStorm(false);
         world.setGameRuleValue("doDaylightCycle", "false");
         world.setGameRuleValue("doWeatherCycle", "false");
         p.sendMessage(ChatUtils.message("&ePermaday has been enabled!"));
