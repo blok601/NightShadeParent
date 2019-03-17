@@ -2,8 +2,8 @@ package me.blok601.nightshadeuhc.command.game.run;
 
 
 import com.nightshadepvp.core.Rank;
-import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.command.UHCCommand;
+import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import org.bukkit.Bukkit;
@@ -15,6 +15,13 @@ import org.bukkit.entity.Player;
  * Created by Blok on 9/10/2017.
  */
 public class ManualGameCommand implements UHCCommand {
+    
+    private GameManager gameManager;
+
+    public ManualGameCommand(GameManager gameManager) {
+        this.gameManager = gameManager;
+    }
+
     @Override
     public String[] getNames() {
         return new String[]{
@@ -31,22 +38,24 @@ public class ManualGameCommand implements UHCCommand {
             return;
         }
 
-        GameManager manager = GameManager.get();
-
-        if(manager.getFinalHealTask() != null){
-            Bukkit.getScheduler().cancelTask(GameManager.get().getFinalHealTask().getTaskId());
+        if(gameManager.getFinalHealTask() != null){
+            Bukkit.getScheduler().cancelTask(gameManager.getFinalHealTask().getTaskId());
         }
 
-        if(manager.getPvpTask() != null){
-            Bukkit.getScheduler().cancelTask(GameManager.get().getPvpTask().getTaskId());
+        if(gameManager.getPvpTask() != null){
+            Bukkit.getScheduler().cancelTask(gameManager.getPvpTask().getTaskId());
         }
 
-        if (manager.getMeetupTask() != null) {
-            Bukkit.getScheduler().cancelTask(manager.getMeetupTask().getTaskId());
+        if (gameManager.getMeetupTask() != null) {
+            Bukkit.getScheduler().cancelTask(gameManager.getMeetupTask().getTaskId());
         }
 
-        if(manager.getWorldBorderTask() != null){
-            Bukkit.getScheduler().cancelTask(GameManager.get().getWorldBorderTask().getTaskId());
+        if(gameManager.getWorldBorderTask() != null){
+            Bukkit.getScheduler().cancelTask(gameManager.getWorldBorderTask().getTaskId());
+        }
+        
+        if(gameManager.getShrinkTask() != null){
+            Bukkit.getScheduler().cancelTask(gameManager.getShrinkTask().getTaskId());
         }
 
         p.sendMessage(ChatUtils.message("&eSuccessfully canceled all game tasks! You are now in manual mode!"));

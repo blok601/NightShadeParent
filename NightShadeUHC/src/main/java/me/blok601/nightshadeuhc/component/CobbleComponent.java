@@ -38,7 +38,7 @@ public class CobbleComponent extends Component{
         if(e.getBlock().getType() == Material.STONE){ //All 1.8 stones are considered stone and have mat data
             e.setCancelled(true);
             e.getBlock().setType(Material.AIR);
-            e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), new ItemStack(Material.COBBLESTONE));
+            e.getBlock().getWorld().dropItem(e.getBlock().getLocation().add(0.5, 0.5, 0.5), new ItemStack(Material.COBBLESTONE));
         }
     }
 }

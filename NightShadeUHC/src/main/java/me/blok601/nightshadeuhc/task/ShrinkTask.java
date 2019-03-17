@@ -30,7 +30,8 @@ public class ShrinkTask extends BukkitRunnable {
             @Override
             public void run() {
                 if (counter > 0) {
-                    ChatUtils.sendAll("The border will shrink to " + GameManager.get().getShrinks()[GameManager.get().getBorderID()] + " radius in " + counter);
+                    ChatUtils.sendBorderMessage("The border will shrink to " + GameManager.get().getShrinks()[GameManager.get().getBorderID()] + " radius in " + counter);
+
                 } else if (counter == 0) {
                     BorderData bd = com.wimbli.WorldBorder.WorldBorder.plugin.getWorldBorder(world.getName());
                     bd.setRadius(GameManager.get().getShrinks()[GameManager.get().getBorderID()]);
@@ -41,7 +42,7 @@ public class ShrinkTask extends BukkitRunnable {
                     for (Player player : Bukkit.getOnlinePlayers()) {
                         player.playSound(player.getLocation(), Sound.BAT_DEATH, 5, 5);
                     }
-                    ChatUtils.sendAll("&bThe border has shrunk to " + bd.getRadiusX() + " radius!");
+                    ChatUtils.sendBorderMessage("&bThe border has shrunk to " + bd.getRadiusX() + " radius!");
 
 
                     if (GameManager.get().getShrinks()[GameManager.get().getBorderID() + 1] == 0) {

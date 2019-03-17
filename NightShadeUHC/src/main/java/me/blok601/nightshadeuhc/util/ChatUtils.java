@@ -111,4 +111,13 @@ public class ChatUtils {
         return TeamManager.getInstance().getPossibleColors().get(random.nextInt(TeamManager.getInstance().getPossibleColors().size()));
     }
 
+    public static void sendAllNoPrefix(String msg){
+        Bukkit.getOnlinePlayers().forEach(o -> o.sendMessage(ChatUtils.format(msg)));
+    }
+
+    public static void sendBorderMessage(String msg){
+        String prefix = "&5Border&8 »&b";
+        sendAllNoPrefix(prefix + msg);
+    }
+
 }

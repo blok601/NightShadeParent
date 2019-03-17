@@ -1,6 +1,7 @@
 package me.blok601.nightshadeuhc.scenario;
 
 import me.blok601.nightshadeuhc.util.ItemBuilder;
+import me.blok601.nightshadeuhc.util.PlayerUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -38,7 +39,7 @@ public class VeinminerScenario extends Scenario{
             }
 
             if(blocks.size() == 0) return;
-            p.getInventory().addItem(new ItemStack(Material.COAL, blocks.size()));
+            PlayerUtils.giveItem(new ItemStack(Material.COAL, blocks.size()), p);
             ((ExperienceOrb)block.getWorld().spawn(block.getLocation(), ExperienceOrb.class)).setExperience(2*blocks.size());
         }
 
@@ -50,9 +51,9 @@ public class VeinminerScenario extends Scenario{
 
             if(blocks.size() == 0) return;
             if(getScenarioManager().getScen("CutClean").isEnabled()){
-                p.getInventory().addItem(new ItemStack(Material.IRON_INGOT, blocks.size()));
+                PlayerUtils.giveItem(new ItemStack(Material.IRON_INGOT, blocks.size()), p);
             }else{
-                p.getInventory().addItem(new ItemStack(Material.IRON_ORE, blocks.size()));
+                PlayerUtils.giveItem(new ItemStack(Material.IRON_ORE, blocks.size()), p);
             }
 
             ((ExperienceOrb)block.getWorld().spawn(block.getLocation(), ExperienceOrb.class)).setExperience(2*blocks.size());
@@ -67,9 +68,9 @@ public class VeinminerScenario extends Scenario{
             if(blocks.size() == 0) return;
 
             if(getScenarioManager().getScen("CutClean").isEnabled()){
-                p.getInventory().addItem(new ItemStack(Material.GOLD_INGOT, blocks.size()));
+                PlayerUtils.giveItem(new ItemStack(Material.GOLD_INGOT, blocks.size()), p);
             }else{
-                p.getInventory().addItem(new ItemStack(Material.GOLD_ORE, blocks.size()));
+                PlayerUtils.giveItem(new ItemStack(Material.GOLD_ORE, blocks.size()), p);
             }
 
             ((ExperienceOrb)block.getWorld().spawn(block.getLocation(), ExperienceOrb.class)).setExperience(2*blocks.size());
@@ -82,7 +83,7 @@ public class VeinminerScenario extends Scenario{
             }
 
             if(blocks.size() == 0) return;
-            p.getInventory().addItem(new ItemStack(Material.DIAMOND, blocks.size()));
+            PlayerUtils.giveItem(new ItemStack(Material.DIAMOND, blocks.size()), p);
             ((ExperienceOrb)block.getWorld().spawn(block.getLocation(), ExperienceOrb.class)).setExperience(2*blocks.size());
         }
 
@@ -93,7 +94,7 @@ public class VeinminerScenario extends Scenario{
             }
 
             if(blocks.size() == 0) return;
-            p.getInventory().addItem(new ItemStack(Material.REDSTONE, blocks.size()*4));
+            PlayerUtils.giveItem(new ItemStack(Material.REDSTONE, blocks.size()*4), p);
             ((ExperienceOrb)block.getWorld().spawn(block.getLocation(), ExperienceOrb.class)).setExperience(2*blocks.size());
         }
 
@@ -104,7 +105,7 @@ public class VeinminerScenario extends Scenario{
             }
 
             if(blocks.size() == 0) return;
-            p.getInventory().addItem(new ItemStack(Material.EMERALD, blocks.size()));
+            PlayerUtils.giveItem(new ItemStack(Material.EMERALD, blocks.size()), p);
             ((ExperienceOrb)block.getWorld().spawn(block.getLocation(), ExperienceOrb.class)).setExperience(2*blocks.size());
         }
 

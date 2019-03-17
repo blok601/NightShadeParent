@@ -122,7 +122,6 @@ public class GameStartTask extends BukkitRunnable {
                                 StarterItems starterItems = (StarterItems) scenario;
 
                                 starterItems.getStarterItems().forEach(itemStack -> uhcPlayer.getPlayer().getInventory().addItem(itemStack));
-
                             }
                         }
                     });

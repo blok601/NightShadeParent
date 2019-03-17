@@ -64,7 +64,7 @@ public class PlayerUtils {
 
     public static void giveItem(ItemStack itemStack, Player player) {
         if (inventoryFull(player)) {
-            player.getWorld().dropItemNaturally(player.getLocation(), itemStack);
+            player.getWorld().dropItemNaturally(player.getLocation().add(0.5, 0.5, 0.5), itemStack);
             return;
         }
 

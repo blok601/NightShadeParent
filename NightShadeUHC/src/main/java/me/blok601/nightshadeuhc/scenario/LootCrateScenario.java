@@ -32,8 +32,8 @@ public class LootCrateScenario extends Scenario{
 
     public LootCrateScenario() {
         super("LootCrates", "Every 10 minute, everyone gets a lootcrate filled with goodies", new ItemBuilder(Material.CHEST).name("LootCrates").make());
-        chests.add(new ItemStack(Material.CHEST));
-        chests.add(new ItemStack(Material.ENDER_CHEST));
+        chests.add(new ItemBuilder(Material.CHEST).name("&6Tier 1 LootCrate").lore("&eRight click to redeem tier 1 items").make());
+        chests.add(new ItemBuilder(Material.ENDER_CHEST).name("&bTier 2 LootCrate").lore("&eRight click to redeem tier 2 items").make());
         timer = 600;
         tier1 = new ItemStack[]{
                 new ItemBuilder(Material.IRON_PICKAXE).make(), new ItemBuilder(Material.APPLE).amount(2).make(), new ItemBuilder(Material.COOKED_BEEF).amount(8).make(), new ItemBuilder(Material.CAKE).make(),
@@ -94,17 +94,22 @@ public class LootCrateScenario extends Scenario{
         if(e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR){
             Player p = e.getPlayer();
             ItemStack itemStack = p.getItemInHand();
+            if (!itemStack.hasItemMeta() || !itemStack.getItemMeta().hasDisplayName()) return;
             if(itemStack.getType() == Material.CHEST){
+                if(!itemStack.getItemMeta().getDisplayName().equalsIgnoreCase(ChatUtils.format("&6Tier 1 LootCrate"))) return;
                 if(itemStack.getAmount() > 1){
                     p.sendMessage(ChatUtils.message("&cYou can only open one lootcrate at a time!"));
                     return;
                 }
+
+
                 Random r = ThreadLocalRandom.current();
                 ItemStack stack = tier1[r.nextInt(tier1.length)];
                 p.getInventory().setItemInHand(null);
                 p.getInventory().addItem(stack);
                 p.sendMessage(ChatUtils.format(getPrefix() + "&eYou have gotten " + stack.getAmount() + " &b" + stack.getType().name() + " &efrom your lootcrate!"));
             }else if(itemStack.getType() == Material.ENDER_CHEST){
+                if(!itemStack.getItemMeta().getDisplayName().equalsIgnoreCase(ChatUtils.format("&bTier 2 LootCrate"))) return;
                 if(itemStack.getAmount() > 1){
                     p.sendMessage(ChatUtils.message("&cYou can only open one lootcrate at a time!"));
                     return;

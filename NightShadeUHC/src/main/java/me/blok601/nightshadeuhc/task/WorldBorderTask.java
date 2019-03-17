@@ -40,12 +40,12 @@ public class WorldBorderTask extends BukkitRunnable {
             if (counter == (counter - 300)) {
                 //5 mins before
                 Util.staffLog("The border will shrink in 5 minutes!");
-                ChatUtils.sendAll("The border will shrink to " + gameManager.getFirstShrink() + " radius in 5 minutes");
+                ChatUtils.sendBorderMessage("The border will shrink to " + gameManager.getFirstShrink() + " radius in 5 minutes");
                 Bukkit.getOnlinePlayers().forEach((Consumer<Player>) player -> {
                     ActionBarUtil.sendActionBarMessage(player, "§5Shrink to " + gameManager.getFirstShrink() + "radius in " + get(counter), 1, UHC.get());
                 });
             } else if (MathUtil.isBetween(10, 0, counter)) {
-                ChatUtils.sendAll("The border will shrink to " + gameManager.getFirstShrink() + " radius in " + counter);
+                ChatUtils.sendBorderMessage("The border will shrink to " + gameManager.getFirstShrink() + " radius in " + counter);
             }
         } else if (counter == 0) {
             bd.setRadius(first);
@@ -54,9 +54,11 @@ public class WorldBorderTask extends BukkitRunnable {
             for (Player pls : Bukkit.getOnlinePlayers()) {
                 pls.playSound(pls.getLocation(), Sound.BAT_DEATH, 5, 1);
             }
-            ChatUtils.sendAll("&bThe border has shrunk to " + gameManager.getFirstShrink() + " radius!");
+            ChatUtils.sendBorderMessage("&bThe border has shrunk to " + gameManager.getFirstShrink() + " radius!");
             counter = -1;
-            new ShrinkTask(world).runTaskTimer(UHC.get(), 290 * Util.TICKS, 290 * Util.TICKS);
+            ShrinkTask shrinkTask = new ShrinkTask(world);
+            gameManager.setShrinkTask(shrinkTask);
+            shrinkTask.runTaskTimer(UHC.get(), 290 * Util.TICKS, 290 * Util.TICKS);
             this.cancel();
             return;
         }

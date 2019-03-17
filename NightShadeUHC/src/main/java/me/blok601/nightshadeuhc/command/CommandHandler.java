@@ -55,7 +55,7 @@ public class CommandHandler  {
         registerCommand(new SetTickCommand());
         registerCommand(new TeleportAllCommand());
         registerCommand(new ChatStopCommand());
-        registerCommand(new ManualGameCommand());
+        registerCommand(new ManualGameCommand(gameManager));
         registerCommand(new ClaimHostCommand());
         registerCommand(new SitCommand());
         registerCommand(new ScenarioManager(uhc, gameManager));

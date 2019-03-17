@@ -71,6 +71,9 @@ public class GameManager {
     @Getter
     @Setter
     private GameCountdownTask gameCountdownTask;
+    @Getter
+    @Setter
+    private ShrinkTask shrinkTask;
     private  int[] shrinks;
     private  int borderID;
     private  HashMap<UUID, Integer> kills = new HashMap<>();

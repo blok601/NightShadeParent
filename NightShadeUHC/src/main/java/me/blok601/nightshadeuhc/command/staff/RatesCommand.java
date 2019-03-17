@@ -92,14 +92,14 @@ public class RatesCommand implements UHCCommand, Listener{
             if(scenarioManager.getScen("CutClean").isEnabled()){
                 e.getBlock().setType(Material.AIR);
                 e.getBlock().getDrops().clear();
-                e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(), new ItemStack(Material.FLINT));
+                e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation().add(0.5, 0.5, 0.5), new ItemStack(Material.FLINT));
                 return;
             }
 
             if(MathUtil.getChance(gameManager.getFlintRates())){
                 e.getBlock().setType(Material.AIR);
                 e.getBlock().getDrops().clear();
-                e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(), new ItemStack(Material.FLINT));
+                e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation().add(0.5, 0.5, 0.5), new ItemStack(Material.FLINT));
             }
 
 
