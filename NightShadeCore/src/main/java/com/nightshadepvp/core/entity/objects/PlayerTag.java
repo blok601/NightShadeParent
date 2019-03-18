@@ -33,8 +33,6 @@ public enum PlayerTag {
     DISCOVER_CARD("&fDisc&6o&fver&6Card", new ItemBuilder(Material.NAME_TAG).name("&&fDisc&6o&fver&6Card &fTag &8(&fDisc&6o&fver&6Card&8)").make()),
     SHADY("&7&oShady", new ItemBuilder(Material.NAME_TAG).name("&7&oShady &fTag &8(&7&oShady&8)").make()),
     CTRL_C("&c&lCTRL-C", new ItemBuilder(Material.NAME_TAG).name("&c&lCTRL-C Tag &8(&c&lCTRL-C&8)").make());
-    OWO("&cOwO", new ItemBuilder(Material.NAME_TAG).name("&cOwO Tag &8(&cOwO)").make());
-    FRUIT_OWNER("&bFruit Owner", new ItemBuilder(Material.NAME_TAG).name("&bFruit Owner Tag &8(&bFruit Owner)").make());
 
     private String title;
     private ItemStack stack;
