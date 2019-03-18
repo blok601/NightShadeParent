@@ -72,10 +72,8 @@ public class SlaveOwnerCommand implements UHCCommand{
                 p.sendMessage(ChatUtils.message("&cThat player is offline, dog."));
                 return;
             }
-
-            Team team = TeamManager.getInstance().getTeam(target);
-            if (!GameManager.get().isIsTeam() || team == null) {
-                p.sendMessage(ChatUtils.message("&cSlave owners can only be set in a teams game!"));
+            if (!GameManager.get().isIsTeam()) {
+                ChatUtils.sendAll("&cSlave owners can only be set in a teams game!");
                 return;
             }
             if (args[0].equalsIgnoreCase("add")){
