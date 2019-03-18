@@ -96,6 +96,7 @@ public class ScenarioManager implements UHCCommand{
         addScen(new Scenario("Rush", "The game progresses quicker", new  ItemStack(Material.COMPASS, 1)));
         addScen(new SkycleanScenario());
         addScen(new SkyhighScenario());
+        addScen(new SlaveMarketScenario(gameManager));
         addScen(new SlutCleanScenario(), "SC");
         addScen(new SoupScenario());
         addScen(new SoupPlusScenario());
