@@ -2,6 +2,7 @@ package me.blok601.nightshadeuhc.scenario;
 
 import me.blok601.nightshadeuhc.util.ItemBuilder;
 import me.blok601.nightshadeuhc.util.PlayerUtils;
+import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -87,8 +88,8 @@ public class VeinminerScenario extends Scenario{
             ((ExperienceOrb)block.getWorld().spawn(block.getLocation(), ExperienceOrb.class)).setExperience(2*blocks.size());
         }
 
-        if(block.getType() == Material.REDSTONE_ORE){
-            ArrayList<Block> blocks = getBlocks(block, 2, Material.REDSTONE_ORE);
+        if (block.getType() == Material.REDSTONE_ORE || block.getType() == Material.GLOWING_REDSTONE_ORE) {
+            ArrayList<Block> blocks = getBlocks(block, 2, block.getType());
             for (Block b : blocks){
                 b.setType(Material.AIR);
             }
@@ -96,6 +97,17 @@ public class VeinminerScenario extends Scenario{
             if(blocks.size() == 0) return;
             PlayerUtils.giveItem(new ItemStack(Material.REDSTONE, blocks.size()*4), p);
             ((ExperienceOrb)block.getWorld().spawn(block.getLocation(), ExperienceOrb.class)).setExperience(2*blocks.size());
+        }
+
+        if (block.getType() == Material.LAPIS_ORE) {
+            ArrayList<Block> blocks = getBlocks(block, 2, Material.LAPIS_ORE);
+            for (Block b : blocks) {
+                b.setType(Material.AIR);
+            }
+
+            if (blocks.size() == 0) return;
+            PlayerUtils.giveItem(new ItemStack(Material.INK_SACK, blocks.size() * 4, DyeColor.BLUE.getDyeData()), p);
+            ((ExperienceOrb) block.getWorld().spawn(block.getLocation(), ExperienceOrb.class)).setExperience(2 * blocks.size());
         }
 
         if(block.getType() == Material.EMERALD_ORE){
