@@ -73,14 +73,14 @@ public class SlaveOwnerCommand implements UHCCommand{
                 return;
             }
             if (!GameManager.get().isIsTeam()) {
-                ChatUtils.sendAll("&cSlave owners can only be set in a teams game!");
+                p.sendMessage(ChatUtils.message("&cSlave owners can only be set in a teams game!"));
                 return;
             }
             if (args[0].equalsIgnoreCase("add")){
                 SlaveMarketScenario.owners.put(target.getUniqueId(), 64);
                 int ts = TeamManager.getInstance().getTeams().size()+1;
                 TeamManager.getInstance().addTeam(new Team("UHC" + ts, p));
-                p.sendMessage(ChatUtils.message(target.getName() + " has been added as a slave owner!"));
+               ChatUtils.sendAll(target.getName() + " has been added as a slave owner!");
 
 
 
