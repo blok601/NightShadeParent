@@ -22,7 +22,7 @@ public class BidCommand implements UHCCommand {
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
         UHCPlayer uhcPlayer = UHCPlayer.get(p);
-        if (!SlaveMarketScenario.owners.containsKey(p.getName())) {
+        if (!SlaveMarketScenario.owners.containsKey(p.getUniqueId())) {
             p.sendMessage(ChatUtils.message("&cOnly slave owners can do that command!"));
             return;
         }
