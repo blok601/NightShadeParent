@@ -21,10 +21,10 @@ public class SlaveOwnerCommand implements UHCCommand{
 
     @Getter
     @Setter
-     private static Player topBidder = null;
+     private static Player topBidder;
     @Getter
     @Setter
-        private  static Player Slave = null;
+        private  static Player Slave;
 
         @Override
         public String[] getNames() {

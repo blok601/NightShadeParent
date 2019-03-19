@@ -30,13 +30,13 @@ public class BidCommand implements UHCCommand {
         if (args.length == 1) {
             if (StartBiddingCommand.currentBid == 0) {
                 SlaveOwnerCommand.setTopBidder(p);
-                ChatUtils.sendAll("&e" + p.getName() + " has bid " + bid + "diamonds on " + SlaveOwnerCommand.getSlave());
+                ChatUtils.sendAll("&e" + p.getName() + " has bid " + bid + "diamonds on " + SlaveOwnerCommand.getSlave().getName());
 
                 return;
             }
             bid = StartBiddingCommand.currentBid + 1;
             SlaveOwnerCommand.setTopBidder(p);
-            ChatUtils.sendAll("&e" + p.getName() + " has bid " + bid + "diamonds on " + SlaveOwnerCommand.getSlave());
+            ChatUtils.sendAll("&e" + p.getName() + " has bid " + bid + "diamonds on " + SlaveOwnerCommand.getSlave().getName());
             return;
 
         }
@@ -44,7 +44,7 @@ public class BidCommand implements UHCCommand {
             if (Integer.parseInt(args[1]) > StartBiddingCommand.currentBid) {
                 bid = Integer.parseInt(args[1]);
                 SlaveOwnerCommand.setTopBidder(p);
-                ChatUtils.sendAll("&e" + p.getName() + " has bid " + bid + "diamonds on " + SlaveOwnerCommand.getSlave());
+                ChatUtils.sendAll("&e" + p.getName() + " has bid " + bid + "diamonds on " + SlaveOwnerCommand.getSlave().getName());
 
                 return;
             } else {
