@@ -18,10 +18,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
+
 public class StartBiddingCommand implements UHCCommand {
     public static int time = 5;
     public static int currentBid = 0;
+    int player;
     public boolean done = false;
+    ArrayList<Player> slaves = new ArrayList<Player>();
 
     @Override
     public String[] getNames() {
@@ -50,43 +54,50 @@ public class StartBiddingCommand implements UHCCommand {
         });
 
         UHCPlayerColl.get().getAllPlaying().forEach(player -> {
+            if (!SlaveMarketScenario.owners.containsKey(player.getUuid())) {
+                slaves.add((Player)player);
+            }
 
 
 
+        });
+        SlaveOwnerCommand.setSlave(slaves.get(0));
 
-        new BukkitRunnable() {
 
-            @Override
-            public void run() {
-                time--;
-                if (time == 0) {
-                    Player owner = SlaveOwnerCommand.getTopBidder();
-                    if (owner == null) {
-                        ChatUtils.sendAll("&cReally guys? No one bid? Guess it goes to team one.");
-                        Team targetTeam = TeamManager.getInstance().getTeam("UHC1");
+
+            new BukkitRunnable() {
+
+                @Override
+                public void run() {
+                    time--;
+                    if (time == 0) {
+                        Player owner = SlaveOwnerCommand.getTopBidder();
+                        if (owner == null) {
+                            ChatUtils.sendAll("&cReally guys? No one bid? Guess it goes to team one.");
+                            Team targetTeam = TeamManager.getInstance().getTeam("UHC1");
+                            targetTeam.addMember(SlaveOwnerCommand.getSlave());
+
+                        }
+                        Team targetTeam = TeamManager.getInstance().getTeambyPlayerOnTeam(SlaveOwnerCommand.getTopBidder().getName());
                         targetTeam.addMember(SlaveOwnerCommand.getSlave());
+                        ChatUtils.sendAll("&c" + SlaveOwnerCommand.getSlave().getName() + " has been sold to " + SlaveOwnerCommand.getTopBidder() + "!");
+                        int diamonds = SlaveMarketScenario.owners.get(SlaveOwnerCommand.getTopBidder().getUniqueId());
+                        SlaveMarketScenario.owners.replace(SlaveOwnerCommand.getTopBidder().getUniqueId(), diamonds - currentBid);
+                        SlaveOwnerCommand.getTopBidder().getInventory().removeItem(new ItemStack(Material.DIAMOND, currentBid));
+                        SlaveOwnerCommand.setSlave(slaves.get(player));
+                        player++;
+
+
+                        time = 5;
+
+
+                    } else {
+                        Bukkit.broadcastMessage(ChatUtils.message(SlaveOwnerCommand.getSlave().getName() + " Will be sold to " + SlaveOwnerCommand.getTopBidder().getName() + " in " + time + "!"));
 
                     }
-                    Team targetTeam = TeamManager.getInstance().getTeambyPlayerOnTeam(SlaveOwnerCommand.getTopBidder().getName());
-                    targetTeam.addMember(SlaveOwnerCommand.getSlave());
-                    ChatUtils.sendAll("&c" + SlaveOwnerCommand.getSlave().getName() + " has been sold to " + SlaveOwnerCommand.getTopBidder() + "!");
-                    int diamonds = SlaveMarketScenario.owners.get(SlaveOwnerCommand.getTopBidder().getUniqueId());
-                    SlaveMarketScenario.owners.replace(SlaveOwnerCommand.getTopBidder().getUniqueId(), diamonds - currentBid);
-                    SlaveOwnerCommand.getTopBidder().getInventory().removeItem(new ItemStack(Material.DIAMOND, currentBid));
-
-                    time = 5;
-
-
-
-                } else {
-                    Bukkit.broadcastMessage(ChatUtils.message(SlaveOwnerCommand.getSlave().getName() + " Will be sold to " + SlaveOwnerCommand.getTopBidder().getName() + " in " + time + "!"));
-
                 }
-            }
-        }.runTaskTimer(UHC.get(), 0, 20);
-        });
-    }
-
+            }.runTaskTimer(UHC.get(), 0, 20);
+        }
     @Override
     public boolean playerOnly() {
         return true;

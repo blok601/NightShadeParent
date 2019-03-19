@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 
 public class BidCommand implements UHCCommand {
     public static int time = 5;
+    int bid = 0;
 
     @Override
     public String[] getNames() {
@@ -26,7 +27,6 @@ public class BidCommand implements UHCCommand {
             p.sendMessage(ChatUtils.message("&cOnly slave owners can do that command!"));
             return;
         }
-        int bid = 0;
         if (args.length == 1) {
             if (StartBiddingCommand.currentBid == 0) {
                 SlaveOwnerCommand.setTopBidder(p);

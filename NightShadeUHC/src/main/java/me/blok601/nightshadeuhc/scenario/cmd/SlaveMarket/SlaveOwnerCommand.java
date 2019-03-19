@@ -51,6 +51,11 @@ public class SlaveOwnerCommand implements UHCCommand{
         }
 
         if(args.length == 1){
+            if (args[0].equalsIgnoreCase("reset")) {
+                SlaveMarketScenario.owners.clear();
+                ChatUtils.sendAll("&e Slave owners have been reset!");
+                return;
+            }
             p.sendMessage(ChatUtils.message("&c Invalid arguments! Usage: /owners <add/remove/reset> <player>"));
             return;
         }
@@ -59,11 +64,7 @@ public class SlaveOwnerCommand implements UHCCommand{
             return;
 
         }
-        if (args[0].equalsIgnoreCase("reset")) {
-            SlaveMarketScenario.owners.clear();
-            p.sendMessage(ChatUtils.message("&e Slave owners have been reset!"));
-            return;
-        }
+
         else {
 
 
