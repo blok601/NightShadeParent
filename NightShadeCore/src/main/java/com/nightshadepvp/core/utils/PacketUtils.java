@@ -8,7 +8,9 @@ import com.comphenix.protocol.wrappers.EnumWrappers;
 import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Logger;
 import net.minecraft.server.v1_8_R3.*;
+import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
@@ -19,6 +21,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.UUID;
 
 /**
  * Created by Blok on 3/5/2019.
@@ -72,6 +75,22 @@ public class PacketUtils {
         packetContainer.getStrings().write(0, entry);
         packetContainer.getStrings().write(1, "sidebar"); //Display slot
         sendPacket(player, packetContainer);
+    }
+
+    public static String getNameFromUUID(UUID uuid) {
+        Validate.notNull(uuid, "UUID can't be null!");
+        Player player = Bukkit.getPlayer(uuid);
+        if (player != null) {
+            return player.getName();
+        }
+
+        //Player is offline
+        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
+        if (offlinePlayer == null) {
+            return "";
+        }
+
+        return offlinePlayer.getName();
     }
 
 }

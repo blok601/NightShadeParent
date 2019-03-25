@@ -82,6 +82,10 @@ public class Team {
         this.members.add(player.getName());
     }
 
+    public void addMember(String name) {
+        this.members.add(name);
+    }
+
     public String getPrefix() {
         return prefix;
     }

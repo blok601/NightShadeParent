@@ -16,6 +16,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.PlayerInventory;
 
@@ -181,5 +182,16 @@ public class EnginePlayer extends Engine {
             user.setCurrentAFKTime(0);
             user.setAFK(false);
         }
+    }
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent e) {
+        Player player = e.getPlayer();
+        if (!Core.get().getLoginTasks().containsKey(player.getUniqueId())) {
+            return;
+        }
+
+        Core.get().getLoginTasks().get(player.getUniqueId()).forEach(uuidConsumer -> uuidConsumer.accept(player.getUniqueId()));
+        Core.get().getLoginTasks().remove(player.getUniqueId());
     }
 }

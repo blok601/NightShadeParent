@@ -8,6 +8,8 @@ import com.nightshadepvp.core.entity.objects.PlayerColor;
 import com.nightshadepvp.core.entity.objects.PlayerEffect;
 import com.nightshadepvp.core.entity.objects.PlayerTag;
 
+import java.util.Collections;
+
 public class NSPlayer extends SenderEntity<NSPlayer> {
     // -------------------------------------------- //
     // META
@@ -25,14 +27,14 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
     private String prefix = "";
 
     private PlayerColor color = PlayerColor.DEFAULT;
-    private MassiveList<PlayerColor> colors = new MassiveList<>();
+    private MassiveList<PlayerColor> colors = new MassiveList<>(Collections.singletonList(PlayerColor.DEFAULT));
 
     private boolean particleSwitch = false;
     private PlayerEffect effect = PlayerEffect.NONE;
-    private MassiveList<PlayerEffect> effects = new MassiveList<>();
+    private MassiveList<PlayerEffect> effects = new MassiveList<>(Collections.singletonList(PlayerEffect.NONE));
 
     private PlayerTag currentTag = PlayerTag.DEFAULT;
-    private MassiveList<PlayerTag> unlockedTags = new MassiveList<>();
+    private MassiveList<PlayerTag> unlockedTags = new MassiveList<>(Collections.singletonList(PlayerTag.DEFAULT));
 
     private boolean messageSounds = true;
 

@@ -1,5 +1,6 @@
 package me.blok601.nightshadeuhc.scenario;
 
+import me.blok601.nightshadeuhc.util.ChatUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
@@ -99,5 +100,9 @@ public class Scenario implements Listener {
 
     public void setScenarioManager(ScenarioManager scenarioManager) {
         this.scenarioManager = scenarioManager;
+    }
+
+    public void sendMessage(Player player, String message) {
+        player.sendMessage(ChatUtils.format(this.getPrefix() + message));
     }
 }

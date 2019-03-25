@@ -2,6 +2,7 @@ package me.blok601.nightshadeuhc.manager;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.nightshadepvp.core.utils.PacketUtils;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
 import me.blok601.nightshadeuhc.entity.object.CachedColor;
@@ -114,6 +115,10 @@ public class TeamManager {
         }
 
         return null;
+    }
+
+    public Team getTeamByPlayerUUIDOnTeam(UUID uuid) {
+        return getTeambyPlayerOnTeam(PacketUtils.getNameFromUUID(uuid));
     }
 
     public boolean isTeamManagement() {

@@ -20,6 +20,11 @@ import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.bukkit.scheduler.BukkitRunnable;
 import redis.clients.jedis.Jedis;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
+import java.util.function.Consumer;
+
 public class Core extends MassivePlugin implements PluginMessageListener {
 
     private String matchpost = "uhc.gg";
@@ -35,7 +40,7 @@ public class Core extends MassivePlugin implements PluginMessageListener {
     private Logger logger;
     private Jedis jedis;
     private Announcer announcer;
-
+    private HashMap<UUID, ArrayList<Consumer<UUID>>> loginTasks;
 
     @Override
     public void onEnableInner() {
@@ -46,6 +51,7 @@ public class Core extends MassivePlugin implements PluginMessageListener {
         this.activateAuto();
 
         logger = new Logger();
+        this.loginTasks = new HashMap<>();
 
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "Maintenance");
         Bukkit.getMessenger().registerIncomingPluginChannel(this, "Maintenance", this);
@@ -180,5 +186,9 @@ public class Core extends MassivePlugin implements PluginMessageListener {
 
     public Announcer getAnnouncer() {
         return announcer;
+    }
+
+    public HashMap<UUID, ArrayList<Consumer<UUID>>> getLoginTasks() {
+        return loginTasks;
     }
 }

@@ -5,6 +5,7 @@ import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
 import me.blok601.nightshadeuhc.manager.TeamManager;
+import me.blok601.nightshadeuhc.scenario.Scenario;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -118,6 +119,10 @@ public class ChatUtils {
     public static void sendBorderMessage(String msg){
         String prefix = "&5Border&8 »&b";
         sendAllNoPrefix(prefix + msg);
+    }
+
+    public static void sendAllScenarioMessage(String message, Scenario scenario) {
+        Bukkit.getOnlinePlayers().forEach(o -> scenario.sendMessage(o, message));
     }
 
 }
