@@ -204,4 +204,10 @@ commands:
   show:
     aliases: [fixinvis, showinvis]
     description: Fix player visibility glitch
+  bid:
+    description: Bid on a player during Slave Market
+  startbid:
+    description: Start slave market bidding
+  owners:
+    description: A command for handling slave owners.
 
