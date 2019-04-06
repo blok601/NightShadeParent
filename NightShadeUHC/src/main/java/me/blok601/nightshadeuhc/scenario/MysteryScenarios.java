@@ -19,7 +19,7 @@ public class MysteryScenarios extends Scenario{
     public void onPre(PlayerCommandPreprocessEvent e){
         if(!isEnabled()) return;
 
-        if(e.getMessage().startsWith("/scenarios") || e.getMessage().startsWith("/scens")){
+        if(e.getMessage().startsWith("/scenarios") || e.getMessage().startsWith("/scens") || e.getMessage().startsWith("/uhc:scenarios") || e.getMessage().startsWith("/uhc:scens")){
             e.setCancelled(true);
             e.getPlayer().sendMessage(ChatUtils.format(getPrefix() + "&cYou can't do that in mystery scenarios..."));
         }
