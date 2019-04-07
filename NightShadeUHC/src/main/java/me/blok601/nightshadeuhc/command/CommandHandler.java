@@ -2,6 +2,7 @@ package me.blok601.nightshadeuhc.command;
 
 import com.google.common.collect.Sets;
 import com.nightshadepvp.core.Core;
+import com.nightshadepvp.core.Logger;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.command.game.run.*;
 import me.blok601.nightshadeuhc.command.game.setup.*;
@@ -14,6 +15,7 @@ import me.blok601.nightshadeuhc.command.staff.admin.ResetStatsCommand;
 import me.blok601.nightshadeuhc.command.staff.admin.SetArenaSpawnCommand;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
+import me.blok601.nightshadeuhc.scenario.SlaveMarketScenario;
 import me.blok601.nightshadeuhc.scenario.cmd.*;
 import me.blok601.nightshadeuhc.scenario.cmd.SlaveMarket.BidCommand;
 import me.blok601.nightshadeuhc.scenario.cmd.SlaveMarket.SlaveOwnerCommand;
@@ -117,9 +119,16 @@ public class CommandHandler  {
         registerCommand(new ToggleMobsCommand());
         registerCommand(new ClearTreesCommand());
         registerCommand(new PMOresCommand());
-        registerCommand(new StartBiddingCommand());
-        registerCommand(new SlaveOwnerCommand());
-        registerCommand(new BidCommand());
+
+        SlaveMarketScenario scenario = (SlaveMarketScenario) scenarioManager.getScen("Slave Market");
+        if(scenario == null){
+            core.getLogManager().log(Logger.LogType.SEVERE, "There was an error trying to load Slave Market! Slave Market Commands won't work!");
+        }else{
+            registerCommand(new StartBiddingCommand(scenario, uhc));
+            registerCommand(new SlaveOwnerCommand(scenario));
+            registerCommand(new BidCommand(scenario));
+        }
+
         registerCommand(new HostCommand(gameManager, scenarioManager));
         registerCommand(new ConfirmCommand());
         registerCommand(new SetBorderCommand());
