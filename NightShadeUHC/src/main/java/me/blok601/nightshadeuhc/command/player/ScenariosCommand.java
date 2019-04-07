@@ -35,11 +35,21 @@ public class ScenariosCommand implements UHCCommand{
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
         Collection<Scenario> scenarios = scenarioManager.getEnabledScenarios();
+
+        if (scenarios.size() == 0) {
+            p.sendMessage(ChatUtils.message("&cThere are no enabled scenarios"));
+            return;
+        }
+
+        int index = 0;
+        int last = scenarios.size() - 1;
         FancyMessage fancyMessage = new FancyMessage(ChatUtils.format("&eEnabled Scenarios&8» "));
         for (Scenario scenario : scenarios){
             //builder.append("&3").append(scenario.getName()).append("&8,");
-            fancyMessage.then(scenario.getName() + ",").color(ChatColor.DARK_AQUA).tooltip(scenario.getDesc());
+            fancyMessage.then(scenario.getName() + (index == last ? "" : "&8, ")).color(ChatColor.AQUA).tooltip(scenario.getDesc());
+            index++;
         }
+
 
         //p.sendMessage(ChatUtils.format("&eEnabled Scenarios&8» " + builder.toString().substring(0, builder.toString().length())));
         fancyMessage.send(p);

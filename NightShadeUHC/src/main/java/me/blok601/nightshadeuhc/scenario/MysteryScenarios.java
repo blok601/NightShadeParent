@@ -21,7 +21,7 @@ public class MysteryScenarios extends Scenario{
 
         if(e.getMessage().startsWith("/scenarios") || e.getMessage().startsWith("/scens") || e.getMessage().startsWith("/uhc:scenarios") || e.getMessage().startsWith("/uhc:scens")){
             e.setCancelled(true);
-            e.getPlayer().sendMessage(ChatUtils.format(getPrefix() + "&cYou can't do that in mystery scenarios..."));
+            sendMessage(e.getPlayer(), "&cYou can't do that in mystery scenarios...");
         }
     }
 }
