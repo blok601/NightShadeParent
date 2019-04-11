@@ -69,6 +69,7 @@ public class ScenarioManager implements UHCCommand{
         addScen(new FastGetawayScenario(), "FG");
         addScen(new FeistyBoysScenario());
         addScen(new FirelessScenario());
+        addScen(new FourHorsemenScenario());
         //addScen(new FlowerPowerScenario());
         addScen(new FurnaceDeathScenario());
         addScen(new GapZapScenario(), "GZ");

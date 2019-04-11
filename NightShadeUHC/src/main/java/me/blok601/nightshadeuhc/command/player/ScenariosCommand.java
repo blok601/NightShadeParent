@@ -46,7 +46,7 @@ public class ScenariosCommand implements UHCCommand{
         FancyMessage fancyMessage = new FancyMessage(ChatUtils.format("&eEnabled Scenarios&8» "));
         for (Scenario scenario : scenarios){
             //builder.append("&3").append(scenario.getName()).append("&8,");
-            fancyMessage.then(scenario.getName() + (index == last ? "" : "&8, ")).color(ChatColor.AQUA).tooltip(scenario.getDesc());
+            fancyMessage.then(scenario.getName() + (index == last ? "" : ", ")).color(ChatColor.AQUA).tooltip(scenario.getDesc());
             index++;
         }
 
