@@ -48,14 +48,19 @@ public class ConfigGUI {
         newSkull.name(ChatUtils.format("&b&lHost")).lore(ChatUtils.format("&3Host» &e" + GameManager.get().getHost().getName()));
         newSkull.skullOwner(GameManager.get().getHost().getName());
 
-        ItemStack server = new ItemBuilder(Material.PAPER).name(ChatUtils.format("&6Server Information")).lore(ChatUtils.format("&3Owners» &eBL0K, @DiscoOzzy, Milan, and CarterAimz"))
-                .lore(ChatUtils.format("&3Provider» &eOVH")).lore(ChatUtils.format("&3Developers» &eBL0K, Ozzy, Database and Austin")).lore(ChatUtils.format("&3Website» &ewww.nightshadepvp.com")).lore(ChatUtils.format("&3Twitter» &e@NightShadePVPMC"))
+        ItemStack server = new ItemBuilder(Material.PAPER).name(ChatUtils.format("&6Server Information")).lore(ChatUtils.format("&3Owners» &eBL0K and Ozzy"))
+                .lore(ChatUtils.format("&3Provider» &eOVH")).lore(ChatUtils.format("&3Developers» &eBL0K, Ozzy, and Database")).lore(ChatUtils.format("&3Website» &ewww.nightshadepvp.com")).lore(ChatUtils.format("&3Twitter» &e@NightShadePVPMC"))
                 .lore(ChatUtils.format("&3Discord» &5discord.me/NightShadeMC"))
                 .make();
 
         menu.item(3, post.make());
         menu.item(4, newSkull.make());
         menu.item(5, timers.make());
+        menu.item(10, mining);
+        menu.item(12, apples);
+        menu.item(15, healing);
+        menu.item(17, potions);
+        menu.item(32, server);
 
         player.openInventory(menu.make());
     }
