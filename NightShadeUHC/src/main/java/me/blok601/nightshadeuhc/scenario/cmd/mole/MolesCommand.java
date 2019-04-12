@@ -44,6 +44,24 @@ public class MolesCommand implements UHCCommand{
             return;
         }
 
+        if(MolesScenario.moles.containsKey(p.getUniqueId())) {
+            p.sendMessage(ChatUtils.message("&eThe following moles:"));
+            p.sendMessage(ChatUtils.format("&5&m-----------------------------------"));
+            Player mole;
+            OfflinePlayer offlineMole;
+            for (UUID uuid : MolesScenario.moles.keySet()) {
+                mole = Bukkit.getPlayer(uuid);
+                if (mole != null) {
+                    p.sendMessage(ChatUtils.format("&e- &a" + mole.getName()));
+                } else {
+                    offlineMole = Bukkit.getOfflinePlayer(uuid);
+                    p.sendMessage(ChatUtils.format("&e- &7" + offlineMole.getName()));
+                }
+            }
+            p.sendMessage(ChatUtils.format("&5&m-----------------------------------"));
+            return;
+        }
+
         if (gamePlayer.isSpectator()) {
             if (!NSPlayer.get(p).hasRank(Rank.TRIAL)) {
                 p.sendMessage(ChatUtils.message("&cYou must be playing the game to view the moles!"));
