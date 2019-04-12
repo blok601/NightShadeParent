@@ -58,9 +58,9 @@ public class ConfigGUI {
         menu.item(5, timers.make());
         menu.item(10, mining);
         menu.item(12, apples);
-        menu.item(15, healing);
-        menu.item(17, potions);
-        menu.item(32, server);
+        menu.item(14, healing);
+        menu.item(16, potions);
+        menu.item(40, server);
 
         player.openInventory(menu.make());
     }
