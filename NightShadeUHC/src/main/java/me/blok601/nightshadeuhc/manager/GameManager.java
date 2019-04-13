@@ -112,6 +112,7 @@ public class GameManager {
     private boolean isTeam;
     private double appleRates = 5;
     private double flintRates = 50;
+    private boolean stripmining = false;
 
     // ---------------------------------------
     //      Host GUI Game Settings END

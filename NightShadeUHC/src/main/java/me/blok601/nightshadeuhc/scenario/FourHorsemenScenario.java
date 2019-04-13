@@ -11,6 +11,7 @@ import me.blok601.nightshadeuhc.util.ItemBuilder;
 import me.blok601.nightshadeuhc.util.PlayerUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -94,5 +95,9 @@ public class FourHorsemenScenario extends Scenario {
             }
         }
 
+    }
+
+    public void test (EntityDamageEvent e) {
+        ChatUtils.sendAll("Test");
     }
 }
