@@ -174,7 +174,9 @@ public class GameListener implements Listener {
         UHCPlayerColl.get().getAllOnlinePlayers().forEach(u -> {
             PlayerScoreboard playerScoreboard = UHC.get().getScoreboardManager().getPlayerScoreboard(u.getPlayer());
             org.bukkit.scoreboard.Team specTeam = playerScoreboard.getBukkitScoreboard().getTeam("spec");
-            specTeam.addEntry(p.getName());
+            if (specTeam != null) {
+                specTeam.addEntry(p.getName());
+            }
             CachedColor cachedColor = new CachedColor(p.getName());
             cachedColor.setColor("&7&o");
             cachedColor.setPlayer(p.getName());
@@ -188,7 +190,9 @@ public class GameListener implements Listener {
         UHCPlayerColl.get().getSpectators().forEach(u -> {
             PlayerScoreboard playerScoreboard = UHC.get().getScoreboardManager().getPlayerScoreboard(u.getPlayer());
             org.bukkit.scoreboard.Team specTeam = playerScoreboard.getBukkitScoreboard().getTeam("spec");
-            specTeam.removeEntry(p.getName());
+            if (specTeam != null) {
+                specTeam.removeEntry(p.getName());
+            }
         });
 
         Collection<CachedColor> cachedColors = TeamManager.getInstance().getCachedColors(p);

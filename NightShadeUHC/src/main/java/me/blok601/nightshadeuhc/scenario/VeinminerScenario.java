@@ -89,7 +89,8 @@ public class VeinminerScenario extends Scenario{
         }
 
         if (block.getType() == Material.REDSTONE_ORE || block.getType() == Material.GLOWING_REDSTONE_ORE) {
-            ArrayList<Block> blocks = getBlocks(block, 2, block.getType());
+            ArrayList<Block> blocks = getBlocks(block, 2, Material.REDSTONE_ORE);
+            blocks.addAll(getBlocks(block, 2, Material.GLOWING_REDSTONE_ORE));
             for (Block b : blocks){
                 b.setType(Material.AIR);
             }

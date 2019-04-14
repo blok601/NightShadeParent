@@ -147,7 +147,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         new StaffTrackTask().runTaskTimer(this, 0, 100);
         new PregenTask().runTaskTimer(this, 0, 40);
 
-        Bukkit.getScheduler().runTaskTimer(this, () -> {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
             scoreboardManager.getPlayerScoreboards().values().forEach(PlayerScoreboard::update);
         }, 0L, 35L);
 
