@@ -524,6 +524,10 @@ public class TeamBaseCommand implements UHCCommand{
                         return;
                     }
 
+                    for (Team t : TeamManager.getInstance().getTeams()) {
+                        t.scheduleRemoval(target.getName());
+                    }
+
 
                     Team targetTeam = TeamManager.getInstance().getTeambyPlayerOnTeam(args[2]);
                     if(targetTeam == null){

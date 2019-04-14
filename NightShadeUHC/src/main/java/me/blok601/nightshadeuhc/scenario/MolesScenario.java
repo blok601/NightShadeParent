@@ -1,10 +1,10 @@
 package me.blok601.nightshadeuhc.scenario;
 
 import me.blok601.nightshadeuhc.UHC;
+import me.blok601.nightshadeuhc.entity.object.Team;
 import me.blok601.nightshadeuhc.event.PvPEnableEvent;
 import me.blok601.nightshadeuhc.event.ScenarioEnableEvent;
 import me.blok601.nightshadeuhc.manager.GameManager;
-import me.blok601.nightshadeuhc.entity.object.Team;
 import me.blok601.nightshadeuhc.manager.TeamManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
@@ -93,7 +93,11 @@ public class MolesScenario extends Scenario{
         OfflinePlayer offlinePlayer;
         Player online;
         for (Team team : TeamManager.getInstance().getTeams()){
+            if (team.getMembers().size() == 0) {
+                continue;
+            }
             offlinePlayer = Bukkit.getOfflinePlayer(team.getMembers().get(random.nextInt(team.getMembers().size())));
+            if (offlinePlayer == null) continue;
             team.setMole(offlinePlayer.getUniqueId()); //Clean up later
             moles.put(team.getMole(), false);
 
