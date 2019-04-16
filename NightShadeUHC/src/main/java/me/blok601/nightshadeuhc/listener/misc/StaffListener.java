@@ -52,7 +52,7 @@ public class StaffListener implements Listener {
             }
 
             Block clickedBlock = e.getClickedBlock();
-            if (clickedBlock.getType() == Material.CHEST) {
+            if (clickedBlock != null && clickedBlock.getType() == Material.CHEST) {
                 Chest chest = (Chest) clickedBlock.getState();
                 p.openInventory(chest.getBlockInventory());
                 return;
