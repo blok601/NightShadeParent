@@ -36,8 +36,8 @@ public class FourHorsemenScenario extends Scenario {
                 ChatUtils.sendAll("Pestilence Strikes...");
 
                 UHCPlayerColl.get().getAllPlaying().stream().forEach(uhcPlayer -> {
-                    Player player = (Player) uhcPlayer;
-                    player.setHealth(player.getMaxHealth() - 1);
+                    Player p = (Player) uhcPlayer;
+                    p.damage(4);
                 });
 
 
@@ -77,12 +77,12 @@ public class FourHorsemenScenario extends Scenario {
         if (!isEnabled()) return;
         if (e.getItem().getType() == Material.GOLDEN_APPLE) {
             double rand = (Math.random() * 10) + 1;
-            if (rand <= 2) {
+            if (rand <= 3) {
                 Player p = e.getPlayer();
                 p.sendMessage(ChatUtils.message("&c May Death instill within you.."));
                 e.setCancelled(true);
                 ItemStack stack = p.getItemInHand();
-                p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 20 * 5, 0));
+                p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20 * 5, 0));
                 if (stack.getAmount() > 1) {
                     stack.setAmount(stack.getAmount() - 1);
                 }
