@@ -8,7 +8,6 @@ import me.blok601.nightshadeuhc.event.MeetupStartEvent;
 import me.blok601.nightshadeuhc.event.PvPEnableEvent;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
-import me.blok601.nightshadeuhc.util.PlayerUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
@@ -34,7 +33,7 @@ public class FourHorsemenScenario extends Scenario {
                 }
                 ChatUtils.sendAll("Pestilence Strikes...");
 
-                UHCPlayerColl.get().getAllPlaying().stream().filter(uhcPlayer -> PlayerUtils.inGameWorld(uhcPlayer.getPlayer())).filter(uhcPlayer -> uhcPlayer.getPlayer().getLocation().getY() < 0).forEach(uhcPlayer -> {
+                UHCPlayerColl.get().getAllPlaying().stream().forEach(uhcPlayer -> {
                     uhcPlayer.getPlayer().damage(0.5);
                 });
 
@@ -73,7 +72,6 @@ public class FourHorsemenScenario extends Scenario {
     }
 
     public void onEat (PlayerItemConsumeEvent e) {
-        ChatUtils.sendAll("This works");
         if (!isEnabled()) return;
         if (e.getItem().getType() == Material.GOLDEN_APPLE) {
             double rand = (Math.random() * 10) + 1;
