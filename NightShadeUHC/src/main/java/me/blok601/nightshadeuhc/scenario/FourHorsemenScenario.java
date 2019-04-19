@@ -36,7 +36,8 @@ public class FourHorsemenScenario extends Scenario {
                 ChatUtils.sendAll("Pestilence Strikes...");
 
                 UHCPlayerColl.get().getAllPlaying().stream().forEach(uhcPlayer -> {
-                    uhcPlayer.getPlayer().damage(0.5);
+                    Player player = (Player) uhcPlayer;
+                    player.setHealth(player.getMaxHealth() - 1);
                 });
 
 
@@ -47,12 +48,11 @@ public class FourHorsemenScenario extends Scenario {
     public void onPvp(PvPEnableEvent e) {
         if (!isEnabled()) return;
         ChatUtils.sendAll("It has begun, for War has arrived.");
-        war = 1;
     }
     @EventHandler
     public void onDeath(CustomDeathEvent e) {
         if (!isEnabled()) return;
-        if (war == 1) {
+        if (e.getKiller() != null) {
             Player k = e.getKiller();
             k.sendMessage(ChatUtils.message("&6 War has taken its toll on you."));
             k.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20 * 20, 0));
@@ -67,7 +67,7 @@ public class FourHorsemenScenario extends Scenario {
         UHCPlayerColl.get().getAllPlaying().stream().forEach(uhcPlayer -> {
 
             Player p = (Player) uhcPlayer;
-            p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 72000, 0));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, Integer.MAX_VALUE, 0));
 
         });
 
@@ -77,7 +77,7 @@ public class FourHorsemenScenario extends Scenario {
         if (!isEnabled()) return;
         if (e.getItem().getType() == Material.GOLDEN_APPLE) {
             double rand = (Math.random() * 10) + 1;
-            if (rand >= 3) {
+            if (rand <= 2) {
                 Player p = e.getPlayer();
                 p.sendMessage(ChatUtils.message("&c May Death instill within you.."));
                 e.setCancelled(true);
