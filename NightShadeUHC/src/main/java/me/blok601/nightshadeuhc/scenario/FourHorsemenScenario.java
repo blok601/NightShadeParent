@@ -10,6 +10,7 @@ import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -23,6 +24,7 @@ public class FourHorsemenScenario extends Scenario {
 
     int war = 0;
 
+    @EventHandler
     public void onStart(GameStartEvent e) {
         new BukkitRunnable() {
             @Override
@@ -41,13 +43,13 @@ public class FourHorsemenScenario extends Scenario {
             }
         }.runTaskTimer(UHC.get(), 0, 20 * 60);
     }
-
+    @EventHandler
     public void onPvp(PvPEnableEvent e) {
         if (!isEnabled()) return;
         ChatUtils.sendAll("It has begun, for War has arrived.");
         war = 1;
     }
-
+    @EventHandler
     public void onDeath(CustomDeathEvent e) {
         if (!isEnabled()) return;
         if (war == 1) {
@@ -58,7 +60,7 @@ public class FourHorsemenScenario extends Scenario {
 
         }
     }
-
+    @EventHandler
     public void onMeetup(MeetupStartEvent e) {
         if (!isEnabled()) return;
         ChatUtils.sendAll("May famine bring great sorrow unto you...");
@@ -70,7 +72,7 @@ public class FourHorsemenScenario extends Scenario {
         });
 
     }
-
+    @EventHandler
     public void onEat (PlayerItemConsumeEvent e) {
         if (!isEnabled()) return;
         if (e.getItem().getType() == Material.GOLDEN_APPLE) {
@@ -80,6 +82,7 @@ public class FourHorsemenScenario extends Scenario {
                 p.sendMessage(ChatUtils.message("&c May Death instill within you.."));
                 e.setCancelled(true);
                 ItemStack stack = p.getItemInHand();
+                p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 20 * 5, 0));
                 if (stack.getAmount() > 1) {
                     stack.setAmount(stack.getAmount() - 1);
                 }
