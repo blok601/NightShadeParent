@@ -22,7 +22,6 @@ public class FourHorsemenScenario extends Scenario {
         super("Four Horsemen", "A secret, until April 19th", new ItemBuilder(Material.SKULL_ITEM).name(ChatUtils.format("Four Horsemen")).make());
     }
 
-    int war = 0;
 
     @EventHandler
     public void onStart(GameStartEvent e) {
@@ -36,8 +35,7 @@ public class FourHorsemenScenario extends Scenario {
                 ChatUtils.sendAll("Pestilence Strikes...");
 
                 UHCPlayerColl.get().getAllPlaying().stream().forEach(uhcPlayer -> {
-                    Player p = (Player) uhcPlayer;
-                    p.damage(4);
+                    uhcPlayer.getPlayer().damage(4);
                 });
 
 
@@ -57,7 +55,6 @@ public class FourHorsemenScenario extends Scenario {
             k.sendMessage(ChatUtils.message("&6 War has taken its toll on you."));
             k.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20 * 20, 0));
             k.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 20 * 20, 0));
-
         }
     }
     @EventHandler
@@ -65,9 +62,7 @@ public class FourHorsemenScenario extends Scenario {
         if (!isEnabled()) return;
         ChatUtils.sendAll("May famine bring great sorrow unto you...");
         UHCPlayerColl.get().getAllPlaying().stream().forEach(uhcPlayer -> {
-
-            Player p = (Player) uhcPlayer;
-            p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, Integer.MAX_VALUE, 0));
+            uhcPlayer.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 72000, 0));
 
         });
 
@@ -82,7 +77,7 @@ public class FourHorsemenScenario extends Scenario {
                 p.sendMessage(ChatUtils.message("&c May Death instill within you.."));
                 e.setCancelled(true);
                 ItemStack stack = p.getItemInHand();
-                p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20 * 5, 0));
+                p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 20 * 5, 1));
                 if (stack.getAmount() > 1) {
                     stack.setAmount(stack.getAmount() - 1);
                 }
