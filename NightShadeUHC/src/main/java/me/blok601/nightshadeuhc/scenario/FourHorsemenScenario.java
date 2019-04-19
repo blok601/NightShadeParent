@@ -11,7 +11,6 @@ import me.blok601.nightshadeuhc.util.ItemBuilder;
 import me.blok601.nightshadeuhc.util.PlayerUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -41,7 +40,7 @@ public class FourHorsemenScenario extends Scenario {
 
 
             }
-        }.runTaskTimer(UHC.get(), 0, 20 * 60); //30 seconds
+        }.runTaskTimer(UHC.get(), 0, 20 * 60);
     }
 
     public void onPvp(PvPEnableEvent e) {
@@ -74,6 +73,7 @@ public class FourHorsemenScenario extends Scenario {
     }
 
     public void onEat (PlayerItemConsumeEvent e) {
+        ChatUtils.sendAll("This works");
         if (!isEnabled()) return;
         if (e.getItem().getType() == Material.GOLDEN_APPLE) {
             double rand = (Math.random() * 10) + 1;
@@ -97,7 +97,4 @@ public class FourHorsemenScenario extends Scenario {
 
     }
 
-    public void test (EntityDamageEvent e) {
-        ChatUtils.sendAll("Test");
-    }
 }
