@@ -119,6 +119,7 @@ public class CommandHandler  {
         registerCommand(new ToggleMobsCommand());
         registerCommand(new ClearTreesCommand());
         registerCommand(new PMOresCommand());
+        registerCommand(new ResetPowersCommand());
 
         SlaveMarketScenario scenario = (SlaveMarketScenario) scenarioManager.getScen("Slave Market");
         if(scenario == null){

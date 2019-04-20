@@ -210,4 +210,6 @@ commands:
     description: Start slave market bidding
   owners:
     description: A command for handling slave owners.
+  resetpowers:
+    description: Resets Powers.
 
