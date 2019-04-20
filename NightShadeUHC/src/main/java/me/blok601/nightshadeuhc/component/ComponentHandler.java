@@ -43,6 +43,7 @@ public class ComponentHandler {
         addComponent(new SaturationComponent());
         addComponent(new ShearsComponent(gameManager));
         addComponent(new SportsmanshipComponent());
+        addComponent(new StripminingComponent());
 
         this.components.sort(Comparator.comparing(Component::getName));
     }

@@ -35,12 +35,12 @@ public class FourHorsemenScenario extends Scenario {
                 ChatUtils.sendAll("Pestilence Strikes...");
 
                 UHCPlayerColl.get().getAllPlaying().stream().forEach(uhcPlayer -> {
-                    uhcPlayer.getPlayer().damage(2.5);
+                    uhcPlayer.getPlayer().damage(2);
                 });
 
 
             }
-        }.runTaskTimer(UHC.get(), 0, 20 * 120);
+        }.runTaskTimer(UHC.get(), 0, 20 * 300);
     }
     @EventHandler
     public void onPvp(PvPEnableEvent e) {

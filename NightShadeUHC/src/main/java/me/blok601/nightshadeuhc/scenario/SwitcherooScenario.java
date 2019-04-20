@@ -23,8 +23,6 @@ public class SwitcherooScenario extends Scenario{
             return;
         }
 
-        if (e.getFinalDamage() == 0) return;
-
         if (e.getEntity() instanceof Player) {
             if (e.getDamager() instanceof Arrow) {
                 Arrow arrow = (Arrow) e.getDamager();

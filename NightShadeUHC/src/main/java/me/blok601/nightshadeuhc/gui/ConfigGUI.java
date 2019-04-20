@@ -32,7 +32,7 @@ public class ConfigGUI {
                 .lore("&bFirst Shrink Time &8» &f" + gameManager.getBorderTime() / 60)
                 .lore("&bMeetup Time &8» &f" + gameManager.getMeetupTime() / 60);
 
-        ItemStack mining = new ItemBuilder(Material.IRON_PICKAXE).name(ChatUtils.format("&6Mining Information")).lore(ChatUtils.format("&3Stripmining» &eAbove y32 &cONLY")).lore(ChatUtils.format("&3Rollercoastering» &e&aAllowed"))
+        ItemStack mining = new ItemBuilder(Material.IRON_PICKAXE).name(ChatUtils.format("&6Mining Information")).lore(ChatUtils.format("&3Stripmining» &e Host's Choice")).lore(ChatUtils.format("&3Rollercoastering» &e&aAllowed"))
                 .make();
 
         ItemStack apples = new ItemBuilder(Material.APPLE).name(ChatUtils.format("&6Apples")).lore(ChatUtils.format("&3Apple rates» &e"+ GameManager.get().getAppleRates() + "%")).make();
