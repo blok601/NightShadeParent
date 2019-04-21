@@ -1,4 +1,4 @@
-package me.blok601.nightshadeuhc.scenario.cmd;
+package me.blok601.nightshadeuhc.scenario.cmd.superhero;
 
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.entity.object.GameState;

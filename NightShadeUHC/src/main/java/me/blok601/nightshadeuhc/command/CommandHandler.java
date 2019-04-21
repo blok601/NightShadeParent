@@ -17,10 +17,16 @@ import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.scenario.SlaveMarketScenario;
 import me.blok601.nightshadeuhc.scenario.cmd.*;
-import me.blok601.nightshadeuhc.scenario.cmd.SlaveMarket.BidCommand;
-import me.blok601.nightshadeuhc.scenario.cmd.SlaveMarket.SlaveOwnerCommand;
-import me.blok601.nightshadeuhc.scenario.cmd.SlaveMarket.StartBiddingCommand;
+import me.blok601.nightshadeuhc.scenario.cmd.btc.BTCAddCommand;
+import me.blok601.nightshadeuhc.scenario.cmd.btc.BTCListCommand;
+import me.blok601.nightshadeuhc.scenario.cmd.slavemarket.BidCommand;
+import me.blok601.nightshadeuhc.scenario.cmd.slavemarket.SlaveOwnerCommand;
+import me.blok601.nightshadeuhc.scenario.cmd.slavemarket.StartBiddingCommand;
 import me.blok601.nightshadeuhc.scenario.cmd.mole.*;
+import me.blok601.nightshadeuhc.scenario.cmd.superhero.AssignPowerCommand;
+import me.blok601.nightshadeuhc.scenario.cmd.superhero.ClearPowerCommand;
+import me.blok601.nightshadeuhc.scenario.cmd.superhero.PowerCommand;
+import me.blok601.nightshadeuhc.scenario.cmd.superhero.ResetPowersCommand;
 import me.blok601.nightshadeuhc.stat.command.LeaderboardsCommand;
 import me.blok601.nightshadeuhc.stat.command.StatsCommand;
 
@@ -142,6 +148,8 @@ public class CommandHandler  {
         registerCommand(new ResetStatsCommand(uhc));
         registerCommand(new ClearPowerCommand(scenarioManager));
         registerCommand(new ShowCommand(uhc));
+        registerCommand(new BTCListCommand(scenarioManager));
+        registerCommand(new BTCAddCommand(scenarioManager));
     }
 
 

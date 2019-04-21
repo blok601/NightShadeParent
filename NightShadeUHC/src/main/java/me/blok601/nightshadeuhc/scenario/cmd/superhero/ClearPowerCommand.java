@@ -1,4 +1,4 @@
-package me.blok601.nightshadeuhc.scenario.cmd;
+package me.blok601.nightshadeuhc.scenario.cmd.superhero;
 
 import com.google.common.collect.Sets;
 import com.nightshadepvp.core.Rank;

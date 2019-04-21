@@ -212,4 +212,10 @@ commands:
     description: A command for handling slave owners.
   resetpowers:
     description: Resets Powers.
+  btclist:
+    aliases: [blist, bestbtclist]
+    description: View the players on the best btc list
+  btcadd:
+    aliases: [badd, bestbtcadd]
+    description: Add players to the best btc list
 

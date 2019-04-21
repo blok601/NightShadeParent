@@ -1,6 +1,8 @@
 package me.blok601.nightshadeuhc.scenario;
 
+import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.util.ChatUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
@@ -22,7 +24,7 @@ public class Scenario implements Listener {
     private String abbreviation;
 
     private ArrayList<String> commands;
-    private ScenarioManager scenarioManager;
+    protected ScenarioManager scenarioManager;
 
     public Scenario(String name, String desc, ItemStack item){
         this.name = name;
@@ -104,5 +106,13 @@ public class Scenario implements Listener {
 
     public void sendMessage(Player player, String message) {
         player.sendMessage(ChatUtils.format(this.getPrefix() + message));
+    }
+
+    public void sendMessage(UHCPlayer player, String message) {
+        player.msg(ChatUtils.format(this.getPrefix() + message));
+    }
+
+    public void broadcast(String message) {
+        Bukkit.getOnlinePlayers().forEach(o -> sendMessage(o, message));
     }
 }

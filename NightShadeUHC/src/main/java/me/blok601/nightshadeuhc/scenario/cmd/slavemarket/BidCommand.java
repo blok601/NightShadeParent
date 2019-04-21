@@ -1,4 +1,4 @@
-package me.blok601.nightshadeuhc.scenario.cmd.SlaveMarket;
+package me.blok601.nightshadeuhc.scenario.cmd.slavemarket;
 
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.utils.PacketUtils;

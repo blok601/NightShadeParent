@@ -14,6 +14,7 @@ import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,8 @@ public class LootCrateScenario extends Scenario{
     private static  int timer;
     private ItemStack[] tier1;
     private ItemStack[] tier2;
+
+    private BukkitTask task;
 
     public LootCrateScenario() {
         super("LootCrates", "Every 10 minute, everyone gets a lootcrate filled with goodies", new ItemBuilder(Material.CHEST).name("LootCrates").make());
@@ -47,6 +50,18 @@ public class LootCrateScenario extends Scenario{
         };
     }
 
+    @Override
+    public void onToggle(boolean newState, Player toggler) {
+        if (newState) return;
+
+        if (this.task != null) {
+            task.cancel();
+            sendMessage(toggler, "&bLootCrate tasks have been disabled!");
+        }
+
+        this.task = null;
+    }
+
     @EventHandler
     public void onStart(GameStartEvent e){
         if(!isEnabled()){
@@ -61,7 +76,7 @@ public class LootCrateScenario extends Scenario{
         }
 
 
-        new BukkitRunnable(){
+        this.task = new BukkitRunnable() {
             @Override
             public void run(){
                 if(!isEnabled()){

@@ -52,7 +52,7 @@ public class FourHorsemenScenario extends Scenario {
         if (!isEnabled()) return;
         if (e.getKiller() != null) {
             Player k = e.getKiller();
-            k.sendMessage(ChatUtils.message("&6 War has taken its toll on you."));
+            k.sendMessage(ChatUtils.message("&6War has taken its toll on you."));
             k.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20 * 20, 0));
             k.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 20 * 20, 0));
         }
@@ -74,7 +74,7 @@ public class FourHorsemenScenario extends Scenario {
             double rand = (Math.random() * 10) + 1;
             if (rand <= 3) {
                 Player p = e.getPlayer();
-                p.sendMessage(ChatUtils.message("&c May Death instill within you.."));
+                p.sendMessage(ChatUtils.message("&cMay Death instill within you.."));
                 e.setCancelled(true);
                 ItemStack stack = p.getItemInHand();
                 p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 20 * 5, 1));

@@ -9,9 +9,11 @@ import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
 import me.blok601.nightshadeuhc.util.PlayerUtils;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.List;
 
@@ -25,10 +27,23 @@ public class SkyhighScenario extends Scenario implements StarterItems {
         super ("Skyhigh", "After a certain period of time, you will take damage every 30 seconds if you are below Y:100", new ItemBuilder(Material.COBBLESTONE).name("Skyhigh").make());
     }
 
+    private BukkitTask task;
+
+    @Override
+    public void onToggle(boolean newState, Player toggler) {
+        if (!newState) {
+            if (task != null) {
+                task.cancel();
+                sendMessage(toggler, "&bSkyhigh tasks have been disabled!");
+            }
+
+            task = null;
+        }
+    }
 
     @EventHandler
     public void on(PvPEnableEvent e){
-        new BukkitRunnable(){
+        this.task = new BukkitRunnable() {
             @Override
             public void run() {
                 if(!isEnabled()){

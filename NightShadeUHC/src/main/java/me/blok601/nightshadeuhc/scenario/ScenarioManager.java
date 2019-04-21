@@ -128,6 +128,7 @@ public class ScenarioManager implements UHCCommand{
         addScen(new RottenApplesScenario());
         addScen(new StrengtheningKillScenario());
         addScen(new DependencyScenario(gameManager));
+        addScen(new BaldChickenScenario());
 
         sortScenarios();
     }
