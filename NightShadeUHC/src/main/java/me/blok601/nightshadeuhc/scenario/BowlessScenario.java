@@ -3,11 +3,14 @@ package me.blok601.nightshadeuhc.scenario;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Material;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Created by Blok on 1/28/2018.
@@ -28,6 +31,19 @@ public class BowlessScenario extends Scenario{
             e.getRecipe().getResult().setType(Material.AIR); //crafting
         }
 
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onPickup(PlayerPickupItemEvent e) {
+        if (!isEnabled()) return;
+
+        Item item = e.getItem();
+        ItemStack itemStack = item.getItemStack();
+
+        if (itemStack.getType() != Material.BOW) return;
+
+        e.setCancelled(true);
+        item.remove();
     }
 
     @EventHandler
