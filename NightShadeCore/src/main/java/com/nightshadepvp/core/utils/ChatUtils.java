@@ -7,6 +7,8 @@ import com.nightshadepvp.core.entity.objects.PlayerEffect;
 import org.bukkit.ChatColor;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 
 /**
@@ -81,5 +83,12 @@ public class ChatUtils {
     public static void sendAll(String message, Rank allowed){
         NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> nsPlayer.hasRank(allowed)).forEach(nsPlayer -> nsPlayer.msg(ChatUtils.message(message)));
     }
+
+    public static void sortCollections(List... collection) {
+        for (List list : collection) {
+            Collections.sort(list);
+        }
+    }
+
 
 }

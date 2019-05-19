@@ -98,8 +98,8 @@ public enum Rank {
         return rank.getValue() < Rank.DRAGON.getValue();
     }
 
-    public boolean isDonorRank(Rank rank) {
-        return rank.getValue() >= Rank.DRAGON.getValue() && rank.getValue() <= Rank.GUARDIAN.getValue();
+    public boolean isDonorRank() {
+        return this.getValue() >= Rank.DRAGON.getValue() && this.getValue() <= Rank.GUARDIAN.getValue();
     }
 
     public boolean isDeathSpectate(Rank rank) {
@@ -108,5 +108,9 @@ public enum Rank {
 
     public String getDiscordRankName() {
         return discordRankName;
+    }
+
+    public boolean isAdmin() {
+        return this.getValue() >= Rank.ADMIN.getValue();
     }
 }

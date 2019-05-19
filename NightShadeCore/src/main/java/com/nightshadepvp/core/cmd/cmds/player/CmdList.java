@@ -1,13 +1,15 @@
 package com.nightshadepvp.core.cmd.cmds.player;
 
+import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 import com.massivecraft.massivecore.MassiveException;
+import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.cmd.NightShadeCoreCommand;
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.nightshadepvp.core.entity.NSPlayerColl;
 import com.nightshadepvp.core.utils.ChatUtils;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
 /**
  * Created by Blok on 8/7/2018.
@@ -26,17 +28,51 @@ public class CmdList extends NightShadeCoreCommand {
 
     @Override
     public void perform() throws MassiveException {
-        NSPlayer nsPlayer = NSPlayer.get(sender);
-        ArrayList<NSPlayer> nsPlayers = new ArrayList<>();
-        NSPlayerColl.get().getAllOnline().stream().sorted(Comparator.comparing(nsPlayer1 -> nsPlayer.getRank().getValue())).forEach(nsPlayers::add);
-        //Sorted them
-        StringBuilder stringBuilder = new StringBuilder();
-        for (NSPlayer n : nsPlayers){
-            stringBuilder.append(ChatUtils.format((n.getRank().getNameColor()))).append(ChatUtils.format(n.getName())).append(ChatUtils.format(", &r"));
+        NSPlayer player = NSPlayer.get(sender);
+        ArrayList<String> donors = Lists.newArrayList();
+        ArrayList<String> players = Lists.newArrayList();
+        ArrayList<String> staff = Lists.newArrayList();
+        ArrayList<String> admin = Lists.newArrayList();
+        ArrayList<String> media = Lists.newArrayList();
+
+        for (NSPlayer nsPlayer : NSPlayerColl.get().getAllPlayersOnline()) {
+            if (nsPlayer.getRank() == Rank.PLAYER || nsPlayer.getRank() == Rank.FRIEND) {
+                players.add(nsPlayer.getRank().getNameColor() + nsPlayer.getName());
+                continue;
+            }
+
+            if (nsPlayer.getRank().isDonorRank()) {
+                donors.add(nsPlayer.getRank().getNameColor() + nsPlayer.getName());
+                continue;
+            }
+
+            if (nsPlayer.getRank() == Rank.YOUTUBE) {
+                media.add(nsPlayer.getRank().getNameColor() + nsPlayer.getName());
+                continue;
+            }
+
+            if (nsPlayer.getRank() == Rank.TRIAL || nsPlayer.getRank() == Rank.STAFF || nsPlayer.getRank() == Rank.SENIOR) {
+                staff.add(nsPlayer.getRank().getNameColor() + nsPlayer.getName());
+                continue;
+            }
+
+            if (nsPlayer.getRank().isAdmin()) {
+                admin.add(nsPlayer.getRank().getNameColor() + nsPlayer.getName());
+                continue;
+            }
+
+            players.add(nsPlayer.getRank().getNameColor() + nsPlayer.getName());
         }
 
-        String players = stringBuilder.toString().trim();
-        nsPlayer.msg(ChatUtils.message("&ePlayers online:"));
-        nsPlayer.msg(players.substring(0, players.length()-1));
+        ChatUtils.sortCollections(donors, players, staff, admin, media);
+
+        player.msg(ChatUtils.format("&f&m--------------------------------------------"));
+        player.msg(ChatUtils.format("&5Players &7(&b" + players.size() + "&7)&f: " + Joiner.on("&7,").join(players)));
+        player.msg(ChatUtils.format("&5Donors &7(&b" + donors.size() + "&7)&f: " + Joiner.on("&7,").join(donors)));
+        player.msg(ChatUtils.format("&5Media &7(&b" + media.size() + "&7)&f: " + Joiner.on("&7,").join(media)));
+        player.msg(ChatUtils.format("&5Staff &7(&b" + staff.size() + "&7)&f: " + Joiner.on("&7,").join(staff)));
+        player.msg(ChatUtils.format("&5Admins &7(&b" + admin.size() + "&7)&f: " + Joiner.on("&7,").join(admin)));
+        player.msg(ChatUtils.format("&f&m--------------------------------------------"));
+
     }
 }
