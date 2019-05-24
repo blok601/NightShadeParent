@@ -226,6 +226,7 @@ public class EngineInventory extends Engine {
                     p.closeInventory();
                     p.chat("/freeze " + PunishmentHandler.getInstance().getPunishing().get(p));
                 }
+                p.closeInventory();
 
                 PunishmentHandler.getInstance().handleClick(stack, e);
                 return;
