@@ -34,6 +34,7 @@ public class Punishment extends AbstractPunishment {
             staff.sendMessage(ChatUtils.message("&eSuccessfully executed punishment."));
             for (String cmd : this.commands) {
                 staff.chat("/" + cmd.replaceAll("%player%", name));
+                staff.closeInventory();
             }
         }else{
             staff.sendMessage(ChatUtils.message("&eSuccessfully punished&8: " + target.getName()));
@@ -47,6 +48,8 @@ public class Punishment extends AbstractPunishment {
 
             for (String cmd : this.commands) {
                 staff.chat("/" + cmd.replaceAll("%player%", name));
+                staff.closeInventory();
+
             }
         }
 
