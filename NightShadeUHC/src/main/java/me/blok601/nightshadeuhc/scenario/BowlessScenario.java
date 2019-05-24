@@ -79,6 +79,7 @@ public class BowlessScenario extends Scenario{
         }
     }
 
+    @EventHandler
     public void onhit (EntityDamageByEntityEvent e) {
         if (!isEnabled()) return;
         if (e.getDamager() instanceof Arrow) {
