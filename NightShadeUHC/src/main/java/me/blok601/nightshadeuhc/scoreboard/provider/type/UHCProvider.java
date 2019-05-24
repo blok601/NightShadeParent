@@ -22,7 +22,7 @@ public class UHCProvider extends ScoreboardProvider {
 
     @Override
     public String getTitle(Player p) {
-        return ChatUtils.format("&5NightShadePvP");
+        return ChatUtils.format("&cShatterheart S1");
     }
 
     /**

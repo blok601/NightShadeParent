@@ -49,8 +49,7 @@ public class TeamManager {
         this.rvbScatterType = 1;
         this.randomTeams = false;
 
-        this.possibleColors = Lists.newArrayList("&0", "&1", "&2", "&3", "&4", "&5", "&6",
-                "&7", "&8", "&9", "&a", "&b", "&c", "&d", "&e");
+        this.possibleColors = Lists.newArrayList("&1", "&2", "&3", "&4", "&5", "&6", "&a", "&b", "&c", "&d", "&e", "&9");
 
         List<String> temp = Lists.newArrayList();
         temp.addAll(possibleColors.stream().map(lColor -> lColor + "&o").collect(Collectors.toList()));
@@ -65,8 +64,6 @@ public class TeamManager {
         temp.addAll(possibleColors.stream().map(lColor -> lColor + "&l&m").collect(Collectors.toList()));
         temp.addAll(possibleColors.stream().map(lColor -> lColor + "&l&o").collect(Collectors.toList()));
         temp.addAll(possibleColors.stream().map(lColor -> lColor + "&l&o&n").collect(Collectors.toList()));
-        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&l&o&m").collect(Collectors.toList()));
-        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&l&o&n&m").collect(Collectors.toList()));
 
         possibleColors.addAll(temp);
 
