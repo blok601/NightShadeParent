@@ -3,9 +3,11 @@ package me.blok601.nightshadeuhc.scenario;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Material;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
@@ -74,6 +76,13 @@ public class BowlessScenario extends Scenario{
                 e.setCancelled(true);
                 p.sendMessage(ChatUtils.message(getPrefix() + "&cYou can't use a bow in bowless!"));
             }
+        }
+    }
+
+    public void onhit (EntityDamageByEntityEvent e) {
+        if (!isEnabled()) return;
+        if (e.getDamager() instanceof Arrow) {
+            e.setCancelled(true);
         }
     }
 
