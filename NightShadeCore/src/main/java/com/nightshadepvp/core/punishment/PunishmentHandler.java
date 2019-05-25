@@ -1,6 +1,7 @@
 package com.nightshadepvp.core.punishment;
 
 import com.nightshadepvp.core.punishment.type.ban.*;
+import com.nightshadepvp.core.punishment.type.dq.AvoidingMeetupPunishment;
 import com.nightshadepvp.core.punishment.type.dq.BenefitingPunishment;
 import com.nightshadepvp.core.punishment.type.dq.CampingPunishment;
 import com.nightshadepvp.core.punishment.type.dq.StalkingPunishment;
@@ -59,7 +60,7 @@ public class PunishmentHandler {
         this.punishments.add(new SpamPunishment());
         this.punishments.add(new ToxcictyPunishment());
         this.punishments.add(new DisrespectPunishment());
-
+        this.punishments.add(new AvoidingMeetupPunishment());
     }
 
     public ItemBuilder getChildStack() {

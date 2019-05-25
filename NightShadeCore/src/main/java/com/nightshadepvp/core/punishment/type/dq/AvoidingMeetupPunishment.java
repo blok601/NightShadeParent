@@ -11,7 +11,7 @@ import java.util.Collections;
 
 public class AvoidingMeetupPunishment extends AbstractPunishment {
     public AvoidingMeetupPunishment() {
-        super("Avoiding Meetup", Material.COBBLESTONE, PunishmentType.BAN);
+        super("Avoiding Meetup", Material.MOSSY_COBBLESTONE, PunishmentType.BAN);
 
         this.addChild(new Punishment("Avoiding Meetup (1st Offense)", new ItemBuilder(PunishmentHandler.getInstance().getChildStack())
                 .name("&Avoiding Meetup &8(&51st Offense&8)")

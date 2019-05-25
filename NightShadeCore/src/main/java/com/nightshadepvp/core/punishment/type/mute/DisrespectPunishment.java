@@ -11,7 +11,7 @@ import java.util.Collections;
 
 public class DisrespectPunishment extends AbstractPunishment {
     public DisrespectPunishment() {
-        super("Disrespect", Material.SPIDER_EYE, PunishmentType.MUTE );
+        super("Disrespect", Material.BARRIER, PunishmentType.MUTE );
         this.addChild(new Punishment("Disrespect (1st Offense)", new ItemBuilder(PunishmentHandler.getInstance().getChildStack())
                 .name("&Disrespect &8(&51st Offense&8)")
                 .lore("&eClick to mute the player for 15m for Disrespect").make(),
@@ -19,13 +19,13 @@ public class DisrespectPunishment extends AbstractPunishment {
         ), 20);
 
         this.addChild(new Punishment("Disrespect (2nd Offense)", new ItemBuilder(PunishmentHandler.getInstance().getChildStack())
-                .name("&Disrespect &8(&52nd Offense&8)")
+                .name("&5Disrespect &8(&52nd Offense&8)")
                 .lore("&eClick to mute the player for 45 for Disrespect").make(),
                 this, Collections.singletonList("mute %player% 45m Disrespect"), PunishmentType.MUTE
         ), 21);
 
         this.addChild(new Punishment("Disrespect (3rd Offense)", new ItemBuilder(PunishmentHandler.getInstance().getChildStack())
-                .name("&Disrespect &8(&53rd Offense&8)")
+                .name("&5Disrespect &8(&53rd Offense&8)")
                 .lore("&eClick to mute the player for 2h for Disrespect").make(),
                 this, Collections.singletonList("mute %player% 2h Disrespect"), PunishmentType.MUTE
         ), 22);

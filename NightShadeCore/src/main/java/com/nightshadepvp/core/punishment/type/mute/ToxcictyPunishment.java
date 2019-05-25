@@ -19,13 +19,13 @@ public class ToxcictyPunishment extends AbstractPunishment {
         ), 20);
 
         this.addChild(new Punishment("Toxicity (2nd Offense)", new ItemBuilder(PunishmentHandler.getInstance().getChildStack())
-                .name("&Toxicity &8(&52nd Offense&8)")
+                .name("&5Toxicity &8(&52nd Offense&8)")
                 .lore("&eClick to mute the player for 45 for Toxicity").make(),
                 this, Collections.singletonList("mute %player% 45m Toxicity"), PunishmentType.MUTE
         ), 21);
 
         this.addChild(new Punishment("Toxicity (3rd Offense)", new ItemBuilder(PunishmentHandler.getInstance().getChildStack())
-                .name("&Toxicity &8(&53rd Offense&8)")
+                .name("&5Toxicity &8(&53rd Offense&8)")
                 .lore("&eClick to mute the player for 2h for Toxicity").make(),
                 this, Collections.singletonList("mute %player% 2h Toxicity"), PunishmentType.MUTE
         ), 22);
