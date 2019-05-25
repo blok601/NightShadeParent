@@ -4,8 +4,10 @@ import com.nightshadepvp.core.punishment.type.ban.*;
 import com.nightshadepvp.core.punishment.type.dq.BenefitingPunishment;
 import com.nightshadepvp.core.punishment.type.dq.CampingPunishment;
 import com.nightshadepvp.core.punishment.type.dq.StalkingPunishment;
+import com.nightshadepvp.core.punishment.type.mute.DisrespectPunishment;
 import com.nightshadepvp.core.punishment.type.mute.HackusationPunishment;
 import com.nightshadepvp.core.punishment.type.mute.SpamPunishment;
+import com.nightshadepvp.core.punishment.type.mute.ToxcictyPunishment;
 import com.nightshadepvp.core.utils.ChatUtils;
 import com.nightshadepvp.core.utils.ItemBuilder;
 import org.bukkit.Bukkit;
@@ -55,6 +57,8 @@ public class PunishmentHandler {
         this.punishments.add(new HackusationPunishment());
         this.punishments.add(new SpoilingPunishment());
         this.punishments.add(new SpamPunishment());
+        this.punishments.add(new ToxcictyPunishment());
+        this.punishments.add(new DisrespectPunishment());
 
     }
 

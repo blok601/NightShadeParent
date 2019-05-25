@@ -22,7 +22,6 @@ public enum PlayerTag {
     AQUA_CHECK("&b✓", new ItemBuilder(Material.NAME_TAG).name("&bAqua Check &8(&b✓&8)").make()),
     CLEANER("&5#Cleaner", new ItemBuilder(Material.NAME_TAG).name("&5Cleaner Tag &8(&5#Cleaner&8)").make()),
     BOWSPAM("&4BowSpam", new ItemBuilder(Material.NAME_TAG).name("&4BowSpam Tag &8(&5BowSpam&8)").make()),
-    TOXIC("&2Toxic", new ItemBuilder(Material.NAME_TAG).name("&2Toxic Tag &8(&2Toxic&8)").make()),
     EZ("&9EZ", new ItemBuilder(Material.NAME_TAG).name("&9EZ Tag &8(&9EZ&8)").make()),
     CUTIE("&dCutie", new ItemBuilder(Material.NAME_TAG).name("&9Cutie Tag &8(&dCutie&8)").make()),
     SWEAT("&eSweat", new ItemBuilder(Material.NAME_TAG).name("&eSweat Tag &8(&eSweat&8)").make()),
@@ -30,9 +29,8 @@ public enum PlayerTag {
     FURRY("&eFurry", new ItemBuilder(Material.NAME_TAG).name("&3Furry Tag &8(&eFurry&8)").make()),
     EGIRL("&d&nEGirl", new ItemBuilder(Material.NAME_TAG).name("&d&nEGirl Tag &8(&d&nEGirl&8)").make()),
     OG("&bOG", new ItemBuilder(Material.NAME_TAG).name("&bOG Tag &8(&bOG&8)").make()),
-    DISCOVER_CARD("&fDisc&6o&fver&6Card", new ItemBuilder(Material.NAME_TAG).name("&&fDisc&6o&fver&6Card &fTag &8(&fDisc&6o&fver&6Card&8)").make()),
-    SHADY("&7&oShady", new ItemBuilder(Material.NAME_TAG).name("&7&oShady &fTag &8(&7&oShady&8)").make()),
-    CTRL_C("&c&lCTRL-C", new ItemBuilder(Material.NAME_TAG).name("&c&lCTRL-C Tag &8(&c&lCTRL-C&8)").make());
+    CTRL_C("&c&lCTRL-C", new ItemBuilder(Material.NAME_TAG).name("&c&lCTRL-C Tag &8(&c&lCTRL-C&8)").make()),
+    FRUITY("&dFruity", new ItemBuilder(Material.APPLE).name("&dFruity Tag &8(&dFruity&8)").make());
 
     private String title;
     private ItemStack stack;

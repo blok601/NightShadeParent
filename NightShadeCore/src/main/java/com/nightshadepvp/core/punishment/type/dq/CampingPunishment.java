@@ -27,7 +27,7 @@ public class CampingPunishment extends AbstractPunishment {
                 .name("&5Camping &8(&52nd Offense&8)")
                 .amount(2)
                 .lore("&eClick to DQ the player for camping 2nd offense").make(),
-                this, Collections.singletonList(""), PunishmentType.BAN
+                this, Collections.singletonList(""), PunishmentType.DQ
         ), 23);
     }
 }
