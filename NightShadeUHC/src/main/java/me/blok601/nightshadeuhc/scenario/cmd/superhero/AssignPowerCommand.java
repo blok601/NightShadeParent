@@ -52,6 +52,33 @@ public class AssignPowerCommand implements UHCCommand{
             return;
         }
 
+        if (args[0].equalsIgnoreCase("*")) {
+
+            for (Player target : Bukkit.getOnlinePlayers()) {
+                if (SuperheroesScenario.powers.containsKey(target.getUniqueId())) {
+                    return;
+                }
+
+                Random random = ThreadLocalRandom.current();
+                SuperheroesScenario.SuperHeroType type = SuperheroesScenario.SuperHeroType.values()[random.nextInt(SuperheroesScenario.SuperHeroType.values().length)];
+                SuperheroesScenario.powers.put(target.getUniqueId(), type);
+
+                if (type == SuperheroesScenario.SuperHeroType.HEALTH) {
+                    target.setMaxHealth(40);
+
+                    target.setHealth(40);
+                } else {
+                    for (PotionEffect effect : type.getEffecst()) {
+                        target.addPotionEffect(effect);
+                    }
+                }
+
+                target.sendMessage(ChatUtils.message("&eYour super power is: &3" + type.getName()));
+                p.sendMessage(ChatUtils.message("&eYou have assigned &a" + target.getName() + "'s &epower to &3" + type.getName()));
+            }
+        }
+
+
         Player target = Bukkit.getPlayer(args[0]);
         if(target == null){
             p.sendMessage(ChatUtils.message("&cThat player is offline!"));
