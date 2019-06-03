@@ -23,7 +23,7 @@ public class StrCompentent extends Component {
 
                 for (PotionEffect effect : p.getActivePotionEffects()) {
                     if(effect.getType().equals(PotionEffectType.INCREASE_DAMAGE)) {
-                        e.setDamage(e.getDamage() / 2);
+                        e.setDamage(e.getDamage() * 0.65 );
                     }
                 }
 
