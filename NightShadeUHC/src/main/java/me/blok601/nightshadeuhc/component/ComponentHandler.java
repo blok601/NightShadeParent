@@ -44,6 +44,7 @@ public class ComponentHandler {
         addComponent(new ShearsComponent(gameManager));
         addComponent(new SportsmanshipComponent());
         addComponent(new StripminingComponent());
+        addComponent(new StrCompentent());
 
         this.components.sort(Comparator.comparing(Component::getName));
     }
