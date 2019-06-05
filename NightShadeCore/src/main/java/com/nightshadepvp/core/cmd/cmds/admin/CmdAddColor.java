@@ -22,7 +22,7 @@ public class CmdAddColor extends NightShadeCoreCommand {
         this.addParameter(TypeNSPlayer.get(), "player");
         this.addParameter(TypePlayerColor.get(), "color");
 
-        this.addRequirements(ReqRankHasAtLeast.get(Rank.ADMIN));
+        this.addRequirements(ReqRankHasAtLeast.get(Rank.SENIOR));
     }
 
     @Override

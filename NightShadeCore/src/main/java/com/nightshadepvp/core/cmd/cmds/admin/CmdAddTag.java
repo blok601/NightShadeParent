@@ -22,7 +22,7 @@ public class CmdAddTag extends NightShadeCoreCommand {
         this.addParameter(TypeNSPlayer.get(), "player");
         this.addParameter(TypePlayerTag.get(), "tag");
 
-        this.addRequirements(ReqRankHasAtLeast.get(Rank.ADMIN));
+        this.addRequirements(ReqRankHasAtLeast.get(Rank.SENIOR));
     }
 
     @Override
