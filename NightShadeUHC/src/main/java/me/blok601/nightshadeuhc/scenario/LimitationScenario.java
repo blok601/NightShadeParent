@@ -44,6 +44,8 @@ public class LimitationScenario extends Scenario{
         Location loc = e.getBlock().getLocation();
 
         if (b.getType() == Material.DIAMOND) {
+            p.sendMessage(diamonds.get(p).toString());
+
             if (diamonds.containsKey(e.getPlayer())) {
                 if (diamonds.get(e.getPlayer()) >= 16) {
                     p.sendMessage(ChatUtils.message("&cYou cannot mine any more diamonds!"));
