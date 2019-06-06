@@ -3,7 +3,6 @@ package com.nightshadepvp.core.entity.objects;
 import com.nightshadepvp.core.utils.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -16,7 +15,8 @@ public enum PlayerColor {
     BLUE(ChatColor.DARK_AQUA, new ItemBuilder(Material.PAPER).name("&3Blue").make()),
     RED(ChatColor.RED, new ItemBuilder(Material.PAPER).name("&cRed").make()),
     GOLD(ChatColor.GOLD, new ItemBuilder(Material.PAPER).name("&6Gold").make()),
-    GREEN(ChatColor.GREEN, new ItemBuilder(Material.PAPER).name("&2Green").make());
+    GREEN(ChatColor.GREEN, new ItemBuilder(Material.PAPER).name("&2Green").make()),
+    AQUA(ChatColor.AQUA, new ItemBuilder(Material.PAPER).name("&bAqua").make());
 
     private ChatColor color;
     private ItemStack stack;

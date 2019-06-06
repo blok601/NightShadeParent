@@ -3,7 +3,6 @@ package me.blok601.nightshadeuhc.scenario;
 import me.blok601.nightshadeuhc.event.GameStartEvent;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -13,14 +12,15 @@ import org.bukkit.event.block.BlockBreakEvent;
 import java.util.HashMap;
 
 public class LimitationScenario extends Scenario{
-
-    public LimitationScenario() {
-        super("Limitations", "You can only mine 16 Diamonds, 32 Gold, and 64 Iron the entire game.", new ItemBuilder(Material.COBBLESTONE).name("Limitations").make());
-    }
     HashMap<Player, Integer> diamonds = new HashMap<>();
     HashMap<Player, Integer> gold = new HashMap<>();
 
     HashMap<Player, Integer> iron = new HashMap<>();
+
+    public LimitationScenario() {
+        super("Limitations", "You can only mine 16 Diamonds, 32 Gold, and 64 Iron the entire game.", new ItemBuilder(Material.COBBLESTONE).name("Limitations").make());
+    }
+
 
 
     @EventHandler
@@ -41,10 +41,8 @@ public class LimitationScenario extends Scenario{
 
         Block b = e.getBlock();
         Player p = e.getPlayer();
-        Location loc = e.getBlock().getLocation();
 
-        if (b.getType() == Material.DIAMOND) {
-            p.sendMessage(diamonds.get(p).toString());
+        if (b.getType() == Material.DIAMOND_ORE) {
 
             if (diamonds.containsKey(e.getPlayer())) {
                 if (diamonds.get(e.getPlayer()) >= 16) {
