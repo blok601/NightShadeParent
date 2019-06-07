@@ -10,12 +10,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 public class LimitationScenario extends Scenario{
-    HashMap<Player, Integer> diamonds = new HashMap<>();
-    HashMap<Player, Integer> gold = new HashMap<>();
+    HashMap<UUID, Integer> diamonds = new HashMap<>();
+    HashMap<UUID, Integer> gold = new HashMap<>();
 
-    HashMap<Player, Integer> iron = new HashMap<>();
+    HashMap<UUID, Integer> iron = new HashMap<>();
 
     public LimitationScenario() {
         super("Limitations", "You can only mine 16 Diamonds, 32 Gold, and 64 Iron the entire game.", new ItemBuilder(Material.COBBLESTONE).name("Limitations").make());
@@ -51,12 +52,12 @@ public class LimitationScenario extends Scenario{
                     e.getBlock().setType(Material.AIR);
                     return;
                 }
-                diamonds.put(p, diamonds.get(p) + 1);
+                diamonds.put(p.getUniqueId(), diamonds.get(p.getUniqueId()) + 1);
                 return;
 
             }
             else {
-                diamonds.put(p, 1);
+                diamonds.put(p.getUniqueId(), 1);
                 return;
             }
         }
@@ -68,12 +69,12 @@ public class LimitationScenario extends Scenario{
                     e.getBlock().setType(Material.AIR);
                     return;
                 }
-                gold.put(p, gold.get(p) + 1);
+                gold.put(p.getUniqueId(), gold.get(p.getUniqueId()) + 1);
                 return;
 
             }
             else {
-                gold.put(p, 1);
+                gold.put(p.getUniqueId(), 1);
                 return;
             }
         }
@@ -85,10 +86,10 @@ public class LimitationScenario extends Scenario{
                     e.getBlock().setType(Material.AIR);
                     return;
                 }
-                iron.put(p, iron.get(p) + 1);
+                iron.put(p.getUniqueId(), iron.get(p.getUniqueId()) + 1);
                 return;
             }
-            iron.put(p, 1);
+            iron.put(p.getUniqueId(), 1);
             return;
         }
 

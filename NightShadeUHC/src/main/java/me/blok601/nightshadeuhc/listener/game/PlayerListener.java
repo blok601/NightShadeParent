@@ -327,9 +327,7 @@ public class PlayerListener implements Listener {
             Player p = e.getPlayer();
             if(b.getType() == Material.AIR) return;
 
-            if (b.getType().toString().contains("FENCE")) {
-                e.setCancelled(true);
-            }
+
 
             BlockState state = b.getState();
             if (state instanceof org.bukkit.material.Skull) { //this test if b is a skull
