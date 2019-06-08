@@ -1,14 +1,15 @@
 package me.blok601.nightshadeuhc.scenario.cmd;
 
 import com.nightshadepvp.core.Rank;
-import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.command.UHCCommand;
-import me.blok601.nightshadeuhc.scenario.ScenarioManager;
-import me.blok601.nightshadeuhc.scenario.TeamInventoryScenario;
+import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.entity.object.Team;
 import me.blok601.nightshadeuhc.manager.TeamManager;
+import me.blok601.nightshadeuhc.scenario.ScenarioManager;
+import me.blok601.nightshadeuhc.scenario.TeamInventoryScenario;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -43,6 +44,10 @@ public class TeamInventoryCommand implements UHCCommand {
 
         if(!scenarioManager.getScen("Team Inventory").isEnabled()){
             p.sendMessage(ChatUtils.message("&cTeam Inventory isn't enabled!"));
+            return;
+        }
+        if (p.getGameMode() == GameMode.CREATIVE) {
+            p.sendMessage(ChatUtils.message("&cYou cannot open Team Inventory While in creative mode!"));
             return;
         }
 
