@@ -3,12 +3,8 @@ package me.blok601.nightshadeuhc.scenario;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -72,30 +68,30 @@ public class CutCleanScenario extends Scenario{
 
         if (b.getType() == Material.COAL_ORE) {
             if (Math.random() * 10 + 1 >= 6) {
-                p.giveExp(2);
-                p.playSound(p.getLocation(), Sound.ORB_PICKUP, 2F, 1F);
+                ExperienceOrb orb = e.getPlayer().getWorld().spawn(loc, ExperienceOrb.class);
+                orb.setExperience(2);
 
 
             }
         }
+        if (b.getType() == Material.REDSTONE_ORE || b.getType() == Material.GLOWING_REDSTONE_ORE) {
+            ExperienceOrb orb = e.getPlayer().getWorld().spawn(loc, ExperienceOrb.class);
+            orb.setExperience(7);
+
+        }
         if (!isEnabled()) return;
 
         if (b.getType() == Material.GOLD_ORE) {
-            p.giveExp(3);
-            p.playSound(p.getLocation(), Sound.ORB_PICKUP, 2F, 1F);
+            ExperienceOrb orb = e.getPlayer().getWorld().spawn(loc, ExperienceOrb.class);
+            orb.setExperience(2);
 
 
         }
 
-        if (b.getType() == Material.REDSTONE_ORE) {
-            p.giveExp(7);
-            p.playSound(p.getLocation(), Sound.ORB_PICKUP, 2F, 1F);
-
-        }
 
         if (b.getType() == Material.IRON_ORE) {
-            p.giveExp(2);
-            p.playSound(p.getLocation(), Sound.ORB_PICKUP, 2F, 1F);
+            ExperienceOrb orb = e.getPlayer().getWorld().spawn(loc, ExperienceOrb.class);
+            orb.setExperience(2);
 
 
         }
