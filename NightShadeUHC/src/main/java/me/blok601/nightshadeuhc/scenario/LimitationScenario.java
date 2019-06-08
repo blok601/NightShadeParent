@@ -45,8 +45,8 @@ public class LimitationScenario extends Scenario{
 
         if (b.getType() == Material.DIAMOND_ORE) {
 
-            if (diamonds.containsKey(e.getPlayer())) {
-                if (diamonds.get(e.getPlayer()) >= 16) {
+            if (diamonds.containsKey(e.getPlayer().getUniqueId())) {
+                if (diamonds.get(e.getPlayer().getUniqueId()) >= 16) {
                     p.sendMessage(ChatUtils.message("&cYou cannot mine any more diamonds!"));
                     e.setCancelled(true);
                     e.getBlock().setType(Material.AIR);
@@ -62,8 +62,8 @@ public class LimitationScenario extends Scenario{
             }
         }
         if (b.getType() == Material.GOLD_ORE) {
-            if (gold.containsKey(e.getPlayer())) {
-                if (gold.get(e.getPlayer()) >= 32) {
+            if (gold.containsKey(e.getPlayer().getUniqueId())) {
+                if (gold.get(e.getPlayer().getUniqueId()) >= 32) {
                     p.sendMessage(ChatUtils.message("&cYou cannot mine any more gold!"));
                     e.setCancelled(true);
                     e.getBlock().setType(Material.AIR);
@@ -79,8 +79,8 @@ public class LimitationScenario extends Scenario{
             }
         }
         if (b.getType() == Material.IRON_ORE) {
-            if (iron.containsKey(e.getPlayer())) {
-                if (iron.get(e.getPlayer()) >= 64) {
+            if (iron.containsKey(e.getPlayer().getUniqueId())) {
+                if (iron.get(e.getPlayer().getUniqueId()) >= 64) {
                     p.sendMessage(ChatUtils.message("&cYou cannot mine any more iron!"));
                     e.setCancelled(true);
                     e.getBlock().setType(Material.AIR);
