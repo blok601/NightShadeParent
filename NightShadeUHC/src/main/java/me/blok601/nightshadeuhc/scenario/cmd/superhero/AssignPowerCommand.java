@@ -54,7 +54,7 @@ public class AssignPowerCommand implements UHCCommand{
 
         if (args[0].equalsIgnoreCase("*")) {
 
-            for (Player target : Bukkit.getOnlinePlayers()) {
+            for (Player target : Bukkit.getServer().getOnlinePlayers()) {
                 if (SuperheroesScenario.powers.containsKey(target.getUniqueId())) {
                     return;
                 }

@@ -153,8 +153,6 @@ public class SpectatorListener implements Listener {
         }
 
         Rank rank = NSPlayer.get(p).getRank();
-        if (rank.isDonorRank(rank)) {
-
             if (e.getTo().getY() < 40) {
                 e.setTo(e.getFrom());
                 p.sendMessage(ChatUtils.message("&cYou can not go this low with your current rank!"));
@@ -182,6 +180,5 @@ public class SpectatorListener implements Listener {
                     return;
                 }
             }
-        }
     }
 }
