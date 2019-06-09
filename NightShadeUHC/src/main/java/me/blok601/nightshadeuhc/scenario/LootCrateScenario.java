@@ -5,6 +5,7 @@ import me.blok601.nightshadeuhc.event.GameStartEvent;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -88,7 +89,13 @@ public class LootCrateScenario extends Scenario{
                     timer = 600;
                     for (Player player : Bukkit.getOnlinePlayers()){
                         Random r = new Random();
-                        player.getInventory().addItem(chests.get(r.nextInt(chests.size())));
+                        if (player.getInventory().firstEmpty() == -1) {
+                            Location loc = player.getLocation();
+                            player.getWorld().dropItem(loc, chests.get(r.nextInt(chests.size())));
+                        }
+                        else {
+                            player.getInventory().addItem(chests.get(r.nextInt(chests.size())));
+                        }
                         player.sendMessage(ChatUtils.format(getPrefix() + "&eYou have been given your lootcrate!"));
                     }
                 }
