@@ -76,7 +76,7 @@ public class CutCleanScenario extends Scenario{
         }
         if (b.getType() == Material.REDSTONE_ORE || b.getType() == Material.GLOWING_REDSTONE_ORE) {
             ExperienceOrb orb = e.getPlayer().getWorld().spawn(loc, ExperienceOrb.class);
-            orb.setExperience(4);
+            orb.setExperience(3);
 
         }
         if (!isEnabled()) return;
