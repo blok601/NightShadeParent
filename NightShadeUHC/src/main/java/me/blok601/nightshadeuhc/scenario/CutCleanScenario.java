@@ -56,6 +56,8 @@ public class CutCleanScenario extends Scenario{
 
     /*
     Fucking ass cunt dick
+
+    XP fixes
      */
 
     @EventHandler
@@ -75,6 +77,11 @@ public class CutCleanScenario extends Scenario{
             }
         }
         if (b.getType() == Material.REDSTONE_ORE || b.getType() == Material.GLOWING_REDSTONE_ORE) {
+            ExperienceOrb orb = e.getPlayer().getWorld().spawn(loc, ExperienceOrb.class);
+            orb.setExperience(2);
+
+        }
+        if (b.getType() == Material.LAPIS_ORE) {
             ExperienceOrb orb = e.getPlayer().getWorld().spawn(loc, ExperienceOrb.class);
             orb.setExperience(2);
 
