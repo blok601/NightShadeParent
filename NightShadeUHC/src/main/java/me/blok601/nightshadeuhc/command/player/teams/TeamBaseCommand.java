@@ -173,7 +173,7 @@ public class TeamBaseCommand implements UHCCommand{
                         for (UHCPlayer uhcPlayer : Iterables.filter(UHCPlayerColl.get().getAllOnline(), Predicates.not(IS_SPEC))) {
                             String color = ChatUtils.generateTeamColor();
                             player = uhcPlayer.getPlayer();
-                            if(TeamManager.getInstance().getTeam(player) == null) continue; //Already colored
+                            if(TeamManager.getInstance().getTeam(player) != null) continue; //Already colored
                             String playerString = player.getName().length() >= 13 ? player.getName().substring(0, 11) : player.getName();
                             name = "UHC" + playerString;
 
