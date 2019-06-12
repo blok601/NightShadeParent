@@ -97,12 +97,14 @@ public class ArenaListener implements Listener {
                     shooter.getArenaSession().setBowAttempts(shooter.getArenaSession().getBowAttempts() + 1);
                 }
             }
+        } else {
+            UHCPlayer uhcPlayer = UHCPlayer.get(e.getDamager());
+            if (uhcPlayer.isInArena()) {
+                uhcPlayer.getArenaSession().setSwordHits(uhcPlayer.getArenaSession().getSwordHits() + 1);
+            }
         }
 
-        UHCPlayer uhcPlayer = UHCPlayer.get(e.getDamager());
-        if (uhcPlayer.isInArena()) {
-            uhcPlayer.getArenaSession().setSwordHits(uhcPlayer.getArenaSession().getSwordHits() + 1);
-        }
+
     }
 
     @EventHandler

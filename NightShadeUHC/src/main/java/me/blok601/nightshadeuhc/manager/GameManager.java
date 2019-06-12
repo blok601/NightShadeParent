@@ -97,6 +97,7 @@ public class GameManager {
     private World netherWorld = null;
     @Getter
     private HashSet<UUID> toCancel = new HashSet<>();
+    public ShowPlayerTask showPlayerTask;
 
 
 

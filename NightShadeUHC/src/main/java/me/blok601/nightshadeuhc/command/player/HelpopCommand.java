@@ -72,7 +72,7 @@ public class HelpopCommand implements UHCCommand{
 				String reason = message.toString().trim();
 
 
-				Bukkit.getOnlinePlayers().stream().filter(o -> NSPlayer.get(o.getUniqueId()).hasRank(Rank.TRIAL)).filter(o -> UHCPlayer.get(o.getUniqueId()).isReceiveHelpop()).forEach(o -> o.sendMessage(ChatColor.DARK_AQUA + "[HelpOP] "+  p.getName() + ": "+ ChatColor.YELLOW + reason));
+				Bukkit.getOnlinePlayers().stream().filter(o -> NSPlayer.get(o.getUniqueId()).hasRank(Rank.TRIAL)).filter(o -> UHCPlayer.get(o.getUniqueId()).isReceiveHelpop()).forEach(o -> o.sendMessage(ChatUtils.format( "&8[&cHelpOP&8] &c"+  p.getName() + ": "+ ChatColor.YELLOW + reason)));
                 this.helpopCooldown.add(p.getUniqueId());
                 new BukkitRunnable(){
                     @Override

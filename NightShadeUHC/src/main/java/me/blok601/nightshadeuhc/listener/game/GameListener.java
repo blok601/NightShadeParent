@@ -16,6 +16,7 @@ import me.blok601.nightshadeuhc.scenario.interfaces.StarterItems;
 import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
 import me.blok601.nightshadeuhc.stat.CachedGame;
 import me.blok601.nightshadeuhc.stat.handler.StatsHandler;
+import me.blok601.nightshadeuhc.task.ShowPlayerTask;
 import me.blok601.nightshadeuhc.task.WorldBorderTask;
 import me.blok601.nightshadeuhc.util.ActionBarUtil;
 import me.blok601.nightshadeuhc.util.ChatUtils;
@@ -45,6 +46,7 @@ public class GameListener implements Listener {
     private ScenarioManager scenarioManager;
     private ComponentHandler componentHandler;
 
+
     public GameListener(GameManager gameManager, ScenarioManager scenarioManager, ComponentHandler componentHandler) {
         this.gameManager = gameManager;
         this.scenarioManager = scenarioManager;
@@ -58,11 +60,17 @@ public class GameListener implements Listener {
         StatsHandler.getInstance().getCachedGame().setFill(UHCPlayerColl.get().getAllPlaying().size());
 
             Bukkit.getServer().getScheduler().runTaskAsynchronously(UHC.get(), () -> StatsHandler.getInstance().getCachedGame().setMatchID(UHC.get().getGameCollection().count() + 1));
-        //}
+        ShowPlayerTask showPlayerTask = new ShowPlayerTask(UHC.get());
+        showPlayerTask.runTaskTimer(UHC.get(), 0L, 2400);
+        showPlayerTask.setRunning(true);
+        this.gameManager.showPlayerTask = showPlayerTask;
     }
 
     @EventHandler
     public void onEnd(GameEndEvent e) {
+        this.gameManager.showPlayerTask.cancel();
+        this.gameManager.showPlayerTask.setRunning(false);
+        this.gameManager.showPlayerTask = null;
         Bukkit.getServer().getScheduler().runTaskAsynchronously(UHC.get(), () -> {
             HashMap<String, Integer> winnerKills = new HashMap<>();
             CachedGame cachedGame = StatsHandler.getInstance().getCachedGame();
