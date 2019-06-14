@@ -32,11 +32,15 @@ public class ShowPlayerTask extends BukkitRunnable {
                 uhcPlayer = UHCPlayer.get(otherPlayers);
                 if (uhcPlayer.isSpectator()) continue;
 
-                player.hidePlayer(otherPlayers);
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        player.showPlayer(otherPlayers);
+                        try {
+                            player.showPlayer(otherPlayers);
+                        }
+                        catch (Exception e) {
+                            //do nothing
+                        }
                     }
                 }.runTaskLater(plugin, 10);
 
