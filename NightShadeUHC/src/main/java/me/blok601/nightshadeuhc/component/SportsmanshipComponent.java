@@ -26,9 +26,9 @@ public class SportsmanshipComponent extends Component {
         UHCPlayer uhcPlayer = UHCPlayer.get(p);
         String message = event.getMessage();
         if (uhcPlayer.getPlayerStatus() == PlayerStatus.DEAD) {
-            if (!message.equalsIgnoreCase("gf") || !message.equalsIgnoreCase("gg")) {
+            if (!message.equalsIgnoreCase("gg")) {
                 event.setCancelled(true);
-                p.sendMessage(ChatUtils.message("&cThe sportsmanship filter is on! You can only say gg or gf. If you would like to say anything else, use /helpop"));
+                p.sendMessage(ChatUtils.message("&cThe sportsmanship filter is on! You can only say gg. If you would like to say anything else, use /helpop"));
                 return;
             }
         }
