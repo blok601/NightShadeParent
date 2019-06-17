@@ -178,8 +178,11 @@ public class GameDeathListener implements Listener {
             //GameManager.get().getPointChanges().remove(p.getUniqueId());
             //}
 
-            if (user.hasRank(Rank.TRIAL)) { //Dragon and above can spectate the games, otherwise kick
-                //Do jack shit because this game is shit and its shit
+            if (user.hasRank(Rank.DRAGON)) { //Dragon and above can spectate the games, otherwise kick
+                p.setAllowFlight(true);
+                p.setFlying(true);
+                p.setFlySpeed(0.2F);
+                uhcPlayer.spec();
             } else {
                 p.spigot().respawn();
                 p.teleport(MConf.get().getSpawnLocation().asBukkitLocation(true));

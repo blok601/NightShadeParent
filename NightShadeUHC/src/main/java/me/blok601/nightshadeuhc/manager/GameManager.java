@@ -286,7 +286,10 @@ public class GameManager {
         UHC.get().getServer().dispatchCommand(Bukkit.getConsoleSender(), "wb " + w.getName() + " set " + size + " " + size + " 0 0");
         UHC.get().getServer().dispatchCommand(Bukkit.getConsoleSender(), "wb shape square");
         Location loc = new Location(w, 0.0D, 59.0D, 0.0D);
-        int i = 4;
+        if (Bukkit.getServer().getName().equalsIgnoreCase("UHC1")) {
+
+        }
+       int i = 4;
         while (i < 4 + 4) {
             for (int x = loc.getBlockX() - size; x <= loc.getBlockX() + size; x++) {
                 for (int y = 59; y <= 59; y++) {
@@ -294,13 +297,15 @@ public class GameManager {
                         if ((x == loc.getBlockX() - size) || (x == loc.getBlockX() + size) || (z == loc.getBlockZ() - size) || (z == loc.getBlockZ() + size)) {
                             Location loc2 = new Location(w, x, y, z);
                             loc2.setY(w.getHighestBlockYAt(loc2));
-                            loc2.getBlock().setType(Material.BEDROCK);
-                        }
+                           loc2.getBlock().setType(Material.BEDROCK);
+                       }
                     }
                 }
             }
             i++;
-        }
+       }
+
+
     }
 
     public HashSet<String> getRespawnQueue() {
