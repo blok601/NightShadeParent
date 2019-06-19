@@ -125,6 +125,7 @@ public class ScenarioManager implements UHCCommand{
         addScen(new DoubleDatesScenario());
         addScen(new SecretTeamsScenario());
         addScen(new StickyAndAfraidScenario());
+        addScen(new TripleOresScenario());
         addScen(new RottenApplesScenario());
         addScen(new StrengtheningKillScenario());
         addScen(new DependencyScenario(gameManager));
