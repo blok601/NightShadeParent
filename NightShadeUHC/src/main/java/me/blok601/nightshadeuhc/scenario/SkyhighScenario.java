@@ -52,7 +52,7 @@ public class SkyhighScenario extends Scenario implements StarterItems {
                 }
 
                 UHCPlayerColl.get().getAllPlaying().stream().filter(uhcPlayer -> PlayerUtils.inGameWorld(uhcPlayer.getPlayer())).filter(uhcPlayer -> uhcPlayer.getPlayer().getLocation().getY() < 100).forEach(uhcPlayer -> {
-                    uhcPlayer.getPlayer().damage(0.5);
+                    uhcPlayer.getPlayer().setHealth(uhcPlayer.getPlayer().getHealth() - 1);
                     uhcPlayer.msg(ChatUtils.format(getPrefix() + " &eYou have lost 0.5 hearts for being under y:100!"));
                 });
 

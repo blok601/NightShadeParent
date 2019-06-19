@@ -288,6 +288,7 @@ public class GameManager {
         Location loc = new Location(w, 0.0D, 59.0D, 0.0D);
         if (Bukkit.getPluginManager().getPlugin("ViaRewind") == null) {
             w.getWorldBorder().setCenter(loc);
+            w.getWorldBorder().setDamageAmount(0);
             w.getWorldBorder().setSize(size * 2);
 
         }
