@@ -288,24 +288,26 @@ public class GameManager {
         Location loc = new Location(w, 0.0D, 59.0D, 0.0D);
         if (Bukkit.getPluginManager().getPlugin("ViaRewind") == null) {
             w.getWorldBorder().setCenter(loc);
-            w.getWorldBorder().setSize(size);
+            w.getWorldBorder().setSize(size * 2);
 
         }
-       int i = 4;
-        while (i < 4 + 4) {
-            for (int x = loc.getBlockX() - size; x <= loc.getBlockX() + size; x++) {
-                for (int y = 59; y <= 59; y++) {
-                    for (int z = loc.getBlockZ() - size; z <= loc.getBlockZ() + size; z++) {
-                        if ((x == loc.getBlockX() - size) || (x == loc.getBlockX() + size) || (z == loc.getBlockZ() - size) || (z == loc.getBlockZ() + size)) {
-                            Location loc2 = new Location(w, x, y, z);
-                            loc2.setY(w.getHighestBlockYAt(loc2));
-                           loc2.getBlock().setType(Material.BEDROCK);
-                       }
+        else {
+            int i = 4;
+            while (i < 4 + 4) {
+                for (int x = loc.getBlockX() - size; x <= loc.getBlockX() + size; x++) {
+                    for (int y = 59; y <= 59; y++) {
+                        for (int z = loc.getBlockZ() - size; z <= loc.getBlockZ() + size; z++) {
+                            if ((x == loc.getBlockX() - size) || (x == loc.getBlockX() + size) || (z == loc.getBlockZ() - size) || (z == loc.getBlockZ() + size)) {
+                                Location loc2 = new Location(w, x, y, z);
+                                loc2.setY(w.getHighestBlockYAt(loc2));
+                                loc2.getBlock().setType(Material.BEDROCK);
+                            }
+                        }
                     }
                 }
+                i++;
             }
-            i++;
-       }
+        }
 
 
     }
