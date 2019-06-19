@@ -19,7 +19,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class FlowerPowerScenario extends Scenario {
 
 
-    private ArrayList<Material> flowerTypes = new ArrayList<>(Arrays.asList(Material.YELLOW_FLOWER, Material.DOUBLE_PLANT, Material.RED_ROSE, Material.BROWN_MUSHROOM, Material.RED_MUSHROOM));
+    private ArrayList<Material> flowerTypes = new ArrayList<>(Arrays.asList(Material.YELLOW_FLOWER, Material.DOUBLE_PLANT, Material.RED_ROSE, Material.BROWN_MUSHROOM, Material.RED_MUSHROOM, Material.DOUBLE_PLANT));
     private ArrayList<Material> blacklistedMaterials = new ArrayList<>(Arrays.asList(Material.MONSTER_EGG, Material.MONSTER_EGGS, Material.GRASS, Material.COMMAND_MINECART, Material.HOPPER_MINECART, Material.COMMAND, Material.GLOWSTONE, Material.GLOWSTONE_DUST, Material.BARRIER, Material.BEDROCK, Material.BED, Material.ENDER_PORTAL_FRAME));
 
     private ThreadLocalRandom random = ThreadLocalRandom.current();
