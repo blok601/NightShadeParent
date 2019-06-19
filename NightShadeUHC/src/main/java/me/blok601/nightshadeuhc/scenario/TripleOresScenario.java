@@ -2,6 +2,7 @@ package me.blok601.nightshadeuhc.scenario;
 
 import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Material;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -10,7 +11,7 @@ public class TripleOresScenario extends Scenario{
         super("Triple Ores", "All ores are tripled!", new ItemBuilder(Material.DIAMOND_ORE).name("&eTriple Ores").make());
     }
 
-
+    @EventHandler
     public void onMine(BlockBreakEvent e) {
         if (!isEnabled()) return;
         if (e.getBlock().getType() == Material.DIAMOND_ORE) {
