@@ -286,7 +286,7 @@ public class GameManager {
         UHC.get().getServer().dispatchCommand(Bukkit.getConsoleSender(), "wb " + w.getName() + " set " + size + " " + size + " 0 0");
         UHC.get().getServer().dispatchCommand(Bukkit.getConsoleSender(), "wb shape square");
         Location loc = new Location(w, 0.0D, 59.0D, 0.0D);
-        if (Bukkit.getServer().getName().equalsIgnoreCase("UHC1")) {
+        if (Bukkit.getPluginManager().getPlugin("ViaRewind") == null) {
             w.getWorldBorder().setCenter(loc);
             w.getWorldBorder().setSize(size);
 
