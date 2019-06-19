@@ -1,7 +1,6 @@
 package me.blok601.nightshadeuhc.scenario;
 
 import com.google.common.base.Joiner;
-import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.command.UHCCommand;
@@ -46,7 +45,7 @@ public class ScenarioManager implements UHCCommand{
         addScen(new BatsScenario(), "Bats");
         addScen(new BedBombScenario());
         addScen(new BenchBlitzScenario());
-        addScen(new BestPvEScenario(), "BPVE");
+        //addScen(new BestPvEScenario(), "BPVE");
         addScen(new BetaZombiesScenario(), "BZ");
         addScen(new BleedingSweetsScenario(), "BS");
         addScen(new BlockedScenario());
@@ -64,7 +63,7 @@ public class ScenarioManager implements UHCCommand{
         addScen(new DragonRushScenario());
         addScen(new EggsScenario());
         addScen(new EnchantedDeathScenario());
-        addScen(new EntropyScenario());
+        //addScen(new EntropyScenario());
         addScen(new EveryRoseScenario());
         addScen(new FastGetawayScenario(), "FG");
         addScen(new FeistyBoysScenario());
@@ -77,7 +76,7 @@ public class ScenarioManager implements UHCCommand{
         addScen(new GoldLessScenario());
         addScen(new GoneFishinScenario(), "GF");
         addScen(new HasteyBoysScenario(), "HB");
-        addScen(new HobbitScenario());
+        //addScen(new HobbitScenario());
         addScen(new InfiniteEnchanterScenario(), "IE");
         addScen(new KingsScenario());
         addScen(new LandMineScenario());
@@ -98,8 +97,8 @@ public class ScenarioManager implements UHCCommand{
         addScen(new Scenario("Rush", "The game progresses quicker", new  ItemStack(Material.COMPASS, 1)));
         addScen(new SkycleanScenario());
         addScen(new SkyhighScenario());
-        addScen(new SlaveMarketScenario(Core.get()));
-        addScen(new SlutCleanScenario(), "SC");
+        //addScen(new SlaveMarketScenario(Core.get()));
+        //addScen(new SlutCleanScenario(), "SC");
         addScen(new SoupScenario());
         addScen(new SoupPlusScenario());
         addScen(new SurpriseBombScenario());
@@ -121,8 +120,8 @@ public class ScenarioManager implements UHCCommand{
         //addScen(new VengefulSpiritsScenario(), "VS");
         addScen(new MolesScenario());
         addScen(new GoldenRetrieverScenario());
-        addScen(new AnonymousScenario(), "Anon"); //Put this at bottom to test alphabetical order
-        addScen(new DoubleDatesScenario());
+        //addScen(new AnonymousScenario(), "Anon"); //Put this at bottom to test alphabetical order
+        //addScen(new DoubleDatesScenario());
         addScen(new SecretTeamsScenario());
         addScen(new StickyAndAfraidScenario());
         addScen(new RottenApplesScenario());
