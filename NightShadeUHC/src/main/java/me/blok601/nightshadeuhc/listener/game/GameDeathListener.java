@@ -178,7 +178,7 @@ public class GameDeathListener implements Listener {
             //GameManager.get().getPointChanges().remove(p.getUniqueId());
             //}
 
-            if (user.hasRank(Rank.DRAGON)) { //Dragon and above can spectate the games, otherwise kick
+            if (user.hasRank(Rank.TRIAL)) { //Dragon and above can spectate the games, otherwise kick
                 p.setAllowFlight(true);
                 p.setFlying(true);
                 p.setFlySpeed(0.2F);
@@ -323,7 +323,7 @@ public class GameDeathListener implements Listener {
         //}
 
 
-        if (user.hasRank(Rank.YOUTUBE)) { //YouTube and above can spectate the games, otherwise kick
+        if (user.hasRank(Rank.TRIAL)) { //YouTube and above can spectate the games, otherwise kick
             p.setAllowFlight(true);
             p.setFlying(true);
             p.setFlySpeed(0.2F);
