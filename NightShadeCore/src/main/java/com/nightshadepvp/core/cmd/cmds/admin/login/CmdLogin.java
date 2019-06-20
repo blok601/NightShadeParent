@@ -45,7 +45,7 @@ public class CmdLogin extends NightShadeCoreCommand implements Encrypter {
         }
 
         //Log them in
-        if (!password.equals(new String(decrypt(password.getBytes())))) {
+        if (!password.equals(new String(decrypt(nsPlayer.getAdminPassword())))) {
             nsPlayer.msg(ChatUtils.message("&cIncorrect Password!"));
             player.playSound(player.getLocation(), Sound.ANVIL_BREAK, 0.5F, 0.5F);
             return;
