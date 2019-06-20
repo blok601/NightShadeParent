@@ -216,6 +216,7 @@ public class StaffListener implements Listener {
         if(uhcPlayer.isStaffMode()) {
             ItemStack item = p.getItemInHand();
             if (item.getType() == Material.BOOK) {
+                System.out.println("[INVENTORY SEE] " + uhcPlayer.getPlayer().getName() + " Has Opened the inventory of " + e.getRightClicked().getName());
                 Inventory inv = Bukkit.createInventory(null, 54, ChatUtils.format("&6" + target.getName() + "'s Inventory"));
 
                 for (ItemStack stack : target.getInventory()) {
