@@ -41,7 +41,7 @@ public class CmdSetPassword extends NightShadeCoreCommand implements Encrypter {
             return;
         }
 
-        if (nsPlayer.getAdminPassword().length != 0 || nsPlayer.getAdminPassword() != null) {
+        if (nsPlayer.getAdminPassword() != null) {
             nsPlayer.msg(ChatUtils.message("&cYou already have a password! Use /newpassword to change your password."));
             return;
         }
