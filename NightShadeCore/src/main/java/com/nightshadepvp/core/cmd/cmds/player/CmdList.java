@@ -67,11 +67,11 @@ public class CmdList extends NightShadeCoreCommand {
         ChatUtils.sortCollections(donors, players, staff, admin, media);
 
         player.msg(ChatUtils.format("&f&m--------------------------------------------"));
-        player.msg(ChatUtils.format("&5Players &7(&b" + players.size() + "&7)&f: " + Joiner.on("&7,").join(players)));
-        player.msg(ChatUtils.format("&5Donors &7(&b" + donors.size() + "&7)&f: " + Joiner.on("&7,").join(donors)));
-        player.msg(ChatUtils.format("&5Media &7(&b" + media.size() + "&7)&f: " + Joiner.on("&7,").join(media)));
-        player.msg(ChatUtils.format("&5Staff &7(&b" + staff.size() + "&7)&f: " + Joiner.on("&7,").join(staff)));
-        player.msg(ChatUtils.format("&5Admins &7(&b" + admin.size() + "&7)&f: " + Joiner.on("&7,").join(admin)));
+        player.msg(ChatUtils.format("&5Players &7(&b" + players.size() + "&7)&f: " + Joiner.on("&7, ").join(players)));
+        player.msg(ChatUtils.format("&5Donors &7(&b" + donors.size() + "&7)&f: " + Joiner.on("&7, ").join(donors)));
+        player.msg(ChatUtils.format("&5Media &7(&b" + media.size() + "&7)&f: " + Joiner.on("&7, ").join(media)));
+        player.msg(ChatUtils.format("&5Staff &7(&b" + staff.size() + "&7)&f: " + Joiner.on("&7, ").join(staff)));
+        player.msg(ChatUtils.format("&5Admins &7(&b" + admin.size() + "&7)&f: " + Joiner.on("&7, ").join(admin)));
         player.msg(ChatUtils.format("&f&m--------------------------------------------"));
 
     }

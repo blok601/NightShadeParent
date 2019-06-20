@@ -40,6 +40,8 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
 
     private long discordID = -1;
 
+    private byte[] adminPassword = new byte[0];
+
     private transient boolean frozen = false;
     private transient boolean receivingPMs = true;
     private transient NSPlayer lastMessaged = null;
@@ -59,6 +61,8 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
     private transient boolean receivingStaffChat = true;
     private transient int toggleSneakVL = 0;
     private transient boolean receivingToggleSneak = true;
+    private transient boolean loggedIn = false;
+
 
     @Override
     public NSPlayer load(NSPlayer that) {
@@ -82,6 +86,8 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
         this.setMessageSounds(that.messageSounds);
 
         this.setSpectatingTime(that.spectatingTime);
+        this.setAdminPassword(that.adminPassword);
+
 
         return this;
     }
@@ -312,5 +318,21 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
 
     public void setSpectatingTime(int spectatingTime) {
         this.spectatingTime = spectatingTime;
+    }
+
+    public byte[] getAdminPassword() {
+        return adminPassword;
+    }
+
+    public void setAdminPassword(byte[] adminPassword) {
+        this.adminPassword = adminPassword;
+    }
+
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
     }
 }

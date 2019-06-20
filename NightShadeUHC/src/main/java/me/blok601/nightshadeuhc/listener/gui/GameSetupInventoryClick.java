@@ -329,7 +329,7 @@ public class GameSetupInventoryClick implements Listener {
             } else if (slot == 14) {
                 new NetherGUI(p);
             } else if (slot == 18) {
-                if (PlayerUtils.getToConfirm().containsKey(p.getUniqueId())) {
+                if (com.nightshadepvp.core.utils.PlayerUtils.getToConfirm().containsKey(p.getUniqueId())) {
                     p.sendMessage(ChatUtils.message("&cYou are already in the process of deleting your worlds! Do /confirm to confirm your actions first!"));
                     return;
                 }
@@ -355,7 +355,7 @@ public class GameSetupInventoryClick implements Listener {
                 FancyMessage fancyMessage = new FancyMessage("Please confirm within 10 seconds by doing /confirm or clicking this message");
                 fancyMessage.color(ChatColor.YELLOW).command("/confirm");
                 fancyMessage.send(p);
-                PlayerUtils.getToConfirm().put(p.getUniqueId(), () -> {
+                com.nightshadepvp.core.utils.PlayerUtils.getToConfirm().put(p.getUniqueId(), () -> {
                     p.sendMessage(ChatUtils.message("&eThe worlds will now be deleted..."));
                     for (World world : toDelete) {
                         mvWorldManager.removeWorldFromConfig(world.getName());
@@ -366,7 +366,7 @@ public class GameSetupInventoryClick implements Listener {
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-                            PlayerUtils.getToConfirm().remove(p.getUniqueId());
+                            com.nightshadepvp.core.utils.PlayerUtils.getToConfirm().remove(p.getUniqueId());
                         }
                     }.runTaskLater(UHC.get(), 10 * 20);
                     p.sendMessage(ChatUtils.message("&eYour worlds have been cleared!"));
