@@ -40,7 +40,7 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
 
     private long discordID = -1;
 
-    private byte[] adminPassword = new byte[0];
+    private byte[] adminPassword = null;
 
     private transient boolean frozen = false;
     private transient boolean receivingPMs = true;
