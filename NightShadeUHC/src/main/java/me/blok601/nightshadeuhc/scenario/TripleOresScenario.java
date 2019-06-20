@@ -30,7 +30,7 @@ public class TripleOresScenario extends Scenario{
             e.getPlayer().getWorld().dropItemNaturally(e.getBlock().getLocation(), new ItemStack(Material.REDSTONE, 10));
         }
         if (e.getBlock().getType() == Material.LAPIS_ORE) {
-            e.getPlayer().getWorld().dropItemNaturally(e.getBlock().getLocation(), new ItemStack(Material.INK_SACK, 1, (short) 4));
+            e.getPlayer().getWorld().dropItemNaturally(e.getBlock().getLocation(), new ItemStack(Material.INK_SACK, 10, (short) 4));
         }
     }
 }

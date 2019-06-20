@@ -92,7 +92,7 @@ public class ScatterTask extends BukkitRunnable {
                         return;
                     } else {
                         Player p = players.get(0);
-                        ScatterUtil.scatterPlayer(world, radius, p);
+                        ScatterUtil.scatterPlayer(world, radius - 1, p);
                         UHCPlayer.get(p).setPlayerStatus(PlayerStatus.PLAYING);
                         p.setHealth(p.getMaxHealth());
                         p.setFoodLevel(10);
