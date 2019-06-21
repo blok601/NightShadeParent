@@ -34,6 +34,12 @@ public class CmdLogin extends NightShadeCoreCommand implements Encrypter {
         String password = this.readArg();
         NSPlayer nsPlayer = NSPlayer.get(sender); //Is a player
         Player player = nsPlayer.getPlayer();
+
+        if(nsPlayer.isLoggedIn()){
+            nsPlayer.msg(ChatUtils.message("&cYou are already logged in!"));
+            return;
+        }
+
         if (nsPlayer.getAdminPassword() == null || nsPlayer.getAdminPassword().length == 0) {
             nsPlayer.msg(ChatUtils.message("&cYou don't have a password! Do /setpassword to create one!"));
             return;
@@ -47,12 +53,13 @@ public class CmdLogin extends NightShadeCoreCommand implements Encrypter {
         //Log them in
         if (!password.equals(new String(decrypt(nsPlayer.getAdminPassword())))) {
             nsPlayer.msg(ChatUtils.message("&cIncorrect Password!"));
-            player.playSound(player.getLocation(), Sound.ANVIL_BREAK, 0.5F, 0.5F);
+            player.playSound(player.getLocation(), Sound.NOTE_BASS, 0.5F, 0.5F);
             return;
         }
 
         //It was good
         nsPlayer.setLoggedIn(true);
+        player.playSound(player.getLocation(), Sound.LEVEL_UP, 0.5F, 0.5f);
         nsPlayer.msg(ChatUtils.format("&5&m---------------------------------"));
         nsPlayer.msg(ChatUtils.message("&bYou are logged in, &r" + nsPlayer.getName()));
         nsPlayer.msg(ChatUtils.format("&5&m---------------------------------"));

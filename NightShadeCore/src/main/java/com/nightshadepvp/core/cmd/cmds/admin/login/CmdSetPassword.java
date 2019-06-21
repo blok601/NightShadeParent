@@ -27,7 +27,7 @@ public class CmdSetPassword extends NightShadeCoreCommand implements Encrypter {
     }
 
     public CmdSetPassword() {
-        this.setAliases("setpassword", "setpass", "setlogin");
+        this.setAliases("setpassword", "setlogin");
         this.addRequirements(ReqRankHasAtLeast.get(Rank.ADMIN), RequirementIsPlayer.get());
         this.addParameter(TypeString.get(), "password");
     }

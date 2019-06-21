@@ -187,6 +187,7 @@ public class EnginePlayer extends Engine {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
+
         if (!Core.get().getLoginTasks().containsKey(player.getUniqueId())) {
             return;
         }
