@@ -58,7 +58,14 @@ public class SuperheroesScenario extends Scenario {
                 uhcPlayer.msg(ChatUtils.format(getPrefix() + "&eYour super power is: &3" + type.getName()));
             });
         }
+    }
 
+    @Override
+    public void onToggle(boolean newState, Player toggler) {
+        if (newState) return;
+
+        powers.clear();
+        teamPowers.clear();
     }
 
     public enum SuperHeroType{
