@@ -151,7 +151,7 @@ public class InvClick implements Listener {
                 FancyMessage fancyMessage = new FancyMessage("Please confirm within 10 seconds by doing /confirm or clicking this message");
                 fancyMessage.color(ChatColor.YELLOW).command("/confirm");
                 fancyMessage.send(p);
-                PlayerUtils.getToConfirm().put(p.getUniqueId(), () -> {
+                com.nightshadepvp.core.utils.PlayerUtils.getToConfirm().put(p.getUniqueId(), () -> {
                     targetUHCPlayer.resetStats();
                     p.sendMessage(ChatUtils.message("&b" + targetUHCPlayer.getName() + "'s &estats have been cleared!"));
                 });
@@ -159,7 +159,7 @@ public class InvClick implements Listener {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        PlayerUtils.getToConfirm().remove(p.getUniqueId());
+                        com.nightshadepvp.core.utils.PlayerUtils.getToConfirm().remove(p.getUniqueId());
                     }
                 }.runTaskLater(uhc, 20 * 10);
 
