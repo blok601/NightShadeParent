@@ -34,7 +34,7 @@ public class CmdCoins extends NightShadeCoreCommand {
             return;
         }
         nsPlayer.msg(ChatUtils.format("&5&m--------------------------------------"));
-        nsPlayer.msg(ChatUtils.message("&e" + target.getName() + "'s Balance: &b" + nsPlayer.getCoins() + " &ecoins"));
+        nsPlayer.msg(ChatUtils.message("&e" + target.getName() + "'s Balance: &b" + target.getCoins() + " &bcoins"));
         nsPlayer.msg(ChatUtils.format("&5&m--------------------------------------"));
     }
 }

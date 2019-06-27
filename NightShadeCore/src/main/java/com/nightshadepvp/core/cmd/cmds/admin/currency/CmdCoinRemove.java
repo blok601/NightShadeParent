@@ -32,6 +32,12 @@ public class CmdCoinRemove extends NightShadeCoreCommand {
             return;
         }
 
+        if (target.getCoins() < change) {
+            nsPlayer.msg(ChatUtils.message("&cA player's balance can not be set to less than 0!"));
+            nsPlayer.msg(ChatUtils.message("&cTo reset &b" + target.getName() + "'s balance &edo /coin set " + target.getName() + " 0"));
+            return;
+        }
+
         target.alterCoins(-change);
         nsPlayer.msg(ChatUtils.format("&5&m--------------------------------------"));
         nsPlayer.msg(ChatUtils.message("&eYou have removed &b" + change + " coins &efrom &b" + target.getName() + "'s &ebalance"));
