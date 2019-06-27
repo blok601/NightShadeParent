@@ -1,6 +1,8 @@
 package me.blok601.nightshadeuhc.listener.gui;
 
 import com.google.common.base.Joiner;
+import com.google.gson.JsonObject;
+import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.nightshadepvp.core.fanciful.FancyMessage;
 import com.onarandombox.MultiverseCore.api.MVWorldManager;
@@ -22,7 +24,10 @@ import me.blok601.nightshadeuhc.scenario.Scenario;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.task.GameCountdownTask;
 import me.blok601.nightshadeuhc.task.PregenTask;
-import me.blok601.nightshadeuhc.util.*;
+import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.util.ItemBuilder;
+import me.blok601.nightshadeuhc.util.PagedInventory;
+import me.blok601.nightshadeuhc.util.Util;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -32,6 +37,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import redis.clients.jedis.Jedis;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -111,7 +117,7 @@ public class GameSetupInventoryClick implements Listener {
                 new ComponentGUI(p, componentHandler);
             } else if (slot == 8) {
                 new TimerGUI(p);
-            } else if (slot == 13) {
+            } else if (slot == 12) {
                 p.closeInventory();
                 p.sendMessage(ChatUtils.message("&eThe game will start in 3 minutes..."));
                 p.sendMessage(ChatUtils.message("&eDo /cancelgame at any time within those 3 minutes to cancel the start timer!"));
@@ -120,6 +126,40 @@ public class GameSetupInventoryClick implements Listener {
                 gameManager.setGameCountdownTask(gameCountdownTask);
                 GameState.setState(GameState.PRE_SCATTER);
                 p.chat("/claimhost");
+            } else if (slot == 14) {
+                //Post to Discord
+                //Access Jedis
+
+                Jedis jedis = Core.get().getJedis();
+
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        JsonObject jsonObject = new JsonObject();
+                        jsonObject.addProperty("host", gameManager.getHost().getName());
+                        //jsonObject.addProperty("time");
+                        StringBuilder stringBuilder = new StringBuilder();
+                        int index = 0;
+                        int last = scenarioManager.getEnabledScenarios().size() - 1;
+                        for (Scenario scenario : scenarioManager.getEnabledScenarios()) {
+                            stringBuilder.append(scenario.getName()).append(index == last ? "" : ", ");
+                            index++;
+                        }
+                        jsonObject.addProperty("scenarios", stringBuilder.toString().trim());
+
+                        if (gameManager.isIsTeam()) {
+                            jsonObject.addProperty("teamsize", (TeamManager.getInstance().isRandomTeams() ? "r" : "c") + "To" + TeamManager.getInstance().getTeamSize());
+                        } else {
+                            jsonObject.addProperty("teamsize", "FFA");
+                        }
+                        jsonObject.addProperty("ip", (UHC.getServerType().equalsIgnoreCase("uhc1") ? "uhc1" : "uhc2") + ".nightshadepvp.com");
+                        jsonObject.addProperty("matchpost", Core.get().getMatchpost());
+
+                        jedis.publish("matches", jsonObject.toString());
+                    }
+                }.runTaskAsynchronously(uhc);
+                p.sendMessage(ChatUtils.message("&eYour UHC will be posted on in < 1 minute"));
+
             } else if (slot == 27) { //Starter food
                 if (clickType == ClickType.LEFT) {
                     //Increase

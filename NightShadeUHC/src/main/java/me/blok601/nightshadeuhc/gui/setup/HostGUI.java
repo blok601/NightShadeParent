@@ -48,6 +48,12 @@ public class HostGUI {
                 .name("&2&lTimers")
                 .lore("&7&o(&6&oi&7&o) &6&oClick to setup the game timers");
 
+        ItemBuilder discordPost = new ItemBuilder(new ItemStack(Material.WOOL, 1, DyeColor.PURPLE.getWoolData()))
+                .name("&5&lPost to Discord")
+                .lore("&7&o(&6&oi&7&o) &6&oClick to post the game to Discord")
+                .lore("&4Make sure that ALL settings are correct, inlcuding scenarios and host before posting your game to Discord")
+                .lore("&7Posted: " + (gameManager.isPostedToDiscord() ? "&c✗" : "&a✓"));
+
         ItemBuilder starterFood = new ItemBuilder(Material.COOKED_BEEF)
                 .name("&5&lStarter Food")
                 .lore("&7(&6i&7) &6Right click to increase by 1, left click to decrease by 1")
@@ -115,7 +121,8 @@ public class HostGUI {
         inventory.setItem(4, border.make());
         inventory.setItem(6, toggleable.make());
         inventory.setItem(8, timers.make());
-        inventory.setItem(13, start.make());
+        inventory.setItem(12, start.make());
+        inventory.setItem(14, discordPost.make());
         inventory.setItem(27, starterFood.make());
         inventory.setItem(28, newSkull.make());
         inventory.setItem(29, maxPlayers.make());
