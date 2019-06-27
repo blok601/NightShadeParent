@@ -66,6 +66,7 @@ public class SuperheroesScenario extends Scenario {
 
         powers.clear();
         teamPowers.clear();
+        toggler.sendMessage(ChatUtils.format(getPrefix() + "All powers have been cleared!"));
     }
 
     public enum SuperHeroType{

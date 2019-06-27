@@ -40,6 +40,8 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
 
     private long discordID = -1;
 
+    private int coins = 0;
+
     private byte[] adminPassword = null;
 
     private transient boolean frozen = false;
@@ -82,6 +84,7 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
         this.setUnlockedTags(that.unlockedTags);
 
         this.setDiscordID(that.discordID);
+        this.setCoins(that.coins);
 
         this.setMessageSounds(that.messageSounds);
 
@@ -108,6 +111,19 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
     public void updateRank(Rank rank) {
         this.rank = rank;
         this.changed();
+    }
+
+    public int getCoins() {
+        return coins;
+    }
+
+    public int setCoins(int coins) {
+        this.coins = coins;
+        return coins;
+    }
+
+    public int alterCoins(int change) {
+        return setCoins(this.coins + change);
     }
 
     public String getPrefix() {
