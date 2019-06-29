@@ -257,6 +257,11 @@ public class ScenarioManager implements UHCCommand{
                         return;
                     }
 
+                    if (!scenario.isEnabled()) {
+                        p.sendMessage(ChatUtils.message("&b" + scenario.getName() + "&c is not enabled!"));
+                        return;
+                    }
+
                     scenario.setEnabled(false);
                     p.sendMessage(ChatUtils.message("&cDisabled &e" + scenario.getName() +"!"));
                 }else{

@@ -114,6 +114,7 @@ public class GameManager {
     private double appleRates = 5;
     private double flintRates = 50;
     private boolean stripmining = false;
+    private boolean postedToDiscord = false;
 
     // ---------------------------------------
     //      Host GUI Game Settings END
@@ -316,5 +317,13 @@ public class GameManager {
 
     public HashSet<String> getRespawnQueue() {
         return respawnQueue;
+    }
+
+    public boolean isPostedToDiscord() {
+        return postedToDiscord;
+    }
+
+    public void setPostedToDiscord(boolean postedToDiscord) {
+        this.postedToDiscord = postedToDiscord;
     }
 }
