@@ -21,7 +21,17 @@ public class ChickenScenario extends Scenario implements StarterItems {
       return;
     }
 
-    UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> uhcPlayer.getPlayer().setHealth(1.0));
+    if (getScenarioManager().getScen("OneHundredHearts").isEnabled()) {
+      UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> uhcPlayer.getPlayer().setHealth(1.0));
+      UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> uhcPlayer.getPlayer().setMaxHealth(200D));
+
+    }
+
+    else {
+
+
+      UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> uhcPlayer.getPlayer().setHealth(1.0));
+    }
   }
 
 
