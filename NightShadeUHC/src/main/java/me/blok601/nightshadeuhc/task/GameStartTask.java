@@ -119,14 +119,13 @@ public class GameStartTask extends BukkitRunnable {
                                 for (ItemStack i : starterItems.getStarterItems()) {
                                     if (uhcPlayer.getPlayer().getInventory().firstEmpty() == -1) {
                                         Location lock = uhcPlayer.getPlayer().getLocation();
-                                        world.dropItemNaturally(lock, i);
+                                        world.dropItem(lock, i);
                                     }
                                     else {
                                         uhcPlayer.getPlayer().getInventory().addItem(i);
                                     }
                                 }
 
-                                starterItems.getStarterItems().forEach(itemStack -> uhcPlayer.getPlayer().getInventory().addItem(itemStack));
                             }
                         }
                     });
