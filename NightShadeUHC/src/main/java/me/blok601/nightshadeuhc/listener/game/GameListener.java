@@ -61,7 +61,7 @@ public class GameListener implements Listener {
 
             Bukkit.getServer().getScheduler().runTaskAsynchronously(UHC.get(), () -> StatsHandler.getInstance().getCachedGame().setMatchID(UHC.get().getGameCollection().count() + 1));
         ShowPlayerTask showPlayerTask = new ShowPlayerTask(UHC.get());
-        showPlayerTask.runTaskTimer(UHC.get(), 0L, 2400);
+        showPlayerTask.runTaskTimer(UHC.get(), 0L, 30 * 20);
         showPlayerTask.setRunning(true);
         this.gameManager.showPlayerTask = showPlayerTask;
     }
