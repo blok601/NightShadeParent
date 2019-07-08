@@ -186,7 +186,7 @@ public class GameListener implements Listener {
             return;
         }
 
-        String[] s = post.split("https://c.uhc.gg/");
+        String[] s = post.split("https://c.uhc.gg/#/post/");
         String id = s[1];
         new BukkitRunnable() {
             @Override
