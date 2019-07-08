@@ -2,6 +2,9 @@ package me.blok601.nightshadeuhc.listener.game;
 
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
+import com.nightshadepvp.core.events.MatchpostUpdateEvent;
+import kong.unirest.JsonNode;
+import kong.unirest.Unirest;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.component.ComponentHandler;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
@@ -18,10 +21,7 @@ import me.blok601.nightshadeuhc.stat.CachedGame;
 import me.blok601.nightshadeuhc.stat.handler.StatsHandler;
 import me.blok601.nightshadeuhc.task.ShowPlayerTask;
 import me.blok601.nightshadeuhc.task.WorldBorderTask;
-import me.blok601.nightshadeuhc.util.ActionBarUtil;
-import me.blok601.nightshadeuhc.util.ChatUtils;
-import me.blok601.nightshadeuhc.util.PlayerUtils;
-import me.blok601.nightshadeuhc.util.ScatterUtil;
+import me.blok601.nightshadeuhc.util.*;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -31,6 +31,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Team;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,12 +44,14 @@ import java.util.UUID;
  */
 public class GameListener implements Listener {
 
+    private UHC uhc;
     private GameManager gameManager;
     private ScenarioManager scenarioManager;
     private ComponentHandler componentHandler;
 
 
-    public GameListener(GameManager gameManager, ScenarioManager scenarioManager, ComponentHandler componentHandler) {
+    public GameListener(UHC uhc, GameManager gameManager, ScenarioManager scenarioManager, ComponentHandler componentHandler) {
+        this.uhc = uhc;
         this.gameManager = gameManager;
         this.scenarioManager = scenarioManager;
         this.componentHandler = componentHandler;
@@ -59,9 +63,9 @@ public class GameListener implements Listener {
             StatsHandler.getInstance().getCachedGame().setStart(System.currentTimeMillis());
         StatsHandler.getInstance().getCachedGame().setFill(UHCPlayerColl.get().getAllPlaying().size());
 
-            Bukkit.getServer().getScheduler().runTaskAsynchronously(UHC.get(), () -> StatsHandler.getInstance().getCachedGame().setMatchID(UHC.get().getGameCollection().count() + 1));
-        ShowPlayerTask showPlayerTask = new ShowPlayerTask(UHC.get());
-        showPlayerTask.runTaskTimer(UHC.get(), 0L, 2400);
+        Bukkit.getServer().getScheduler().runTaskAsynchronously(uhc, () -> StatsHandler.getInstance().getCachedGame().setMatchID(uhc.getGameCollection().count() + 1));
+        ShowPlayerTask showPlayerTask = new ShowPlayerTask(uhc);
+        showPlayerTask.runTaskTimer(uhc, 0L, 30 * 20);
         showPlayerTask.setRunning(true);
         this.gameManager.showPlayerTask = showPlayerTask;
     }
@@ -71,7 +75,7 @@ public class GameListener implements Listener {
         this.gameManager.showPlayerTask.cancel();
         this.gameManager.showPlayerTask.setRunning(false);
         this.gameManager.showPlayerTask = null;
-        Bukkit.getServer().getScheduler().runTaskAsynchronously(UHC.get(), () -> {
+        Bukkit.getServer().getScheduler().runTaskAsynchronously(uhc, () -> {
             HashMap<String, Integer> winnerKills = new HashMap<>();
             CachedGame cachedGame = StatsHandler.getInstance().getCachedGame();
             ArrayList<String> scenarios = new ArrayList<>();
@@ -121,7 +125,7 @@ public class GameListener implements Listener {
             document.append("endTime", cachedGame.getEnd());
             document.append("server", UHC.getServerType());
 
-            UHC.get().getGameCollection().insertOne(document);
+            uhc.getGameCollection().insertOne(document);
         });
     }
 
@@ -141,7 +145,7 @@ public class GameListener implements Listener {
                     ActionBarUtil.sendActionBarMessage(player, "§5Border shrink in " + get(WorldBorderTask.counter));
                 });
             }
-        }.runTaskTimer(UHC.get(), 0, 20);
+        }.runTaskTimer(uhc, 0, 20);
 
 
     }
@@ -176,11 +180,42 @@ public class GameListener implements Listener {
     }
 
     @EventHandler
+    public void onMatchpostUpdate(MatchpostUpdateEvent event) {
+        String post = event.getNewMatchPost();
+        if (!post.contains("https://c.uhc.gg/")) {
+            return;
+        }
+
+        String[] s = post.split("https://c.uhc.gg/");
+        String id = s[1];
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                String url = "https://hosts.uhc.gg/api/matches/" + id;
+                JsonNode jsonNode = Unirest.get(url).asJson().getBody();
+                JSONArray jsonArray = jsonNode.getArray();
+                JSONObject object = jsonArray.getJSONObject(0);
+                String[] scenarios = (String[]) object.get("scenarios");
+                String opens = object.getString("opens");
+
+                Util.staffLog("Data received from matchpost! Testing print now:");
+                Util.staffLog("Scenarios:");
+                for (String scenario : scenarios) {
+                    Util.staffLog(scenario);
+                }
+                Util.staffLog("Opens: " + opens);
+
+            }
+        }.runTaskAsynchronously(uhc);
+
+    }
+
+    @EventHandler
     public void onSpectate(PlayerStartSpectatingEvent e) {
         Player p = e.getPlayer();
 
         UHCPlayerColl.get().getAllOnlinePlayers().forEach(u -> {
-            PlayerScoreboard playerScoreboard = UHC.get().getScoreboardManager().getPlayerScoreboard(u.getPlayer());
+            PlayerScoreboard playerScoreboard = uhc.getScoreboardManager().getPlayerScoreboard(u.getPlayer());
             org.bukkit.scoreboard.Team specTeam = playerScoreboard.getBukkitScoreboard().getTeam("spec");
             if (specTeam != null) {
                 specTeam.addEntry(p.getName());
@@ -196,7 +231,7 @@ public class GameListener implements Listener {
     public void onStopSpectate(PlayerStopSpectatingEvent e) {
         Player p = e.getPlayer();
         UHCPlayerColl.get().getSpectators().forEach(u -> {
-            PlayerScoreboard playerScoreboard = UHC.get().getScoreboardManager().getPlayerScoreboard(u.getPlayer());
+            PlayerScoreboard playerScoreboard = uhc.getScoreboardManager().getPlayerScoreboard(u.getPlayer());
             org.bukkit.scoreboard.Team specTeam = playerScoreboard.getBukkitScoreboard().getTeam("spec");
             if (specTeam != null) {
                 specTeam.removeEntry(p.getName());
@@ -210,7 +245,7 @@ public class GameListener implements Listener {
 
         //Now update every player's board
         UHCPlayerColl.get().getAllOnlinePlayers().forEach(uhcPlayer -> {
-            PlayerScoreboard playerScoreboard = UHC.get().getScoreboardManager().getPlayerScoreboard(uhcPlayer.getPlayer());
+            PlayerScoreboard playerScoreboard = uhc.getScoreboardManager().getPlayerScoreboard(uhcPlayer.getPlayer());
             Team newTeam;
             String name;
             String playerString = p.getName().length() >= 13 ? p.getName().substring(0, 11) : p.getName();

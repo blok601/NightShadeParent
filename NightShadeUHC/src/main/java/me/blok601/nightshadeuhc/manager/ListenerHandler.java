@@ -59,7 +59,7 @@ public class ListenerHandler {
         addListener(new SpectatorInfoListener(scenarioManager));
         addListener(new StaffListener());
 
-        addListener(new GameListener(gameManager, scenarioManager, componentHandler));
+        addListener(new GameListener(uhc, gameManager, scenarioManager, componentHandler));
         addListener(new WorldBorderListener(gameManager));
     }
 

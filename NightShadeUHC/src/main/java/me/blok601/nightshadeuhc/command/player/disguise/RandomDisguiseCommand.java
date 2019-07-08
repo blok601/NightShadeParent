@@ -1,18 +1,20 @@
 package me.blok601.nightshadeuhc.command.player.disguise;
 
-import com.earth2me.essentials.User;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
 import de.robingrether.idisguise.disguise.PlayerDisguise;
 import me.blok601.nightshadeuhc.UHC;
+import me.blok601.nightshadeuhc.command.UHCCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.util.ChatUtils;
-import me.blok601.nightshadeuhc.command.UHCCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 /**
  * Created by Blok on 7/20/2017.
@@ -40,23 +42,22 @@ public class RandomDisguiseCommand implements UHCCommand{
     @Override
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
-        User user = UHC.getEssentials().getUserMap().getUser(p.getName());
         UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
         NSPlayer u = NSPlayer.get(p.getUniqueId());
 
 
         DisguiseObject object = new DisguiseObject();
         object.setPreRank(u.getRank());
+        String name = getFullName();
 
 
              gamePlayer.setDisguised(true);
-            user.setNickname(getFullName());
-            gamePlayer.setDisguisedName(user.getNickname());
+        gamePlayer.setDisguisedName(name);
 
             object.setDisguisedName(gamePlayer.getDisguisedName());
 
-            UHC.getApi().disguise(p, new PlayerDisguise(user.getNickname()));
-            p.sendMessage(ChatUtils.message("&6Disguised as: " + user.getNickname()));
+        UHC.getApi().disguise(p, new PlayerDisguise(name));
+        p.sendMessage(ChatUtils.message("&6Disguised as: " + name));
             u.setRank(Rank.PLAYER);
             if(p.isOp()){
                 p.setOp(false);

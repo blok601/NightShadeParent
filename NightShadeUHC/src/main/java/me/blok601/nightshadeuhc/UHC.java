@@ -1,7 +1,6 @@
 package me.blok601.nightshadeuhc;
 
 import com.comphenix.protocol.ProtocolLibrary;
-import com.earth2me.essentials.Essentials;
 import com.massivecraft.massivecore.MassivePlugin;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
@@ -54,7 +53,6 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         return i;
     }
 
-    private Essentials ess;
     private DisguiseAPI api;
     private MultiverseCore multiverseCore;
 
@@ -82,7 +80,6 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
             return;
         }
 
-
         this.activateAuto();
 
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
@@ -100,8 +97,6 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         }
 
         api = getServer().getServicesManager().getRegistration(DisguiseAPI.class).getProvider();
-        ess = (Essentials) Bukkit.getServer().getPluginManager().getPlugin("Essentials");
-
         setupExtraDatabase();
 
 
@@ -257,9 +252,6 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         ProtocolLibrary.getProtocolManager().addPacketListener(new EnchantHider(this));
     }
 
-    public static Essentials getEssentials() {
-        return get().getEss();
-    }
 
     public static DisguiseAPI getApi() {
         return get().getDisguiseAPI();
@@ -267,10 +259,6 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
 
     public static MultiverseCore getMultiverseCore() {
         return get().getMultiverseCorePlugin();
-    }
-
-    public Essentials getEss() {
-        return ess;
     }
 
     public DisguiseAPI getDisguiseAPI() {

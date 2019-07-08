@@ -138,6 +138,7 @@ public class GameSetupInventoryClick implements Listener {
                         JsonObject jsonObject = new JsonObject();
                         jsonObject.addProperty("host", gameManager.getHost().getName());
                         //jsonObject.addProperty("time");
+
                         StringBuilder stringBuilder = new StringBuilder();
                         int index = 0;
                         int last = scenarioManager.getEnabledScenarios().size() - 1;
@@ -158,7 +159,7 @@ public class GameSetupInventoryClick implements Listener {
                         jedis.publish("matches", jsonObject.toString());
                     }
                 }.runTaskAsynchronously(uhc);
-                p.sendMessage(ChatUtils.message("&eYour UHC will be posted on in < 1 minute"));
+                p.sendMessage(ChatUtils.message("&eYour UHC will now be posted"));
 
             } else if (slot == 27) { //Starter food
                 if (clickType == ClickType.LEFT) {

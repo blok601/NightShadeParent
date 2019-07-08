@@ -1,10 +1,8 @@
 package me.blok601.nightshadeuhc.command.player.disguise;
 
-import com.earth2me.essentials.User;
 import com.nightshadepvp.core.entity.NSPlayer;
 import de.robingrether.idisguise.api.UndisguiseEvent;
 import de.robingrether.idisguise.disguise.DisguiseType;
-import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import org.bukkit.entity.Player;
@@ -20,7 +18,6 @@ public class Undisguise implements Listener{
     public void unDis(UndisguiseEvent e){
         Player p = e.getPlayer();
         UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
-        User user = UHC.getEssentials().getUserMap().getUser(p.getName());
         NSPlayer u = NSPlayer.get(p.getUniqueId());
 
         if(e.getDisguise().getType() == DisguiseType.PLAYER){
@@ -28,7 +25,7 @@ public class Undisguise implements Listener{
 
                 DisguiseObject object = RandomDisguiseCommand.getDis().get(p.getUniqueId());
 
-                user.setNickname("");
+
                 gamePlayer.setDisguised(false);
                 u.setRank(object.getPreRank());
                 if(object.isOp()){
