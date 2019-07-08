@@ -40,7 +40,7 @@ public class FourHorsemenScenario extends Scenario {
 
 
             }
-        }.runTaskTimer(UHC.get(), 0, 20 * 300);
+        }.runTaskTimer(UHC.get(), 20 * 300, 20 * 300);
     }
     @EventHandler
     public void onPvp(PvPEnableEvent e) {

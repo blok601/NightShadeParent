@@ -22,10 +22,7 @@ import me.blok601.nightshadeuhc.util.FreezeUtil;
 import me.blok601.nightshadeuhc.util.Util;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -119,7 +116,16 @@ public class GameStartTask extends BukkitRunnable {
                             if (scenario instanceof StarterItems) {
                                 StarterItems starterItems = (StarterItems) scenario;
 
-                                starterItems.getStarterItems().forEach(itemStack -> uhcPlayer.getPlayer().getInventory().addItem(itemStack));
+                                for (ItemStack i : starterItems.getStarterItems()) {
+                                    if (uhcPlayer.getPlayer().getInventory().firstEmpty() == -1) {
+                                        Location lock = uhcPlayer.getPlayer().getLocation();
+                                        world.dropItem(lock, i);
+                                    }
+                                    else {
+                                        uhcPlayer.getPlayer().getInventory().addItem(i);
+                                    }
+                                }
+
                             }
                         }
                     });

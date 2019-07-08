@@ -12,9 +12,10 @@ public class OneHundredHeartsScenario extends Scenario {
 
     public void onStart(GameStartEvent event) {
         if (!isEnabled()) return;
+
+        if (getScenarioManager().getScen("Chicken").isEnabled()) return;
         UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> {
             uhcPlayer.getPlayer().setMaxHealth(200D);
-            uhcPlayer.getPlayer().setHealth(200D);
         });
     }
 
