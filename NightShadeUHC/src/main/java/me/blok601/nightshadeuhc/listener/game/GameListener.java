@@ -1,10 +1,11 @@
 package me.blok601.nightshadeuhc.listener.game;
 
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.nightshadepvp.core.events.MatchpostUpdateEvent;
-import kong.unirest.JsonNode;
-import kong.unirest.Unirest;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.component.ComponentHandler;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
@@ -192,7 +193,12 @@ public class GameListener implements Listener {
             @Override
             public void run() {
                 String url = "https://hosts.uhc.gg/api/matches/" + id;
-                JsonNode jsonNode = Unirest.get(url).asJson().getBody();
+                JsonNode jsonNode = null;
+                try {
+                    jsonNode = Unirest.get(url).asJson().getBody();
+                } catch (UnirestException e) {
+                    e.printStackTrace();
+                }
                 JSONArray jsonArray = jsonNode.getArray();
                 JSONObject object = jsonArray.getJSONObject(0);
                 String[] scenarios = (String[]) object.get("scenarios");
