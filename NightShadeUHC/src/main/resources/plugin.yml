@@ -111,6 +111,8 @@ commands:
   tpworld:
   worlds:
   deleteworld:
+  giveitems:
+    aliases: starteritems
   fullbright:
     aliases: [nv, nightvision]
     description: Get night vision / full bright for caving
