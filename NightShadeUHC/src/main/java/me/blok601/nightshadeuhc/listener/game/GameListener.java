@@ -32,6 +32,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Team;
+import org.joda.time.DateTime;
+import org.joda.time.format.ISODateTimeFormat;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -202,10 +204,23 @@ public class GameListener implements Listener {
                     String opens = object.getString("opens");
 
                     Util.staffLog("Data received from matchpost! Testing print now:");
+                    ArrayList<String> scenarios = new ArrayList<>();
                     for (int i = 0; i < j.length(); i++) {
-                        Util.staffLog(j.getString(i));
+                        scenarios.add(j.getString(i));
                     }
+                    scenarios.forEach(scen -> {
+                        if (scenarioManager.getScen(scen) != null) {
+                            scenarioManager.getScen(scen).setEnabled(true);
+                            if (event.getUpdater() != null) {
+                                event.getUpdater().sendMessage(ChatUtils.message("&eEnabled &a" + scen));
+                            }
+                        }
+                    });
                     Util.staffLog("Opens: " + opens);
+                    DateTime date = ISODateTimeFormat.dateTimeParser().parseDateTime(opens);
+                    Util.staffLog("Test Date:");
+                    Util.staffLog("Date: " + date.getMonthOfYear() + "/" + date.getDayOfMonth() + "/" + date.getYear());
+                    Util.staffLog("Time: " + date.getHourOfDay() +":" + date.getMinuteOfHour() + ":" + date.getSecondOfMinute());
                 } catch (UnirestException e) {
                     e.printStackTrace();
                 }
