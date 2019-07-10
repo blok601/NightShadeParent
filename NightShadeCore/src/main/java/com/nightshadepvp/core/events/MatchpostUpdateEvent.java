@@ -1,5 +1,6 @@
 package com.nightshadepvp.core.events;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
@@ -9,9 +10,11 @@ import org.bukkit.event.HandlerList;
 public class MatchpostUpdateEvent extends Event {
 
     private String newMatchPost;
+    private Player updater;
 
-    public MatchpostUpdateEvent(String newMatchPost) {
+    public MatchpostUpdateEvent(String newMatchPost, Player updater) {
         this.newMatchPost = newMatchPost;
+        this.updater = updater;
     }
 
     public String getNewMatchPost() {
@@ -26,5 +29,9 @@ public class MatchpostUpdateEvent extends Event {
 
     public static HandlerList getHandlerList() {
         return handlerList;
+    }
+
+    public Player getUpdater() {
+        return updater;
     }
 }

@@ -34,7 +34,7 @@ public class CmdSetMatchPost extends NightShadeCoreCommand {
         String post = this.readArg();
         NSPlayer nsPlayer = NSPlayer.get(sender);
         Core.get().setMatchpost(post);
-        Bukkit.getPluginManager().callEvent(new MatchpostUpdateEvent(post));
+        Bukkit.getPluginManager().callEvent(new MatchpostUpdateEvent(post, (nsPlayer.isPlayer() ? nsPlayer.getPlayer() : null)));
         nsPlayer.msg(ChatUtils.message("&eYou have set the matchpost to&8: &3" + post));
     }
 }
