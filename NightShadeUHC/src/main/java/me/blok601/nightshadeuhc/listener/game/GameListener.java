@@ -196,20 +196,20 @@ public class GameListener implements Listener {
                 JsonNode jsonNode = null;
                 try {
                     jsonNode = Unirest.get(url).asJson().getBody();
+                    JSONArray jsonArray = jsonNode.getArray();
+                    JSONObject object = jsonArray.getJSONObject(0);
+                    JSONArray j = object.getJSONArray("scenarios");
+                    String opens = object.getString("opens");
+
+                    Util.staffLog("Data received from matchpost! Testing print now:");
+                    for (int i = 0; i < j.length(); i++) {
+                        Util.staffLog(j.getString(i));
+                    }
+                    Util.staffLog("Opens: " + opens);
                 } catch (UnirestException e) {
                     e.printStackTrace();
                 }
-                JSONArray jsonArray = jsonNode.getArray();
-                JSONObject object = jsonArray.getJSONObject(0);
-                String[] scenarios = (String[]) object.get("scenarios");
-                String opens = object.getString("opens");
 
-                Util.staffLog("Data received from matchpost! Testing print now:");
-                Util.staffLog("Scenarios:");
-                for (String scenario : scenarios) {
-                    Util.staffLog(scenario);
-                }
-                Util.staffLog("Opens: " + opens);
 
             }
         }.runTaskAsynchronously(uhc);
