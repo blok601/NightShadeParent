@@ -36,7 +36,7 @@
                         </goals>
                         <configuration>
                             <finalName>UHC</finalName>
-                            <minimizeJar>true</minimizeJar>
+                            <minimizeJar>false</minimizeJar>
                         </configuration>
                     </execution>
                 </executions>
