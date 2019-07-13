@@ -20,6 +20,7 @@ public enum Rank {
     COMET(2, "&7[&eComet&7] &e", "&e", "Comet"),
     GUARDIAN(3, "&7[&cGuardian&7] &c", "&c", "Guardian"),
     YOUTUBE(4, ChatUtils.format("&7[&eMedia&7] &e"), "&e", "YouTube"),
+    Builder(6, "&7[&dBuilder] &d", "&d", "Builder"),
     TRIAL(7, "&7[&aTrial&7] &a", "&a", "Trial"),
     STAFF(7, "&7[&bStaff&7] &b", "&b", "Staff"),
     SENIOR(8, "&7[&5Senior&7] &5", "&5", "Senior"),
