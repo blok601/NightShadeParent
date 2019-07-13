@@ -208,8 +208,11 @@ public class EndGameCommand implements UHCCommand {
                 if (gamePlayer.getGamesWon() == 4) {
                     user.setPrefix(ChatUtils.format("&8[&c★★★★&8]"));
                 }
-                if (gamePlayer.getGamesWon() >= 5) {
+                if (gamePlayer.getGamesWon() >= 5 && gamePlayer.getGamesWon() < 10) {
                     user.setPrefix(ChatUtils.format("&8[&c-=★=-&8]"));
+                }
+                if (gamePlayer.getGamesWon() >= 10) {
+                    user.setPrefix(ChatUtils.format("&8[&c-=(★)=-&8]"));
                 }
             }
             gamePlayer.changed();
