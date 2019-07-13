@@ -148,10 +148,23 @@ public class EndGameCommand implements UHCCommand {
 //                    double curr = GameManager.get().getPointChanges().get(gamePlayer.getUuid());
 //                    GameManager.get().getPointChanges().put(gamePlayer.getUuid(), curr + toAdd);
                     if (user.getRank() == Rank.PLAYER) {
-                        if (gamePlayer.getGamesWon() >= 10) {
+                        if (gamePlayer.getGamesWon() == 1) {
                             user.setPrefix(ChatUtils.format("&8[&c★&8]"));
-                        } else {
-                            user.setPrefix(ChatUtils.format("&8[&cWinner&8]"));
+                        }
+                        if (gamePlayer.getGamesWon() == 2) {
+                            user.setPrefix(ChatUtils.format("&8[&c★★&8]"));
+                        }
+                        if (gamePlayer.getGamesWon() == 3) {
+                            user.setPrefix(ChatUtils.format("&8[&c★★★&8]"));
+                        }
+                        if (gamePlayer.getGamesWon() == 4) {
+                            user.setPrefix(ChatUtils.format("&8[&c★★★★&8]"));
+                        }
+                        if (gamePlayer.getGamesWon() >= 5 && gamePlayer.getGamesWon() < 10) {
+                            user.setPrefix(ChatUtils.format("&8[&c-=★=-&8]"));
+                        }
+                        if (gamePlayer.getGamesWon() >= 10) {
+                            user.setPrefix(ChatUtils.format("&8[&c-=(★)=-&8]"));
                         }
                     }
                     gamePlayer.changed();
