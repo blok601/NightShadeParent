@@ -42,6 +42,9 @@ public class GiveItemsCommand implements UHCCommand {
                 if (scenario instanceof StarterItems) {
 
                     StarterItems starterItems = (StarterItems) scenario;
+                    if (scenario.getName().equalsIgnoreCase("Infinite Enchanter") ||scenario.getName().equalsIgnoreCase("GoneFishin") ) {
+                        player.setLevel(27000);
+                    }
 
                     //UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> PlayerUtils.giveBulkItems(uhcPlayer.getPlayer(), starterItems.getStarterItems
                     for (ItemStack stack : starterItems.getStarterItems()) {
