@@ -24,7 +24,7 @@ public class GiveItemsCommand implements UHCCommand {
     @Override
     public String[] getNames() {
         return new String[]{
-                "giveitrms"
+                "giveitems"
         };
     }
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
