@@ -6,6 +6,7 @@ import me.blok601.nightshadeuhc.event.GameStartEvent;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -37,15 +38,15 @@ public class SuperheroesScenario extends Scenario {
         if(!isEnabled()) return;
         Random random = ThreadLocalRandom.current();
         {
-            UHCPlayerColl.get().getAllPlaying().forEach(uhcPlayer -> {
+            for (Player p : Bukkit.getServer().getOnlinePlayers()) {
                 SuperHeroType type = SuperHeroType.values()[random.nextInt(SuperHeroType.values().length)];
-                if (powers.containsKey(uhcPlayer.getUuid())) {
-                    return;
+                if (powers.containsKey(p.getUniqueId())) {
+                    continue;
                 }
 
-                powers.put(uhcPlayer.getUuid(), type);
+                powers.put(p.getUniqueId(), type);
 
-                Player p = uhcPlayer.getPlayer();
+
                 if (type == SuperHeroType.HEALTH) {
                     p.setMaxHealth(40);
                     p.setHealth(40);
@@ -55,8 +56,8 @@ public class SuperheroesScenario extends Scenario {
                     }
                 }
 
-                uhcPlayer.msg(ChatUtils.format(getPrefix() + "&eYour super power is: &3" + type.getName()));
-            });
+                p.sendMessage((ChatUtils.format(getPrefix() + "&eYour super power is: &3" + type.getName())));
+            }
         }
     }
 

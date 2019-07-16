@@ -226,6 +226,7 @@ public class EndGameCommand implements UHCCommand {
                 }
                 if (gamePlayer.getGamesWon() >= 10) {
                     user.setPrefix(ChatUtils.format("&8[&c-=(★)=-&8]"));
+
                 }
             }
             gamePlayer.changed();

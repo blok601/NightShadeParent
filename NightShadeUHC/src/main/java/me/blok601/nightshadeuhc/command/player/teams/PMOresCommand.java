@@ -52,11 +52,11 @@ public class PMOresCommand implements UHCCommand {
         for (ItemStack stack : p.getInventory().getContents()) {
             if (stack == null || stack.getType() == Material.AIR) continue;
             if (stack.getType() == Material.DIAMOND_ORE || stack.getType() == Material.DIAMOND) {
-                diamonds++;
+                diamonds = diamonds + stack.getAmount();
             } else if (stack.getType() == Material.GOLD_ORE || stack.getType() == Material.GOLD_INGOT) {
-                gold++;
+                gold+=stack.getAmount();
             } else if (stack.getType() == Material.IRON_ORE || stack.getType() == Material.IRON_INGOT) {
-                iron++;
+                iron+=stack.getAmount();
             }
         }
 

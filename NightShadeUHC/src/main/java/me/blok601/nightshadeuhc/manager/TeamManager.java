@@ -9,6 +9,7 @@ import me.blok601.nightshadeuhc.entity.object.CachedColor;
 import me.blok601.nightshadeuhc.entity.object.Team;
 import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
 import me.blok601.nightshadeuhc.scoreboard.ScoreboardManager;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;

@@ -74,6 +74,7 @@ public class ScatterTask extends BukkitRunnable {
                     Bukkit.getOnlinePlayers().forEach(o -> {
                         for(PotionEffect effect: o.getActivePotionEffects()){
                             o.removePotionEffect(effect.getType());
+                            o.setMaxHealth(20);
                         }
                         o.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1));
                         o.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, Integer.MAX_VALUE, 0));
@@ -94,6 +95,7 @@ public class ScatterTask extends BukkitRunnable {
                         Player p = players.get(0);
                         ScatterUtil.scatterPlayer(world, radius - 1, p);
                         UHCPlayer.get(p).setPlayerStatus(PlayerStatus.PLAYING);
+                        p.setMaxHealth(20);
                         p.setHealth(p.getMaxHealth());
                         p.setFoodLevel(10);
                         p.setFlying(false);
@@ -106,6 +108,7 @@ public class ScatterTask extends BukkitRunnable {
                     Bukkit.getOnlinePlayers().forEach(o -> {
                         for(PotionEffect effect: o.getActivePotionEffects()){
                             o.removePotionEffect(effect.getType());
+                            o.setMaxHealth(20);
                         }
                         o.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1));
                         o.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, Integer.MAX_VALUE, 0));
@@ -124,10 +127,12 @@ public class ScatterTask extends BukkitRunnable {
 
                         ScatterUtil.scatter(world, radius, players);
                         players.forEach(player -> {
+                            player.setMaxHealth(20);
                             player.setHealth(player.getMaxHealth());
                             player.setFoodLevel(10);
                             player.setFlying(false);
                             player.setAllowFlight(false);
+
                             UHCPlayer.get(player).setPlayerStatus(PlayerStatus.PLAYING);
                         });
                         tms++;
@@ -164,6 +169,7 @@ public class ScatterTask extends BukkitRunnable {
                 Bukkit.getOnlinePlayers().forEach(o -> {
                     for(PotionEffect effect: o.getActivePotionEffects()){
                         o.removePotionEffect(effect.getType());
+                        o.setMaxHealth(20);
                     }
                     o.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1));
                     o.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, Integer.MAX_VALUE, 0));

@@ -21,12 +21,12 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class SuperHeroesTeamScenario extends Scenario{
     private GameManager gameManager;
-    public static HashMap<UUID, SuperheroesScenario.SuperHeroType> powers;
+    public static HashMap<UUID, SuperHeroType> powers;
 
 
 
     public SuperHeroesTeamScenario(GameManager gameManager) {
-        super("Superheroes Teams", "Each player will gain a special ability. The powers are speed 1, strength 1, resistance 2, invisibility, 10 extra hearts, and jump boost 4.", new ItemBuilder(Material.BREWING_STAND_ITEM).name("Superheroes").make());
+        super("Superheroes Teams", "Each player will gain a special ability. The powers are speed 2, strength 1, resistance 1, invisibility, 10 extra hearts, and jump boost 4.", new ItemBuilder(Material.BREWING_STAND_ITEM).name("Superheroes").make());
         this.gameManager = gameManager;
         powers = new HashMap<>();
     }
@@ -37,6 +37,11 @@ public class SuperHeroesTeamScenario extends Scenario{
         if(!isEnabled()) return;
         Player tempPlayer;
         for (Team team : TeamManager.getInstance().getTeams()) {
+            ArrayList<SuperHeroType> jew = new ArrayList<>();
+            for (SuperHeroType t : SuperHeroType.values()) {
+                jew.add(t);
+            }
+            Collections.shuffle(jew);
             Collections.shuffle(team.getMembers());
             int times = team.getMembers().size() - 1;
             for (int i = 0; i <= times; i++){
@@ -45,12 +50,13 @@ public class SuperHeroesTeamScenario extends Scenario{
                 if(powers.containsKey(tempPlayer.getUniqueId())) {
                     continue;
                 }
+                SuperHeroType type = jew.get(0);
 
-                SuperheroesScenario.SuperHeroType type = SuperheroesScenario.SuperHeroType.values()[i];
 
                 powers.put(tempPlayer.getUniqueId(), type);
+                jew.remove(0);
 
-                if (type == SuperheroesScenario.SuperHeroType.HEALTH) {
+                if (type == SuperHeroType.HEALTH) {
                     tempPlayer.setMaxHealth(40);
                     tempPlayer.setHealth(40);
                 } else {
@@ -66,13 +72,13 @@ public class SuperHeroesTeamScenario extends Scenario{
             Random random = ThreadLocalRandom.current();
 
             if (TeamManager.getInstance().getTeam(p) == null) {
-                SuperheroesScenario.SuperHeroType type = SuperheroesScenario.SuperHeroType.values()[random.nextInt(SuperheroesScenario.SuperHeroType.values().length)];
+                SuperHeroType type = SuperHeroType.values()[random.nextInt(SuperHeroType.values().length)];
                 if (powers.containsKey(uhcPlayer.getUuid())) {
                     return;
                 }
 
                 powers.put(uhcPlayer.getUuid(), type);
-                if (type == SuperheroesScenario.SuperHeroType.HEALTH) {
+                if (type == SuperHeroType.HEALTH) {
                     p.setMaxHealth(40);
                     p.setHealth(40);
                 } else {
@@ -87,9 +93,9 @@ public class SuperHeroesTeamScenario extends Scenario{
     }
 
     public enum SuperHeroType{
-        SPEED("Speed 1, Haste 2", Lists.newArrayList(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0), new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, 1))),
+        SPEED("Speed 2, Haste 2", Lists.newArrayList(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1), new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, 1))),
         STRENGTH("Strength 1", Lists.newArrayList(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0))),
-        RES("Resistance 2, Fire Resistance 1", Lists.newArrayList(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1), new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 0))),
+        RES("Resistance 1, Fire Resistance 1", Lists.newArrayList(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0), new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 0))),
         HEALTH("10 Extra Hearts", Collections.emptyList()),
         JUMP("Jump Boost 4, Haste 2, Saturation", Lists.newArrayList(new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, 3), new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, 1), new PotionEffect(PotionEffectType.SATURATION, Integer.MAX_VALUE, 9)));
 

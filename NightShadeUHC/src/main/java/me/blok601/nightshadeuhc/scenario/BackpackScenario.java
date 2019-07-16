@@ -27,5 +27,6 @@ public class BackpackScenario extends Scenario{
         for (Player player : Bukkit.getOnlinePlayers()){
             bps.put(player.getUniqueId(), Bukkit.createInventory(null, 27, player.getName() + "'s BackPack"));
         }
+
     }
 }

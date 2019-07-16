@@ -117,6 +117,7 @@ public class GameDeathListener implements Listener {
                 }
 
                 p.setHealth(p.getMaxHealth());
+                p.setMaxHealth(20);
                 p.setFoodLevel(20);
                 p.getInventory().clear();
                 p.getInventory().setArmorContents(null);
