@@ -87,6 +87,8 @@ commands:
   config:
     aliases: [conf, uhc]
     description: Show the game config
+  helpopmute:
+    description: mutes a player from helpop
   respawn:
     description: Respawn players
   ewl:

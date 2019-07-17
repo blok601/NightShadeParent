@@ -121,6 +121,7 @@ public class CommandHandler  {
         registerCommand(new SpectatingTimeCommand());
         registerCommand(new TopSpecCommand());
         registerCommand(new HallOfFameCommand());
+        registerCommand(new HelpopMuteCommand());
         registerCommand(new MoleCommand());
         registerCommand(new SetMoleCommand());
         registerCommand(new ToggleMobsCommand());
