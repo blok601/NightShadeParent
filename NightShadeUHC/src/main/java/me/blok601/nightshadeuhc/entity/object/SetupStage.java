@@ -5,6 +5,6 @@ package me.blok601.nightshadeuhc.entity.object;
  */
 public enum SetupStage {
 
-    MATCHPOST, SEED;
+    MATCHPOST, SEED, BORDER;
 
 }

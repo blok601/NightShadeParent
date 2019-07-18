@@ -690,7 +690,11 @@ public class GameSetupInventoryClick implements Listener {
             } else if (e.getClick() == ClickType.RIGHT) {
                 if (gameManager.getShrinks()[slot] - 50 < 0) return;
                 gameManager.getShrinks()[slot] = cBorder - 50; //Minus 50
-            } else {
+            } else if (e.getClick() == ClickType.MIDDLE){
+                p.closeInventory();
+                gameManager.getSetupStageHashMap().put(p, SetupStage.BORDER);
+                gameManager.setCurrentEditingBorderIndex(slot);
+                p.sendMessage(ChatUtils.message("&eChat the custom border amount, or say cancel to cancel the process"));
                 return;
             }
 

@@ -104,16 +104,16 @@ public class GameDeathListener implements Listener {
                 String deathMessage = ""; //Figure out death message based on how they died
                 if (damager != null) {
                     if (shot) {
-                        deathMessage = "&5" + (uhcPlayer.isDisguised() ? uhcPlayer.getDisguisedName() : uhcPlayer.getName()) + " &9was shot by &5" + (gamePlayer1.isDisguised() ? gamePlayer1.getDisguisedName() : gamePlayer1.getName()) + "(" + Math.floor(p.getLocation().distance(damager.getLocation())) + "m)";
+                        deathMessage = "&b" + (uhcPlayer.isDisguised() ? uhcPlayer.getDisguisedName() : uhcPlayer.getName()) + " &fwas shot by &b" + (gamePlayer1.isDisguised() ? gamePlayer1.getDisguisedName() : gamePlayer1.getName()) + "&7(&b" + Math.floor(p.getLocation().distance(damager.getLocation())) + "m&7)";
                     } else {
                         if (gamePlayer1.isDisguised() && gamePlayer1.getDisguisedName() != null) {
-                            deathMessage = "&5" + (uhcPlayer.isDisguised() ? uhcPlayer.getDisguisedName() : uhcPlayer.getName()) + " &9was killed by &5" + (gamePlayer1.isDisguised() ? gamePlayer1.getDisguisedName() : gamePlayer1.getName()) + "";
+                            deathMessage = "&b" + (uhcPlayer.isDisguised() ? uhcPlayer.getDisguisedName() : uhcPlayer.getName()) + " &fwas killed by &b" + (gamePlayer1.isDisguised() ? gamePlayer1.getDisguisedName() : gamePlayer1.getName()) + "";
                         } else {
-                            deathMessage = "&5" + (uhcPlayer.isDisguised() ? uhcPlayer.getDisguisedName() : uhcPlayer.getName()) + " &9was killed by &5" + (gamePlayer1.isDisguised() ? gamePlayer1.getDisguisedName() : gamePlayer1.getName()) + "";
+                            deathMessage = "&b" + (uhcPlayer.isDisguised() ? uhcPlayer.getDisguisedName() : uhcPlayer.getName()) + " &fwas killed by &b" + (gamePlayer1.isDisguised() ? gamePlayer1.getDisguisedName() : gamePlayer1.getName()) + "";
                         }
                     }
                 } else {
-                    deathMessage = "&5" + (uhcPlayer.isDisguised() ? uhcPlayer.getDisguisedName() : uhcPlayer.getName()) + " &9died.";
+                    deathMessage = "&b" + (uhcPlayer.isDisguised() ? uhcPlayer.getDisguisedName() : uhcPlayer.getName()) + " &fdied.";
                 }
 
                 p.setHealth(p.getMaxHealth());
@@ -257,9 +257,9 @@ public class GameDeathListener implements Listener {
         if (!customDeathEvent.isCancelled()) {
             String deathMessage = ""; //Figure out death message based on how they died
             if(damager == null){
-                deathMessage = "&5" + p.getName() + " &9died.";
+                deathMessage = "&b" + p.getName() + " &fdied.";
             }else{
-                deathMessage = "&5" + p.getName() + " &9was killed by &5" + damager.getName() + "";
+                deathMessage = "&b" + p.getName() + " &fwas killed by &b" + damager.getName() + "";
             }
 
             p.setHealth(p.getMaxHealth());

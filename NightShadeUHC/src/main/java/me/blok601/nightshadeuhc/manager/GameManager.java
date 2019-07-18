@@ -98,6 +98,8 @@ public class GameManager {
     @Getter
     private HashSet<UUID> toCancel = new HashSet<>();
     public ShowPlayerTask showPlayerTask;
+    @Getter@Setter
+    private int currentEditingBorderIndex = -1;
 
 
 

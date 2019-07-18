@@ -24,7 +24,7 @@ public class BorderConfigGUI {
             }else{
                 item = new ItemBuilder(Material.EMERALD_BLOCK).lore(ChatUtils.format("&6" + GameManager.get().getShrinks()[i]));
             }
-            item.lore("&7(&6i&7) &6Right click to increase border by 50, left click to decrease by 50");
+            item.lore("&7(&6i&7) &6Right click to increase border by 50, left click to decrease by 50, middle click to set a custom value");
             builder.item(i, item.make());
         }
 

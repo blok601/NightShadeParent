@@ -33,6 +33,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Team;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.format.ISODateTimeFormat;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -218,6 +219,7 @@ public class GameListener implements Listener {
                     });
                     Util.staffLog("Opens: " + opens);
                     DateTime date = ISODateTimeFormat.dateTimeParser().parseDateTime(opens);
+                    date.withZone(DateTimeZone.UTC);
                     Util.staffLog("Test Date:");
                     Util.staffLog("Date: " + date.getMonthOfYear() + "/" + date.getDayOfMonth() + "/" + date.getYear());
                     Util.staffLog("Time: " + date.getHourOfDay() +":" + date.getMinuteOfHour() + ":" + date.getSecondOfMinute());

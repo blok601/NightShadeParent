@@ -13,10 +13,12 @@ import me.blok601.nightshadeuhc.entity.object.PlayerStatus;
 import me.blok601.nightshadeuhc.entity.object.SetupStage;
 import me.blok601.nightshadeuhc.entity.object.Team;
 import me.blok601.nightshadeuhc.gui.setup.HostGUI;
+import me.blok601.nightshadeuhc.gui.setup.world.BorderConfigGUI;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.manager.TeamManager;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.util.MathUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -182,31 +184,52 @@ public class PlayerListener implements Listener {
             }
         }
 
-        if (GameManager.get().getSetupStageHashMap().containsKey(p)) {
+        if (gameManager.getSetupStageHashMap().containsKey(p)) {
             e.setCancelled(true);
-            SetupStage stage = GameManager.get().getSetupStageHashMap().get(p);
+            SetupStage stage = gameManager.getSetupStageHashMap().get(p);
             if (stage == SetupStage.MATCHPOST) {
                 if (message.toLowerCase().startsWith("cancel")) {
                     p.sendMessage(ChatUtils.message("&eYou have left the setup process."));
-                    GameManager.get().getSetupStageHashMap().remove(p);
+                    gameManager.getSetupStageHashMap().remove(p);
                     return;
                 }
                 Core.get().setMatchpost(message);
                 p.sendMessage(ChatUtils.message("&eThe matchpost is now: &a" + message));
-                GameManager.get().getSetupStageHashMap().remove(p);
+                gameManager.getSetupStageHashMap().remove(p);
                 new HostGUI(p, gameManager, scenarioManager);
                 return;
             } else if (stage == SetupStage.SEED) {
                 if (message.toLowerCase().startsWith("cancel")) {
                     p.sendMessage(ChatUtils.message("&eYou have left the setup process."));
-                    GameManager.get().getSetupStageHashMap().remove(p);
+                    gameManager.getSetupStageHashMap().remove(p);
                     return;
                 }
 
-                GameManager.get().setSetupSeed(message);
+                gameManager.setSetupSeed(message);
                 p.sendMessage(ChatUtils.message("&eThe seed is now&8: &b" + message));
-                GameManager.get().getSetupStageHashMap().remove(p);
+                gameManager.getSetupStageHashMap().remove(p);
                 new HostGUI(p, gameManager, scenarioManager);
+                return;
+            } else if (stage == SetupStage.BORDER) {
+                if (message.toLowerCase().startsWith("cancel")) {
+                    p.sendMessage(ChatUtils.message("&eYou have left the setup process."));
+                    gameManager.getSetupStageHashMap().remove(p);
+                    gameManager.setCurrentEditingBorderIndex(-1);
+                    new BorderConfigGUI(p);
+                    return;
+                }
+
+                String msg = e.getMessage();
+                if (!MathUtil.isInt(msg)) {
+                    p.sendMessage(ChatUtils.message("&cInvalid input! Enter a valid border size or type &bcancel &eto cancel the process."));
+                    return;
+                }
+
+                int newBorder = Integer.parseInt(msg);
+                gameManager.getShrinks()[gameManager.getCurrentEditingBorderIndex()] = newBorder;
+                p.sendMessage(ChatUtils.message("&eYou have set shrink &b#" + gameManager.getCurrentEditingBorderIndex() + " &e to &b" + newBorder + " x " + newBorder));
+                gameManager.setCurrentEditingBorderIndex(-1);
+                gameManager.getSetupStageHashMap().remove(p);
                 return;
             }
         }
