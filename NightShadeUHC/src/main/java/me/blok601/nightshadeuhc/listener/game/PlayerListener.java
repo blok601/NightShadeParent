@@ -227,7 +227,7 @@ public class PlayerListener implements Listener {
 
                 int newBorder = Integer.parseInt(msg);
                 gameManager.getShrinks()[gameManager.getCurrentEditingBorderIndex()] = newBorder;
-                p.sendMessage(ChatUtils.message("&eYou have set shrink &b#" + gameManager.getCurrentEditingBorderIndex() + " &e to &b" + newBorder + " x " + newBorder));
+                p.sendMessage(ChatUtils.message("&eYou have set shrink &b#" + (gameManager.getCurrentEditingBorderIndex() + 1) + " &e to &b" + newBorder + " x " + newBorder)); //Do the +1 for readability purposes
                 gameManager.setCurrentEditingBorderIndex(-1);
                 gameManager.getSetupStageHashMap().remove(p);
                 return;

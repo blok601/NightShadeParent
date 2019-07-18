@@ -222,4 +222,6 @@ commands:
   btcadd:
     aliases: [badd, bestbtcadd]
     description: Add players to the best btc list
+  border:
+    description: View the current and next border shrinks
 
