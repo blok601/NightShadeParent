@@ -67,7 +67,7 @@ public class JoinListener implements Listener {
         Scenario scen = scenarioManager.getScen("Secret Teams");
         if(scen != null && !scen.isEnabled()){
             for (CachedColor cachedColor : TeamManager.getInstance().getCachedColors()) {
-                if (scoreboard.getTeam(cachedColor.getId()) != null) continue;
+                //if (scoreboard.getTeam(cachedColor.getId()) != null) continue;
                 Team team = scoreboard.registerNewTeam(cachedColor.getId());
                 team.setPrefix(ChatUtils.format(cachedColor.getColor()));
                 team.addEntry(cachedColor.getPlayer());
