@@ -159,7 +159,7 @@ public class TeamBaseCommand implements UHCCommand{
                 }else if(args[0].equalsIgnoreCase("color")){
                     if(user.hasRank(Rank.TRIAL)){
 
-
+                        ChatUtils.sendAll("&bRecoloring all teams...");
                         ScoreboardManager scoreboardManager = UHC.get().getScoreboardManager();
                         Scoreboard scoreboard;
                         TeamManager.getInstance().colorAllTeams();

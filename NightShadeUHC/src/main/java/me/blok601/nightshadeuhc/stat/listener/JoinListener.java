@@ -277,7 +277,7 @@ public class JoinListener implements Listener {
 
         }
 
-        if (Bukkit.getOnlinePlayers().size() == gameManager.getMaxPlayers()) {
+        if ((Bukkit.getOnlinePlayers().size() - UHCPlayerColl.get().getSpectators().size()) == gameManager.getMaxPlayers()) {
             if (!user.hasRank(Rank.YOUTUBE)) {
                 e.disallow(PlayerLoginEvent.Result.KICK_FULL, "The server is full!");
             } else {

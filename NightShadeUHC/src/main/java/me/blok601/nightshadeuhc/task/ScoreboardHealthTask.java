@@ -47,7 +47,7 @@ public class ScoreboardHealthTask extends BukkitRunnable {
 
 
             for (UHCPlayer uhcPlayer : UHCPlayerColl.get().getAllPlaying()) {
-                double health = MathUtil.getPercentage(uhcPlayer.getPlayer().getHealth(), (uhcPlayer.getPlayer().getMaxHealth()));
+                double health = MathUtil.getPercentage(uhcPlayer.getPlayer().getHealth(), 20.0);
                 tab.getScore(uhcPlayer.getName()).setScore((int) health);
             }
 

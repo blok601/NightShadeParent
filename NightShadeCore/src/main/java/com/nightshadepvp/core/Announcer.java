@@ -34,10 +34,11 @@ public class Announcer {
             messages.add("&bMake sure to ask the host if you have any questions with /helpop!");
             messages.add("&bBe sure to apply for staff on the forums! www.nightshadepvp.com");
             messages.add("&bFix the invis glitch by doing /show <player>");
+            messages.add("&bToggle your private messages with /togglepm");
 
             if (ServerType.getType() == ServerType.UHC) {
                 messages.add("&bUse /config to view the game config!");
-                messages.add("&bSend your coordinates to your teammates with /pmcoords");
+                messages.add("&bSend your coordinates and ores to your teammates with /pmcoords and /pmores");
                 messages.add("&bView the game scenarios by doing /scenarios");
                 messages.add("&bView the matchpost with /matchpost");
 
@@ -58,9 +59,9 @@ public class Announcer {
                     return;
                 }
 
-                Bukkit.broadcastMessage(ChatUtils.format("&f&m--------------------------------------------"));
+                Bukkit.broadcastMessage(ChatUtils.format("&f&m--------------------------------------------------"));
                 Bukkit.broadcastMessage(ChatUtils.message(messages.get(random.nextInt(messages.size()))));
-                Bukkit.broadcastMessage(ChatUtils.format("&f&m--------------------------------------------"));
+                Bukkit.broadcastMessage(ChatUtils.format("&f&m--------------------------------------------------"));
             }
         }.runTaskTimer(core, 0, 3000L);
     }

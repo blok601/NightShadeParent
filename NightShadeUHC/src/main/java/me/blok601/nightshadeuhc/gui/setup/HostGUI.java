@@ -96,7 +96,7 @@ public class HostGUI {
 
         ItemBuilder teamGame = new ItemBuilder(Material.SIGN)
                 .name("&5&lTeam Game")
-                .lore("&eCurrent: " + (gameManager.isIsTeam() ? "&aYes" : "&aNo"))
+                .lore("&eCurrent: " + (gameManager.isIsTeam() ? "&aYes" : "&cNo"))
                 .lore("&7&o(&6&oi&7&o) &6&oClick to toggle teams on and off");
 
         ItemBuilder teamMan = new ItemBuilder(Material.ARROW)
