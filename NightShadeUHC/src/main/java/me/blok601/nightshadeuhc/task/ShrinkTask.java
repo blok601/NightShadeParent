@@ -17,11 +17,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class ShrinkTask extends BukkitRunnable {
 
     private World world;
-    private int counter;
+    //private int counter;
 
     public ShrinkTask(World world) {
         this.world = world;
-        this.counter = 300;
+        //this.counter = 300;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class ShrinkTask extends BukkitRunnable {
                     bd.setRadius(GameManager.get().getShrinks()[GameManager.get().getBorderID()]);
                     GameManager.get().genWalls(GameManager.get().getShrinks()[GameManager.get().getBorderID()], GameManager.get().getWorld());
                     GameManager.get().setBorderID(GameManager.get().getBorderID() + 1);
-                    this.counter = 300;
+                    //this.counter = 300;
 
 
                     for (Player player : Bukkit.getOnlinePlayers()) {
