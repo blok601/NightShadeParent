@@ -72,8 +72,8 @@ public class CombatLogger {
         //this.freeze();
 
         nameHologram = HologramAPI.createHologram(this.location.add(0, 1, 0), ChatUtils.format("&b&l" + loggerName + "'s Logger"));
-        nameHologram.addLineBelow(ChatUtils.format("&a&l5:00"));
         nameHologram.spawn();
+        nameHologram.addLineBelow(ChatUtils.format("&a&l5:00"));
 
         taskID = new BukkitRunnable(){
 
