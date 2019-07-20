@@ -8,7 +8,6 @@ import me.blok601.nightshadeuhc.entity.object.PlayerRespawn;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.manager.LoggerManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ExperienceOrb;
@@ -92,7 +91,9 @@ public class LoggerListener implements Listener {
                     PlayerRespawn object = new PlayerRespawn(logger.getArmor(), logger.getInventory(), logger.getArmorStand().getLocation());
                     GameManager.get().getInvs().put(logger.getUuid(), object);
 
-                    Bukkit.broadcastMessage(ChatUtils.format("&5" + name + " (Logger) &9 was killed"));
+                    //Bukkit.broadcastMessage(ChatUtils.format("&5" + name + " (Logger) &9 was killed"));
+                    ChatUtils.sendAll("&4" + name + " &7(Logger) &4was killed.");
+                    logger.getArmorStand().getWorld().strikeLightningEffect(logger.getArmorStand().getLocation().add(0, 10, 0));
                     LoggerManager.getInstance().getDeadLoggers().add(logger.getUuid());
                     logger.remove();
 
