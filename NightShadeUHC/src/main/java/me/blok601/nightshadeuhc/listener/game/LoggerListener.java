@@ -10,7 +10,6 @@ import me.blok601.nightshadeuhc.manager.LoggerManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
@@ -90,7 +89,7 @@ public class LoggerListener implements Listener {
 
                     UHC.loggedOutPlayers.remove(logger.getUuid());
 
-                    PlayerRespawn object = new PlayerRespawn(logger.getArmor(), logger.getInventory(), logger.getZombie().getLocation());
+                    PlayerRespawn object = new PlayerRespawn(logger.getArmor(), logger.getInventory(), logger.getArmorStand().getLocation());
                     GameManager.get().getInvs().put(logger.getUuid(), object);
 
                     Bukkit.broadcastMessage(ChatUtils.format("&5" + name + " (Logger) &9 was killed"));
