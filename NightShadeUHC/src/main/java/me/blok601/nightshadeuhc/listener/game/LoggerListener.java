@@ -9,10 +9,7 @@ import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.manager.LoggerManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import org.bukkit.Material;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.ExperienceOrb;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Zombie;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityCombustEvent;
@@ -28,11 +25,11 @@ public class LoggerListener implements Listener {
     @EventHandler
     public void onCombust(EntityCombustEvent event) {
 
-        if (event.getEntity() instanceof Zombie) {
+        if (event.getEntity() instanceof ArmorStand) {
 
-            Zombie zombie = (Zombie) event.getEntity();
+            ArmorStand armorStand = (ArmorStand) event.getEntity();
 
-            if (zombie.isCustomNameVisible() && zombie.getCustomName() != null) {
+            if (armorStand.isCustomNameVisible() && armorStand.getCustomName() != null) {
                 event.setCancelled(true);
             }
 
@@ -42,14 +39,14 @@ public class LoggerListener implements Listener {
     @EventHandler
     public void onDamage(EntityDamageByEntityEvent event) {
 
-        if (event.getEntity() instanceof Zombie) {
+        if (event.getEntity() instanceof ArmorStand) {
             if (!PvPCommand.isEnabled() && event.getEntity().hasMetadata("logger")) {
                 event.setCancelled(true);
             }
         }
 
         if(event.getEntity() instanceof Player){
-            if(event.getDamager() instanceof Zombie){
+            if(event.getDamager() instanceof ArmorStand){
                 if(event.getDamager().hasMetadata("logger")){
                     event.setCancelled(true); //Don't allow them to hit players
                 }
@@ -63,10 +60,10 @@ public class LoggerListener implements Listener {
     @EventHandler
     public void onDeath(EntityDeathEvent event) {
         if (GameState.getState() == GameState.INGAME || GameState.getState() == GameState.MEETUP) {
-            if (event.getEntity() instanceof Zombie && event.getEntity().isCustomNameVisible() && event.getEntity().getCustomName() != null) {
-                Zombie zombie = (Zombie) event.getEntity();
+            if (event.getEntity() instanceof ArmorStand && event.getEntity().isCustomNameVisible() && event.getEntity().getCustomName() != null) {
+                ArmorStand armorStand = (ArmorStand) event.getEntity();
 
-                String name = zombie.getName();
+                String name = armorStand.getName();
 
                 CombatLogger logger = LoggerManager.getInstance().getLogger(name);
 
@@ -96,7 +93,6 @@ public class LoggerListener implements Listener {
                     logger.getArmorStand().getWorld().strikeLightningEffect(logger.getArmorStand().getLocation().add(0, 10, 0));
                     LoggerManager.getInstance().getDeadLoggers().add(logger.getUuid());
                     logger.remove();
-
                 }
 
             }
