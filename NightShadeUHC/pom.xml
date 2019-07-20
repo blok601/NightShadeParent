@@ -199,7 +199,6 @@
             <groupId>org.inventivetalent</groupId>
             <artifactId>hologramapi</artifactId>
             <version>1.4.0</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>
