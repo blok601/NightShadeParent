@@ -45,7 +45,7 @@ public class CombatLogger {
     private int logOutTimer;
 
     public CombatLogger(Player logger) {
-        this.loggerName = logger.getName();
+        this.loggerName = ChatUtils.format("&b&l" + logger.getName() + "'s Logger");
         this.loggerP = logger;
         this.armor = logger.getInventory().getArmorContents();
         this.inventory = logger.getInventory().getContents();
@@ -71,7 +71,7 @@ public class CombatLogger {
         armorStand.getEquipment().setArmorContents(getArmor());
         //this.freeze();
 
-        nameHologram = HologramAPI.createHologram(this.location.add(0, 4, 0), ChatUtils.format("&b&l" + loggerName + "'s Logger"));
+        nameHologram = HologramAPI.createHologram(this.location.add(0, 2.5, 0), ChatUtils.format("&b&l" + loggerName + "'s Logger"));
         nameHologram.spawn();
         nameHologram.addLineBelow(ChatUtils.format("&a&l5:00"));
 
@@ -135,7 +135,7 @@ public class CombatLogger {
                 logOutTimer--;
 
             }
-        }.runTaskTimer(UHC.get(), 0, Util.TICKS * 20).getTaskId();
+        }.runTaskTimer(UHC.get(), 0, Util.TICKS).getTaskId();
 
         LoggerManager.getInstance().createLogger(this);
 

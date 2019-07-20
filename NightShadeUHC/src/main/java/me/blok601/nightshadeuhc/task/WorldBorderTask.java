@@ -70,6 +70,6 @@ public class WorldBorderTask extends BukkitRunnable {
         int m = i / 60;
         int s = i % 60;
 
-        return "§3" + m + "§5m§3" + s + "§5s";
+        return "§b" + m + "§5m§3" + s + "§bs";
     }
 }
