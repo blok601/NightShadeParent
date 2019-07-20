@@ -4,7 +4,7 @@ import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.entity.object.PlayerStatus;
 import me.blok601.nightshadeuhc.util.ChatUtils;
-import me.blok601.nightshadeuhc.util.MathUtil;
+import me.blok601.nightshadeuhc.util.MathUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -34,7 +34,7 @@ public class RottenApplesScenario extends Scenario {
         if (e.getItem().getType() == Material.GOLDEN_APPLE) {
             Player p = e.getPlayer();
             if (UHCPlayer.get(p).getPlayerStatus() == PlayerStatus.PLAYING) {
-                if (MathUtil.getChance(10)) {
+                if (MathUtils.getChance(10)) {
                     p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 200, 0));
                     p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 0));
                     p.sendMessage(ChatUtils.format(getPrefix() + "&cYou have received slowness and nausea for 10 seconds!"));

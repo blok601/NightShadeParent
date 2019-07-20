@@ -1,7 +1,7 @@
 package me.blok601.nightshadeuhc.scenario;
 
 import me.blok601.nightshadeuhc.util.ItemBuilder;
-import me.blok601.nightshadeuhc.util.MathUtil;
+import me.blok601.nightshadeuhc.util.MathUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Entity;
@@ -30,7 +30,7 @@ public class BaldChickenScenario extends Scenario {
         } else if (entity instanceof Skeleton) {
             event.getDrops().stream().filter(itemStack -> itemStack.getType() == Material.ARROW).forEach(itemStack -> itemStack.setType(Material.AIR));
 
-            event.getDrops().add(new ItemStack(Material.ARROW, MathUtil.getRand(15, 20)));
+            event.getDrops().add(new ItemStack(Material.ARROW, MathUtils.getRand(15, 20)));
         }
     }
 

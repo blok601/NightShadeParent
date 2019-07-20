@@ -5,7 +5,7 @@ import me.blok601.nightshadeuhc.command.UHCCommand;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
-import me.blok601.nightshadeuhc.util.MathUtil;
+import me.blok601.nightshadeuhc.util.MathUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
@@ -54,7 +54,7 @@ public class RatesCommand implements UHCCommand, Listener{
         if(args[0].equalsIgnoreCase("apple") || args[0].equalsIgnoreCase("apples")){
             String arg = args[1];
             int rate;
-            if(MathUtil.isInt(arg)){
+            if(MathUtils.isInt(arg)){
                 rate  = Integer.parseInt(arg);
             }else{
                 p.sendMessage(ChatUtils.message("&cPlease supply a number!"));
@@ -66,7 +66,7 @@ public class RatesCommand implements UHCCommand, Listener{
         }else if(args[0].equalsIgnoreCase("flint")){
             String arg = args[1];
             int rate;
-            if(MathUtil.isInt(arg)){
+            if(MathUtils.isInt(arg)){
                 rate  = Integer.parseInt(arg);
             }else{
                 p.sendMessage(ChatUtils.message("&cPlease supply a number!"));
@@ -96,7 +96,7 @@ public class RatesCommand implements UHCCommand, Listener{
                 return;
             }
 
-            if(MathUtil.getChance(gameManager.getFlintRates())){
+            if(MathUtils.getChance(gameManager.getFlintRates())){
                 e.getBlock().setType(Material.AIR);
                 e.getBlock().getDrops().clear();
                 e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation().add(0.5, 0.5, 0.5), new ItemStack(Material.FLINT));
@@ -111,7 +111,7 @@ public class RatesCommand implements UHCCommand, Listener{
     public void decay(LeavesDecayEvent e){
         if(e.getBlock().getType() == Material.LEAVES || e.getBlock().getType() == Material.LEAVES_2){
 
-            if(MathUtil.getChance(gameManager.getAppleRates())){
+            if(MathUtils.getChance(gameManager.getAppleRates())){
                 e.getBlock().setType(Material.AIR);
                 e.getBlock().getDrops().clear();
                 e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), new ItemStack(Material.APPLE));

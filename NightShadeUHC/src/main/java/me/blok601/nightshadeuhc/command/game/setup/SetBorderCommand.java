@@ -5,8 +5,7 @@ import com.nightshadepvp.core.entity.NSPlayer;
 import me.blok601.nightshadeuhc.command.UHCCommand;
 import me.blok601.nightshadeuhc.entity.MConf;
 import me.blok601.nightshadeuhc.util.ChatUtils;
-import me.blok601.nightshadeuhc.util.MathUtil;
-import me.blok601.nightshadeuhc.util.Util;
+import me.blok601.nightshadeuhc.util.MathUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -33,7 +32,7 @@ public class SetBorderCommand implements UHCCommand {
         }
 
         if (args.length == 1) {
-            if (!MathUtil.isInt(args[0])) {
+            if (!MathUtils.isInt(args[0])) {
                 p.sendMessage(ChatUtils.message("&cPlease supply a valid number!"));
                 return;
             }
@@ -53,7 +52,7 @@ public class SetBorderCommand implements UHCCommand {
 
         } else if (args.length == 2) {
 
-            if (!MathUtil.isInt(args[0])) {
+            if (!MathUtils.isInt(args[0])) {
                 p.sendMessage(ChatUtils.message("&cPlease supply a valid number!"));
                 return;
             }

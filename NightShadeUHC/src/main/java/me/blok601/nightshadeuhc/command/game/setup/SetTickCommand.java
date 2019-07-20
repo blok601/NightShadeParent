@@ -2,7 +2,7 @@ package me.blok601.nightshadeuhc.command.game.setup;
 
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.util.ChatUtils;
-import me.blok601.nightshadeuhc.util.MathUtil;
+import me.blok601.nightshadeuhc.util.MathUtils;
 import me.blok601.nightshadeuhc.util.Util;
 import me.blok601.nightshadeuhc.command.UHCCommand;
 import org.bukkit.command.Command;
@@ -28,7 +28,7 @@ public class SetTickCommand implements UHCCommand{
             return;
         }
 
-        if(!MathUtil.isInt(args[0])){
+        if(!MathUtils.isInt(args[0])){
             p.sendMessage(ChatUtils.message("&cThat is not a number!"));return;
         }
 

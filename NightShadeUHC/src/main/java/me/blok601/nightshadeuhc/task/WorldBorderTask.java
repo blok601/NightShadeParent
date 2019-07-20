@@ -5,7 +5,7 @@ import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.util.ActionBarUtil;
 import me.blok601.nightshadeuhc.util.ChatUtils;
-import me.blok601.nightshadeuhc.util.MathUtil;
+import me.blok601.nightshadeuhc.util.MathUtils;
 import me.blok601.nightshadeuhc.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -44,7 +44,7 @@ public class WorldBorderTask extends BukkitRunnable {
                 Bukkit.getOnlinePlayers().forEach((Consumer<Player>) player -> {
                     ActionBarUtil.sendActionBarMessage(player, "§5Shrink to " + gameManager.getFirstShrink() + "radius in " + get(counter), 1, UHC.get());
                 });
-            } else if (MathUtil.isBetween(10, 0, counter)) {
+            } else if (MathUtils.isBetween(10, 0, counter)) {
                 ChatUtils.sendBorderMessage("The border will shrink to " + gameManager.getFirstShrink() + " radius in " + counter);
             }
         } else if (counter == 0) {

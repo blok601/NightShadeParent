@@ -2,7 +2,6 @@ package me.blok601.nightshadeuhc.util;
 
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.manager.GameManager;
-import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.joda.time.Period;
 import org.joda.time.format.PeriodFormatter;
@@ -58,15 +57,15 @@ public class TimeUtils {
         if (input.contains("m")) {
             array = input.split("m");
             String number = array[0];
-            return MathUtil.isInt(number);
+            return MathUtils.isInt(number);
         } else if (input.contains("mins")) {
             array = input.split("mins");
             String number = array[0];
-            return MathUtil.isInt(number);
+            return MathUtils.isInt(number);
         } else if (input.contains("minutes")) {
             array = input.split("minutes");
             String number = array[0];
-            return MathUtil.isInt(number);
+            return MathUtils.isInt(number);
         }
 
         return false;
@@ -94,21 +93,21 @@ public class TimeUtils {
         if (input.contains("m")) {
             array = input.split("m");
             String number = array[0];
-            if (MathUtil.isInt(number)) {
+            if (MathUtils.isInt(number)) {
                 int i = Integer.parseInt(number);
                 return i * 60;
             }
         } else if (input.contains("mins")) {
             array = input.split("mins");
             String number = array[0];
-            if (MathUtil.isInt(number)) {
+            if (MathUtils.isInt(number)) {
                 int i = Integer.parseInt(number);
                 return i * 60;
             }
         } else if (input.contains("minutes")) {
             array = input.split("minutes");
             String number = array[0];
-            if (MathUtil.isInt(number)) {
+            if (MathUtils.isInt(number)) {
                 int i = Integer.parseInt(number);
                 return i * 60;
             }
@@ -122,5 +121,12 @@ public class TimeUtils {
         int s = seconds % 60;
 
         return mins + "minutes and " + s + " seconds";
+    }
+
+    public static String formatSecondsToMinutesSeconds(int seconds) {
+        int mins = seconds / 60;
+        int s = seconds % 60;
+
+        return mins + ":" + s;
     }
 }

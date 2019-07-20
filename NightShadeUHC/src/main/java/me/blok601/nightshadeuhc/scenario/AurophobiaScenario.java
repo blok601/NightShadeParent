@@ -2,8 +2,7 @@ package me.blok601.nightshadeuhc.scenario;
 
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
-import me.blok601.nightshadeuhc.util.MathUtil;
-import me.blok601.nightshadeuhc.util.Util;
+import me.blok601.nightshadeuhc.util.MathUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -28,21 +27,21 @@ public class AurophobiaScenario extends Scenario{
         Player p = e.getPlayer();
 
         if(e.getBlock().getType() == Material.GOLD_ORE){
-            if(MathUtil.getChance(5)){
+            if(MathUtils.getChance(5)){
                 p.damage(2);
                 p.sendMessage(ChatUtils.format(getPrefix() + "&eYou were unlucky and took 1 heart of damage!"));
-            }else if(MathUtil.getChance(5)){
+            }else if(MathUtils.getChance(5)){
                 p.getLocation().getWorld().spawnEntity(p.getLocation(), EntityType.SILVERFISH);
                 p.getLocation().getWorld().spawnEntity(p.getLocation(), EntityType.SILVERFISH);
                 p.sendMessage(ChatUtils.format(getPrefix() + "&eYou were unlucky and 2 silverfish were spawned!"));
-            }else if(MathUtil.getChance(5)){
+            }else if(MathUtils.getChance(5)){
                 e.setCancelled(true);
                 e.getBlock().setType(Material.AIR);
                 p.sendMessage(ChatUtils.format(getPrefix() + "&eYou were unlucky lost the gold!"));
-            }else if(MathUtil.getChance(5)){
+            }else if(MathUtils.getChance(5)){
                 p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 10, 2));
                 p.sendMessage(ChatUtils.format(getPrefix() + "&eYou were unlucky and are now blinded!"));
-            }else if(MathUtil.getChance(3)){
+            }else if(MathUtils.getChance(3)){
                 p.getLocation().getWorld().spawnEntity(p.getLocation(), EntityType.CAVE_SPIDER);
                 p.sendMessage(ChatUtils.format(getPrefix() + "&eYou were unlucky and a cave spider appeared!"));
             }

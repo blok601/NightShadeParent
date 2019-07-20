@@ -2,8 +2,7 @@ package me.blok601.nightshadeuhc.scenario;
 
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
-import me.blok601.nightshadeuhc.util.MathUtil;
-import me.blok601.nightshadeuhc.util.Util;
+import me.blok601.nightshadeuhc.util.MathUtils;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -28,19 +27,19 @@ public class TrashOrTreasureScenario extends Scenario{
 
 
         if (e.getBlock().getType() == Material.DIAMOND_ORE) {
-          if(MathUtil.getChance(3)){
+          if(MathUtils.getChance(3)){
             e.getPlayer().getInventory().addItem(new ItemStack(Material.DIAMOND));
           }
         }
 
           if(e.getBlock().getType() == Material.LAPIS_ORE){
-            if(MathUtil.getChance(5)){
+            if(MathUtils.getChance(5)){
               e.getPlayer().getInventory().addItem(new ItemStack(Material.DIAMOND));
             }
           }
 
           if(e.getBlock().getType() == Material.GOLD_ORE){
-            if(MathUtil.getChance(7)){
+            if(MathUtils.getChance(7)){
             e.setCancelled(true);
             e.getBlock().setType(Material.AIR);
             e.getPlayer().sendMessage(ChatUtils.format(getPrefix() + "&cYou can't mine diamonds in &6Trash or Treasure!"));
@@ -48,13 +47,13 @@ public class TrashOrTreasureScenario extends Scenario{
         }
 
         if(e.getBlock().getType() == Material.COAL_ORE){
-            if(MathUtil.getChance(1)){
+            if(MathUtils.getChance(1)){
                e.getPlayer().getInventory().addItem(new ItemStack(Material.DIAMOND));
             }
         }
 
         if(e.getBlock().getType() == Material.IRON_ORE){
-            if(MathUtil.getChance(2)){
+            if(MathUtils.getChance(2)){
                 e.getPlayer().getInventory().addItem(new ItemStack(Material.DIAMOND));
             }
         }
@@ -65,7 +64,7 @@ public class TrashOrTreasureScenario extends Scenario{
         }
 
         if(e.getBlock().getType() == Material.EMERALD_ORE){
-            if(MathUtil.getChance(9)){
+            if(MathUtils.getChance(9)){
                 e.getPlayer().getInventory().addItem(new ItemStack(Material.DIAMOND));
             }
         }

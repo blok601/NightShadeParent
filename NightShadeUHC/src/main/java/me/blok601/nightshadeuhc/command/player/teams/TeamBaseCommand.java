@@ -18,7 +18,7 @@ import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
 import me.blok601.nightshadeuhc.scoreboard.ScoreboardManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
-import me.blok601.nightshadeuhc.util.MathUtil;
+import me.blok601.nightshadeuhc.util.MathUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -373,7 +373,7 @@ public class TeamBaseCommand implements UHCCommand{
                     }
                 }else if(args[0].equalsIgnoreCase("limit")){
                     if(user.hasRank(Rank.TRIAL)){
-                        if(MathUtil.isInt(args[1])){
+                        if(MathUtils.isInt(args[1])){
                             TeamManager.getInstance().setTeamSize(Integer.parseInt(args[1]));
                             p.sendMessage(ChatUtils.message("&eSet the team size to " + args[1]));
                             return;

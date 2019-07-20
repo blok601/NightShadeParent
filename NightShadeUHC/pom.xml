@@ -80,6 +80,10 @@
             <name>jcenter-bintray</name>
             <url>http://jcenter.bintray.com</url>
         </repository>
+        <repository>
+            <id>inventive-repo</id>
+            <url>https://repo.inventivetalent.org/content/repositories/releases</url>
+        </repository>
     </repositories>
 
 
@@ -191,6 +195,11 @@
             <version>1.4.9</version>
             <scope>compile</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.inventivetalent</groupId>
+            <artifactId>hologramapi</artifactId>
+            <version>1.4.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>

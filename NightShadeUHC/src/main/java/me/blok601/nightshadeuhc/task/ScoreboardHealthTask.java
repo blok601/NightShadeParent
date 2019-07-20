@@ -4,7 +4,7 @@ import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
 import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
 import me.blok601.nightshadeuhc.scoreboard.ScoreboardManager;
-import me.blok601.nightshadeuhc.util.MathUtil;
+import me.blok601.nightshadeuhc.util.MathUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -47,7 +47,7 @@ public class ScoreboardHealthTask extends BukkitRunnable {
 
 
             for (UHCPlayer uhcPlayer : UHCPlayerColl.get().getAllPlaying()) {
-                double health = MathUtil.getPercentage(uhcPlayer.getPlayer().getHealth(), 20.0);
+                double health = MathUtils.getPercentage(uhcPlayer.getPlayer().getHealth(), 20.0);
                 tab.getScore(uhcPlayer.getName()).setScore((int) health);
             }
 

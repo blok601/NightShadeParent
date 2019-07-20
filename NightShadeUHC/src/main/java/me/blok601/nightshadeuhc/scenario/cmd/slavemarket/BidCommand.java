@@ -5,7 +5,7 @@ import com.nightshadepvp.core.utils.PacketUtils;
 import me.blok601.nightshadeuhc.command.UHCCommand;
 import me.blok601.nightshadeuhc.scenario.SlaveMarketScenario;
 import me.blok601.nightshadeuhc.util.ChatUtils;
-import me.blok601.nightshadeuhc.util.MathUtil;
+import me.blok601.nightshadeuhc.util.MathUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -46,7 +46,7 @@ public class BidCommand implements UHCCommand {
 
         }
         if (args.length == 2) {
-            if (!MathUtil.isInt(args[1])) {
+            if (!MathUtils.isInt(args[1])) {
                 slaveMarketScenario.sendMessage(p, "&cYou must supply a valid number!");
                 return;
             }

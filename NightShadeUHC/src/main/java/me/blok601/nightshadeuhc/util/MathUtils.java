@@ -11,7 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * Created by Blok on 6/23/2018.
  */
-public class MathUtil {
+public class MathUtils {
 
     public static String formatDoubleToPercet(double percent){
         DecimalFormat df = new DecimalFormat("##.#");

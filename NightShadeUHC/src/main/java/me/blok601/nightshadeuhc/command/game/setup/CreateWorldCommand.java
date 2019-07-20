@@ -7,7 +7,7 @@ import com.wimbli.WorldBorder.WorldFillTask;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.command.UHCCommand;
 import me.blok601.nightshadeuhc.util.ChatUtils;
-import me.blok601.nightshadeuhc.util.MathUtil;
+import me.blok601.nightshadeuhc.util.MathUtils;
 import me.blok601.nightshadeuhc.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -49,7 +49,7 @@ public class CreateWorldCommand implements UHCCommand{
             return;
         }
 
-        if(!MathUtil.isInt(args[2])){
+        if(!MathUtils.isInt(args[2])){
             p.sendMessage(ChatUtils.message("&cPlease supply a number!"));
             return;
         }

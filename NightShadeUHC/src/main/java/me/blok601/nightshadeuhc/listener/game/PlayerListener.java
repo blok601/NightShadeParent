@@ -18,7 +18,7 @@ import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.manager.TeamManager;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
-import me.blok601.nightshadeuhc.util.MathUtil;
+import me.blok601.nightshadeuhc.util.MathUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -220,7 +220,7 @@ public class PlayerListener implements Listener {
                 }
 
                 String msg = e.getMessage();
-                if (!MathUtil.isInt(msg)) {
+                if (!MathUtils.isInt(msg)) {
                     p.sendMessage(ChatUtils.message("&cInvalid input! Enter a valid border size or type &bcancel &eto cancel the process."));
                     return;
                 }
