@@ -127,6 +127,6 @@ public class TimeUtils {
         int mins = seconds / 60;
         int s = seconds % 60;
 
-        return mins + ":" + (s > 10 ? s + "0" : s);
+        return mins + ":" + (s < 10 ? s + "0" : s);
     }
 }

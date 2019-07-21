@@ -29,7 +29,7 @@ public class LoggerListener implements Listener {
 
             ArmorStand armorStand = (ArmorStand) event.getEntity();
 
-            if (armorStand.isCustomNameVisible() && armorStand.getCustomName() != null) {
+            if (!PvPCommand.isEnabled() && armorStand.hasMetadata("logger")) {
                 event.setCancelled(true);
             }
 
@@ -65,7 +65,7 @@ public class LoggerListener implements Listener {
 
                 String name = armorStand.getName();
 
-                CombatLogger logger = LoggerManager.getInstance().getLogger(name);
+                CombatLogger logger = LoggerManager.getInstance().getLogger(armorStand.getEntityId());
 
                 if (logger != null) {
                     event.getDrops().clear();

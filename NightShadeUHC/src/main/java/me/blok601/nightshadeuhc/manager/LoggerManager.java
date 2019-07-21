@@ -32,6 +32,16 @@ public class LoggerManager {
         return null;
     }
 
+    public CombatLogger getLogger(int id) {
+        for (CombatLogger logger : loggers) {
+            if (logger.getArmorStand().getEntityId() == id) {
+                return logger;
+            }
+        }
+
+        return null;
+    }
+
     public void createLogger(CombatLogger logger) {
         loggers.add(logger);
     }
