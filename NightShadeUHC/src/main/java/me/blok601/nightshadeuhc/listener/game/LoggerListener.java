@@ -60,7 +60,7 @@ public class LoggerListener implements Listener {
     @EventHandler
     public void onDeath(EntityDeathEvent event) {
         if (GameState.getState() == GameState.INGAME || GameState.getState() == GameState.MEETUP) {
-            if (event.getEntity() instanceof ArmorStand && event.getEntity().isCustomNameVisible() && event.getEntity().getCustomName() != null) {
+            if (event.getEntity() instanceof ArmorStand) {
                 ArmorStand armorStand = (ArmorStand) event.getEntity();
 
                 String name = armorStand.getName();
@@ -97,7 +97,6 @@ public class LoggerListener implements Listener {
 
             }
         }
-
     }
 
 

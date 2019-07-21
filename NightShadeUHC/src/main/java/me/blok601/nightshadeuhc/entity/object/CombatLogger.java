@@ -88,7 +88,9 @@ public class CombatLogger {
                 if (logOutTimer == 0) {
                     this.cancel();
                     logOutTimer = -10;
-                    ChatUtils.sendAll("&4" + loggerName + " &7(Logger) &4 was logged out for too long.");
+                    ChatUtils.sendAll("&4" + loggerName + "  &4 was logged out for too long.");
+                    nameHologram.getLineBelow().despawn();
+                    nameHologram.despawn();
                     if (loggerP != null || loggerP.isOnline()) {
                         UHC.loggedOutPlayers.remove(loggerP.getUniqueId());
                     } else {
