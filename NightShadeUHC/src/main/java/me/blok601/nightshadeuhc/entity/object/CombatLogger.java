@@ -71,7 +71,7 @@ public class CombatLogger {
         armorStand.getEquipment().setArmorContents(getArmor());
         //this.freeze();
 
-        nameHologram = HologramAPI.createHologram(this.location.add(0, 2.5, 0), ChatUtils.format("&b&l" + loggerName + "'s Logger"));
+        nameHologram = HologramAPI.createHologram(this.location.add(0, 2.5, 0), ChatUtils.format("&b&l" + loggerName));
         nameHologram.spawn();
         nameHologram.addLineBelow(ChatUtils.format("&a&l5:00"));
 
