@@ -1,5 +1,7 @@
 package me.blok601.nightshadeuhc.listener.game;
 
+import com.nightshadepvp.core.Core;
+import com.nightshadepvp.core.Logger;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.command.staff.PvPCommand;
 import me.blok601.nightshadeuhc.entity.object.CombatLogger;
@@ -93,6 +95,8 @@ public class LoggerListener implements Listener {
                     logger.getArmorStand().getWorld().strikeLightningEffect(logger.getArmorStand().getLocation().add(0, 10, 0));
                     LoggerManager.getInstance().getDeadLoggers().add(logger.getUuid());
                     logger.remove();
+                }else{
+                    Core.get().getLogManager().log(Logger.LogType.DEBUG, "Logger was null here!");
                 }
 
             }
