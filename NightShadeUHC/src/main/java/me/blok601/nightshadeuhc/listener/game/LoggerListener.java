@@ -67,8 +67,7 @@ public class LoggerListener implements Listener {
         if (GameState.gameHasStarted()) {
             if (event.getEntity() instanceof ArmorStand) {
                 ArmorStand armorStand = (ArmorStand) event.getEntity();
-                
-                String name = armorStand.getName();
+
 
                 CombatLogger logger = LoggerManager.getInstance().getLogger(armorStand.getEntityId());
 
@@ -94,7 +93,7 @@ public class LoggerListener implements Listener {
                     GameManager.get().getInvs().put(logger.getUuid(), object);
 
                     //Bukkit.broadcastMessage(ChatUtils.format("&5" + name + " (Logger) &9 was killed"));
-                    ChatUtils.sendAll("&4" + name + " &7(Logger) &4was killed.");
+                    ChatUtils.sendAll("&7" + logger.getPlayerName() + " &7(Logger) &4was killed.");
                     logger.getArmorStand().getWorld().strikeLightningEffect(logger.getArmorStand().getLocation().add(0, 10, 0));
                     LoggerManager.getInstance().getDeadLoggers().add(logger.getUuid());
                     logger.remove();
