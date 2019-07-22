@@ -11,12 +11,15 @@ import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.manager.LoggerManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import org.bukkit.Material;
-import org.bukkit.entity.*;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.ExperienceOrb;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -60,17 +63,17 @@ public class LoggerListener implements Listener {
 
 
     @EventHandler
-    public void onDeath(EntityDeathEvent event) {
-        if (GameState.getState() == GameState.INGAME || GameState.getState() == GameState.MEETUP) {
+    public void onDeath(EntityDamageEvent event) {
+        if (GameState.gameHasStarted()) {
             if (event.getEntity() instanceof ArmorStand) {
                 ArmorStand armorStand = (ArmorStand) event.getEntity();
-
+                
                 String name = armorStand.getName();
 
                 CombatLogger logger = LoggerManager.getInstance().getLogger(armorStand.getEntityId());
 
                 if (logger != null) {
-                    event.getDrops().clear();
+                    //event.getDrops().clear();
 
                     for (ItemStack itemStack : logger.getInventory()) {
                         if(itemStack == null || itemStack.getType() == Material.AIR) continue;
