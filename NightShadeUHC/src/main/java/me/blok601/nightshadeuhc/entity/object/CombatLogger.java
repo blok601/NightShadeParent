@@ -28,6 +28,7 @@ public class CombatLogger {
 
     private Player loggerP;
     private String loggerName;
+    private String playerName;
 
     private ArmorStand armorStand;
     private Hologram nameHologram;
@@ -47,6 +48,7 @@ public class CombatLogger {
     public CombatLogger(Player logger) {
         this.loggerName = ChatUtils.format("&b&l" + logger.getName() + "'s Logger");
         this.loggerP = logger;
+        this.playerName = logger.getName();
         this.armor = logger.getInventory().getArmorContents();
         this.inventory = logger.getInventory().getContents();
         this.health = logger.getHealth();
@@ -139,8 +141,6 @@ public class CombatLogger {
 
             }
         }.runTaskTimer(UHC.get(), 0, Util.TICKS).getTaskId();
-
-
     }
 
     public void remove() {
@@ -209,5 +209,7 @@ public class CombatLogger {
         return nameHologram;
     }
 
-
+    public String getPlayerName() {
+        return playerName;
+    }
 }

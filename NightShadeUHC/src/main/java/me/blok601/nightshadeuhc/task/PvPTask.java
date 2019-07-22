@@ -1,12 +1,10 @@
 package me.blok601.nightshadeuhc.task;
 
 import com.massivecraft.massivecore.nms.NmsChat;
-import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.command.staff.PvPCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
 import me.blok601.nightshadeuhc.event.PvPEnableEvent;
-import me.blok601.nightshadeuhc.util.ActionBarUtil;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
@@ -59,7 +57,7 @@ public class PvPTask extends BukkitRunnable {
         }
 
         Bukkit.getOnlinePlayers().forEach((Consumer<Player>) player -> {
-            NmsChat.get().sendActionbarMessage(player, "§5PvP enabled in " + formatTime(counter));
+            NmsChat.get().sendActionbarMessage(player, "§bPvP §8» " + formatTime(counter));
         });
 
 
@@ -72,6 +70,6 @@ public class PvPTask extends BukkitRunnable {
         int m = i / 60;
         int s = i % 60;
 
-        return "§3" + m + "§5m§3" + s + "§5s";
+        return "§b" + m + "§fm§b" + s + "§fs";
     }
 }

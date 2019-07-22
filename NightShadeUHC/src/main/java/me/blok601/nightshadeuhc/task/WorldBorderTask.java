@@ -42,7 +42,7 @@ public class WorldBorderTask extends BukkitRunnable {
                 Util.staffLog("The border will shrink in 5 minutes!");
                 ChatUtils.sendBorderMessage("The border will shrink to " + gameManager.getFirstShrink() + " radius in 5 minutes");
                 Bukkit.getOnlinePlayers().forEach((Consumer<Player>) player -> {
-                    ActionBarUtil.sendActionBarMessage(player, "§5Shrink to " + gameManager.getFirstShrink() + "radius in " + get(counter), 1, UHC.get());
+                    ActionBarUtil.sendActionBarMessage(player, "§bShrink to " + gameManager.getFirstShrink() + " radius in " + get(counter), 1, UHC.get());
                 });
             } else if (MathUtils.isBetween(10, 0, counter)) {
                 ChatUtils.sendBorderMessage("The border will shrink to " + gameManager.getFirstShrink() + " radius in " + counter);
@@ -70,6 +70,6 @@ public class WorldBorderTask extends BukkitRunnable {
         int m = i / 60;
         int s = i % 60;
 
-        return "§b" + m + "§5m§3" + s + "§bs";
+        return "§b" + m + "§fm§b" + s + "§fs";
     }
 }

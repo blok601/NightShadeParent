@@ -146,7 +146,7 @@ public class GameListener implements Listener {
                 }
 
                 Bukkit.getOnlinePlayers().forEach(player ->{
-                    ActionBarUtil.sendActionBarMessage(player, "§5Border shrink in " + get(WorldBorderTask.counter));
+                    ActionBarUtil.sendActionBarMessage(player, "§bBorder Shrink §8» " + get(WorldBorderTask.counter));
                 });
             }
         }.runTaskTimer(uhc, 0, 20);
@@ -288,7 +288,7 @@ public class GameListener implements Listener {
         int m = i/60;
         int s = i%60;
 
-        return "§b" + m + "§5m§b" + s + "§5s";
+        return "§b" + m + "§fm§b" + s + "§fs";
     }
 
 }

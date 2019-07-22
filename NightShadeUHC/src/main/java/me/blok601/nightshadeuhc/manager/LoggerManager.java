@@ -25,7 +25,7 @@ public class LoggerManager {
 
     public CombatLogger getLogger(String logger) {
         for (CombatLogger combatLogger : loggers) {
-            if (combatLogger.getLoggerName().equalsIgnoreCase(logger)) {
+            if (combatLogger.getPlayerName().equalsIgnoreCase(logger)) {
                 return combatLogger;
             }
         }
