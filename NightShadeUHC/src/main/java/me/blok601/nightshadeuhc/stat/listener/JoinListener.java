@@ -201,7 +201,7 @@ public class JoinListener implements Listener {
             return;
         }
 
-        if (gamePlayer.getPlayerStatus() == PlayerStatus.PLAYING) {
+        if (gamePlayer.getPlayerStatus() == PlayerStatus.PLAYING && PlayerUtils.inGameWorld(p)) {
 
             if (GameState.getState() == GameState.INGAME || GameState.getState() == GameState.MEETUP) {
                 CombatLogger logger = LoggerManager.getInstance().getLogger(e.getPlayer().getName());
@@ -227,7 +227,7 @@ public class JoinListener implements Listener {
             return;
         }
 
-        if (gamePlayer.getPlayerStatus() == PlayerStatus.PLAYING) {
+        if (gamePlayer.getPlayerStatus() == PlayerStatus.PLAYING && PlayerUtils.inGameWorld(p)) {
             if (GameState.getState() == GameState.INGAME || GameState.getState() == GameState.MEETUP) {
                 CombatLogger logger = LoggerManager.getInstance().getLogger(e.getPlayer().getName());
                 if (logger == null) { // create a logger, cause its null :D
