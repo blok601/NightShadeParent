@@ -12,6 +12,7 @@ import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.manager.LoggerManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -62,7 +63,7 @@ public class LoggerListener implements Listener {
 
     @EventHandler
     public void onDeath(EntityDamageByEntityEvent event) {
-        if (GameState.gameHasStarted()) {
+        if (GameState.gameHasStarted() && PvPCommand.isEnabled()) {
             if (event.getEntity() instanceof ArmorStand) {
                 ArmorStand armorStand = (ArmorStand) event.getEntity();
 
@@ -70,6 +71,8 @@ public class LoggerListener implements Listener {
                     CombatLogger logger = LoggerManager.getInstance().getLogger(armorStand.getEntityId());
                     if (logger != null) {
                         //event.getDrops().clear();
+
+                        if(Bukkit.getPlayer(logger.getPlayerName()) != null) return; //Trying to kill a logger of an online player -> not good
 
                         Player killer;
                         if (event.getDamager() instanceof Player) {

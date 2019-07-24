@@ -147,10 +147,10 @@ public class CombatLogger {
 
         this.logOutTimer = -11;
         Bukkit.getServer().getScheduler().cancelTask(getTaskID());
-        armorStand.remove();
         nameHologram.removeLineBelow();
         nameHologram.despawn();
         LoggerManager.getInstance().removeLogger(this);
+        armorStand.remove();
 
     }
 
