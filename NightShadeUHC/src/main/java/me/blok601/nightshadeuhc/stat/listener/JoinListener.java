@@ -31,7 +31,6 @@ import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
@@ -74,20 +73,20 @@ public class JoinListener implements Listener {
             }
         }
 
-        if (NSPlayer.get(player).hasRank(Rank.OWNER)) {
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    FakePlayerManager.getInstance().getNpcs().forEach(fakePlayer -> {
-                        fakePlayer.spawnFor(player);
-                    });
-                }
-            }.runTaskLater(uhc, 15L);
-        }
+//        if (NSPlayer.get(player).hasRank(Rank.OWNER)) {
+//            new BukkitRunnable() {
+//                @Override
+//                public void run() {
+//                    FakePlayerManager.getInstance().getNpcs().forEach(fakePlayer -> {
+//                        fakePlayer.spawnFor(player);
+//                    });
+//                }
+//            }.runTaskLater(uhc, 15L);
+//        }
         
         if (gamePlayer.isSpectator()) return;
         if (GameState.getState() == GameState.INGAME || GameState.getState() == GameState.MEETUP) {
-            CombatLogger logger = LoggerManager.getInstance().getLogger(e.getPlayer().getName());
+            CombatLogger logger = LoggerManager.getInstance().getLogger(player.getName());
             if (logger != null) {
                 logger.remove();
             }
