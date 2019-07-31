@@ -56,7 +56,7 @@ public class CombatLogger {
         this.exp = logger.getExp();
         this.uuid = logger.getUniqueId();
         this.location = logger.getLocation();
-        this.logOutTimer = 300;
+        this.logOutTimer = 600;
 
         armorStand = (ArmorStand) logger.getLocation().getWorld().spawnEntity(logger.getLocation(), EntityType.ARMOR_STAND);
         armorStand.setMetadata("logger", new FixedMetadataValue(UHC.get(), "logger"));
@@ -82,6 +82,12 @@ public class CombatLogger {
                 if (logOutTimer == 0) {
                     this.cancel();
                     logOutTimer = -10;
+                    if (loggerP != null || loggerP.isOnline()) {
+                        UHC.loggedOutPlayers.remove(loggerP.getUniqueId());
+                        nameHologram.getLineBelow().despawn();
+                        nameHologram.despawn();
+                        return;
+                    }
                     ChatUtils.sendAll("&4" + loggerName + "  &4 was logged out for too long.");
                     nameHologram.getLineBelow().despawn();
                     nameHologram.despawn();
@@ -92,22 +98,23 @@ public class CombatLogger {
                         if (offlinePlayer == null) return;
                         if (offlinePlayer.hasPlayedBefore()) {
                             UHC.loggedOutPlayers.remove(offlinePlayer.getUniqueId());
+                            for (ItemStack itemStack : getInventory()) {
+                                if (itemStack == null || itemStack.getType() == Material.AIR) continue;
+                                getArmorStand().getWorld().dropItem(getArmorStand().getLocation(), itemStack);
+                            }
+
+                            for (ItemStack itemStack : getArmor()) {
+                                if (itemStack == null || itemStack.getType() == Material.AIR) continue;
+                                getArmorStand().getWorld().dropItem(getArmorStand().getLocation(), itemStack);
+                            }
+
+                            LoggerManager.getInstance().getDeadLoggers().add(getUuid());
+                            armorStand.remove();
+                            return;
                         }
                     }
 
-                    for (ItemStack itemStack : getInventory()) {
-                        if (itemStack == null || itemStack.getType() == Material.AIR) continue;
-                        getArmorStand().getWorld().dropItem(getArmorStand().getLocation(), itemStack);
-                    }
 
-                    for (ItemStack itemStack : getArmor()) {
-                        if (itemStack == null || itemStack.getType() == Material.AIR) continue;
-                        getArmorStand().getWorld().dropItem(getArmorStand().getLocation(), itemStack);
-                    }
-
-                    LoggerManager.getInstance().getDeadLoggers().add(getUuid());
-                    armorStand.remove();
-                    return;
                 }
 
                 //Every second

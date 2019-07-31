@@ -1,5 +1,6 @@
 package me.blok601.nightshadeuhc.scenario;
 
+import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -27,6 +28,7 @@ public class FlowerPowerScenario extends Scenario {
     public FlowerPowerScenario() {
         super("FlowerPower", "Breaking flowers gets you random flowerTypes", new ItemBuilder(Material.YELLOW_FLOWER).name("Flower Power").make());
     }
+
 
     @EventHandler
     public void onBreak(BlockBreakEvent e) {
