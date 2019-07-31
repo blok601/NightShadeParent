@@ -107,17 +107,8 @@ public class JoinListener implements Listener {
         if (gameManager.getRespawnQueue().contains(player.getName().toLowerCase())) {
             // They should be respawned
             //TODO: Stopped here
-            gameManager.getRespawnQueue().remove(player.getName().toLowerCase());
-            PlayerRespawn obj = gameManager.getInvs().get(player.getUniqueId());
-            player.teleport(obj.getLocation());
-            gamePlayer.setPlayerStatus(PlayerStatus.PLAYING);
-            player.getInventory().setArmorContents(obj.getArmor());
-            player.getInventory().setContents(obj.getItems());
-            if (gamePlayer.isSpectator()) {
-                gamePlayer.unspec();
-            }
-
             if (gamePlayer.isStaffMode()) {
+                gamePlayer.unspec();
                 Bukkit.getOnlinePlayers().forEach(o -> o.showPlayer(player));
                 player.getActivePotionEffects().forEach(potionEffect -> player.removePotionEffect(potionEffect.getType()));
                 gamePlayer.setStaffMode(false);
@@ -125,6 +116,14 @@ public class JoinListener implements Listener {
                 gamePlayer.getPlayer().getInventory().setArmorContents(null);
                 gamePlayer.getPlayer().chat("/rea");
             }
+
+            gameManager.getRespawnQueue().remove(player.getName().toLowerCase());
+            PlayerRespawn obj = gameManager.getInvs().get(player.getUniqueId());
+            player.teleport(obj.getLocation());
+            gamePlayer.setPlayerStatus(PlayerStatus.PLAYING);
+            player.getInventory().setArmorContents(obj.getArmor());
+            player.getInventory().setContents(obj.getItems());
+
 
             if (gamePlayer.isVanished()) gamePlayer.unVanish();
 

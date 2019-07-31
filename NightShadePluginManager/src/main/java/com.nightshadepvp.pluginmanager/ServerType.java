@@ -8,7 +8,7 @@ import java.util.List;
  */
 public enum ServerType {
 
-    UHC(Collections.singletonList("UHC.jar")), HUB(Collections.singletonList("Hub.jar")), MINIGAME(Collections.emptyList());
+    UHC(Collections.singletonList("UHC.jar")), HUB(Collections.singletonList("Hub.jar")), MINIGAME(Collections.emptyList()), TOURNAMENT(Collections.singletonList("Tournament.jar"));
 
     private List<String> need;
 

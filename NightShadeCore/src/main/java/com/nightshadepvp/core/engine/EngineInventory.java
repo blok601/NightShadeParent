@@ -63,15 +63,6 @@ public class EngineInventory extends Engine {
                     p.sendMessage(ChatUtils.message("&cYou can't set a rank to higher than your own!"));
                     return;
                 }
-
-
-                //   NSPlayer user = SetRankCommand.update.get(p.getUniqueId());
-
-                //TODO: RE-WRITE
-
-                // p.sendMessage(ChatUtils.message("&eUpdated &a" + user.getName() + "'s &erank to &a" + rank.toString()));
-                //Bukkit.getPluginManager().callEvent(new RankChangeEvent(user.getUuid(), rank));
-
             }
 
             if (inv.getName().contains("Stats")) {

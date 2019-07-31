@@ -10,6 +10,7 @@ import net.md_5.bungee.event.EventHandler;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by Blok on 1/2/2019.
@@ -34,7 +35,18 @@ public class ServerListener implements Listener {
             ServerInfo serverInfo;
             for (Map.Entry<String, ServerInfo> entry : servers.entrySet()){
                 String name = entry.getKey();
+                AtomicBoolean send = new AtomicBoolean(true);
                 serverInfo = nightShadeProxy.getProxy().getServerInfo(name);
+                serverInfo.ping((result, error) -> {
+                    if (error != null) {
+                        //Offline
+                        send.set(false);
+                    }
+                });
+
+                if (!send.get()) {
+                    continue;
+                }
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 DataOutputStream out = new DataOutputStream(stream);

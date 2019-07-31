@@ -58,20 +58,11 @@ public class CombatLogger {
         this.location = logger.getLocation();
         this.logOutTimer = 300;
 
-        //zombie = (Zombie) logger.getLocation().getWorld().spawnEntity(logger.getLocation(), EntityType.ZOMBIE);
         armorStand = (ArmorStand) logger.getLocation().getWorld().spawnEntity(logger.getLocation(), EntityType.ARMOR_STAND);
-        //zombie.setMetadata("logger", new FixedMetadataValue(UHC.get(), "logger"));
         armorStand.setMetadata("logger", new FixedMetadataValue(UHC.get(), "logger"));
-
-        //zombie.setCustomNameVisible(true);
-        //zombie.setCustomName(logger.getName());
-//        armorStand.setCustomNameVisible(true);
-//        armorStand.setCustomName(logger.getName());
-
         armorStand.setMaxHealth(logger.getMaxHealth());
         armorStand.setHealth(logger.getHealth());
         armorStand.getEquipment().setArmorContents(getArmor());
-        //this.freeze();
 
         nameHologram = HologramAPI.createHologram(this.location.add(0, 2.5, 0), ChatUtils.format("&b&l" + loggerName));
         nameHologram.spawn();

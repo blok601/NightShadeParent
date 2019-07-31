@@ -316,8 +316,8 @@ public class GameDeathListener implements Listener {
             p.sendMessage(ChatUtils.format("&f&m----------------------------"));
             p.playSound(p.getLocation(), Sound.LEVEL_UP, 5F, 5F);
             p.sendMessage(ChatUtils.message("&bYour Game Stats:"));
-        p.sendMessage(ChatUtils.format("      " + (uhcPlayer.getChangedLevel() >= 0 ? "&a&o+" + changed + " points" : "&c&o-" + changed + " points")));
-            p.sendMessage(ChatUtils.format("      &bCurrent Points: &f" + decimalFormat.format(uhcPlayer.getPoints())));
+        //p.sendMessage(ChatUtils.format("      " + (uhcPlayer.getChangedLevel() >= 0 ? "&a&o+" + changed + " points" : "&c&o-" + changed + " points")));
+        // p.sendMessage(ChatUtils.format("      &bCurrent Points: &f" + decimalFormat.format(uhcPlayer.getPoints())));
         p.sendMessage(ChatUtils.format("      &bKills: " + GameManager.get().getKills().getOrDefault(uhcPlayer.getUuid(), 0)));
             p.sendMessage(ChatUtils.format("&f&m----------------------------"));
             //GameManager.get().getPointChanges().remove(p.getUniqueId());
@@ -336,6 +336,7 @@ public class GameDeathListener implements Listener {
             new BukkitRunnable() {
                 @Override
                 public void run() {
+                    if(uhcPlayer.getPlayerStatus() == PlayerStatus.PLAYING) return;
                     if (p.isOnline()) {
                         p.kickPlayer("You have died! Follow us on twitter @NightShadePvPMC for more!");
                     }

@@ -1,7 +1,7 @@
 package com.nightshadepvp.pluginmanager;
 
 
-import com.nightshadepvp.pluginmanager.commnads.VersionsCommand;
+import com.nightshadepvp.pluginmanager.commands.VersionsCommand;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -30,6 +30,8 @@ public class PluginManager extends JavaPlugin {
                 serverType = ServerType.UHC;
             } else if (file.getName().equalsIgnoreCase("Hub.jar")) {
                 serverType = ServerType.HUB;
+            } else if (file.getName().equalsIgnoreCase("Tournament.jar")) {
+                serverType = ServerType.TOURNAMENT;
             }
         }
     }
@@ -69,7 +71,7 @@ public class PluginManager extends JavaPlugin {
 
             try {
                 FileUtils.copyFileToDirectory(file, pluginsDir);
-                Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.GREEN + "Success" + ChatColor.DARK_GRAY + "] " + ChatColor.DARK_RED + "Copied " + file.getName() + " successfully!");
+                Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.GREEN + "Success" + ChatColor.DARK_GRAY + "] " + ChatColor.GREEN + "Copied " + file.getName() + " successfully!");
             } catch (IOException e) {
                 Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.RED + "Severe" + ChatColor.DARK_GRAY + "] " + ChatColor.DARK_RED + "IO Exception!");
                 e.printStackTrace();
