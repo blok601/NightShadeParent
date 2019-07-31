@@ -2,6 +2,7 @@ package com.nightshadepvp.tournament.entity.objects.game;
 
 import com.massivecraft.massivecore.store.SenderEntity;
 import com.massivecraft.massivecore.util.MUtil;
+import com.nightshadepvp.core.fanciful.FancyMessage;
 import com.nightshadepvp.tournament.Tournament;
 import com.nightshadepvp.tournament.entity.TPlayer;
 import com.nightshadepvp.tournament.entity.enums.MatchState;
@@ -11,7 +12,6 @@ import com.nightshadepvp.tournament.entity.handler.InventoryManager;
 import com.nightshadepvp.tournament.entity.objects.data.Arena;
 import com.nightshadepvp.tournament.entity.objects.data.Kit;
 import com.nightshadepvp.tournament.entity.objects.player.PlayerInv;
-import com.nightshadepvp.tournament.mkremins.fanciful.FancyMessage;
 import com.nightshadepvp.tournament.scoreboard.ScoreboardLib;
 import com.nightshadepvp.tournament.scoreboard.ScoreboardSettings;
 import com.nightshadepvp.tournament.scoreboard.common.EntryBuilder;
