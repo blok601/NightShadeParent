@@ -53,6 +53,7 @@ public class ScenarioManager implements UHCCommand{
         addScen(new BloodDiamondsScenario(), "BD");
         addScen(new BloodStoneScenario());
         addScen(new BomberScenario());
+        addScen(new HealthDonorScenario());
         addScen(new BowlessScenario());
         addScen(new ChickenScenario());
         addScen(new ColdWeaponsScenario(), "CW");
