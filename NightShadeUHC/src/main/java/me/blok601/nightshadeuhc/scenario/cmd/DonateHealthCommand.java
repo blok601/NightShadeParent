@@ -10,7 +10,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class DonateHealthCommand implements UHCCommand {
+public class DonateHealthCommand implements UHCCommand{
+
     private ScenarioManager scenarioManager;
 
     public DonateHealthCommand(ScenarioManager scenarioManager) {
@@ -32,6 +33,11 @@ public class DonateHealthCommand implements UHCCommand {
             p.sendMessage(ChatUtils.message("&cHealth donor is not enabled!"));
         }
         Player target = Bukkit.getPlayer(args[0]);
+
+        if( target == p) {
+            p.sendMessage(ChatUtils.message("&cYou cannot donate health to yourself!"));
+
+        }
 
         if (target == null) {
             p.sendMessage(ChatUtils.message("&cYou must specify a valid online player!"));
