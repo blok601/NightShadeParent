@@ -20,7 +20,7 @@ public class DonateHealthCommand implements UHCCommand {
     @Override
     public String[] getNames() {
         return new String[]{
-                "explain"
+                "donatehealth"
         };
     }
 
