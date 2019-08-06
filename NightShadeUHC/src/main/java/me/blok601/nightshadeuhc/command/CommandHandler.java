@@ -106,6 +106,7 @@ public class CommandHandler  {
         registerCommand(new SetArenaSpawnCommand());
         registerCommand(new ArenaCommand());
         registerCommand(new WallsCommand());
+        registerCommand(new DonateHealthCommand(scenarioManager));
         registerCommand(new CancelPregenCommand());
         registerCommand(new PowerCommand(scenarioManager));
         registerCommand(new AssignPowerCommand(scenarioManager));

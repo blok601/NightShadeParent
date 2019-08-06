@@ -49,6 +49,8 @@ commands:
     description: Send a message to the online staff
   pvp:
     description: Enable/Disable PvP
+  donatehealth:
+    description: Donates health in health donor games
   lct:
     description: Check how much longer until lootcrates are given
   cancelgame:
