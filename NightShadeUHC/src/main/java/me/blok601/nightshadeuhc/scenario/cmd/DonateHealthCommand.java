@@ -1,7 +1,10 @@
 package me.blok601.nightshadeuhc.scenario.cmd;
 
 import com.nightshadepvp.core.Rank;
+import com.nightshadepvp.core.entity.NSPlayer;
 import me.blok601.nightshadeuhc.command.UHCCommand;
+import me.blok601.nightshadeuhc.entity.UHCPlayer;
+import me.blok601.nightshadeuhc.entity.object.PlayerStatus;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import org.bukkit.Bukkit;
@@ -34,52 +37,63 @@ public class DonateHealthCommand implements UHCCommand{
         }
         Player target = Bukkit.getPlayer(args[0]);
 
-        if( target == p) {
-            p.sendMessage(ChatUtils.message("&cYou cannot donate health to yourself!"));
-
-        }
-
-        if (target == null) {
-            p.sendMessage(ChatUtils.message("&cYou must specify a valid online player!"));
-        }
-        if (args.length == 1) {
-            p.sendMessage(ChatUtils.message("&cYou must specify an amount of health to donate!"));
-
-        }
-        try {
-            int donate = Integer.parseInt(args[1]);
-            if (p.getHealth() <= donate) {
-                p.sendMessage(ChatUtils.message("&cYou cannot donate more health than you have!"));
-            }
-            if (donate < 1) {
-                p.sendMessage(ChatUtils.message("&cYou cannot donate negative health!"));
-            }
-            double healthdiff = target.getMaxHealth() - target.getHealth();
-
-            p.setHealth(p.getHealth() - donate);
-            p.playSound(p.getLocation(), Sound.BAT_DEATH, 5, 5 );
-            p.sendMessage(ChatUtils.message("&3Successfully Donated Health to " +target.getName() + "!"));
-
-
-            if (target.getHealth() + (double) donate > target.getMaxHealth()) {
-                double addhealth = donate - healthdiff;
-                target.setMaxHealth(target.getMaxHealth() + addhealth);
-                target.setHealth(target.getMaxHealth());
-                target.sendMessage(ChatUtils.message("&3 Someone donated you " + donate + " health, and thus your max health has increased!!"));
-
-            }
-            else {
-                target.setHealth(target.getHealth() + donate);
-                target.sendMessage(ChatUtils.message("&3 Someone donated you " + donate + " health!"));
+        UHCPlayer uhcp = (UHCPlayer) p;
+        if (uhcp.getPlayerStatus() == PlayerStatus.PLAYING) {
+            if( target == p) {
+                p.sendMessage(ChatUtils.message("&cYou cannot donate health to yourself!"));
 
             }
 
+            if (target == null) {
+                p.sendMessage(ChatUtils.message("&cYou must specify a valid online player!"));
+            }
+            if (args.length == 1) {
+                p.sendMessage(ChatUtils.message("&cYou must specify an amount of health to donate!"));
+
+            }
+            try {
+                int donate = Integer.parseInt(args[1]);
+                if (p.getHealth() <= donate) {
+                    p.sendMessage(ChatUtils.message("&cYou cannot donate more health than you have!"));
+                }
+                if (donate < 1) {
+                    p.sendMessage(ChatUtils.message("&cYou cannot donate negative health!"));
+                }
+                double healthdiff = target.getMaxHealth() - target.getHealth();
+
+                p.setHealth(p.getHealth() - donate);
+                p.playSound(p.getLocation(), Sound.BAT_DEATH, 5, 5 );
+                p.sendMessage(ChatUtils.message("&3Successfully Donated Health to " +target.getName() + "!"));
 
 
-        } catch (NumberFormatException e) {
-            p.sendMessage(ChatUtils.message("&cAmount of health must be an integer!"));
+                if (target.getHealth() + (double) donate > target.getMaxHealth()) {
+                    double addhealth = donate - healthdiff;
+                    target.setMaxHealth(target.getMaxHealth() + addhealth);
+                    target.setHealth(target.getMaxHealth());
+                    target.sendMessage(ChatUtils.message("&3 Someone donated you " + donate + " health, and thus your max health has increased!!"));
+
+                }
+                else {
+                    target.setHealth(target.getHealth() + donate);
+                    target.sendMessage(ChatUtils.message("&3 Someone donated you " + donate + " health!"));
+
+                }
+
+
+
+            } catch (NumberFormatException e) {
+                p.sendMessage(ChatUtils.message("&cAmount of health must be an integer!"));
+
+            }
 
         }
+        else {
+            p.sendMessage(ChatUtils.message("&cYou must be playing the UHC to donate!"));
+
+        }
+
+
+
     }
 
     @Override
