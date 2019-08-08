@@ -45,7 +45,7 @@ public class DonateHealthCommand implements UHCCommand{
         }
         Player target = Bukkit.getPlayer(args[0]);
 
-        if (p.getWorld() != GameManager.get().getWorld() || p.getGameMode() != GameMode.SURVIVAL) {
+        if (p.getWorld() == GameManager.get().getWorld() || p.getGameMode() == GameMode.SURVIVAL) {
 
             if( target == p) {
                 p.sendMessage(ChatUtils.message("&cYou cannot donate health to yourself!"));
