@@ -5,9 +5,11 @@ import com.nightshadepvp.core.entity.NSPlayer;
 import me.blok601.nightshadeuhc.command.UHCCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.object.PlayerStatus;
+import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -36,10 +38,15 @@ public class DonateHealthCommand implements UHCCommand{
             p.sendMessage(ChatUtils.message("&cHealth donor is not enabled!"));
             return;
         }
+        if (args.length == 0) {
+            p.sendMessage(ChatUtils.message("&cYou must specify a player!"));
+            return;
+
+        }
         Player target = Bukkit.getPlayer(args[0]);
 
-        UHCPlayer uhcp = (UHCPlayer) p;
-        if (uhcp.getPlayerStatus() == PlayerStatus.PLAYING) {
+        if (p.getWorld() != GameManager.get().getWorld() || p.getGameMode() != GameMode.SURVIVAL) {
+
             if( target == p) {
                 p.sendMessage(ChatUtils.message("&cYou cannot donate health to yourself!"));
                 return;
