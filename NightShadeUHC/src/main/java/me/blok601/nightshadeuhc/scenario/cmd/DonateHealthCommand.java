@@ -34,6 +34,7 @@ public class DonateHealthCommand implements UHCCommand{
 
         if (!scenarioManager.getScen("Health Donor").isEnabled()) {
             p.sendMessage(ChatUtils.message("&cHealth donor is not enabled!"));
+            return;
         }
         Player target = Bukkit.getPlayer(args[0]);
 
@@ -41,23 +42,28 @@ public class DonateHealthCommand implements UHCCommand{
         if (uhcp.getPlayerStatus() == PlayerStatus.PLAYING) {
             if( target == p) {
                 p.sendMessage(ChatUtils.message("&cYou cannot donate health to yourself!"));
+                return;
 
             }
 
             if (target == null) {
                 p.sendMessage(ChatUtils.message("&cYou must specify a valid online player!"));
+                return;
             }
             if (args.length == 1) {
                 p.sendMessage(ChatUtils.message("&cYou must specify an amount of health to donate!"));
+                return;
 
             }
             try {
                 int donate = Integer.parseInt(args[1]);
                 if (p.getHealth() <= donate) {
                     p.sendMessage(ChatUtils.message("&cYou cannot donate more health than you have!"));
+                    return;
                 }
                 if (donate < 1) {
                     p.sendMessage(ChatUtils.message("&cYou cannot donate negative health!"));
+                    return;
                 }
                 double healthdiff = target.getMaxHealth() - target.getHealth();
 
@@ -83,14 +89,17 @@ public class DonateHealthCommand implements UHCCommand{
 
             } catch (NumberFormatException e) {
                 p.sendMessage(ChatUtils.message("&cAmount of health must be an integer!"));
+                return;
 
             }
 
         }
         else {
             p.sendMessage(ChatUtils.message("&cYou must be playing the UHC to donate!"));
+            return;
 
         }
+        return;
 
 
 
