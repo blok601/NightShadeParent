@@ -75,7 +75,6 @@ public class DonateHealthCommand implements UHCCommand{
                 double healthdiff = target.getMaxHealth() - target.getHealth();
 
                 p.setHealth(p.getHealth() - donate);
-                p.playSound(p.getLocation(), Sound.BAT_DEATH, 5, 5 );
                 p.sendMessage(ChatUtils.message("&3Successfully Donated Health to " +target.getName() + "!"));
 
 
