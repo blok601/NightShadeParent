@@ -9,6 +9,7 @@ import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -23,6 +24,7 @@ public class SevenDeadlySinsScenario extends Scenario{
         gm = gmc;
     }
 
+    @EventHandler
     public void onstart (GameStartEvent e) {
         for (Team team : TeamManager.getInstance().getTeams()) {
             int count = 0;
