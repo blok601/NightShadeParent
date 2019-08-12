@@ -127,5 +127,25 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>at.stefangeyer.challonge</groupId>
+            <artifactId>core</artifactId>
+            <version>2.0.1</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>at.stefangeyer.challonge.serializer</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.0.1</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>at.stefangeyer.challonge.rest</groupId>
+            <artifactId>retrofit</artifactId>
+            <version>2.0.1</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>
