@@ -14,7 +14,20 @@ public enum Perm implements Identified
 	CHECK,
 	ADD,
 	REMOVE,
-	SET;
+	SET,
+	SURVIVAL,
+	S,
+	CREATIVE,
+	C,
+	SPECTATOR,
+	SP,
+	SPEC,
+	ADVENTURE,
+	A,
+	STORM,
+	RAIN,
+	CLEAR,
+	SUN;
 	
 	private final String id;
 	

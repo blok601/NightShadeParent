@@ -1,5 +1,9 @@
 package com.nightshadepvp.tournament.entity.handler;
 
+import at.stefangeyer.challonge.Challonge;
+import at.stefangeyer.challonge.model.Credentials;
+import at.stefangeyer.challonge.rest.retrofit.RetrofitRestClient;
+import at.stefangeyer.challonge.serializer.gson.GsonSerializer;
 import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Logger;
 import com.nightshadepvp.tournament.Tournament;
@@ -40,6 +44,9 @@ public class GameHandler {
     private int teamSize;
     private boolean chatFrozen;
 
+    private Challonge challonge;
+    private String bracketLink;
+
     private HashSet<String> whitelist;
     private boolean whitelistOn;
 
@@ -52,16 +59,19 @@ public class GameHandler {
 
 
     public void setup() {
-        kit = null;
-        teams = false;
-        host = null;
-        teamSize = 1;
-        seeded = false;
+        this.kit = null;
+        this.teams = false;
+        this.host = null;
+        this.teamSize = 1;
+        this.seeded = false;
         this.startRoundTask = null;
         this.teleportQueue = new HashMap<>();
         this.chatFrozen = false;
         this.whitelist = new HashSet<>();
         this.whitelistOn = false;
+
+        this.challonge = new Challonge(new Credentials("NightShadePvP", "PC4Qd6rMkNxBn4v7KKLTXJRGyDwlgOOdd6gnArUp"), new GsonSerializer(), new RetrofitRestClient());
+        this.bracketLink = "https://challonge.com/users/nightshadepvp/tournaments";
 
         Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
 
@@ -221,5 +231,17 @@ public class GameHandler {
 
     public void setWhitelistOn(boolean whitelistOn) {
         this.whitelistOn = whitelistOn;
+    }
+
+    public Challonge getChallonge() {
+        return challonge;
+    }
+
+    public String getBracketLink() {
+        return bracketLink;
+    }
+
+    public void setBracketLink(String bracketLink) {
+        this.bracketLink = bracketLink;
     }
 }

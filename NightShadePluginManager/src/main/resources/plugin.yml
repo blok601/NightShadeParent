@@ -5,3 +5,5 @@ description: NightShadePvP's Plugin Manager
 commands:
   versions:
     description: Displays the version of all the NightShade plugins on the server
+  depends:
+    description: View which plugins depend on a plugin

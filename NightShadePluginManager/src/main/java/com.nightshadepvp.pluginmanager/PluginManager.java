@@ -1,6 +1,7 @@
 package com.nightshadepvp.pluginmanager;
 
 
+import com.nightshadepvp.pluginmanager.commands.DependsCommand;
 import com.nightshadepvp.pluginmanager.commands.VersionsCommand;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
@@ -23,6 +24,7 @@ public class PluginManager extends JavaPlugin {
     public void onEnable() {
         i = this;
         getCommand("versions").setExecutor(new VersionsCommand());
+        getCommand("depends").setExecutor(new DependsCommand());
 
         File pluginsDir = new File(this.getServer().getWorldContainer() + "/plugins/");
         for (File file : pluginsDir.listFiles()) {

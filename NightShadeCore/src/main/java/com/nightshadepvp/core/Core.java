@@ -59,6 +59,9 @@ public class Core extends MassivePlugin implements PluginMessageListener {
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "staffchat");
         Bukkit.getMessenger().registerIncomingPluginChannel(this, "staffchat", this);
 
+        this.getServer().getMessenger().registerIncomingPluginChannel(this, "WDL|INIT", this);
+        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "WDL|CONTROL");
+
         getConfig().options().copyDefaults(true);
         saveConfig();
         Events.get().register(new LiteBansListener());
@@ -98,6 +101,8 @@ public class Core extends MassivePlugin implements PluginMessageListener {
     public void onDisable() {
         i = null;
         MConf.get().setAnnouncerMessages(this.announcer.getMessages());
+        this.getServer().getMessenger().unregisterIncomingPluginChannel(this, "WDL|INIT");
+        this.getServer().getMessenger().unregisterOutgoingPluginChannel(this, "WDL|CONTROL");
     }
 
 
@@ -161,6 +166,8 @@ public class Core extends MassivePlugin implements PluginMessageListener {
 
                 }
             }
+        } else if (channel.equals("WDL|INIT")) {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "kick " + player.getName() + " World Downloader Detected");
         }
     }
 

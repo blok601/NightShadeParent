@@ -1,5 +1,6 @@
 package com.nightshadepvp.tournament.entity;
 
+import at.stefangeyer.challonge.model.Participant;
 import com.massivecraft.massivecore.store.SenderEntity;
 import com.massivecraft.massivecore.util.MUtil;
 import com.nightshadepvp.core.utils.ItemBuilder;
@@ -50,6 +51,9 @@ public class TPlayer extends SenderEntity<TPlayer> {
     private boolean specMatchAlert = true;
 
     private transient int seed;
+    private transient Participant participant;
+
+    private transient Scoreboard scoreboard;
 
 
     private transient boolean spectator;
@@ -58,8 +62,6 @@ public class TPlayer extends SenderEntity<TPlayer> {
     private transient boolean staffMode;
     private transient PlayerStatus status;
     private transient boolean receivingHelpop;
-
-    private transient Scoreboard scoreboard;
 
     private transient Map<Kit, PlayerInv> playerKits = new HashMap<>();
 
@@ -372,5 +374,13 @@ public class TPlayer extends SenderEntity<TPlayer> {
 
     public boolean isSpecMatchAlert() {
         return specMatchAlert;
+    }
+
+    public Participant getParticipant() {
+        return participant;
+    }
+
+    public void setParticipant(Participant participant) {
+        this.participant = participant;
     }
 }
