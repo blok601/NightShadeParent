@@ -12,6 +12,8 @@ import com.nightshadepvp.core.utils.ChatUtils;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -194,5 +196,16 @@ public class EnginePlayer extends Engine {
 
         Core.get().getLoginTasks().get(player.getUniqueId()).forEach(uuidConsumer -> uuidConsumer.accept(player.getUniqueId()));
         Core.get().getLoginTasks().remove(player.getUniqueId());
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onSignChange(SignChangeEvent e) {
+        if (NSPlayer.get(e.getPlayer()).hasRank(Rank.Builder)) {
+            for (int i = 0; i <= 3; ++i) {
+                String line = e.getLine(i);
+                line = ChatUtils.format(line);
+                e.setLine(i, line);
+            }
+        }
     }
 }

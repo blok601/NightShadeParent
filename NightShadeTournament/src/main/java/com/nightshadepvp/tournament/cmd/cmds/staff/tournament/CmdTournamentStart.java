@@ -25,6 +25,9 @@ public class CmdTournamentStart extends NightShadeTournamentCommand {
     @Override
     public void perform() throws MassiveException {
         TPlayer tPlayer = TPlayer.get(sender);
+
+
+
         tPlayer.msg(ChatUtils.message("&eStarting the tournament in 10 seconds..."));
         new BukkitRunnable(){
             @Override

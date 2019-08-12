@@ -11,7 +11,7 @@ import org.bukkit.ChatColor;
  */
 public class ChatUtils {
 
-    private static final String PREFIX = ChatColor.DARK_PURPLE + "Tournament" + ChatColor.DARK_GRAY + "» ";
+    private static final String PREFIX = ChatColor.DARK_PURPLE + "Tournament" + ChatColor.DARK_GRAY + " » ";
 
     public static String format(String string){
         return ChatColor.translateAlternateColorCodes('&', string);
