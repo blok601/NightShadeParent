@@ -69,7 +69,7 @@ public class PluginManager extends JavaPlugin {
                 continue;
             }
 
-            if (!serverType.getNeed().contains(file.getName())) continue;
+            if (!serverType.getNeed().contains(file.getName()) && !file.getName().equalsIgnoreCase("Core.jar")) continue;
 
             try {
                 FileUtils.copyFileToDirectory(file, pluginsDir);

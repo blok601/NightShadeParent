@@ -81,10 +81,11 @@
             <systemPath>${basedir}/src/main/resources/libs/MassiveCore.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>1.12.2-R0.1-SNAPSHOT</version>
-            <scope>compile</scope>
+            <groupId>com.nightshadepvp</groupId>
+            <artifactId>core</artifactId>
+            <version>LATEST</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/src/main/resources/libs/Core.jar</systemPath>
         </dependency>
     </dependencies>
 </project>
