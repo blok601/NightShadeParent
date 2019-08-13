@@ -10,6 +10,7 @@ import com.nightshadepvp.core.entity.NSPlayerColl;
 import com.nightshadepvp.core.fanciful.FancyMessage;
 import com.nightshadepvp.core.utils.ChatUtils;
 import org.bukkit.GameMode;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -21,6 +22,7 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class EnginePlayer extends Engine {
 
@@ -189,6 +191,12 @@ public class EnginePlayer extends Engine {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                player.playSound(player.getLocation(), Sound.NOTE_BASS, 5, 5);
+            }
+        }.runTaskLater(Core.get(), 2L);
 
         if (!Core.get().getLoginTasks().containsKey(player.getUniqueId())) {
             return;
@@ -196,6 +204,7 @@ public class EnginePlayer extends Engine {
 
         Core.get().getLoginTasks().get(player.getUniqueId()).forEach(uuidConsumer -> uuidConsumer.accept(player.getUniqueId()));
         Core.get().getLoginTasks().remove(player.getUniqueId());
+
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
