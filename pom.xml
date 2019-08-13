@@ -17,4 +17,15 @@
         <module>NightShadeHub</module>
         <module>NightShadeTournament</module>
     </modules>
+
+    <profiles>
+        <profile>
+            <id>ci</id>
+            <modules>
+                <module>NightShadeUHC</module>
+                <module>NightShadeCore</module>
+                <module>NightShadeTournament</module>
+            </modules>
+        </profile>
+    </profiles>
 </project>

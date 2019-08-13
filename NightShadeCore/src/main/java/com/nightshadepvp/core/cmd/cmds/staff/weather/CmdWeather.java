@@ -17,6 +17,8 @@ public class CmdWeather extends NightShadeCoreCommand {
     }
 
     public CmdWeatherClear cmdWeatherClear = new CmdWeatherClear();
+    public CmdWeatherRain cmdWeatherRain = new CmdWeatherRain();
+    public CmdWeatherStorm cmdWeatherStorm = new CmdWeatherStorm();
 
     @Override
     public List<String> getAliases() {
