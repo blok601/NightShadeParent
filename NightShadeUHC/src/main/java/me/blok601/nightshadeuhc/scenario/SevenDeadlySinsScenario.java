@@ -26,6 +26,8 @@ public class SevenDeadlySinsScenario extends Scenario{
 
     @EventHandler
     public void onstart (GameStartEvent e) {
+
+        if (!isEnabled()) return;
         for (Team team : TeamManager.getInstance().getTeams()) {
             int count = 0;
             if (team.getMembers().size() == 0) {
@@ -42,9 +44,7 @@ public class SevenDeadlySinsScenario extends Scenario{
                 if (count == 5) sins.put(p.getUniqueId(), "Wrath");
                 if (count == 6) sins.put(p.getUniqueId(), "Pride");
                 count++;
-                p.sendMessage(ChatUtils.message("&7[ &c" + sins.get(p.getUniqueId()) + " &7]" + "May the weight of your sins be a burden on your soul."));
-
-
+                p.sendMessage(ChatUtils.message("&7[&c" + sins.get(p.getUniqueId()) + "&7]" + "&cMay the weight of your sins be a burden on your soul."));
             }
 
         }
