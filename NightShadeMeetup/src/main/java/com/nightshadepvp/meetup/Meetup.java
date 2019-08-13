@@ -1,12 +1,33 @@
 package com.nightshadepvp.meetup;
 
 import com.massivecraft.massivecore.MassivePlugin;
+import com.massivecraft.massivecore.store.DriverFlatfile;
+import com.massivecraft.massivecore.store.DriverMongo;
+import com.nightshadepvp.core.Core;
+import com.nightshadepvp.core.Logger;
+import com.nightshadepvp.core.store.NSStore;
+import com.nightshadepvp.core.store.NSStoreConf;
 import com.nightshadepvp.meetup.entity.handler.GameHandler;
-import com.nightshadepvp.meetup.scoreboard.PlayerScoreboard;
-import com.nightshadepvp.meetup.scoreboard.ScoreboardManager;
-import org.bukkit.Bukkit;
 
 public final class Meetup extends MassivePlugin {
+
+    private GameHandler gameHandler;
+
+    @Override
+    public void onEnable() {
+        NSStoreConf.get().load();
+        NSStore.registerDriver(DriverMongo.get());
+        NSStore.registerDriver(DriverFlatfile.get());
+        this.activateAuto();
+
+        this.gameHandler = new GameHandler();
+        Core.get().getLogManager().log(Logger.LogType.INFO, "NightShadeMeetup v" + this.getDescription().getVersion() + " has been enabled");
+    }
+
+    @Override
+    public void onDisable() {
+        i = null;
+    }
 
     private static Meetup i;
 
@@ -14,32 +35,8 @@ public final class Meetup extends MassivePlugin {
         Meetup.i = this;
     }
 
-    private ScoreboardManager scoreboardManager;
-    private GameHandler gameHandler;
-
-    @Override
-    public void onEnableInner() {
-        this.activateAuto();
-        getConfig().options().copyDefaults(true);
-        saveConfig();
-        gameHandler = new GameHandler(this);
-        scoreboardManager = new ScoreboardManager(this);
-        Bukkit.getScheduler().runTaskTimer(this, () -> {
-            scoreboardManager.getPlayerScoreboards().values().forEach(PlayerScoreboard::update);
-        }, 0L, 20L);
-    }
-
-    @Override
-    public void onDisable() {
-        // Plugin shutdown logic
-    }
-
     public static Meetup get() {
         return i;
-    }
-
-    public ScoreboardManager getScoreboardManager() {
-        return scoreboardManager;
     }
 
     public GameHandler getGameHandler() {

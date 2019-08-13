@@ -1,63 +1,71 @@
 package com.nightshadepvp.meetup.entity.handler;
 
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.nightshadepvp.meetup.GameState;
-import com.nightshadepvp.meetup.Meetup;
 import com.nightshadepvp.meetup.entity.object.Map;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.UUID;
+import java.util.function.Consumer;
 
 /**
- * Created by Blok on 10/15/2018.
+ * Created by Blok on 7/31/2019.
  */
 public class GameHandler {
 
-    private Meetup plugin;
-
-    public GameHandler(Meetup plugin){
-        this.plugin = plugin;
-        this.maxPlayers = 12;
-        this.initialBorder = 300;
-        this.gameState = GameState.WAITING;
-        this.map = new Map(Bukkit.getWorlds().get(0), 500); //TODO: Change this later on
-    }
-
-    private int maxPlayers;
-    private int initialBorder;
+    private Map currentMap;
     private GameState gameState;
-    private Map map;
+    private HashSet<UUID> playing;
+    private boolean chatFrozen;
 
-    public int getMaxPlayers() {
-        return maxPlayers;
+    private HashMap<UUID, Consumer<Player>> taskQueue;
+
+
+    public GameHandler() {
+        this.currentMap = new Map(500, Bukkit.getWorlds().get(1)); //This will change later (default map)
+        this.gameState = GameState.WAITING;
+        this.playing = Sets.newHashSet();
+        this.chatFrozen = false;
+        this.taskQueue = Maps.newHashMap();
     }
 
-    public void setMaxPlayers(int maxPlayers) {
-        this.maxPlayers = maxPlayers;
+    public Map getCurrentMap() {
+        return currentMap;
     }
 
-    public int getInitialBorder() {
-        return initialBorder;
-    }
-
-    public void setInitialBorder(int initialBorder) {
-        this.initialBorder = initialBorder;
+    public void setCurrentMap(Map currentMap) {
+        this.currentMap = currentMap;
     }
 
     public GameState getGameState() {
         return gameState;
     }
 
-    public boolean inGame(){
-        return this.gameState == GameState.INGAME; // if in game -> will return true
-    }
-
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
     }
 
-    public Map getMap() {
-        return map;
+    public boolean gameHasStarted() {
+        return this.gameState == GameState.INGAME || this.gameState == GameState.ENDING;
     }
 
-    public void setMap(Map map) {
-        this.map = map;
+    public HashSet<UUID> getPlaying() {
+        return playing;
+    }
+
+    public boolean isChatFrozen() {
+        return chatFrozen;
+    }
+
+    public void setChatFrozen(boolean chatFrozen) {
+        this.chatFrozen = chatFrozen;
+    }
+
+    public HashMap<UUID, Consumer<Player>> getTaskQueue() {
+        return taskQueue;
     }
 }

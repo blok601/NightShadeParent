@@ -1,7 +1,6 @@
-name: Meetup
-version: 0.1
+name: NightShadeMeetup
+version: ${project.version}
 main: com.nightshadepvp.meetup.Meetup
 authors: [Blok]
-description: NightShadePvP's UHC Meetup Plugin
-website: www.nightshadepvp.com
-depend: [Core, WorldBorder, Multiverse-Core]
+description: NightShadePvP Meetup plugin
+website: discord.me/NightShadeMC

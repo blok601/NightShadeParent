@@ -7,7 +7,7 @@ import com.nightshadepvp.meetup.utils.ChatUtils;
  */
 public enum GameState {
 
-    WAITING("&eWaiting..."), STARTING("&eStarting..."), INGAME("&eIngame");
+    WAITING("&eWaiting..."), STARTING("&eStarting..."), INGAME("&eIngame"), ENDING("&eEnding");
 
     private String formatted;
 
@@ -18,5 +18,7 @@ public enum GameState {
     public String getFormatted() {
         return ChatUtils.format(formatted);
     }
+
+
 
 }

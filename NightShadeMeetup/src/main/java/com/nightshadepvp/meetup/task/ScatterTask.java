@@ -1,42 +1,54 @@
 package com.nightshadepvp.meetup.task;
 
-import com.nightshadepvp.meetup.Meetup;
-import com.nightshadepvp.meetup.entity.MPlayerColl;
 import com.nightshadepvp.meetup.entity.handler.GameHandler;
+import com.nightshadepvp.meetup.entity.object.Map;
+import com.nightshadepvp.meetup.utils.ChatUtils;
 import com.nightshadepvp.meetup.utils.ScatterUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.UUID;
 
 /**
- * Created by Blok on 10/15/2018.
+ * Created by Blok on 7/31/2019.
  */
 public class ScatterTask extends BukkitRunnable {
 
-    private ArrayList<Player> players;
+    private ArrayList<UUID> toScatter;
     private GameHandler gameHandler;
+    private Map map;
 
-    public ScatterTask(ArrayList<Player> players, GameHandler gameHandler) {
-        this.players = players;
+    public ScatterTask(ArrayList<UUID> toScatter, GameHandler gameHandler) {
+        this.toScatter = toScatter;
+        Collections.shuffle(toScatter);
         this.gameHandler = gameHandler;
-        MPlayerColl.get().getAllIngamePlayers().forEach(mPlayer -> mPlayer.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 1, 35)));
+        this.map = gameHandler.getCurrentMap();
     }
 
+
+    /**
+     * Will scatter 5 players a second
+     */
     @Override
     public void run() {
-        if (players.size() == 0) {
-            Bukkit.getOnlinePlayers().forEach(o -> o.removePotionEffect(PotionEffectType.BLINDNESS));
-            new GameStartTask().runTaskTimer(Meetup.get(), 0, 20);
-            cancel();
-            return;
+        if (toScatter.size() == 0) {
+            //Finished
+            //TODO: Game start code
         } else {
-            Player p = players.get(0);
-            ScatterUtil.scatterPlayer(gameHandler.getMap().getWorld(), gameHandler.getMap().getRadius(), p);
-            players.remove(p);
+            Player player = Bukkit.getPlayer(toScatter.get(0));
+            if (player == null) {
+                gameHandler.getTaskQueue().put(toScatter.get(0), player1 -> {
+                    ScatterUtil.scatterPlayer(map.getWorld(), map.getRadius(), player1);
+                });
+            } else {
+                //Online
+                ScatterUtil.scatterPlayer(map.getWorld(), map.getRadius(), player);
+                player.sendMessage(ChatUtils.message("&eYou have been scattered"));
+            }
+            toScatter.remove(0);
         }
     }
 }

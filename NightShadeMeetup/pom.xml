@@ -11,11 +11,11 @@
 
     <name>NightShadeMeetup</name>
 
-    <description>NightShadePvP's me.blok601.nightshadeuhc.UHC Meetup Plugin</description>
+    <description>NightShadePvP Meetup plugin</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <url>www.nightshadepvp.com</url>
+    <url>discord.me/NightShadeMC</url>
 
     <build>
         <defaultGoal>clean package</defaultGoal>
@@ -41,6 +41,7 @@
                         </goals>
                         <configuration>
                             <minimizeJar>true</minimizeJar>
+                            <finalName>Meetup</finalName>
                         </configuration>
                     </execution>
                 </executions>
@@ -69,24 +70,21 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.8.8-R0.1-SNAPSHOT</version>
+            <version>1.8.8-R0.1-SNAPSHOT-R0.1</version>
             <scope>provided</scope>
         </dependency>
-
-        <dependency>
-            <groupId>com.nightshadepvp</groupId>
-            <artifactId>Core</artifactId>
-            <version>LATEST</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/src/main/resources/libs/Core.jar</systemPath>
-        </dependency>
-
         <dependency>
             <groupId>com.massivecraft</groupId>
             <artifactId>MassiveCore</artifactId>
             <version>LATEST</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/src/main/resources/libs/MassiveCore.jar</systemPath>
+            <systemPath>${basedir}/src/main/resources/libs/MassiveCore.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.12.2-R0.1-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>
