@@ -21,6 +21,6 @@ public class CmdForums extends NightShadeCoreCommand {
     public void perform() throws MassiveException {
         NSPlayer nsPlayer = NSPlayer.get(sender);
         nsPlayer.msg(ChatUtils.message("&eOur website is&8: &bhttp://www.nightshadepvp.com"));
-        nsPlayer.msg(ChatUtils.message("&eYou can apply @ &bhttp://www.nightshadepvp.com/"));
+        nsPlayer.msg(ChatUtils.message("&eYou can apply @ &bhttp://bit.ly/ns_apply"));
     }
 }
