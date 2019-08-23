@@ -1,58 +1,71 @@
 package me.blok601.nightshadeuhc.manager;
 
-import me.blok601.nightshadeuhc.entity.object.CombatLogger;
+import com.google.common.collect.Sets;
+import me.blok601.nightshadeuhc.entity.object.LoggedOutPlayer;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.UUID;
 
 /**
- * Created by Blok on 9/23/2017.
+ * Created by Blok on 8/23/2019.
  */
 public class LoggerManager {
 
-
-    private static LoggerManager instance = new LoggerManager();
+    private static LoggerManager ourInstance = new LoggerManager();
 
     public static LoggerManager getInstance() {
-        return instance;
+        return ourInstance;
     }
 
-    private ArrayList<CombatLogger> loggers = new ArrayList<>();
-
-    public ArrayList<CombatLogger> getLoggers() {
-        return loggers;
+    private LoggerManager() {
     }
 
-    public CombatLogger getLogger(String logger) {
-        for (CombatLogger combatLogger : loggers) {
-            if (combatLogger.getPlayerName().equalsIgnoreCase(logger)) {
-                return combatLogger;
+    private HashSet<LoggedOutPlayer> loggedOutPlayers;
+    private HashSet<LoggedOutPlayer> deadLoggers;
+
+    public void setup() {
+        this.loggedOutPlayers = Sets.newHashSet();
+        this.deadLoggers = Sets.newHashSet();
+    }
+
+
+    public LoggedOutPlayer getLogger(UUID uuid) {
+        for (LoggedOutPlayer loggedOutPlayer : this.loggedOutPlayers) {
+            if (loggedOutPlayer.getUuid().equals(uuid)) {
+                return loggedOutPlayer;
             }
         }
         return null;
     }
 
-    public CombatLogger getLogger(int id) {
-        for (CombatLogger logger : loggers) {
-            if (logger.getArmorStand().getEntityId() == id) {
-                return logger;
+    public LoggedOutPlayer getDeadLogger(UUID uuid) {
+        for (LoggedOutPlayer loggedOutPlayer : this.deadLoggers) {
+            if (loggedOutPlayer.getUuid().equals(uuid)) {
+                return loggedOutPlayer;
             }
         }
-
         return null;
     }
 
-    public void createLogger(CombatLogger logger) {
-        loggers.add(logger);
+    public boolean hasLogger(UUID uuid) {
+        return getLogger(uuid) != null;
     }
 
-    public void removeLogger(CombatLogger logger) {
-        loggers.remove(logger);
+    public boolean isDeadLogger(UUID uuid){
+        for (LoggedOutPlayer loggedOutPlayer : this.deadLoggers) {
+            if (loggedOutPlayer.getUuid().equals(uuid)) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    private ArrayList<UUID> deadLoggers = new ArrayList<>();
+    public HashSet<LoggedOutPlayer> getLoggedOutPlayers() {
+        return loggedOutPlayers;
+    }
 
-    public ArrayList<UUID> getDeadLoggers() {
+
+    public HashSet<LoggedOutPlayer> getDeadLoggers() {
         return deadLoggers;
     }
 }

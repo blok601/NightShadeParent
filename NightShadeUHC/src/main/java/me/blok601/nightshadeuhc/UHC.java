@@ -106,6 +106,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         StatsHandler.getInstance().setup();
         new GoldenHeadRecipe();
         FakePlayerManager.getInstance().setup(this);
+        LoggerManager.getInstance().setup();
 
 
         this.gameManager = new GameManager();
@@ -130,7 +131,6 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
 
     public void onDisable() {
         //LoggerHandler.getInstance().getLoggers().forEach(combatLogger -> LoggerHandler.getInstance().removeLogger(combatLogger));
-        LoggerManager.getInstance().getLoggers().clear();
         Bukkit.getMessenger().unregisterIncomingPluginChannel(this, "BungeeCord", this);
         Bukkit.getMessenger().unregisterOutgoingPluginChannel(this, "BungeeCord");
 

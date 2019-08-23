@@ -86,9 +86,8 @@ public class JoinListener implements Listener {
         
         if (gamePlayer.isSpectator()) return;
         if (GameState.getState() == GameState.INGAME || GameState.getState() == GameState.MEETUP) {
-            CombatLogger logger = LoggerManager.getInstance().getLogger(player.getName());
-            if (logger != null) {
-                logger.remove();
+            if (LoggerManager.getInstance().hasLogger(player.getUniqueId())) {
+                LoggerManager.getInstance().getLogger(player.getUniqueId()).remove(false);
             }
         }
 
@@ -202,9 +201,14 @@ public class JoinListener implements Listener {
         if (gamePlayer.getPlayerStatus() == PlayerStatus.PLAYING && PlayerUtils.inGameWorld(p)) {
 
             if (GameState.getState() == GameState.INGAME || GameState.getState() == GameState.MEETUP) {
-                CombatLogger logger = LoggerManager.getInstance().getLogger(e.getPlayer().getName());
-                if (logger == null) { // create a logger, cause its null :D
-                    new CombatLogger(e.getPlayer());
+                if (!LoggerManager.getInstance().hasLogger(e.getPlayer().getUniqueId())) {
+                    LoggedOutPlayer loggedOutPlayer = new LoggedOutPlayer(e.getPlayer().getUniqueId(), e.getPlayer().getName(), uhc);
+                    loggedOutPlayer.setArmor(e.getPlayer().getInventory().getArmorContents());
+                    loggedOutPlayer.setItems(e.getPlayer().getInventory().getContents());
+                    loggedOutPlayer.setLocation(e.getPlayer().getLocation());
+                    loggedOutPlayer.setXp(e.getPlayer().getExp());
+                    LoggerManager.getInstance().getLoggedOutPlayers().add(loggedOutPlayer);
+                    loggedOutPlayer.start();
                 }
             }
 
@@ -227,9 +231,14 @@ public class JoinListener implements Listener {
 
         if (gamePlayer.getPlayerStatus() == PlayerStatus.PLAYING && PlayerUtils.inGameWorld(p)) {
             if (GameState.getState() == GameState.INGAME || GameState.getState() == GameState.MEETUP) {
-                CombatLogger logger = LoggerManager.getInstance().getLogger(e.getPlayer().getName());
-                if (logger == null) { // create a logger, cause its null :D
-                    new CombatLogger(e.getPlayer());
+                if (!LoggerManager.getInstance().hasLogger(e.getPlayer().getUniqueId())) {
+                    LoggedOutPlayer loggedOutPlayer = new LoggedOutPlayer(e.getPlayer().getUniqueId(), e.getPlayer().getName(), uhc);
+                    loggedOutPlayer.setArmor(e.getPlayer().getInventory().getArmorContents());
+                    loggedOutPlayer.setItems(e.getPlayer().getInventory().getContents());
+                    loggedOutPlayer.setLocation(e.getPlayer().getLocation());
+                    loggedOutPlayer.setXp(e.getPlayer().getExp());
+                    LoggerManager.getInstance().getLoggedOutPlayers().add(loggedOutPlayer);
+                    loggedOutPlayer.start();
                 }
             }
             UHC.loggedOutPlayers.add(p.getUniqueId());
@@ -250,7 +259,7 @@ public class JoinListener implements Listener {
 
             if (gameManager.getRespawnQueue().contains(e.getPlayer().getName().toLowerCase())) {
                 e.allow();
-                LoggerManager.getInstance().getDeadLoggers().remove(p.getUniqueId());
+                LoggerManager.getInstance().getDeadLoggers().remove(LoggerManager.getInstance().getDeadLogger(p.getUniqueId()));
                 return;
             }
 
@@ -269,7 +278,7 @@ public class JoinListener implements Listener {
                 return;
             }
 
-            if (LoggerManager.getInstance().getDeadLoggers().contains(p.getUniqueId())) {
+            if (LoggerManager.getInstance().isDeadLogger(p.getUniqueId())) {
                 e.disallow(PlayerLoginEvent.Result.KICK_WHITELIST, "You have died! Follow us on twitter @NightShadePvPMC for more!");
             }
 

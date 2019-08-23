@@ -42,7 +42,6 @@ public class ListenerHandler {
         this.componentHandler = componentHandler;
         listeners = Sets.newHashSet();
 
-        addListener(new LoggerListener());
         addListener(new GameDeathListener());
         addListener(new GoldenHeadConsume());
         addListener(new PlayerListener(gameManager, scenarioManager));
