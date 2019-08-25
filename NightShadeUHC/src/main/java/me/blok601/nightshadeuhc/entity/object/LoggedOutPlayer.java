@@ -5,6 +5,7 @@ import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.manager.LoggerManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -114,6 +115,7 @@ public class LoggedOutPlayer {
     }
 
     public void kill() {
+        if (Bukkit.getPlayer(uuid) != null) return; //Tried to kill an offline player
         for (ItemStack itemStack : this.getItems()) {
             if (itemStack == null || itemStack.getType() == Material.AIR) continue;
             this.location.getWorld().dropItem(this.location, itemStack);

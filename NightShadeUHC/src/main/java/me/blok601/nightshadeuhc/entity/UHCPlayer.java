@@ -24,6 +24,7 @@ import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
@@ -73,8 +74,6 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
     private int arenaBowHits = 0;
     private transient ArenaSession arenaSession;
 
-
-    private transient boolean combatTagged;
     private transient boolean isDisguised;
     private transient String disguisedName;
     private transient boolean isSpectator;
@@ -91,6 +90,7 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
     private transient double changedLevel;
     private transient boolean usingOldVersion;
     private transient PlayerStatus playerStatus;
+    private transient int combatLogTimer;
 
     @Override
     public UHCPlayer load(UHCPlayer that) {
@@ -330,14 +330,6 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
 
     public void setLastLocation(PS lastLocation) {
         this.lastLocation = lastLocation;
-    }
-
-    public boolean isCombatTagged() {
-        return combatTagged;
-    }
-
-    public void setCombatTagged(boolean combatTagged) {
-        this.combatTagged = combatTagged;
     }
 
     public boolean isDisguised() {
@@ -839,4 +831,33 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         return format.format(this.getArenaSwordAccuracy());
     }
 
+    public int getCombatLogTimer() {
+        return combatLogTimer;
+    }
+
+    public void setCombatLogTimer(int combatLogTimer) {
+        this.combatLogTimer = combatLogTimer;
+    }
+
+    public void startCombatTimer() {
+        this.combatLogTimer = 30;
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (combatLogTimer > 30) {
+                    this.cancel();
+                    return;
+                }
+
+                if (combatLogTimer == 0) {
+                    combatLogTimer = 31;
+                    msg(ChatUtils.message("&eYou are no longer combat tagged and can safely logout"));
+                    cancel();
+                    return;
+                }
+
+                combatLogTimer--;
+            }
+        }.runTaskTimer(UHC.get(), 0, 20);
+    }
 }

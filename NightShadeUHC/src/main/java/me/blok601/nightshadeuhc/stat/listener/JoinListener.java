@@ -16,12 +16,15 @@ import me.blok601.nightshadeuhc.scenario.Scenario;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.scoreboard.ScoreboardManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.util.ItemBuilder;
 import me.blok601.nightshadeuhc.util.PlayerUtils;
 import me.blok601.nightshadeuhc.util.ScatterUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -201,6 +204,31 @@ public class JoinListener implements Listener {
         if (gamePlayer.getPlayerStatus() == PlayerStatus.PLAYING && PlayerUtils.inGameWorld(p)) {
 
             if (GameState.getState() == GameState.INGAME || GameState.getState() == GameState.MEETUP) {
+                if (gamePlayer.getCombatLogTimer() <= 30) {
+                    //Kill them
+                    for (ItemStack itemStack : p.getInventory().getContents()) {
+                        if (itemStack == null || itemStack.getType() == Material.AIR) continue;
+                        p.getWorld().dropItemNaturally(p.getLocation(), itemStack);
+                    }
+
+                    for (ItemStack itemStack : p.getInventory().getArmorContents()) {
+                        if (itemStack == null || itemStack.getType() == Material.AIR) continue;
+                        p.getWorld().dropItemNaturally(p.getLocation(), itemStack);
+                    }
+
+                    p.getLocation().getWorld().strikeLightningEffect(p.getLocation().add(0, 10, 0));
+
+                    ItemStack skull1 = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+                    ItemStack newSkull1 = new ItemBuilder(skull1).skullOwner(p.getName()).name(p.getName()).make();
+                    p.getLocation().getWorld().dropItemNaturally(p.getLocation(), newSkull1);
+
+                    ((ExperienceOrb) p.getLocation().getWorld().spawnEntity(p.getLocation(),
+                            EntityType.EXPERIENCE_ORB)).setExperience((int) p.getExp()); // Might be buggy, test
+
+                    gameManager.getWhitelist().remove(p.getName().toLowerCase());
+                    LoggerManager.getInstance().getDeadLoggers().add(new LoggedOutPlayer(p.getUniqueId(), p.getName(), uhc));
+                    return;
+                }
                 if (!LoggerManager.getInstance().hasLogger(e.getPlayer().getUniqueId())) {
                     LoggedOutPlayer loggedOutPlayer = new LoggedOutPlayer(e.getPlayer().getUniqueId(), e.getPlayer().getName(), uhc);
                     loggedOutPlayer.setArmor(e.getPlayer().getInventory().getArmorContents());
@@ -231,6 +259,31 @@ public class JoinListener implements Listener {
 
         if (gamePlayer.getPlayerStatus() == PlayerStatus.PLAYING && PlayerUtils.inGameWorld(p)) {
             if (GameState.getState() == GameState.INGAME || GameState.getState() == GameState.MEETUP) {
+                if (gamePlayer.getCombatLogTimer() <= 30) {
+                    //Kill them
+                    for (ItemStack itemStack : p.getInventory().getContents()) {
+                        if (itemStack == null || itemStack.getType() == Material.AIR) continue;
+                        p.getWorld().dropItemNaturally(p.getLocation(), itemStack);
+                    }
+
+                    for (ItemStack itemStack : p.getInventory().getArmorContents()) {
+                        if (itemStack == null || itemStack.getType() == Material.AIR) continue;
+                        p.getWorld().dropItemNaturally(p.getLocation(), itemStack);
+                    }
+
+                    p.getLocation().getWorld().strikeLightningEffect(p.getLocation().add(0, 10, 0));
+
+                    ItemStack skull1 = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+                    ItemStack newSkull1 = new ItemBuilder(skull1).skullOwner(p.getName()).name(p.getName()).make();
+                    p.getLocation().getWorld().dropItemNaturally(p.getLocation(), newSkull1);
+
+                    ((ExperienceOrb) p.getLocation().getWorld().spawnEntity(p.getLocation(),
+                            EntityType.EXPERIENCE_ORB)).setExperience((int) p.getExp()); // Might be buggy, test
+
+                    gameManager.getWhitelist().remove(p.getName().toLowerCase());
+                    LoggerManager.getInstance().getDeadLoggers().add(new LoggedOutPlayer(p.getUniqueId(), p.getName(), uhc));
+                    return;
+                }
                 if (!LoggerManager.getInstance().hasLogger(e.getPlayer().getUniqueId())) {
                     LoggedOutPlayer loggedOutPlayer = new LoggedOutPlayer(e.getPlayer().getUniqueId(), e.getPlayer().getName(), uhc);
                     loggedOutPlayer.setArmor(e.getPlayer().getInventory().getArmorContents());
