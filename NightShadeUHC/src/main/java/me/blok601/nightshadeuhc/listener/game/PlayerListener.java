@@ -110,7 +110,7 @@ public class PlayerListener implements Listener {
         if (e.getEntity() instanceof Player) {
             Player p = (Player) e.getEntity();
             UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
-            double damage = e.getDamage();
+            double damage = e.getFinalDamage();
             if (gamePlayer.isFrozen()) {
                 e.setCancelled(true);
             }
@@ -132,7 +132,10 @@ public class PlayerListener implements Listener {
                 p.setHealth(p.getMaxHealth());
             }
 
-            if (damage > 0 || e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) {
+            if (damage > 0 || e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE && !e.isCancelled()) {
+
+
+
                 if (gamePlayer.getCombatLogTimer() > 30) {
                     gamePlayer.msg(ChatUtils.message("&eYou are now combat tagged! If you log out in the next 30 seconds you will be killed for PvP logging"));
                 }

@@ -140,6 +140,7 @@ public class LoggedOutPlayer {
         GameManager.get().getInvs().put(this.getUuid(), object);
         ChatUtils.sendAll("&7" + this.name + " &7(Logger) &4was logged out for too long.");
         LoggerManager.getInstance().getDeadLoggers().add(this);
+        GameManager.get().getWhitelist().remove(name.toLowerCase());
         remove(true);
     }
 
