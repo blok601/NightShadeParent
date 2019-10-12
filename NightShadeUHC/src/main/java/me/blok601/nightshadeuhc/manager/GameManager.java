@@ -22,7 +22,7 @@ import java.util.HashSet;
 import java.util.UUID;
 
 /**
- * Created by Blok on 8/5/2017.
+ * Created by Blok on 8/5/2017, Updated by Ozzy, Database, and Austin.
  */
 public class GameManager {
 

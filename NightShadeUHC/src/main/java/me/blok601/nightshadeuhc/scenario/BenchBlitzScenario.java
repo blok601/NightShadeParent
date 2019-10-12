@@ -38,7 +38,7 @@ public class BenchBlitzScenario extends Scenario{
             if (e.isShiftClick()) {
                 e.setCancelled(true);
                 p.closeInventory();
-                p.sendMessage(ChatUtils.format(getPrefix() + "You cannot shift click crafting tables in bench blitz!"));
+                p.sendMessage(ChatUtils.format(getPrefix() + "You cannot shift click crafting tables in bench blitz!"));+
                 return;
             }
             if(crafted.contains(p.getUniqueId())){

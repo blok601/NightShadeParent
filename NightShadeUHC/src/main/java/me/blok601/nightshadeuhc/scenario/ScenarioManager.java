@@ -38,7 +38,7 @@ public class ScenarioManager implements UHCCommand{
     }
 
     public void setup(){
-        scenarios = new ArrayList<>();
+        scenarios = new ArrayList<>();          
         addScen(new AssaultAndBatteryScenario(), "AAB");
         addScen(new AurophobiaScenario(), "AP");
         addScen(new BackpackScenario(), "BP");
@@ -133,6 +133,7 @@ public class ScenarioManager implements UHCCommand{
         addScen(new DependencyScenario(gameManager));
         addScen(new BaldChickenScenario());
         addScen(new LimitationScenario());
+        addScen(new RodlessScenario());
 
         sortScenarios();
     }

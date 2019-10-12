@@ -56,7 +56,7 @@ public class FlowerPowerScenario extends Scenario {
 
         if (e.getEntity() instanceof Item) {
             Item item = (Item) e.getEntity();
-            if (item.getItemStack().getType() == Material.GLOWSTONE || item.getItemStack().getType() == Material.GLOWSTONE_DUST) {
+            if (item.getItemStack().getType() == Material.GLOWSTONE || item.getItemStack().getType() == Material.GLOWSTONE_DUST)
                 item.remove();
             }
         }
