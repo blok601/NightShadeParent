@@ -45,6 +45,7 @@ public class ComponentHandler {
         addComponent(new SportsmanshipComponent());
         addComponent(new StripminingComponent());
         addComponent(new StrCompentent());
+        addComponent(new HardEnchantComponent());
 
         this.components.sort(Comparator.comparing(Component::getName));
     }
