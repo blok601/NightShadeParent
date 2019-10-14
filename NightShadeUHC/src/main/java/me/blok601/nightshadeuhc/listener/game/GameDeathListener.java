@@ -168,7 +168,7 @@ public class GameDeathListener implements Listener {
             String changed = decimalFormat.format(uhcPlayer.getChangedLevel());
 
                 p.sendMessage(ChatUtils.message("&eYou have died! Thank you for playing on NightShadePvP!"));
-                p.sendMessage(ChatUtils.message("&eJoin the Discord at discord.me/NightShadeMC for updates and more!"));
+                p.sendMessage(ChatUtils.message("&eJoin the Discord at discord.nightshadepvp.com for updates and more!"));
                 p.sendMessage(ChatUtils.format("&f&m----------------------------"));
                 p.playSound(p.getLocation(), Sound.LEVEL_UP, 5F, 5F);
                 p.sendMessage(ChatUtils.message("&bYour Game Stats:"));
@@ -312,7 +312,7 @@ public class GameDeathListener implements Listener {
             uhcPlayer.changed();
 
             p.sendMessage(ChatUtils.message("&eYou have died! Thank you for playing on NightShadePvP!"));
-            p.sendMessage(ChatUtils.message("&eJoin the Discord at discord.me/NightShadeMC for updates and more!"));
+            p.sendMessage(ChatUtils.message("&eJoin the Discord at discord.nightshadepvp.com for updates and more!"));
             p.sendMessage(ChatUtils.format("&f&m----------------------------"));
             p.playSound(p.getLocation(), Sound.LEVEL_UP, 5F, 5F);
             p.sendMessage(ChatUtils.message("&bYour Game Stats:"));

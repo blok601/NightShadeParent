@@ -20,6 +20,6 @@ public class CmdDiscord extends NightShadeCoreCommand {
     @Override
     public void perform() throws MassiveException {
         NSPlayer nsPlayer = NSPlayer.get(sender);
-        nsPlayer.msg(ChatUtils.message("&eOur discord&8: &bdiscord.me/NightShadeMC"));
+        nsPlayer.msg(ChatUtils.message("&eOur discord&8: &bdiscord.nightshadepvp.com"));
     }
 }

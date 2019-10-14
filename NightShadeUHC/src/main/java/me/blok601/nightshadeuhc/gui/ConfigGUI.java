@@ -72,7 +72,7 @@ public class ConfigGUI {
                 .lore(ChatUtils.format("&bDevelopers &8» &fBL0K, Ozzy, and Database"))
                 .lore(ChatUtils.format("&bWebsite &8» &fwww.nightshadepvp.com"))
                 .lore(ChatUtils.format("&bTwitter &8» &f@NightShadePVPMC"))
-                .lore(ChatUtils.format("&bDiscord &8» &fdiscord.me/NightShadeMC"))
+                .lore(ChatUtils.format("&bDiscord &8» &fdiscord.nightshadepvp.com"))
                 .make();
 
         menu.item(3, post.make());

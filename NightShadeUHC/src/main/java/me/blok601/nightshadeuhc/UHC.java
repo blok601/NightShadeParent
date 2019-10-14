@@ -22,6 +22,7 @@ import me.blok601.nightshadeuhc.packet.OldEnchanting;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
 import me.blok601.nightshadeuhc.scoreboard.ScoreboardManager;
+import me.blok601.nightshadeuhc.scoreboard.provider.DefaultProvider;
 import me.blok601.nightshadeuhc.stat.handler.StatsHandler;
 import me.blok601.nightshadeuhc.task.PregenTask;
 import me.blok601.nightshadeuhc.task.ScoreboardHealthTask;
@@ -113,6 +114,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         this.scoreboardManager = new ScoreboardManager();
         this.scenarioManager = new ScenarioManager(this, gameManager);
         this.scenarioManager.setup();
+        new DefaultProvider(this, gameManager, scenarioManager);
         this.componentHandler = new ComponentHandler(GameManager.get(), scenarioManager);
         this.componentHandler.setup();
         this.commandHandler = new CommandHandler(this, GameManager.get(), scenarioManager);

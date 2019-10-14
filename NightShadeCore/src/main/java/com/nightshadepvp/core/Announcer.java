@@ -29,7 +29,7 @@ public class Announcer {
 
             messages.add("&bHave a suggestion? Submit them on our Discord via >suggest!");
             messages.add("&bWant to donate and keep the server running? Visit http://nightshadepvp.com/shop/");
-            messages.add("&bJoin our Discord @ http://discord.me/NightShadeMC");
+            messages.add("&bJoin our Discord @ http://discord.nightshadepvp.com");
             messages.add("&bFollow us on Twitter @NightShadePvPMC");
             messages.add("&bMake sure to ask the host if you have any questions with /helpop!");
             messages.add("&bBe sure to apply for staff on the forums! www.nightshadepvp.com");

@@ -77,7 +77,7 @@ public class UHCProvider extends ScoreboardProvider {
             lines.add(new ScoreboardText(ChatUtils.format("&fNoClean: &b" + uhcPlayer.getNoCleanTimer() + "s")));
             lines.add(new ScoreboardText(ChatUtils.format("&f&m--------------------&r")));
         }
-        lines.add(new ScoreboardText(ChatUtils.format("&bdiscord.me/NightShadeMC")));
+        lines.add(new ScoreboardText(ChatUtils.format("&bdiscord.nightshadepvp.com")));
         return lines;
     }
 

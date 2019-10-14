@@ -279,7 +279,7 @@ public class EndGameCommand implements UHCCommand {
         new BukkitRunnable() {
             @Override
             public void run() {
-                Bukkit.getOnlinePlayers().stream().filter(o -> !NSPlayer.get(o.getUniqueId()).hasRank(Rank.TRIAL)).forEach(o -> o.kickPlayer("The game has concluded! Thanks for playing! \n Follow us on twitter @NightShadePvPMC \n Join our Discord @ discord.me/NightShadeMC"));
+                Bukkit.getOnlinePlayers().stream().filter(o -> !NSPlayer.get(o.getUniqueId()).hasRank(Rank.TRIAL)).forEach(o -> o.kickPlayer("The game has concluded! Thanks for playing! \n Follow us on twitter @NightShadePvPMC \n Join our Discord @ discord.nightshadepvp.com"));
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "restart");
             }
         }.runTaskLater(UHC.get(), 30 * 20);

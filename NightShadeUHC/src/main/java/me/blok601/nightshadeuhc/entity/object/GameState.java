@@ -10,6 +10,7 @@ public enum GameState {
 	public static void setState(GameState s){
 		state = s;
 	}
+
 	
 	public static GameState getState(){
 		return state;

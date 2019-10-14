@@ -45,7 +45,7 @@ public class ArenaProvider extends ScoreboardProvider {
         lines.add(new ScoreboardText(ChatUtils.format("&fDeaths: &b" + uhcPlayer.getArenaSession().getDeaths())));
         lines.add(new ScoreboardText(ChatUtils.format("&fKillStreak: &b" + uhcPlayer.getArenaSession().getKillstreak())));
         lines.add(new ScoreboardText(ChatUtils.format("&f&m--------------")));
-        lines.add(new ScoreboardText(ChatUtils.format("&bdiscord.me/NightShadeMC")));
+        lines.add(new ScoreboardText(ChatUtils.format("&bdiscord.nightshadepvp.com")));
         return lines;
     }
 }

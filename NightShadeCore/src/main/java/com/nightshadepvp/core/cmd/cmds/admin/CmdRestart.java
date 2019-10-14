@@ -32,7 +32,7 @@ public class CmdRestart extends NightShadeCoreCommand{
             @Override
             public void run() {
                 if(counter == 5){
-                    Bukkit.getOnlinePlayers().forEach(o -> o.kickPlayer("Thank's for playing on NightShadePvP\n Join our Discord @ discord.me/NightShadeMC for updates   \n" +
+                    Bukkit.getOnlinePlayers().forEach(o -> o.kickPlayer("Thank's for playing on NightShadePvP\n Join our Discord @ discord.nightshadepvp.com for updates   \n" +
                             "Follow us on Twitter @NightShadePvPMC for news and information!"));
                 }
 
