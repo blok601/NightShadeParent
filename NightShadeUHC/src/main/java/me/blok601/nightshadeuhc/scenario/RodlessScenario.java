@@ -35,6 +35,7 @@ public class RodlessScenario extends Scenario {
 
     @EventHandler
     public void onFish(PlayerFishEvent e) {
+        if (!isEnabled()) return;
         e.setCancelled(true);
     }
 }
