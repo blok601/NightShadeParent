@@ -65,12 +65,6 @@
             <id>robingrether-repo</id>
             <url>http://repo.robingrether.de/</url>
         </repository>
-
-        <repository>
-            <id>dmulloy2-repo</id>
-            <url>http://repo.dmulloy2.net/nexus/repository/public/</url>
-        </repository>
-
         <repository>
             <id>filoghost-repo</id>
             <url>https://ci.filoghost.me/plugin/repository/everything/</url>
@@ -143,8 +137,10 @@
 
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
-            <artifactId>ProtocolLib-API</artifactId>
-            <version>4.4.0</version>
+            <artifactId>ProtocolLib</artifactId>
+            <version>LATEST</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/src/main/resources/libs/ProtocolLib.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.multiverse</groupId>
