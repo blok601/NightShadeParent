@@ -1,6 +1,6 @@
 package me.blok601.nightshadeuhc.scoreboard.provider.type;
 
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.manager.TeamManager;
@@ -12,7 +12,6 @@ import me.blok601.nightshadeuhc.util.ChatUtils;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -69,8 +68,17 @@ public class LobbyProvider extends ScoreboardProvider {
     @Override
     public List<ScoreboardText> getLines(Player p) {
         List<ScoreboardText> lines = new ArrayList<>();
-        lines.add(new ScoreboardText(ChatUtils.format("&fHost: &3" + (gameManager.getHost() != null ? gameManager.getHost().getName() : "None"))));
-        lines.add(new ScoreboardText(ChatUtils.format("&fTeam Size: &3" + (gameManager.isIsTeam() ? TeamManager.getInstance().getTeamSize() : "FFA"))));
+        lines.add(new ScoreboardText(ChatUtils.format("&f&m--------------------")));
+        if (GameManager.get().getHost() == null) {
+            lines.add(new ScoreboardText(ChatUtils.format("&fHost: &bNone")));
+        } else {
+            lines.add(new ScoreboardText(ChatUtils.format("&fHost: &b" + GameManager.get().getHost().getName())));
+        }
+        if (GameManager.get().isIsTeam()) {
+            lines.add(new ScoreboardText(ChatUtils.format("&fTeam Size: &b" + (TeamManager.getInstance().isRandomTeams() ? "rTo" + TeamManager.getInstance().getTeamSize() : "cTo" + TeamManager.getInstance().getTeamSize()))));
+        } else {
+            lines.add(new ScoreboardText(ChatUtils.format("&fTeam Size: &bFFA")));
+        }
         lines.add(new ScoreboardText(""));
         lines.add(new ScoreboardText(ChatUtils.format("&fScenarios:")));
         for (String s : scenNames()) {
@@ -84,9 +92,9 @@ public class LobbyProvider extends ScoreboardProvider {
         return lines;
     }
 
-    private HashSet<String> scenNames() {
-        if (scenarioManager.getEnabledScenarios().size() == 0) return Sets.newHashSet();
-        HashSet<String> names = Sets.newHashSet();
+    private ArrayList<String> scenNames() {
+        if (scenarioManager.getEnabledScenarios().size() == 0) return Lists.newArrayList();
+        ArrayList<String> names = Lists.newArrayList();
         int i = 0;
         if (scenarioManager.getEnabledScenarios().size() <= 3) {
             scenarioManager.getEnabledScenarios().forEach(scenario -> names.add(scenario.getName()));
