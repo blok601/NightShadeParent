@@ -110,7 +110,7 @@ public class LobbyProvider extends ScoreboardProvider {
             }
         }
 
-        names.add(ChatUtils.format("" + (scenarioManager.getEnabledScenarios().size() - i) + " more"));
+        names.add(ChatUtils.format("&o" + (scenarioManager.getEnabledScenarios().size() - i) + " more..."));
         return names;
     }
 }

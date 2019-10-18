@@ -48,8 +48,12 @@ public class ScoreboardManager implements Listener {
                 scoreboardEntry.setValue(new PlayerScoreboard(new UHCProvider(), scoreboardEntry.getKey()));
             } else if (UHCPlayer.get((scoreboardEntry.getKey())).getPlayerStatus() == PlayerStatus.LOBBY && !GameState.gameHasStarted()) {
                 scoreboardEntry.setValue(new PlayerScoreboard(new LobbyProvider(plugin, gameManager, scenarioManager), scoreboardEntry.getKey()));
-            } else {
+            } else if (GameState.gameHasStarted()) {
+                scoreboardEntry.setValue(new PlayerScoreboard(new UHCProvider(), scoreboardEntry.getKey()));
+            } else if (UHCPlayer.get(scoreboardEntry.getKey()).getPlayerStatus() == PlayerStatus.ARENA) {
                 scoreboardEntry.setValue(new PlayerScoreboard(new ArenaProvider(), scoreboardEntry.getKey()));
+            } else {
+                scoreboardEntry.setValue(new PlayerScoreboard(new UHCProvider(), scoreboardEntry.getKey()));
             }
         }
     }
