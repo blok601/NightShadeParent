@@ -13,7 +13,6 @@ import me.blok601.nightshadeuhc.event.PlayerStartSpectatingEvent;
 import me.blok601.nightshadeuhc.event.PlayerStopSpectatingEvent;
 import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
 import me.blok601.nightshadeuhc.scoreboard.provider.type.ArenaProvider;
-import me.blok601.nightshadeuhc.scoreboard.provider.type.UHCProvider;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
 import me.blok601.nightshadeuhc.util.Util;
@@ -610,7 +609,8 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         session.setEnd(new Timestamp(System.currentTimeMillis()));
         updateStats(session);
         this.playerStatus = PlayerStatus.LOBBY;
-        UHC.get().getScoreboardManager().getPlayerScoreboards().put(p, new PlayerScoreboard(new UHCProvider(), p));
+        //UHC.get().getScoreboardManager().getPlayerScoreboards().put(p, new PlayerScoreboard(new UHCProvider(), p));
+        UHC.getScoreboardManager().updateCache();
         p.getInventory().clear();
         p.getInventory().setArmorContents(null);
         p.teleport(MConf.get().getSpawnLocation().asBukkitLocation(true));
