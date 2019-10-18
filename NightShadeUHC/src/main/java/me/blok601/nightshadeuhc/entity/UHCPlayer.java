@@ -11,8 +11,6 @@ import me.blok601.nightshadeuhc.entity.object.ArenaSession;
 import me.blok601.nightshadeuhc.entity.object.PlayerStatus;
 import me.blok601.nightshadeuhc.event.PlayerStartSpectatingEvent;
 import me.blok601.nightshadeuhc.event.PlayerStopSpectatingEvent;
-import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
-import me.blok601.nightshadeuhc.scoreboard.provider.type.ArenaProvider;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
 import me.blok601.nightshadeuhc.util.Util;
@@ -566,7 +564,7 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
     public void joinArena() {
         Player p = getPlayer();
         this.setArenaSession(new ArenaSession());
-        UHC.get().getScoreboardManager().getPlayerScoreboards().put(p, new PlayerScoreboard(new ArenaProvider(), p));
+        //UHC.get().getScoreboardManager().getPlayerScoreboards().put(p, new PlayerScoreboard(new ArenaProvider(), p));
         p.getInventory().clear();
         p.getInventory().setArmorContents(null);
         p.setAllowFlight(false);
@@ -574,6 +572,7 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         p.setGameMode(GameMode.SURVIVAL);
 
         this.playerStatus = PlayerStatus.ARENA;
+        UHC.getScoreboardManager().updateCache();
 
         ItemBuilder sword = new ItemBuilder(Material.IRON_SWORD).enchantment(Enchantment.DAMAGE_ALL, 2);
         ItemStack rod = new ItemStack(Material.FISHING_ROD);
