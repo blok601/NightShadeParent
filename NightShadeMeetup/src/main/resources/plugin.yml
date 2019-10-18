@@ -1,0 +1,6 @@
+name: NightShadeMeetup
+version: ${project.version}
+main: com.nightshadepvp.meetup.Meetup
+authors: [Blok]
+description: NightShadePvP Meetup plugin
+website: discord.me/NightShadeMC

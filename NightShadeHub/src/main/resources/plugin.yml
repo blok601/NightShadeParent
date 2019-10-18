@@ -1,0 +1,7 @@
+name: Hub
+version: ${project.version}
+main: com.nightshadepvp.hub.Hub
+authors: [Blok]
+depend: [Core]
+description: NightShadeHub Module for use on the NightShade Network
+website: discord.me/NightShadeMC
