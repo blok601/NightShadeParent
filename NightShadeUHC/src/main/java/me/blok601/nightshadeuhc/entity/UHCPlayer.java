@@ -473,6 +473,7 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         if(!isSpectator()) return;
         setSpectator(false);
         this.playerStatus = PlayerStatus.LOBBY;
+        UHC.getScoreboardManager().updateCache();
         Player p = getPlayer();
 
         for (Player pl : Bukkit.getOnlinePlayers()){

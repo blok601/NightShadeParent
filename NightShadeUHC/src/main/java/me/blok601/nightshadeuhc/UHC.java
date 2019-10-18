@@ -58,7 +58,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
     private MultiverseCore multiverseCore;
 
     private ScenarioManager scenarioManager;
-    private ScoreboardManager scoreboardManager;
+    private static ScoreboardManager scoreboardManager;
     private ListenerHandler listenerHandler;
     private CommandHandler commandHandler;
     private ComponentHandler componentHandler;
@@ -271,7 +271,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         return multiverseCore;
     }
 
-    public ScoreboardManager getScoreboardManager() {
+    public static ScoreboardManager getScoreboardManager() {
         return scoreboardManager;
     }
 
@@ -282,4 +282,8 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
     public static String getServerType() {
         return serverType;
     }
+
+
+
+
 }
