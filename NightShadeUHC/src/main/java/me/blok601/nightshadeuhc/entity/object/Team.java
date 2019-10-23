@@ -6,13 +6,11 @@ import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
 import me.blok601.nightshadeuhc.scoreboard.ScoreboardManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.Color;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -135,7 +133,6 @@ public class Team {
 
             org.bukkit.scoreboard.Team t = scoreboard.registerNewTeam(this.getName());
             t.setPrefix(ChatUtils.format(color));
-            TeamManager.colorHashMap.put(this, color);
 //                                if(t.getPrefix().contains("&k") || t.getPrefix().endsWith("&r")){
 //                                    t.setPrefix(generateColor());
 //                                }
@@ -148,36 +145,6 @@ public class Team {
                 TeamManager.getInstance().getCachedColors().add(cachedColor);
             }
         }
-    }
-
-    public void pColor(Team tr) {
-        String color = TeamManager.colorHashMap.get(tr);
-        ScoreboardManager scoreboardManager = UHC.get().getScoreboardManager();
-        Scoreboard scoreboard;
-        for (Map.Entry<Player, PlayerScoreboard> playerPlayerScoreboardEntry : scoreboardManager.getPlayerScoreboards().entrySet()) {
-            if (playerPlayerScoreboardEntry.getValue() == null) continue;
-            if (playerPlayerScoreboardEntry.getKey() == null) continue;
-
-            scoreboard = playerPlayerScoreboardEntry.getValue().getBukkitScoreboard();
-            if (scoreboard.getTeam(tr.getName()) != null) {
-                scoreboard.getTeam(tr.getName()).unregister();
-            }
-
-            org.bukkit.scoreboard.Team t = scoreboard.registerNewTeam(tr.getName());
-            t.setPrefix(ChatUtils.format(color));
-//                                if(t.getPrefix().contains("&k") || t.getPrefix().endsWith("&r")){
-//                                    t.setPrefix(generateColor());
-//                                }
-
-            for (String mem : getMembers()) {
-                CachedColor cachedColor = new CachedColor(tr.getName());
-                cachedColor.setColor(color);
-                t.addEntry(mem);
-                cachedColor.setPlayer(mem);
-                TeamManager.getInstance().getCachedColors().add(cachedColor);
-            }
-        }
-
     }
 
     public void scheduleRemoval(String name) {
