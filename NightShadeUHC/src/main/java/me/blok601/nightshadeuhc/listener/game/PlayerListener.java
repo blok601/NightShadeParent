@@ -144,6 +144,7 @@ public class PlayerListener implements Listener {
     }
     @EventHandler
     public void onpvp (EntityDamageByEntityEvent e) {
+        if (e.isCancelled() == true) return;
         if (e.getDamager() instanceof Player || e.getEntity() instanceof Player ) {
             Player p = (Player) e.getEntity();
             UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
