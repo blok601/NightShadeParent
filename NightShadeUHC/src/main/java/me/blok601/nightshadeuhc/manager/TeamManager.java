@@ -11,6 +11,7 @@ import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
 import me.blok601.nightshadeuhc.scoreboard.ScoreboardManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 
@@ -21,6 +22,8 @@ import java.util.stream.Collectors;
  * Created by Blok on 9/24/2017.
  */
 public class TeamManager {
+    public static HashMap<Team, String> colorHashMap = new HashMap<>();
+
 
     private boolean teamManagement = false;
     private int teamSize = 2;
