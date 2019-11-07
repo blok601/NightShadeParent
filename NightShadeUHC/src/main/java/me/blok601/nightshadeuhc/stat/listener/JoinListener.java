@@ -207,7 +207,7 @@ public class JoinListener implements Listener {
         if (gamePlayer.getPlayerStatus() == PlayerStatus.PLAYING && PlayerUtils.inGameWorld(p)) {
 
             if (GameState.getState() == GameState.INGAME || GameState.getState() == GameState.MEETUP) {
-                if (gamePlayer.getCombatLogTimer() <= 30) {
+                if (1 > 10) {
                     //Kill them
                     for (ItemStack itemStack : p.getInventory().getContents()) {
                         if (itemStack == null || itemStack.getType() == Material.AIR) continue;
