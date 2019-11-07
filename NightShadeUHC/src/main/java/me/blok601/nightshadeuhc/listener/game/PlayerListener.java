@@ -144,16 +144,16 @@ public class PlayerListener implements Listener {
     }
     @EventHandler
     public void onpvp (EntityDamageByEntityEvent e) {
-        if (e.isCancelled() == true) return;
-        if (e.getDamager() instanceof Player || e.getEntity() instanceof Player ) {
-            Player p = (Player) e.getEntity();
-            UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
-            if (gamePlayer.getCombatLogTimer() > 30) {
-                gamePlayer.msg(ChatUtils.message("&eYou are now combat tagged! If you log out in the next 30 seconds you will be killed for PvP logging"));
-            }
-            gamePlayer.startCombatTimer();
-            gamePlayer.setCombatLogTimer(30);
-        }
+       // if (e.isCancelled() == true) return;
+       // if (e.getDamager() instanceof Player || e.getEntity() instanceof Player ) {
+          //  Player p = (Player) e.getEntity();
+          //  UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
+          //  if (gamePlayer.getCombatLogTimer() > 30) {
+          //      gamePlayer.msg(ChatUtils.message("&eYou are now combat tagged! If you log out in the next 30 seconds you will be killed for PvP logging"));
+          //  }
+           // gamePlayer.startCombatTimer();
+           // gamePlayer.setCombatLogTimer(30);
+       // }
     }
 
     @EventHandler

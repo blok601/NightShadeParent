@@ -34,9 +34,7 @@ public class FourHorsemenScenario extends Scenario {
                 }
                 ChatUtils.sendAll("Pestilence Strikes...");
 
-                UHCPlayerColl.get().getAllPlaying().stream().forEach(uhcPlayer -> {
-                    uhcPlayer.getPlayer().damage(2);
-                });
+                //UHCPlayerColl.get().getAllPlaying().stream().forEach(uhcPlayer -> poi);
 
 
             }
