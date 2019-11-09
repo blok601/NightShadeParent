@@ -52,6 +52,7 @@ public class BomberScenario extends Scenario implements StarterItems {
     }
   }
 
+
   @Override
   public List<ItemStack> getStarterItems() {
     return Collections.singletonList(new ItemStack(Material.FLINT_AND_STEEL));

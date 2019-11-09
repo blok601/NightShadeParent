@@ -9,7 +9,6 @@ import me.blok601.nightshadeuhc.entity.object.CachedColor;
 import me.blok601.nightshadeuhc.entity.object.Team;
 import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
 import me.blok601.nightshadeuhc.scoreboard.ScoreboardManager;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
@@ -28,7 +27,7 @@ public class TeamManager {
     private boolean rvb = false;
     private int rvbScatterType = 1; //1 - Teams, 0 is solo
     private boolean randomTeams = false;
-    private HashSet<CachedColor> colors;//storing player names because teams don't store UUIDs ;(
+    private static HashSet<CachedColor> colors;//storing player names because teams don't store UUIDs ;(
     private List<String> possibleColors;
 
     private static TeamManager ourInstance = new TeamManager();
@@ -197,7 +196,7 @@ public class TeamManager {
         }
     }
 
-    public HashSet<CachedColor> getCachedColors() {
+    public static HashSet<CachedColor> getCachedColors() {
         return colors;
     }
 

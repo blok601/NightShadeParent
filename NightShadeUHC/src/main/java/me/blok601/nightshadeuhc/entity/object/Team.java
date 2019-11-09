@@ -142,7 +142,7 @@ public class Team {
                 cachedColor.setColor(color);
                 t.addEntry(mem);
                 cachedColor.setPlayer(mem);
-                TeamManager.getInstance().getCachedColors().add(cachedColor);
+                TeamManager.getCachedColors().add(cachedColor);
             }
         }
     }

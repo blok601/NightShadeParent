@@ -39,7 +39,7 @@ public class TeamBaseCommand implements UHCCommand{
 
     private HashMap<String, String> invites = new HashMap<>();
 
-      public static HashMap<UUID, String> colors = new HashMap<>();
+      //public static HashMap<UUID, String> colors = new HashMap<>();
 
 	public void sendHelp(Player p){
         p.sendMessage(ChatUtils.message("&aTeam Commands"));
@@ -162,8 +162,8 @@ public class TeamBaseCommand implements UHCCommand{
                     if(user.hasRank(Rank.TRIAL)){
 
                         ChatUtils.sendAll("&bRecoloring all teams...");
-                        colors.clear();
-                        ScoreboardManager scoreboardManager = UHC.get().getScoreboardManager();
+                        //colors.clear();
+                        ScoreboardManager scoreboardManager = UHC.getScoreboardManager();
                         Scoreboard scoreboard;
                         TeamManager.getInstance().colorAllTeams();
 
@@ -196,8 +196,8 @@ public class TeamBaseCommand implements UHCCommand{
                                 CachedColor cachedColor = new CachedColor(name);
                                 cachedColor.setColor(color);
                                 cachedColor.setPlayer(player.getName());
-                                TeamManager.getInstance().getCachedColors().add(cachedColor);
-                                colors.put(uhcPlayer.getUuid(), ChatUtils.format(color));
+                                TeamManager.getCachedColors().add(cachedColor);
+                                //colors.put(uhcPlayer.getUuid(), ChatUtils.format(color));
 
                             }
                         }
