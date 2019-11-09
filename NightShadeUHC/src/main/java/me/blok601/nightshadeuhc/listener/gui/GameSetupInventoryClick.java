@@ -142,7 +142,13 @@ public class GameSetupInventoryClick implements Listener {
                         StringBuilder stringBuilder = new StringBuilder();
                         int index = 0;
                         int last = scenarioManager.getEnabledScenarios().size() - 1;
+
                         for (Scenario scenario : scenarioManager.getEnabledScenarios()) {
+                            if (scenario.getName().equalsIgnoreCase("Mystery Scenarios")) {
+                                stringBuilder.setLength(0);
+                                stringBuilder.append("Mystery Scenarios");
+                                break;
+                            }
                             stringBuilder.append(scenario.getName()).append(index == last ? "" : ", ");
                             index++;
                         }

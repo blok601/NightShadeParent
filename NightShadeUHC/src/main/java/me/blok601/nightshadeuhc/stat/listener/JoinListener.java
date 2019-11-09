@@ -161,7 +161,7 @@ public class JoinListener implements Listener {
             } else {
                 gamePlayer.setPlayerStatus(PlayerStatus.LOBBY);
             }
-            UHC.get().getScoreboardManager().updateCache();
+            UHC.getScoreboardManager().updateCache();
             StringBuilder builder = new StringBuilder();
             scenarioManager.getEnabledScenarios().forEach(scenario -> builder.append(scenario.getName()).append(", "));
             player.sendMessage(ChatUtils.format("&f&m-----------------------------------"));

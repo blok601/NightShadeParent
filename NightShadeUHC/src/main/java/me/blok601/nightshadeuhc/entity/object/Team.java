@@ -120,7 +120,7 @@ public class Team {
 
     public void color() {
         String color = ChatUtils.generateTeamColor();
-        ScoreboardManager scoreboardManager = UHC.get().getScoreboardManager();
+        ScoreboardManager scoreboardManager = UHC.getScoreboardManager();
         Scoreboard scoreboard;
         for (Map.Entry<Player, PlayerScoreboard> playerPlayerScoreboardEntry : scoreboardManager.getPlayerScoreboards().entrySet()) {
             if (playerPlayerScoreboardEntry.getValue() == null) continue;

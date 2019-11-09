@@ -201,7 +201,7 @@ public class TeamManager {
     }
 
     public void updateSpectatorTeam() {
-        ScoreboardManager scoreboardManager = UHC.get().getScoreboardManager();
+        ScoreboardManager scoreboardManager = UHC.getScoreboardManager();
         UHCPlayerColl.get().getAllOnline().forEach(uhcPlayer -> {
             Player player = uhcPlayer.getPlayer();
             PlayerScoreboard playerScoreboard = scoreboardManager.getPlayerScoreboard(player);

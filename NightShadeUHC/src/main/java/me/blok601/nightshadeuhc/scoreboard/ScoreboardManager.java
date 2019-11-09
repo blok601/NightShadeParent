@@ -70,9 +70,16 @@ public class ScoreboardManager implements Listener {
         for (CachedColor cachedColor : TeamManager.getCachedColors()) {
             //if (scoreboard.getTeam(cachedColor.getId()) != null) continue;
             Scoreboard scoreboard = getPlayerScoreboard(player).getBukkitScoreboard();
-            Team team = scoreboard.registerNewTeam(cachedColor.getId());
-            team.setPrefix(ChatUtils.format(cachedColor.getColor()));
-            team.addEntry(cachedColor.getPlayer());
+            if (scoreboard.getTeam(cachedColor.getId()) != null) {
+                Team team = scoreboard.getTeam(cachedColor.getId());
+                team.setPrefix(ChatUtils.format(cachedColor.getColor()));
+                team.addEntry(cachedColor.getPlayer());
+            } else {
+                Team team = scoreboard.registerNewTeam(cachedColor.getId());
+                team.setPrefix(ChatUtils.format(cachedColor.getColor()));
+                team.addEntry(cachedColor.getPlayer());
+            }
+
         }
     }
 
