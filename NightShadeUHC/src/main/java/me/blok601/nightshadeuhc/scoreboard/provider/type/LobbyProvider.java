@@ -9,6 +9,7 @@ import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.scoreboard.ScoreboardProvider;
 import me.blok601.nightshadeuhc.scoreboard.ScoreboardText;
 import me.blok601.nightshadeuhc.util.ChatUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -79,6 +80,7 @@ public class LobbyProvider extends ScoreboardProvider {
         } else {
             lines.add(new ScoreboardText(ChatUtils.format("&fTeam Size: &bFFA")));
         }
+        lines.add(new ScoreboardText(ChatUtils.format("&fPlayers: &b" + Bukkit.getServer().getOnlinePlayers().size())));
         lines.add(new ScoreboardText(""));
         lines.add(new ScoreboardText(ChatUtils.format("&fScenarios:")));
         for (String s : scenNames()) {
