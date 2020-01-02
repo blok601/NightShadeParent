@@ -23,6 +23,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
 /**
  * Created by Blok on 4/6/2017.
@@ -175,7 +176,9 @@ public class ScatterTask extends BukkitRunnable {
                     o.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, Integer.MAX_VALUE, 0));
                 });
                 int tms = 0;
+                int totalTeams = TeamManager.getInstance().getTeams().size();
                 int solos = 0;
+
                 for (Team team : TeamManager.getInstance().getTeams()) {
                     ArrayList<Player> players = new ArrayList<>();
                     Player toScatter;
@@ -188,6 +191,9 @@ public class ScatterTask extends BukkitRunnable {
                     }
 
                     ScatterUtil.scatter(world, radius, players);
+                    for (Player player : Bukkit.getOnlinePlayers()) {
+                        ActionBarUtil.sendActionBarMessage(player, ("§bScattered §8» §f" + tms + "§b/" + totalTeams + " teams"), 1, UHC.get());
+                    }
                     tms++;
                 }
 
@@ -206,6 +212,9 @@ public class ScatterTask extends BukkitRunnable {
                     ScatterUtil.scatterPlayer(world, radius, player);
                     gamePlayer.setPlayerStatus(PlayerStatus.PLAYING);
                     solos++;
+                    for (Player ps : Bukkit.getOnlinePlayers()) {
+                        ActionBarUtil.sendActionBarMessage(ps, ("§bScattered §8» §f" + solos + " §bsolos"), 1, UHC.get());
+                    }
                 }
 
                 Util.staffLog("&3Finished scattering &e" + solos + " &3solos");
@@ -220,6 +229,8 @@ public class ScatterTask extends BukkitRunnable {
 
 
         } else {
+            int scattered = 0;
+            int totalSolos = players.size();
             Bukkit.getOnlinePlayers().forEach(o -> {
                 for(PotionEffect effect: o.getActivePotionEffects()){
                     o.removePotionEffect(effect.getType());
@@ -242,9 +253,13 @@ public class ScatterTask extends BukkitRunnable {
             } else {
                 Player p = players.get(0);
                 ScatterUtil.scatterPlayer(world, radius, p);
+                scattered++;
                 UHCPlayer.get(p).setPlayerStatus(PlayerStatus.PLAYING);
                 p.sendMessage(ChatUtils.message("&bYou have been scattered!"));
                 players.remove(p);
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    ActionBarUtil.sendActionBarMessage(player, ("§bScattered §8» §f" + scattered + "§b/" + totalSolos + " solos"), 1, UHC.get());
+                }
             }
         }
     }

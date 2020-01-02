@@ -31,7 +31,7 @@ public class CancelGameCommand implements UHCCommand {
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
         if (GameState.getState() != GameState.PRE_SCATTER) {
-            p.sendMessage(ChatUtils.message("&cYou can only do this during the scatter countdown!"));
+            p.sendMessage(ChatUtils.message("&cYou can only do this during the scatter countdown."));
             return;
         }
 
