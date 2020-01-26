@@ -7,8 +7,10 @@ import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.nightshadepvp.core.entity.NSPlayerColl;
+import com.nightshadepvp.core.events.RankChangeEvent;
 import com.nightshadepvp.core.fanciful.FancyMessage;
 import com.nightshadepvp.core.utils.ChatUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -23,6 +25,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.UUID;
 
 public class EnginePlayer extends Engine {
 
@@ -216,5 +220,21 @@ public class EnginePlayer extends Engine {
                 e.setLine(i, line);
             }
         }
+    }
+
+    @EventHandler
+    public void onRankChange(RankChangeEvent event){
+        UUID uuid = event.getPlayerUUID();
+        String name = null;
+        if(Bukkit.getPlayer(uuid) != null){
+            name = Bukkit.getPlayer(uuid).getName();
+        }else{
+            name = Bukkit.getOfflinePlayer(uuid).getName();
+        }
+
+        if(name == null) return;
+
+        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "pex user " + name + " group set " + event.getToRank().getPexRank());
+
     }
 }
