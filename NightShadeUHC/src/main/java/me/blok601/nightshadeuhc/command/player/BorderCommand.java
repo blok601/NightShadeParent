@@ -36,8 +36,8 @@ public class BorderCommand implements UHCCommand {
             return;
         }
 
-        int currentBorder = gameManager.getShrinks()[gameManager.getBorderID()];
-        int nextBorder = (gameManager.getBorderID() + 1 < gameManager.getShrinks().length ? gameManager.getShrinks()[gameManager.getBorderID() + 1] : -1);
+        int currentBorder = gameManager.getShrinks()[gameManager.getBorderID() - 1];
+        int nextBorder = (gameManager.getBorderID() + 1 < gameManager.getShrinks().length ? gameManager.getShrinks()[gameManager.getBorderID()] : -1);
 
         uhcPlayer.msg(ChatUtils.format("&f&m----------------------------"));
         uhcPlayer.msg(ChatUtils.format("&fCurrent Border: &b" + currentBorder));

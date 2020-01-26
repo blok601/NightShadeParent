@@ -37,6 +37,10 @@ public class PowerCommand implements UHCCommand{
             p.sendMessage(ChatUtils.message("&cSuperheroes isn't enabled!"));
             return;
         }
+        if (!scenarioManager.getScen("Superheroes Teams").isEnabled()) {
+            p.sendMessage(ChatUtils.message("&cSuperheroes isn't enabled!"));
+            return;
+        }
 
         if (!GameState.gameHasStarted()) {
             p.sendMessage(ChatUtils.message("&cThe game hasn't started yet!"));

@@ -114,6 +114,7 @@ public class CommandHandler  {
         registerCommand(new AssaultAndBatteryRoleCommand(scenarioManager));
         registerCommand(new GiveItemsCommand(scenarioManager));
         registerCommand(new KickSolosCommand());
+        registerCommand(new KickUnderCommand());
         registerCommand(new SpectatorsCommand());
         registerCommand(new PermaDayCommand());
         registerCommand(new AliveCommand());

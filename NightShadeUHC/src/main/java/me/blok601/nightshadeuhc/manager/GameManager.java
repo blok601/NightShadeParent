@@ -31,7 +31,7 @@ public class GameManager {
         setMaxPlayers(60);
 
         shrinks = new int[]{
-                500, 300, 200, 100, 50, 25, 10, 0, 0
+                500, 300, 200, 100, 50, 25, 10, 10, 10
         };
 
         Core.get().getLogManager().log(Logger.LogType.INFO, "GameManager has been setup!");

@@ -1,5 +1,6 @@
 package me.blok601.nightshadeuhc.scenario;
 
+import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
 import me.blok601.nightshadeuhc.util.PlayerUtils;
 import org.bukkit.DyeColor;
@@ -73,6 +74,8 @@ public class VeinminerScenario extends Scenario{
             }else{
                 PlayerUtils.giveItem(new ItemStack(Material.GOLD_ORE, blocks.size()), p);
             }
+            ChatUtils.sendMiningMessage(false, p, blocks.size());
+
 
             ((ExperienceOrb)block.getWorld().spawn(block.getLocation(), ExperienceOrb.class)).setExperience(2*blocks.size());
         }
@@ -85,6 +88,8 @@ public class VeinminerScenario extends Scenario{
 
             if(blocks.size() == 0) return;
             PlayerUtils.giveItem(new ItemStack(Material.DIAMOND, blocks.size()), p);
+            ChatUtils.sendMiningMessage(true, p, blocks.size());
+
             ((ExperienceOrb)block.getWorld().spawn(block.getLocation(), ExperienceOrb.class)).setExperience(2*blocks.size());
         }
 
@@ -108,6 +113,7 @@ public class VeinminerScenario extends Scenario{
 
             if (blocks.size() == 0) return;
             PlayerUtils.giveItem(new ItemStack(Material.INK_SACK, blocks.size() * 4, DyeColor.BLUE.getDyeData()), p);
+
             ((ExperienceOrb) block.getWorld().spawn(block.getLocation(), ExperienceOrb.class)).setExperience(2 * blocks.size());
         }
 
@@ -119,6 +125,7 @@ public class VeinminerScenario extends Scenario{
 
             if(blocks.size() == 0) return;
             PlayerUtils.giveItem(new ItemStack(Material.EMERALD, blocks.size()), p);
+
             ((ExperienceOrb)block.getWorld().spawn(block.getLocation(), ExperienceOrb.class)).setExperience(2*blocks.size());
         }
 
