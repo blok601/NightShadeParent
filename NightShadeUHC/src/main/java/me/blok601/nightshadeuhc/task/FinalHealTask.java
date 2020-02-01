@@ -2,7 +2,10 @@ package me.blok601.nightshadeuhc.task;
 
 import com.massivecraft.massivecore.nms.NmsChat;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
+import me.blok601.nightshadeuhc.event.FinalHealEvent;
+import me.blok601.nightshadeuhc.event.PlayerStopSpectatingEvent;
 import me.blok601.nightshadeuhc.util.ChatUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -21,7 +24,13 @@ public class FinalHealTask extends BukkitRunnable {
     @Override
     public void run() {
 
-        if (counter <= -1) return;
+        if (counter <= -1) {
+            Bukkit.getServer().getPluginManager().callEvent(new FinalHealEvent());
+            return;
+
+
+        }
+
 
         if (counter == 0) {
 

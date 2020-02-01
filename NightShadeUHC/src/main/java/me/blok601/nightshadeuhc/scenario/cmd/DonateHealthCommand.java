@@ -5,6 +5,7 @@ import com.nightshadepvp.core.entity.NSPlayer;
 import me.blok601.nightshadeuhc.command.UHCCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.object.PlayerStatus;
+import me.blok601.nightshadeuhc.event.FinalHealEvent;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
@@ -14,8 +15,10 @@ import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 
 public class DonateHealthCommand implements UHCCommand{
+    Boolean a = false;
 
     private ScenarioManager scenarioManager;
 
@@ -36,6 +39,10 @@ public class DonateHealthCommand implements UHCCommand{
 
         if (!scenarioManager.getScen("Health Donor").isEnabled()) {
             p.sendMessage(ChatUtils.message("&cHealth donor is not enabled!"));
+            return;
+        }
+        if (!a) {
+            p.sendMessage(ChatUtils.message("&cYou cannot donate health until after the final heal!"));
             return;
         }
         if (args.length == 0) {
@@ -109,6 +116,11 @@ public class DonateHealthCommand implements UHCCommand{
 
 
 
+    }
+
+    @EventHandler
+    public void onEvent(FinalHealEvent e) {
+        this.a = true;
     }
 
     @Override
