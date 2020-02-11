@@ -75,10 +75,13 @@ public class ScoreboardManager implements Listener {
                 Team team = scoreboard.getTeam(cachedColor.getId());
                 team.setPrefix(ChatUtils.format(cachedColor.getColor()));
                 team.addEntry(cachedColor.getPlayer());
+                System.out.println(player + " has been colored");
             } else {
                 Team team = scoreboard.registerNewTeam(cachedColor.getId());
                 team.setPrefix(ChatUtils.format(cachedColor.getColor()));
                 team.addEntry(cachedColor.getPlayer());
+                System.out.println(player + " has been colored");
+
             }
 
         }
