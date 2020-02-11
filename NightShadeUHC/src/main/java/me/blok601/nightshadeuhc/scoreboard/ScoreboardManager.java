@@ -49,6 +49,7 @@ public class ScoreboardManager implements Listener {
 
     public void updateCache(){
         for (Map.Entry<Player, PlayerScoreboard> scoreboardEntry : this.playerScoreboards.entrySet()){
+            System.out.println("Updating the cache of " + scoreboardEntry.getKey().getName());
             if (UHCPlayer.get(scoreboardEntry.getKey()).getPlayerStatus() == PlayerStatus.PLAYING && GameState.gameHasStarted()) {
                 scoreboardEntry.setValue(new PlayerScoreboard(new UHCProvider(), scoreboardEntry.getKey()));
                 colorFix(scoreboardEntry.getKey());
