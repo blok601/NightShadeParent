@@ -7,6 +7,7 @@ import com.nightshadepvp.core.cmd.NightShadeCoreCommand;
 import com.nightshadepvp.core.cmd.req.ReqRankHasAtLeast;
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.nightshadepvp.core.utils.ChatUtils;
+import com.nightshadepvp.core.utils.PlayerUtils;
 import org.bukkit.entity.Player;
 
 public class CmdClear extends NightShadeCoreCommand {
@@ -28,7 +29,7 @@ public class CmdClear extends NightShadeCoreCommand {
             return;
         }
 
-        toClear.getInventory().setContents(null);
+        toClear.getInventory().clear();
         sender.sendMessage(ChatUtils.message("&bCleared the inventory of &f" + toClear.getName()));
 
     }
