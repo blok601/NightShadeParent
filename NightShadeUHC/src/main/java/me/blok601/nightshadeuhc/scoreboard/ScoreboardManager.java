@@ -49,7 +49,7 @@ public class ScoreboardManager implements Listener {
 
     public void updateCache(){
         for (Map.Entry<Player, PlayerScoreboard> scoreboardEntry : this.playerScoreboards.entrySet()){
-            System.out.println("Updating the cache of " + scoreboardEntry.getKey().getName());
+            //System.out.println("Updating the cache of " + scoreboardEntry.getKey().getName());
             if (UHCPlayer.get(scoreboardEntry.getKey()).getPlayerStatus() == PlayerStatus.PLAYING && GameState.gameHasStarted()) {
                 scoreboardEntry.setValue(new PlayerScoreboard(new UHCProvider(), scoreboardEntry.getKey()));
                 colorFix(scoreboardEntry.getKey());
@@ -75,12 +75,12 @@ public class ScoreboardManager implements Listener {
                 Team team = scoreboard.getTeam(cachedColor.getId());
                 team.setPrefix(ChatUtils.format(cachedColor.getColor()));
                 team.addEntry(cachedColor.getPlayer());
-                System.out.println(player + " has been colored");
+                //System.out.println(player + " has been colored");
             } else {
                 Team team = scoreboard.registerNewTeam(cachedColor.getId());
                 team.setPrefix(ChatUtils.format(cachedColor.getColor()));
                 team.addEntry(cachedColor.getPlayer());
-                System.out.println(player + " has been colored");
+                //System.out.println(player + " has been colored");
 
             }
 
