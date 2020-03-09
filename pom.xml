@@ -16,6 +16,7 @@
         <module>NightShadeProxy</module>
         <module>NightShadeHub</module>
         <module>NightShadeTournament</module>
+        <module>NightShadeBattleArena</module>
     </modules>
 
     <profiles>
