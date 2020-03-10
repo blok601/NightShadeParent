@@ -1,7 +1,10 @@
 package com.nightshadepvp.core.cmd.cmds.player.friend;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import com.massivecraft.massivecore.MassiveException;
 import com.massivecraft.massivecore.command.requirement.RequirementIsPlayer;
+import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.cmd.NightShadeCoreCommand;
 import com.nightshadepvp.core.cmd.type.TypeNSPlayer;
 import com.nightshadepvp.core.entity.NSPlayer;
@@ -35,6 +38,13 @@ public class CmdFriendRemove extends NightShadeCoreCommand {
         }
 
         player.removeFriend(target.getUuid());
+        target.removeFriend(player.getUuid());
         player.msg(ChatUtils.message("&fYou and &b" + target.getName() + " &fare no longer friends."));
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("Message");
+        out.writeUTF(target.getName());
+        out.writeUTF(ChatUtils.message("&fYou and &b" + player.getName() + " &fare no longer friends."));
+        player.getPlayer().sendPluginMessage(Core.get(), "BungeeCord", out.toByteArray());
+        return;
     }
 }

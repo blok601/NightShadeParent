@@ -48,7 +48,7 @@ public class CmdFriendAdd extends NightShadeCoreCommand {
         // if the other player has an outgoing request to the sender, make them friends
         // if not, create a friend request
 
-        if(target.getOutGoingFriendRequests().contains(player.getUuid())){
+        if(target.getOutGoingFriendRequests().remove(player.getUuid())){
             //Make them friends
             Date date = new Date(System.currentTimeMillis());
             Friend targetFriend = new Friend(target.getUuid(), date);
