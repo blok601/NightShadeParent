@@ -1,14 +1,18 @@
 package com.nightshadepvp.core.entity;
 
+import com.google.common.collect.Sets;
 import com.massivecraft.massivecore.collections.MassiveList;
 import com.massivecraft.massivecore.store.SenderEntity;
 import com.massivecraft.massivecore.util.MUtil;
 import com.nightshadepvp.core.Rank;
+import com.nightshadepvp.core.entity.objects.Friend;
 import com.nightshadepvp.core.entity.objects.PlayerColor;
 import com.nightshadepvp.core.entity.objects.PlayerEffect;
 import com.nightshadepvp.core.entity.objects.PlayerTag;
 
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.UUID;
 
 public class NSPlayer extends SenderEntity<NSPlayer> {
     // -------------------------------------------- //
@@ -43,6 +47,9 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
     private int coins = 0;
 
     private byte[] adminPassword = null;
+
+    private HashSet<Friend> friends = Sets.newHashSet();
+    private HashSet<UUID> outGoingFriendRequests = Sets.newHashSet();
 
     private transient boolean frozen = false;
     private transient boolean receivingPMs = true;
@@ -90,6 +97,9 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
 
         this.setSpectatingTime(that.spectatingTime);
         this.setAdminPassword(that.adminPassword);
+
+        this.setFriends(that.friends);
+        this.setOutGoingFriendRequests(that.outGoingFriendRequests);
 
 
         return this;
@@ -350,5 +360,40 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
 
     public void setLoggedIn(boolean loggedIn) {
         this.loggedIn = loggedIn;
+    }
+
+    public HashSet<Friend> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(HashSet<Friend> friends) {
+        this.friends = friends;
+    }
+
+    public HashSet<UUID> getOutGoingFriendRequests() {
+        return outGoingFriendRequests;
+    }
+
+    public void setOutGoingFriendRequests(HashSet<UUID> outGoingFriendRequests) {
+        this.outGoingFriendRequests = outGoingFriendRequests;
+    }
+
+    public Friend getFriend(UUID uuid){
+        for (Friend friend : this.friends) {
+            if(friend.getFriendUUID() == uuid){
+                return friend;
+            }
+        }
+
+        return null;
+    }
+
+    public void removeFriend(UUID uuid){
+        Friend friend = getFriend(uuid);
+        if(friend == null){
+            return;
+        }
+
+        this.friends.remove(friend);
     }
 }

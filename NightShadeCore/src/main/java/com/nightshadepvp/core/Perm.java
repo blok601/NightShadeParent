@@ -27,7 +27,10 @@ public enum Perm implements Identified
 	STORM,
 	RAIN,
 	CLEAR,
-	SUN;
+	SUN,
+	REQUEST,
+	DELETE;
+
 	
 	private final String id;
 	
