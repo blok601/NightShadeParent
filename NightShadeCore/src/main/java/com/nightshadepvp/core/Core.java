@@ -56,6 +56,9 @@ public class Core extends MassivePlugin implements PluginMessageListener {
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "Maintenance");
         Bukkit.getMessenger().registerIncomingPluginChannel(this, "Maintenance", this);
 
+        Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+        Bukkit.getMessenger().registerIncomingPluginChannel(this, "BungeeCord", this);
+
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "staffchat");
         Bukkit.getMessenger().registerIncomingPluginChannel(this, "staffchat", this);
 
