@@ -48,7 +48,7 @@ public class CmdStaffChat extends NightShadeCoreCommand{
             //out.writeUTF(MConf.get().getServerName());
             out.writeUTF(message.trim());
             user.getPlayer().sendPluginMessage(Core.get(), "staffchat", out.toByteArray());
-            Core.get().getLogManager().log(Logger.LogType.DEBUG, "Staff Chat line 61");
+            //Core.get().getLogManager().log(Logger.LogType.DEBUG, "Staff Chat line 61");
         }
 
     }

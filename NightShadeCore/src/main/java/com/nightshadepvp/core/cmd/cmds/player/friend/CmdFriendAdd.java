@@ -1,7 +1,10 @@
 package com.nightshadepvp.core.cmd.cmds.player.friend;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import com.massivecraft.massivecore.MassiveException;
 import com.massivecraft.massivecore.command.requirement.RequirementIsPlayer;
+import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.cmd.NightShadeCoreCommand;
 import com.nightshadepvp.core.cmd.type.TypeNSPlayer;
 import com.nightshadepvp.core.entity.NSPlayer;
@@ -34,6 +37,7 @@ public class CmdFriendAdd extends NightShadeCoreCommand {
 
         if(player.getFriend(target.getUuid()) != null){
             player.msg(ChatUtils.message("&cYou are already friends with &e" + target.getName() + "&c."));
+            return;
         }
 
         if(player.getOutGoingFriendRequests().contains(target.getUuid())){
@@ -51,9 +55,12 @@ public class CmdFriendAdd extends NightShadeCoreCommand {
             Friend playerFriend = new Friend(player.getUuid(), date);
             target.getFriends().add(playerFriend);
             player.getFriends().add(targetFriend);
-            if(target.isOnline()){
-                target.msg(ChatUtils.message("&fYou and &b" + player.getName() + " &fare now friends."));
-            }
+
+            ByteArrayDataOutput out = ByteStreams.newDataOutput();
+            out.writeUTF("Message");
+            out.writeUTF(target.getName());
+            out.writeUTF(ChatUtils.message("&fYou and &b" + player.getName() + " &fare now friends."));
+            player.getPlayer().sendPluginMessage(Core.get(), "BungeeCord", out.toByteArray());
             player.msg(ChatUtils.message("&fYou and &b" + target.getName() + " &fare now friends."));
             return;
         }

@@ -24,6 +24,11 @@ public class CmdFriendRemove extends NightShadeCoreCommand {
             return;
         }
 
+        if(player.getOutGoingFriendRequests().remove(target.getUuid())){
+            player.msg(ChatUtils.message("&fFriend request to &b" + target.getName() + " &fcancelled."));
+            return;
+        }
+
         if(player.getFriend(target.getUuid()) == null){
             player.msg(ChatUtils.message("&cYou are not friends with &e" + target.getName() + "&c."));
             return;
