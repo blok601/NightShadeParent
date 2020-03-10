@@ -379,7 +379,7 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
     }
 
     public Friend getFriend(UUID uuid){
-        for (Friend friend : this.friends) {
+        for (Friend friend : getFriends()) {
             if(friend.getFriendUUID().equals(uuid)){
                 return friend;
             }
