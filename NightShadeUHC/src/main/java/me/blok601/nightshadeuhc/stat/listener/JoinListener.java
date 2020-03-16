@@ -69,13 +69,7 @@ public class JoinListener implements Listener {
         Scoreboard scoreboard = scoreboardManager.getPlayerScoreboard(player).getBukkitScoreboard();
         Scenario scen = scenarioManager.getScen("Secret Teams");
         if(scen != null && !scen.isEnabled()){
-            new BukkitRunnable(){
-                @Override
-                public void run() {
-                    TeamManager.getInstance().colorAllTeams();
-
-                }
-            }.runTaskAsynchronously(uhc);
+            TeamManager.getInstance().colorAllTeams();
         }
 
 //        if (NSPlayer.get(player).hasRank(Rank.OWNER)) {
