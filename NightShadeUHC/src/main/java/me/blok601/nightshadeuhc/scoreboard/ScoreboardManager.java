@@ -52,17 +52,17 @@ public class ScoreboardManager implements Listener {
             //System.out.println("Updating the cache of " + scoreboardEntry.getKey().getName());
             if (UHCPlayer.get(scoreboardEntry.getKey()).getPlayerStatus() == PlayerStatus.PLAYING && GameState.gameHasStarted()) {
                 scoreboardEntry.setValue(new PlayerScoreboard(new UHCProvider(), scoreboardEntry.getKey()));
-                colorFix(scoreboardEntry.getKey());
+                //colorFix(scoreboardEntry.getKey());
             } else if (UHCPlayer.get((scoreboardEntry.getKey())).getPlayerStatus() == PlayerStatus.LOBBY && !GameState.gameHasStarted()) {
                 scoreboardEntry.setValue(new PlayerScoreboard(new LobbyProvider(plugin, gameManager, scenarioManager), scoreboardEntry.getKey()));
             } else if (GameState.gameHasStarted()) {
                 scoreboardEntry.setValue(new PlayerScoreboard(new UHCProvider(), scoreboardEntry.getKey()));
-                colorFix(scoreboardEntry.getKey());
+               // colorFix(scoreboardEntry.getKey());
             } else if (UHCPlayer.get(scoreboardEntry.getKey()).getPlayerStatus() == PlayerStatus.ARENA) {
                 scoreboardEntry.setValue(new PlayerScoreboard(new ArenaProvider(), scoreboardEntry.getKey()));
             } else {
                 scoreboardEntry.setValue(new PlayerScoreboard(new UHCProvider(), scoreboardEntry.getKey())); //default
-                colorFix(scoreboardEntry.getKey());
+              //  colorFix(scoreboardEntry.getKey());
             }
         }
     }

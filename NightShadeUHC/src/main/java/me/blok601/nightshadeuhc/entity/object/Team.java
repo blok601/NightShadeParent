@@ -6,12 +6,14 @@ import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
 import me.blok601.nightshadeuhc.scoreboard.ScoreboardManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -144,6 +146,26 @@ public class Team {
                 cachedColor.setPlayer(mem);
                 TeamManager.getCachedColors().add(cachedColor);
             }
+        }
+    }
+
+    ChatColor color = null;
+
+    public void setColor() {
+        if(color == null) {
+            color = ChatColor.getByChar(ChatUtils.generateTeamColor());
+            getMembers().forEach(player -> {
+                Player onlinePlayer = Bukkit.getPlayer(player);
+
+                onlinePlayer.setPlayerListName(color + onlinePlayer.getName());
+            });
+
+        } else {
+            getMembers().forEach(player -> {
+                Player onlinePlayer = Bukkit.getPlayer(player);
+
+                onlinePlayer.setPlayerListName(color + onlinePlayer.getName());
+            });
         }
     }
 
