@@ -57,8 +57,6 @@ public class JoinListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onJoin(PlayerJoinEvent e) {
-        TeamManager.getInstance().colorAllTeams();
-
         Player player = e.getPlayer();
         UHCPlayer gamePlayer = UHCPlayer.get(player);
 
@@ -74,14 +72,8 @@ public class JoinListener implements Listener {
             new BukkitRunnable(){
                 @Override
                 public void run() {
-                    for (CachedColor cachedColor : TeamManager.getInstance().getCachedColors()) {
-                        if (scoreboard.getTeam(cachedColor.getId()) != null) {
-                            scoreboard.getTeam(cachedColor.getId()).unregister();
-                        }
-                        Team team = scoreboard.registerNewTeam(cachedColor.getId());
-                        team.setPrefix(ChatUtils.format(cachedColor.getColor()));
-                        team.addEntry(cachedColor.getPlayer());
-                    }
+                    TeamManager.getInstance().colorAllTeams();
+
                 }
             }.runTaskAsynchronously(uhc);
         }

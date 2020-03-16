@@ -60,6 +60,8 @@ public class Team {
         return name;
     }
 
+    public ChatColor getColor() {return color;}
+
     public ArrayList<String> getMembers() {
         return members;
     }
