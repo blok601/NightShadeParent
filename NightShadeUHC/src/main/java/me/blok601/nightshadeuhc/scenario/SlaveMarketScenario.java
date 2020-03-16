@@ -6,6 +6,7 @@ import me.blok601.nightshadeuhc.event.GameStartEvent;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -46,7 +47,7 @@ public class SlaveMarketScenario extends Scenario {
         CURRENT_TOP_BIDDER = null;
         canBid = false;
 
-        leftOverTeam = new Team("UHC10000", ChatUtils.generateTeamColor());
+        leftOverTeam = new Team("UHC10000", ChatColor.WHITE);
         initializeTask = null;
     }
 
