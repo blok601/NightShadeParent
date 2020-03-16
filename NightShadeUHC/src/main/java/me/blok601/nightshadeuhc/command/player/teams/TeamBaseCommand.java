@@ -174,32 +174,9 @@ public class TeamBaseCommand implements UHCCommand{
 
 
                         for (UHCPlayer uhcPlayer : Iterables.filter(UHCPlayerColl.get().getAllOnline(), Predicates.not(IS_SPEC))) {
-                            String color = ChatUtils.generateTeamColor();
+                            ChatColor color = ChatUtils.generateTeamColor();
                             player = uhcPlayer.getPlayer();
-                            if(TeamManager.getInstance().getTeam(player) != null) continue; //Already colored
-                            String playerString = player.getName().length() >= 13 ? player.getName().substring(0, 11) : player.getName();
-                            name = "UHC" + playerString;
-
-
-                            for (Map.Entry<Player, PlayerScoreboard> playerPlayerScoreboardEntry : scoreboardManager.getPlayerScoreboards().entrySet()){
-                                if(playerPlayerScoreboardEntry.getValue() == null) continue;
-                                if(playerPlayerScoreboardEntry.getKey() == null) continue;
-
-                                scoreboard = playerPlayerScoreboardEntry.getValue().getBukkitScoreboard();
-                                if(scoreboard.getTeam(name) != null) {
-                                    scoreboard.getTeam(name).unregister();
-                                }
-
-                                org.bukkit.scoreboard.Team t = scoreboard.registerNewTeam(name);
-                                t.setPrefix(ChatUtils.format(color));
-                                t.addEntry(player.getName());
-                                CachedColor cachedColor = new CachedColor(name);
-                                cachedColor.setColor(color);
-                                cachedColor.setPlayer(player.getName());
-                                TeamManager.getCachedColors().add(cachedColor);
-                                //colors.put(uhcPlayer.getUuid(), ChatUtils.format(color));
-
-                            }
+                            player.setPlayerListName(color + player.getName());
                         }
 
                         TeamManager.getInstance().updateSpectatorTeam();
