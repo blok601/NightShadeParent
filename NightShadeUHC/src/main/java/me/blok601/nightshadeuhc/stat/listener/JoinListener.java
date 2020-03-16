@@ -72,8 +72,10 @@ public class JoinListener implements Listener {
             new BukkitRunnable(){
                 @Override
                 public void run() {
-                    TeamManager.getInstance().colorAllTeams();
+                    for (CachedColor cachedColor : TeamManager.getInstance().getCachedColors()) {
+                        TeamManager.getInstance().colorAllTeams();
 
+                    }
                 }
             }.runTaskAsynchronously(uhc);
         }
