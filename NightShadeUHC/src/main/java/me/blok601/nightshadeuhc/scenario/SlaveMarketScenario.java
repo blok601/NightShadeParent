@@ -46,7 +46,7 @@ public class SlaveMarketScenario extends Scenario {
         CURRENT_TOP_BIDDER = null;
         canBid = false;
 
-        leftOverTeam = new Team("UHC10000");
+        leftOverTeam = new Team("UHC10000", ChatUtils.generateTeamColor());
         initializeTask = null;
     }
 

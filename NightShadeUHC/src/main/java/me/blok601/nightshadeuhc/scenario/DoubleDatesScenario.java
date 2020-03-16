@@ -41,7 +41,7 @@ public class DoubleDatesScenario extends Scenario {
         int i = 1;
         for (List<Team> teamList : listOfTeams) {
             //List of teams to combine
-            Team newTeam = new Team(namePrefix + i);
+            Team newTeam = new Team(namePrefix + i, ChatUtils.generateTeamColor());
             for (Team team : teamList) {
                 for (String name : team.getMembers()) {
                     newTeam.getMembers().add(name);
