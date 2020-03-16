@@ -69,7 +69,19 @@ public class JoinListener implements Listener {
         Scoreboard scoreboard = scoreboardManager.getPlayerScoreboard(player).getBukkitScoreboard();
         Scenario scen = scenarioManager.getScen("Secret Teams");
         if(scen != null && !scen.isEnabled()){
-            TeamManager.getInstance().colorAllTeams();
+            new BukkitRunnable(){
+                @Override
+                public void run() {
+                    for (CachedColor cachedColor : TeamManager.getInstance().getCachedColors()) {
+                        if (scoreboard.getTeam(cachedColor.getId()) != null) {
+                            scoreboard.getTeam(cachedColor.getId()).unregister();
+                        }
+                        Team team = scoreboard.registerNewTeam(cachedColor.getId());
+                        team.setPrefix(ChatUtils.format(cachedColor.getColor()));
+                        team.addEntry(cachedColor.getPlayer());
+                    }
+                }
+            }.runTaskAsynchronously(uhc);
         }
 
 //        if (NSPlayer.get(player).hasRank(Rank.OWNER)) {
