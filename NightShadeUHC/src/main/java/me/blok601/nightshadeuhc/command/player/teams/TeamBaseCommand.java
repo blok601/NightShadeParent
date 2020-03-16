@@ -102,7 +102,7 @@ public class TeamBaseCommand implements UHCCommand{
 
                         int ts = TeamManager.getInstance().getTeams().size()+1;
 
-                        TeamManager.getInstance().addTeam(new Team("UHC" + ts, p));
+                        TeamManager.getInstance().addTeam(new Team("UHC" + ts, p, ChatUtils.generateTeamColor()));
                         p.sendMessage(ChatUtils.message("&eSuccessfully created team!"));
                     }else{
                         p.sendMessage(ChatUtils.message("&cTeam management is currently disabled!"));
@@ -174,9 +174,7 @@ public class TeamBaseCommand implements UHCCommand{
 
 
                         for (UHCPlayer uhcPlayer : Iterables.filter(UHCPlayerColl.get().getAllOnline(), Predicates.not(IS_SPEC))) {
-                            ChatColor color = ChatUtils.generateTeamColor();
-                            player = uhcPlayer.getPlayer();
-                            player.setPlayerListName(color + player.getName());
+
                         }
 
                         TeamManager.getInstance().updateSpectatorTeam();
@@ -217,7 +215,7 @@ public class TeamBaseCommand implements UHCCommand{
                         }
 
 
-                        Team team = new Team("UHC" + (TeamManager.getInstance().getTeams().size()+1), templist);
+                        Team team = new Team("UHC" + (TeamManager.getInstance().getTeams().size()+1), templist, ChatUtils.generateTeamColor());
                         TeamManager.getInstance().addTeam(team);
                     }
 

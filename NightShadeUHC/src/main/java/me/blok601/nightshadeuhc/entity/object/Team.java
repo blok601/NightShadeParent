@@ -29,22 +29,28 @@ public class Team {
 
     private UUID melee;
     private UUID bow;
+    private ChatColor color;
 
-    public Team(String name, Player player) {
+    public Team(String name, Player player, ChatColor color) {
         this.name = name;
         this.members = new ArrayList<>();
+        this.color = color;
         if(player != null){
             this.members.add(player.getName());
         }
 
     }
 
-    public Team(String name){
+    public Team(String name, ChatColor color){
+        this.color = color;
+
         this.name = name;
         this.members = new ArrayList<>();
     }
 
-    public Team(String name, ArrayList<String> members){
+    public Team(String name, ArrayList<String> members, ChatColor color){
+        this.color = color;
+
         this.name = name;
         this.members = members;
     }
@@ -149,22 +155,20 @@ public class Team {
         }
     }
 
-    ChatColor color = null;
 
     public void setColor() {
-        if(color == null) {
-            color = ChatUtils.generateTeamColor();
+        if(this.color == null) {
             getMembers().forEach(player -> {
                 Player onlinePlayer = Bukkit.getPlayer(player);
 
-                onlinePlayer.setPlayerListName(color + onlinePlayer.getName());
+                onlinePlayer.setPlayerListName(this.color + onlinePlayer.getName());
             });
 
         } else {
             getMembers().forEach(player -> {
                 Player onlinePlayer = Bukkit.getPlayer(player);
 
-                onlinePlayer.setPlayerListName(color + onlinePlayer.getName());
+                onlinePlayer.setPlayerListName(this.color + onlinePlayer.getName());
             });
         }
     }

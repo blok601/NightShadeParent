@@ -77,7 +77,7 @@ public class SlaveOwnerCommand implements UHCCommand{
                 }
                 slaveMarketScenario.owners.put(target.getUniqueId(), 64);
                 int ts = TeamManager.getInstance().getTeams().size()+1;
-                TeamManager.getInstance().addTeam(new Team("UHC" + ts, p));
+                TeamManager.getInstance().addTeam(new Team("UHC" + ts, p, ChatUtils.generateTeamColor()));
                 ChatUtils.sendAllScenarioMessage("&b" + target.getName() + " has been added as a slave owner!", slaveMarketScenario);
             }
 

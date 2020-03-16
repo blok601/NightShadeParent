@@ -57,6 +57,8 @@ public class JoinListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onJoin(PlayerJoinEvent e) {
+        TeamManager.getInstance().colorAllTeams();
+
         Player player = e.getPlayer();
         UHCPlayer gamePlayer = UHCPlayer.get(player);
 
