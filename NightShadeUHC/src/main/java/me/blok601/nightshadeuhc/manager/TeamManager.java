@@ -28,7 +28,7 @@ public class TeamManager {
     private int rvbScatterType = 1; //1 - Teams, 0 is solo
     private boolean randomTeams = false;
     private static HashSet<CachedColor> colors;//storing player names because teams don't store UUIDs ;(
-    private List<String> possibleColors;
+    private List<ChatColor> possibleColors;
 
     private static TeamManager ourInstance = new TeamManager();
 
@@ -49,25 +49,14 @@ public class TeamManager {
         this.rvbScatterType = 1;
         this.randomTeams = false;
 
-        this.possibleColors = Lists.newArrayList("&1", "&2", "&3", "&4", "&5", "&6", "&a", "&b", "&c", "&d", "&e", "&9");
+        this.possibleColors = Lists.newArrayList();
 
-        List<String> temp = Lists.newArrayList();
-        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&o").collect(Collectors.toList()));
-        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&n").collect(Collectors.toList()));
-        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&m").collect(Collectors.toList()));
-        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&l").collect(Collectors.toList()));
-        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&m&n").collect(Collectors.toList()));
-        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&o&n").collect(Collectors.toList()));
-        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&o&m").collect(Collectors.toList()));
-        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&o&n&m").collect(Collectors.toList()));
-        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&l&n").collect(Collectors.toList()));
-        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&l&m").collect(Collectors.toList()));
-        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&l&o").collect(Collectors.toList()));
-        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&l&o&n").collect(Collectors.toList()));
+        List<ChatColor> temp = Lists.newArrayList();
+       for (int i = 1; i <= 16; i++) {
+           temp.add(ChatColor.getByChar(Integer.toHexString(i)));
+       }
 
         possibleColors.addAll(temp);
-
-        possibleColors.remove("&7&o");
         Collections.shuffle(possibleColors); //Have all good color combos
     }
 
@@ -223,7 +212,7 @@ public class TeamManager {
         });
     }
 
-    public List<String> getPossibleColors() {
+    public List<ChatColor> getPossibleColors() {
         return possibleColors;
     }
 
