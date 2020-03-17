@@ -1,4 +1,4 @@
-package com.nightshadepvp.core.entity.objects;
+package com.nightshadepvp.core.quest;
 
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.nightshadepvp.core.utils.ChatUtils;

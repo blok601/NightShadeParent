@@ -64,6 +64,8 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
 
     private int spectatingTime = 0;
 
+    private HashSet<Integer> completedQuests = Sets.newHashSet();
+
     // ----------------------------------
     //         Staff Toggles
     // ----------------------------------
@@ -104,6 +106,8 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
         this.setOutGoingFriendRequests(that.outGoingFriendRequests);
 
         this.setHasReferred(that.hasReferred);
+
+        this.setCompletedQuests(that.completedQuests);
 
 
         return this;
@@ -407,5 +411,13 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
 
     public void setHasReferred(boolean hasReferred) {
         this.hasReferred = hasReferred;
+    }
+
+    public HashSet<Integer> getCompletedQuests() {
+        return completedQuests;
+    }
+
+    public void setCompletedQuests(HashSet<Integer> completedQuests) {
+        this.completedQuests = completedQuests;
     }
 }
