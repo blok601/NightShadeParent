@@ -49,26 +49,26 @@ public class TeamManager {
         this.rvbScatterType = 1;
         this.randomTeams = false;
 
-        this.possibleColors = Lists.newArrayList("&1", "&2", "&3", "&4", "&5", "&6", "&a", "&b", "&c", "&d", "&e", "&9");
+        this.possibleColors = Lists.newArrayList("§1", "§2", "§3", "§4", "§5", "§6", "§a", "§b", "§c", "§d", "§e", "§9");
 
         List<String> temp = Lists.newArrayList();
-        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&o").collect(Collectors.toList()));
-        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&n").collect(Collectors.toList()));
-        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&m").collect(Collectors.toList()));
-        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&l").collect(Collectors.toList()));
-        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&m&n").collect(Collectors.toList()));
-        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&o&n").collect(Collectors.toList()));
-        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&o&m").collect(Collectors.toList()));
-        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&o&n&m").collect(Collectors.toList()));
-        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&l&n").collect(Collectors.toList()));
-        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&l&m").collect(Collectors.toList()));
-        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&l&o").collect(Collectors.toList()));
-        temp.addAll(possibleColors.stream().map(lColor -> lColor + "&l&o&n").collect(Collectors.toList()));
+        temp.addAll(possibleColors.stream().map(lColor -> lColor + "§o").collect(Collectors.toList()));
+        temp.addAll(possibleColors.stream().map(lColor -> lColor + "§n").collect(Collectors.toList()));
+        temp.addAll(possibleColors.stream().map(lColor -> lColor + "§m").collect(Collectors.toList()));
+        temp.addAll(possibleColors.stream().map(lColor -> lColor + "§l").collect(Collectors.toList()));
+        temp.addAll(possibleColors.stream().map(lColor -> lColor + "§m§n").collect(Collectors.toList()));
+        temp.addAll(possibleColors.stream().map(lColor -> lColor + "§o§n").collect(Collectors.toList()));
+        temp.addAll(possibleColors.stream().map(lColor -> lColor + "§o§m").collect(Collectors.toList()));
+        temp.addAll(possibleColors.stream().map(lColor -> lColor + "§o§n§m").collect(Collectors.toList()));
+        temp.addAll(possibleColors.stream().map(lColor -> lColor + "§l§n").collect(Collectors.toList()));
+        temp.addAll(possibleColors.stream().map(lColor -> lColor + "§l§m").collect(Collectors.toList()));
+        temp.addAll(possibleColors.stream().map(lColor -> lColor + "§l§o").collect(Collectors.toList()));
+        temp.addAll(possibleColors.stream().map(lColor -> lColor + "§l§o§n").collect(Collectors.toList()));
         this.possibleColors = Lists.newArrayList();
 
         possibleColors.addAll(temp);
 
-        possibleColors.remove("&7&o");
+        possibleColors.remove("§7§o");
 
         possibleColors.addAll(temp);
         Collections.shuffle(possibleColors); //Have all good color combos
@@ -172,6 +172,9 @@ public class TeamManager {
     public void resetTeams(){
         ScoreboardManager scoreboardManager = UHC.get().getScoreboardManager();
         TeamManager.getInstance().getTeams().clear();
+        for (Team t : TeamManager.getInstance().getTeams() ) {
+            t.removeColor();
+        }
         Scoreboard scoreboard;
 
         for (Map.Entry<Player, PlayerScoreboard> playerPlayerScoreboardEntry : scoreboardManager.getPlayerScoreboards().entrySet()) {

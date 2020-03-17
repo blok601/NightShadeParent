@@ -175,6 +175,23 @@ public class Team {
         }
     }
 
+    public void removeColor() {
+        if(this.color == null) {
+            getMembers().forEach(player -> {
+                Player onlinePlayer = Bukkit.getPlayer(player);
+
+                onlinePlayer.setPlayerListName("&r" + onlinePlayer.getName());
+            });
+
+        } else {
+            getMembers().forEach(player -> {
+                Player onlinePlayer = Bukkit.getPlayer(player);
+
+                onlinePlayer.setPlayerListName("&r" + onlinePlayer.getName());
+            });
+        }
+    }
+
     public void scheduleRemoval(String name) {
         for (String n : this.getMembers()) {
             if (n.equalsIgnoreCase(name)) {
