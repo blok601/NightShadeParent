@@ -85,7 +85,11 @@ public class Team {
     }
 
     public void removeMember(Player player){
-        if(this.members.contains(player.getName())) this.getMembers().remove(player.getName());
+        if(this.members.contains(player.getName())) {
+            this.removeColor(player);
+            this.getMembers().remove(player.getName());
+        }
+
     }
 
     public void addMember(Player player){
@@ -180,16 +184,19 @@ public class Team {
             getMembers().forEach(player -> {
                 Player onlinePlayer = Bukkit.getPlayer(player);
 
-                onlinePlayer.setPlayerListName("&r" + onlinePlayer.getName());
+                onlinePlayer.setPlayerListName("§f" + onlinePlayer.getName());
             });
 
         } else {
             getMembers().forEach(player -> {
                 Player onlinePlayer = Bukkit.getPlayer(player);
 
-                onlinePlayer.setPlayerListName("&r" + onlinePlayer.getName());
+                onlinePlayer.setPlayerListName("§f" + onlinePlayer.getName());
             });
         }
+    }
+    public void removeColor(Player p) {
+       p.setPlayerListName("§f" + p.getName());
     }
 
     public void scheduleRemoval(String name) {

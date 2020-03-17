@@ -171,10 +171,10 @@ public class TeamManager {
 
     public void resetTeams(){
         ScoreboardManager scoreboardManager = UHC.get().getScoreboardManager();
-        TeamManager.getInstance().getTeams().clear();
         for (Team t : TeamManager.getInstance().getTeams() ) {
             t.removeColor();
         }
+        TeamManager.getInstance().getTeams().clear();
         Scoreboard scoreboard;
 
         for (Map.Entry<Player, PlayerScoreboard> playerPlayerScoreboardEntry : scoreboardManager.getPlayerScoreboards().entrySet()) {
