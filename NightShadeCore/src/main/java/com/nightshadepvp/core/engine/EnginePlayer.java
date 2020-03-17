@@ -202,6 +202,7 @@ public class EnginePlayer extends Engine {
             }
         }.runTaskLater(Core.get(), 2L);
 
+
         if (!Core.get().getLoginTasks().containsKey(player.getUniqueId())) {
             return;
         }
@@ -225,7 +226,7 @@ public class EnginePlayer extends Engine {
     @EventHandler
     public void onRankChange(RankChangeEvent event){
         UUID uuid = event.getPlayerUUID();
-        String name = null;
+        String name;
         if(Bukkit.getPlayer(uuid) != null){
             name = Bukkit.getPlayer(uuid).getName();
         }else{

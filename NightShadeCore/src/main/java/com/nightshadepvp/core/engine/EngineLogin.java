@@ -1,21 +1,46 @@
 package com.nightshadepvp.core.engine;
 
 import com.massivecraft.massivecore.Engine;
+import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
+import com.nightshadepvp.core.entity.NSPlayerColl;
 import com.nightshadepvp.core.utils.ChatUtils;
+import net.minecraft.server.v1_8_R3.PacketPlayOutEntityHeadRotation;
+import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+
+import java.util.ArrayList;
+import java.util.UUID;
+import java.util.function.Consumer;
 
 /**
  * Created by Blok on 6/20/2019.
  */
 public class EngineLogin extends Engine {
+
+    @EventHandler
+    public void onPreLogin(AsyncPlayerPreLoginEvent event){
+        UUID uuid = event.getUniqueId();
+        if(NSPlayer.get(uuid) == null){
+            ArrayList<Consumer<UUID>> toDo = new ArrayList<>();
+            toDo.add(uuid1 -> {
+                Bukkit.getPlayer(uuid1).sendMessage(ChatUtils.format("&f&m&o------------------------------------------"));
+                Bukkit.getPlayer(uuid1).sendMessage(ChatUtils.format("&bWelcome to NightShadePvP!"));
+                Bukkit.getPlayer(uuid1).sendMessage(ChatUtils.format("&bIf you found out about NightShade from another player, type /refer <player>"));
+                Bukkit.getPlayer(uuid1).sendMessage(ChatUtils.format("&bThey will receive a special reward!"));
+                Bukkit.getPlayer(uuid1).sendMessage(ChatUtils.format("&f&m&o------------------------------------------"));
+            });
+            Core.get().getLoginTasks().put(uuid, toDo);
+        }
+    }
 
     @EventHandler
     public void onLogin(PlayerLoginEvent e) {

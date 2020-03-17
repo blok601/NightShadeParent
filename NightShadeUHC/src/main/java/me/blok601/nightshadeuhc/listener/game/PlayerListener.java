@@ -115,14 +115,14 @@ public class PlayerListener implements Listener {
                 e.setCancelled(true);
             }
 
-            if(gamePlayer.isInArena()){
-                if(e.getCause() == EntityDamageEvent.DamageCause.FALL){
+            if (gamePlayer.isInArena()) {
+                if (e.getCause() == EntityDamageEvent.DamageCause.FALL) {
                     e.setDamage(0);
                     return;
                 }
 
-                if(e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK) return;
-                if(e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) return;
+                if (e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK) return;
+                if (e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) return;
 
                 return; //Allow it
             }
@@ -135,25 +135,10 @@ public class PlayerListener implements Listener {
             if (damage > 0 || e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE && !e.isCancelled()) {
 
 
-
-
             }
 
 
         }
-    }
-    @EventHandler
-    public void onpvp (EntityDamageByEntityEvent e) {
-       // if (e.isCancelled() == true) return;
-       // if (e.getDamager() instanceof Player || e.getEntity() instanceof Player ) {
-          //  Player p = (Player) e.getEntity();
-          //  UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
-          //  if (gamePlayer.getCombatLogTimer() > 30) {
-          //      gamePlayer.msg(ChatUtils.message("&eYou are now combat tagged! If you log out in the next 30 seconds you will be killed for PvP logging"));
-          //  }
-           // gamePlayer.startCombatTimer();
-           // gamePlayer.setCombatLogTimer(30);
-       // }
     }
 
     @EventHandler
