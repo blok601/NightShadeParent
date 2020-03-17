@@ -29,9 +29,9 @@ public class Team {
 
     private UUID melee;
     private UUID bow;
-    private ChatColor color;
+    private String color;
 
-    public Team(String name, Player player, ChatColor color) {
+    public Team(String name, Player player, String color) {
         this.name = name;
         this.members = new ArrayList<>();
         this.color = color;
@@ -41,14 +41,14 @@ public class Team {
 
     }
 
-    public Team(String name, ChatColor color){
+    public Team(String name, String color){
         this.color = color;
 
         this.name = name;
         this.members = new ArrayList<>();
     }
 
-    public Team(String name, ArrayList<String> members, ChatColor color){
+    public Team(String name, ArrayList<String> members, String color){
         this.color = color;
 
         this.name = name;
@@ -60,7 +60,7 @@ public class Team {
         return name;
     }
 
-    public ChatColor getColor() {return color;}
+    public String getColor() {return color;}
 
     public ArrayList<String> getMembers() {
         return members;

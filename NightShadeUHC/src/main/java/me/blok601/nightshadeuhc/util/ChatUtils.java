@@ -107,7 +107,7 @@ public class ChatUtils {
        return format("&5Arena &8» &b" + msg);
    }
 
-    public static ChatColor generateTeamColor() {
+    public static String generateTeamColor() {
         Random random = new Random();
         return TeamManager.getInstance().getPossibleColors().get(random.nextInt(TeamManager.getInstance().getPossibleColors().size()));
     }
