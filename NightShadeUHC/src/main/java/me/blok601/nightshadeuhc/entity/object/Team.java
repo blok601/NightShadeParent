@@ -133,7 +133,7 @@ public class Team {
     }
 
     public void color() {
-       // String color = ChatUtils.generateTeamColor();
+       String color = this.color;
         ScoreboardManager scoreboardManager = UHC.getScoreboardManager();
         Scoreboard scoreboard;
         for (Map.Entry<Player, PlayerScoreboard> playerPlayerScoreboardEntry : scoreboardManager.getPlayerScoreboards().entrySet()) {
@@ -146,17 +146,9 @@ public class Team {
             }
 
             org.bukkit.scoreboard.Team t = scoreboard.registerNewTeam(this.getName());
-            //t.setPrefix(ChatUtils.format(color));
-//                                if(t.getPrefix().contains("&k") || t.getPrefix().endsWith("&r")){
-//                                    t.setPrefix(generateColor());
-//                                }
-
+            t.setPrefix(color);
             for (String mem : getMembers()) {
-                CachedColor cachedColor = new CachedColor(this.getName());
-             //   cachedColor.setColor(color);
                 t.addEntry(mem);
-                cachedColor.setPlayer(mem);
-                TeamManager.getCachedColors().add(cachedColor);
             }
         }
     }

@@ -198,7 +198,7 @@ public class TeamManager {
 
     public void colorAllTeams() {
         for (Team team : this.teams) {
-            team.setColor();
+            team.color();
         }
     }
 
