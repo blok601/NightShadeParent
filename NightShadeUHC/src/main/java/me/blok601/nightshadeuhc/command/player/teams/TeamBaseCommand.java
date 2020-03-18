@@ -229,7 +229,10 @@ public class TeamBaseCommand implements UHCCommand{
                     }
                     final Player target = Bukkit.getPlayerExact(args[1]);
                     Team t = TeamManager.getInstance().getTeam(target);
-                    t.removeColor();
+                    for (String sl : t.getMembers()) {
+                        Player p1 = Bukkit.getPlayer(sl);
+                        t.removeColor(p1);
+                    }
                     TeamManager.getInstance().removeTeam(t);
                     p.sendMessage(ChatUtils.message("&cDeleted " + target.getName() + "&c's team!"));
 
