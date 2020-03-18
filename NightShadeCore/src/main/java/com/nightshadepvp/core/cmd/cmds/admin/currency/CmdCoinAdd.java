@@ -8,6 +8,7 @@ import com.nightshadepvp.core.cmd.req.ReqRankHasAtLeast;
 import com.nightshadepvp.core.cmd.type.TypeNSPlayer;
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.nightshadepvp.core.utils.ChatUtils;
+import org.bukkit.Sound;
 
 /**
  * Created by Blok on 6/27/2019.
@@ -43,6 +44,7 @@ public class CmdCoinAdd extends NightShadeCoreCommand {
             target.msg(ChatUtils.message("&b" + nsPlayer.getName() + " &ehas added &b" + change + " coins &eto your balance."));
             target.msg(ChatUtils.format("&eYou new balance: &b" + target.getCoins() + " coins"));
             target.msg(ChatUtils.format("&5&m--------------------------------------"));
+            target.getPlayer().playSound(target.getPlayer().getLocation(), Sound.LEVEL_UP, 5, 5);
         }
     }
 }

@@ -77,16 +77,6 @@ public class JoinListener implements Listener {
             }.runTaskAsynchronously(uhc);
         }
 
-//        if (NSPlayer.get(player).hasRank(Rank.OWNER)) {
-//            new BukkitRunnable() {
-//                @Override
-//                public void run() {
-//                    FakePlayerManager.getInstance().getNpcs().forEach(fakePlayer -> {
-//                        fakePlayer.spawnFor(player);
-//                    });
-//                }
-//            }.runTaskLater(uhc, 15L);
-//        }
         
         if (gamePlayer.isSpectator()) return;
         if (GameState.getState() == GameState.INGAME || GameState.getState() == GameState.MEETUP) {

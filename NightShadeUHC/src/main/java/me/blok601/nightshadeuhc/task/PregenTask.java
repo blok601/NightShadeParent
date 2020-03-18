@@ -107,6 +107,6 @@ public class PregenTask extends BukkitRunnable {
         } else {
             coloredPercent = "§4" + DECIMAL_FORMAT.format(pct) + "%";
         }
-        return "§5Pregen in §b" + worldName + "§8» " + coloredPercent;
+        return "§5Pregen in §b" + worldName + " §8» " + coloredPercent;
     }
 }

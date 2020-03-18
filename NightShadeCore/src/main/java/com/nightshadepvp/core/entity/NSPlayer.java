@@ -51,6 +51,8 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
     private HashSet<Friend> friends = Sets.newHashSet();
     private HashSet<UUID> outGoingFriendRequests = Sets.newHashSet();
 
+    private boolean hasReferred = false;
+
     private transient boolean frozen = false;
     private transient boolean receivingPMs = true;
     private transient NSPlayer lastMessaged = null;
@@ -61,6 +63,8 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
     private transient int currentAFKTime = 0;
 
     private int spectatingTime = 0;
+
+    private HashSet<Integer> completedQuests = Sets.newHashSet();
 
     // ----------------------------------
     //         Staff Toggles
@@ -100,6 +104,10 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
 
         this.setFriends(that.friends);
         this.setOutGoingFriendRequests(that.outGoingFriendRequests);
+
+        this.setHasReferred(that.hasReferred);
+
+        this.setCompletedQuests(that.completedQuests);
 
 
         return this;
@@ -395,5 +403,21 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
         }
 
         this.friends.remove(friend);
+    }
+
+    public boolean isHasReferred() {
+        return hasReferred;
+    }
+
+    public void setHasReferred(boolean hasReferred) {
+        this.hasReferred = hasReferred;
+    }
+
+    public HashSet<Integer> getCompletedQuests() {
+        return completedQuests;
+    }
+
+    public void setCompletedQuests(HashSet<Integer> completedQuests) {
+        this.completedQuests = completedQuests;
     }
 }
