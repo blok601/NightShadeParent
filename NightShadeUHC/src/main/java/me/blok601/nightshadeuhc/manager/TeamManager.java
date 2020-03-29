@@ -9,6 +9,7 @@ import me.blok601.nightshadeuhc.entity.object.CachedColor;
 import me.blok601.nightshadeuhc.entity.object.Team;
 import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
 import me.blok601.nightshadeuhc.scoreboard.ScoreboardManager;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
@@ -85,6 +86,10 @@ public class TeamManager {
     }
 
     public void removeTeam(Team team) {
+        for (String sl : team.getMembers()) {
+            Player p1 = Bukkit.getPlayer(sl);
+            team.removeColor(p1);
+        }
         this.teams.remove(team);
     }
 
@@ -198,7 +203,7 @@ public class TeamManager {
 
     public void colorAllTeams() {
         for (Team team : this.teams) {
-            team.setColor();
+            team.color();
         }
     }
 
