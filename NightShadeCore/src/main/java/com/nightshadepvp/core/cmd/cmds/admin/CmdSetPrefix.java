@@ -43,7 +43,7 @@ public class CmdSetPrefix extends NightShadeCoreCommand{
         }
 
         user.setPrefix(prefix);
-        if(user.getPlayer().isOnline()){
+        if(user.isOnline()){
             user.getPlayer().sendMessage(ChatUtils.message("&eYour prefix has been updated to " + prefix));
         }
         sender.sendMessage(ChatUtils.message("&eYou have updated &a" + user.getName() + "&e's prefix to &a"  + user.getPrefix()));
