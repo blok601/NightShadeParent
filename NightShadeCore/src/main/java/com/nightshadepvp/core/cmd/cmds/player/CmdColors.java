@@ -38,8 +38,8 @@ public class CmdColors extends NightShadeCoreCommand{
             user.msg(ChatUtils.message("&eYou have the following colors&8: &a" + colors));
             user.msg(ChatUtils.message("&eYour selected color&8: &a" + user.getColor()));
         }else{
-            user.msg(ChatUtils.message("&a" + user.getName() + " &ehas the following colors&8: &a" + colors));
-            user.msg(ChatUtils.message("&a" + user.getName() + "'s &eselected color&8: &a" + user.getColor()));
+            NSPlayer.get(sender).msg(ChatUtils.message("&a" + user.getName() + " &ehas the following colors&8: &a" + colors));
+            NSPlayer.get(sender).msg(ChatUtils.message("&a" + user.getName() + "'s &eselected color&8: &a" + user.getColor()));
         }
 
     }
