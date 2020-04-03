@@ -13,6 +13,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -94,8 +95,9 @@ public class LobbyProvider extends ScoreboardProvider {
         return lines;
     }
 
-    private ArrayList<String> scenNames() {
+    private List<String> scenNames() {
         if (scenarioManager.getEnabledScenarios().size() == 0) return Lists.newArrayList();
+        if(scenarioManager.getEnabledScenarios().contains(scenarioManager.getScen("Mystery Scenarios"))) return Collections.singletonList("Mystery Scenarios");
         ArrayList<String> names = Lists.newArrayList();
         int i = 0;
         if (scenarioManager.getEnabledScenarios().size() <= 3) {
