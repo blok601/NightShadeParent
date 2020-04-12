@@ -134,6 +134,7 @@ public class ScenarioManager implements UHCCommand{
         addScen(new BaldChickenScenario());
         addScen(new LimitationScenario());
         addScen(new RodlessScenario());
+        addScen(new BloodCycleScenario(uhc), "BC");
 
         sortScenarios();
     }

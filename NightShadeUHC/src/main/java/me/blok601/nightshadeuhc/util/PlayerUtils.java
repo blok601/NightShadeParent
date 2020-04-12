@@ -4,7 +4,9 @@ import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.entity.MConf;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.object.PlayerStatus;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -88,6 +90,13 @@ public class PlayerUtils {
         return uhcPlayer.getPlayerStatus() == PlayerStatus.PLAYING;
     }
 
+    public static void playSound(Sound sound, Player player){
+        player.playSound(player.getLocation(), sound, 5f, 5f);
+    }
+
+    public static void broadcastSound(Sound sound){
+        Bukkit.getOnlinePlayers().forEach(o -> playSound(sound, o));
+    }
 
 
 }
