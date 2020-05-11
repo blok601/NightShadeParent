@@ -158,4 +158,24 @@ public class ChatUtils {
 
     }
 
+    public static String materialToString(Material material){
+        String name = material.toString();
+        if(oreToString(material) != null){
+            return oreToString(material);
+        }
+
+        if(name.contains("_")){
+            String[] words = name.split("_");
+            StringBuilder builder = new StringBuilder();
+            for (String word : words){
+                builder.append(uppercaseFirstLetter(word.toLowerCase())).append(" ");
+            }
+
+            return builder.toString().trim();
+        }
+
+        return uppercaseFirstLetter(name.toLowerCase());
+
+    }
+
 }
