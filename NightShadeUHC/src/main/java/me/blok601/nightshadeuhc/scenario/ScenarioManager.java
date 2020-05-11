@@ -135,6 +135,15 @@ public class ScenarioManager implements UHCCommand{
         addScen(new LimitationScenario());
         addScen(new RodlessScenario());
         addScen(new BloodCycleScenario(uhc), "BC");
+        addScen(new AppleFamineScenario());
+        addScen(new CatsEyesScenario());
+        addScen(new CobbleHatersScenario());
+        addScen(new RocketStartScenario());
+        addScen(new SiphonScenario());
+        addScen(new PlayerSwapScenario(uhc));
+        addScen(new CupidScenario());
+        addScen(new SugarRushScenario(uhc));
+        addScen(new TrainingRabbitsScenario());
 
         sortScenarios();
     }
