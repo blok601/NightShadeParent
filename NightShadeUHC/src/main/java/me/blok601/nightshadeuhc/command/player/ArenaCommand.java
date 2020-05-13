@@ -14,6 +14,13 @@ import org.bukkit.entity.Player;
  * Created by Blok on 7/9/2018.
  */
 public class ArenaCommand implements UHCCommand {
+
+    private GameManager gameMananger;
+
+    public ArenaCommand(GameManager gameMananger) {
+        this.gameMananger = gameMananger;
+    }
+
     @Override
     public String[] getNames() {
         return new String[]{
@@ -25,7 +32,7 @@ public class ArenaCommand implements UHCCommand {
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
         Player p = (Player) s;
         UHCPlayer uhcPlayer = UHCPlayer.get(p);
-        if (GameState.getState() != GameState.WAITING) {
+        if (GameState.getState() != GameState.WAITING || !gameMananger.isArenaOpen()) {
             p.sendMessage(ChatUtils.message("&cYou can't enter the arena right now!"));
             return;
         }
