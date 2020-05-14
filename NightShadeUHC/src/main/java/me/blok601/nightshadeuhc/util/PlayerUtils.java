@@ -81,7 +81,7 @@ public class PlayerUtils {
     }
 
     public static boolean isPlaying(Player player) {
-        return UHCPlayer.get(player).getPlayerStatus() == PlayerStatus.PLAYING;
+        return UHCPlayer.get(player).getPlayerStatus() == PlayerStatus.PLAYING && isPlaying(player);
     }
 
     public static boolean isPlaying(UUID uuid) {

@@ -1,10 +1,13 @@
 package me.blok601.nightshadeuhc.entity.object;
 
+import com.google.common.collect.Lists;
 import me.blok601.nightshadeuhc.UHC;
+import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.manager.TeamManager;
 import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
 import me.blok601.nightshadeuhc.scoreboard.ScoreboardManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
+import me.blok601.nightshadeuhc.util.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -213,6 +216,32 @@ public class Team {
                 }.runTaskLater(UHC.get(), 7);
             }
         }
+    }
+
+    public ArrayList<Player> getOnlineMembers(){
+        ArrayList<Player> toReturn = Lists.newArrayList();
+        Player player;
+        for (String name : this.members){
+            player = Bukkit.getPlayer(name);
+            if(player == null){
+                continue;
+            }
+
+            toReturn.add(player);
+        }
+
+        return toReturn;
+    }
+
+    public ArrayList<Player> getOnlineAliveMembers(){
+        ArrayList<Player> toReturn = Lists.newArrayList();
+        for (Player player : getOnlineMembers()){
+            if(PlayerUtils.isPlaying(player)){
+                toReturn.add(player);
+            }
+        }
+
+        return toReturn;
     }
 
 }

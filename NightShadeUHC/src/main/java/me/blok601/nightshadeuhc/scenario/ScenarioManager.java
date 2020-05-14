@@ -145,6 +145,7 @@ public class ScenarioManager implements UHCCommand{
         addScen(new SugarRushScenario(uhc));
         addScen(new TrainingRabbitsScenario());
         addScen(new CaptainsScenario());
+        addScen(new ChildrenLeftUnattendedScenario(gameManager));
 
         sortScenarios();
     }

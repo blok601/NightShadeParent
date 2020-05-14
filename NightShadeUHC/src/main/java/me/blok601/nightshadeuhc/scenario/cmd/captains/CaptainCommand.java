@@ -3,7 +3,6 @@ package me.blok601.nightshadeuhc.scenario.cmd.captains;
 import com.google.common.collect.Lists;
 import com.massivecraft.massivecore.nms.NmsChat;
 import com.nightshadepvp.core.Rank;
-import com.nightshadepvp.core.cmd.cmds.staff.CmdInvsee;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.command.UHCCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
@@ -173,9 +172,15 @@ public class CaptainCommand implements UHCCommand {
                                         team.addMember(targetOfflinePlayer.getName());
                                         captainsScenario.broadcast("&f" + targetOfflinePlayer.getName() + " &bhas been added to &f" + offlineCaptain.getName() + "'s &bteam!");
                                         captainsScenario.setPositionIndex(captainsScenario.getPositionIndex() + 1);
-                                        captainsScenario.setTurnToPick(offlineCaptain .getUniqueId());
+                                        captainsScenario.setTurnToPick(offlineCaptain.getUniqueId());
                                         return;
                                     }
+                                }
+                            }
+
+                            if(captainsScenario.getPositionIndex() == captainAmount-1){
+                                if(captainsScenario.isGoingBackwards()){
+                                    captainsScenario.setGoingBackwards(false);
                                 }
                             }
                         }

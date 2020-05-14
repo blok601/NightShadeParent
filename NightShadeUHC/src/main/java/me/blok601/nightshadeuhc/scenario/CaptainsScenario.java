@@ -11,11 +11,13 @@ public class CaptainsScenario extends Scenario{
     private UUID turnToPick;
     private int positionIndex;
     private boolean hasPicked;
+    private boolean goingBackwards;
 
     public CaptainsScenario() {
         super("Captains", "Teams are picked in a snake draft with set captains", new ItemBuilder(Material.PAINTING).name("Captains").make());
         this.turnToPick = UUID.randomUUID();
         this.positionIndex = -1;
+        this.goingBackwards = false;
     }
 
     public UUID getTurnToPick() {
@@ -44,5 +46,13 @@ public class CaptainsScenario extends Scenario{
 
     public void setHasPicked(boolean hasPicked) {
         this.hasPicked = hasPicked;
+    }
+
+    public boolean isGoingBackwards() {
+        return goingBackwards;
+    }
+
+    public void setGoingBackwards(boolean goingBackwards) {
+        this.goingBackwards = goingBackwards;
     }
 }
