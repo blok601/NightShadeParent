@@ -22,7 +22,7 @@ public class TrainingRabbitsScenario extends Scenario {
 
     @EventHandler
     public void onKill(CustomDeathEvent event) {
-        if (!isEnabled()) ;
+        if (!isEnabled()) return;
         Player killer = event.getKiller();
         if (killer == null) return;
 
