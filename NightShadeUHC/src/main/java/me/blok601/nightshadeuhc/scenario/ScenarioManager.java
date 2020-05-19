@@ -5,6 +5,7 @@ import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Rank;
 import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.command.UHCCommand;
+import me.blok601.nightshadeuhc.component.ComponentHandler;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
@@ -30,11 +31,13 @@ public class ScenarioManager implements UHCCommand{
 
     private UHC uhc;
     private GameManager gameManager;
+    private ComponentHandler componentHandler;
     private static ArrayList<Scenario> scenarios;
 
-    public ScenarioManager(UHC uhc, GameManager gameManager) {
+    public ScenarioManager(UHC uhc, GameManager gameManager, ComponentHandler componentHandler) {
         this.uhc = uhc;
         this.gameManager = gameManager;
+        this.componentHandler = componentHandler;
     }
 
     public void setup(){
@@ -146,6 +149,10 @@ public class ScenarioManager implements UHCCommand{
         addScen(new TrainingRabbitsScenario());
         addScen(new CaptainsScenario());
         addScen(new ChildrenLeftUnattendedScenario(gameManager));
+        addScen(new EnchantParanoiaScenario());
+        addScen(new BlastMiningScenario());
+        addScen(new InfestationScenario());
+        addScen(new KrenzinatorScenario(uhc, componentHandler));
 
         sortScenarios();
     }
