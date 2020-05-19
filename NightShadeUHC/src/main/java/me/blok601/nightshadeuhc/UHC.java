@@ -117,7 +117,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         this.componentHandler = new ComponentHandler(GameManager.get(), scenarioManager);
         this.componentHandler.setup();
         this.scenarioManager = new ScenarioManager(this, gameManager, componentHandler);
-        this.commandHandler = new CommandHandler(this, GameManager.get(), scenarioManager);
+        this.commandHandler = new CommandHandler(this, GameManager.get(), scenarioManager, componentHandler);
         this.listenerHandler = new ListenerHandler(this, Core.get(), scenarioManager, GameManager.get(), componentHandler);
         this.listenerHandler.complete();
         TeamManager.getInstance().setup();
@@ -190,7 +190,7 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (this.commandHandler.getCommands() == null || this.commandHandler.getCommands().isEmpty()) {
-            new CommandHandler(this, gameManager, scenarioManager);
+            new CommandHandler(this, gameManager, scenarioManager, componentHandler);
         }
 
         for (UHCCommand ci : this.commandHandler.getCommands()) {
