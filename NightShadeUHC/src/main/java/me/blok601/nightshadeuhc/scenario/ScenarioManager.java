@@ -153,6 +153,7 @@ public class ScenarioManager implements UHCCommand{
         addScen(new BlastMiningScenario());
         addScen(new InfestationScenario());
         addScen(new KrenzinatorScenario(uhc, componentHandler));
+        addScen(new SpeedShotScenario());
 
         sortScenarios();
     }
