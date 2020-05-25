@@ -154,6 +154,8 @@ public class ScenarioManager implements UHCCommand{
         addScen(new InfestationScenario());
         addScen(new KrenzinatorScenario(uhc, componentHandler));
         addScen(new SpeedShotScenario());
+        addScen(new OPHasteyBoysScenario());
+        addScen(new SafelootScenario());
 
         sortScenarios();
     }

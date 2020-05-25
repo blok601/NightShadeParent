@@ -13,11 +13,11 @@ import java.util.List;
 /**
  * Created by Blok on 1/28/2018.
  */
-public class HasteyBoysScenario extends Scenario{
+public class OPHasteyBoysScenario extends Scenario{
 
 
-    public HasteyBoysScenario() {
-        super("HasteyBoys", "All tools are enchanted with efficiency 3", new ItemBuilder(Material.WOOD_PICKAXE).enchantment(Enchantment.DIG_SPEED, 3).name("HasteyBoys").make());
+    public OPHasteyBoysScenario() {
+        super("OP HasteyBoys", "All tools are enchanted with Efficiency V Unbreaking V", new ItemBuilder(Material.WOOD_PICKAXE).enchantment(Enchantment.DIG_SPEED, 5).name("OP HasteyBoys").make());
     }
 
 
@@ -32,7 +32,7 @@ public class HasteyBoysScenario extends Scenario{
         if(!isEnabled()) return;
 
         if(types.contains(e.getRecipe().getResult().getType())){
-            e.getInventory().setResult(new ItemBuilder(e.getRecipe().getResult()).enchantment(Enchantment.DIG_SPEED, 3).enchantment(Enchantment.DURABILITY, 2).
+            e.getInventory().setResult(new ItemBuilder(e.getRecipe().getResult()).enchantment(Enchantment.DIG_SPEED, 5).enchantment(Enchantment.DURABILITY, 5).
                     make());
         }
     }
