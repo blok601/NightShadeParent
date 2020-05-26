@@ -42,6 +42,7 @@ import java.util.*;
 public class SoloMatch implements iMatch {
 
     private int matchID;
+    private String challongeMatchID;
     private TPlayer player1;
     private TPlayer player2;
     private Arena arena;
@@ -54,6 +55,7 @@ public class SoloMatch implements iMatch {
     private String timer;
     private HashMap<UUID, Scoreboard> scoreboards;
     private HashMap<UUID, LogOutTimerTask> logOutTimers;
+
 
 
     public SoloMatch(TPlayer player1, TPlayer player2) {
@@ -544,6 +546,15 @@ public class SoloMatch implements iMatch {
     @Override
     public void resetBlocks() {
         this.blocks.forEach(location -> location.getWorld().getBlockAt(location).setType(Material.AIR)); //Clear all the blocks
+    }
+
+    @Override
+    public String getChallongeMatchID() {
+        return challongeMatchID;
+    }
+
+    public void setChallongeMatchID(String challongeMatchID) {
+        this.challongeMatchID = challongeMatchID;
     }
 
     @Override

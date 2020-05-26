@@ -2,6 +2,7 @@ package com.nightshadepvp.tournament;
 
 
 import com.massivecraft.massivecore.MassivePlugin;
+import com.nightshadepvp.tournament.challonge.Challonge;
 import com.nightshadepvp.tournament.entity.handler.ArenaHandler;
 import com.nightshadepvp.tournament.entity.handler.GameHandler;
 import com.nightshadepvp.tournament.entity.handler.KitHandler;
@@ -24,6 +25,7 @@ public final class Tournament extends MassivePlugin {
 
     private Location spawnLocation;
     private Location editLocation;
+    private Challonge challonge;
 
 
     @Override
@@ -131,5 +133,13 @@ public final class Tournament extends MassivePlugin {
         Plugin p = Bukkit.getServer().getPluginManager().getPlugin("WorldEdit");
         if (p instanceof WorldEditPlugin) return (WorldEditPlugin) p;
         else return null;
+    }
+
+    public Challonge getChallonge() {
+        return challonge;
+    }
+
+    public void setChallonge(Challonge challonge) {
+        this.challonge = challonge;
     }
 }

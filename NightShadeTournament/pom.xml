@@ -40,7 +40,7 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <minimizeJar>true</minimizeJar>
+                            <minimizeJar>false</minimizeJar>
                             <finalName>Tournament</finalName>
                         </configuration>
                     </execution>
@@ -57,8 +57,8 @@
 
     <repositories>
         <repository>
-            <id>spigotmc-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
         <repository>
             <id>sonatype</id>
@@ -127,25 +127,45 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>at.stefangeyer.challonge</groupId>
-            <artifactId>core</artifactId>
-            <version>2.0.1</version>
-            <scope>compile</scope>
-        </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.konghq/unirest-java -->
         <dependency>
-            <groupId>at.stefangeyer.challonge.serializer</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.0.1</version>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.9</version>
             <scope>compile</scope>
         </dependency>
-
         <dependency>
-            <groupId>at.stefangeyer.challonge.rest</groupId>
-            <artifactId>retrofit</artifactId>
-            <version>2.0.1</version>
+            <groupId>com.konghq</groupId>
+            <artifactId>unirest-java</artifactId>
+            <version>2.4.03</version>
             <scope>compile</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.json/json -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20190722</version>
+            <scope>compile</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpmime -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
+            <version>4.5.12</version>
+            <scope>compile</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpasyncclient -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpasyncclient</artifactId>
+            <version>4.1.4</version>
+            <scope>compile</scope>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>commons-logging</groupId>-->
+            <!--<artifactId>commons-logging</artifactId>-->
+            <!--<version>1.2</version>-->
+        <!--</dependency>-->
     </dependencies>
 </project>

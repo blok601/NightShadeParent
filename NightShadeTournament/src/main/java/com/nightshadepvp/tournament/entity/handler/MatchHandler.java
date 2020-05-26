@@ -1,5 +1,7 @@
 package com.nightshadepvp.tournament.entity.handler;
 
+import com.nightshadepvp.tournament.Tournament;
+import com.nightshadepvp.tournament.challonge.Challonge;
 import com.nightshadepvp.tournament.entity.TPlayer;
 import com.nightshadepvp.tournament.entity.enums.MatchState;
 import com.nightshadepvp.tournament.entity.objects.game.SoloMatch;
@@ -22,22 +24,18 @@ public class MatchHandler {
 
     private ArrayList<iMatch> matches;
     private int matchID;
+    private Challonge challonge;
 
     private MatchHandler() {
         matches = new ArrayList<>();
         matchID = 0;
-    }
 
-    public void addMatch(TPlayer player1, TPlayer player2){
-        SoloMatch soloMatch = new SoloMatch(player1, player2);
-        matchID++;
-        soloMatch.setMatchID(matchID);
-        matches.add(soloMatch);
     }
 
     public void addMatch(SoloMatch soloMatch){
         matchID++;
         soloMatch.setMatchID(matchID);
+        soloMatch.setChallongeMatchID(challonge.getMatchIds().get(matchID));
         matches.add(soloMatch);
     }
 
@@ -74,5 +72,9 @@ public class MatchHandler {
 
     public void setMatchID(int matchID) {
         this.matchID = matchID;
+    }
+
+    public void setupChallonge(){
+        challonge = Tournament.get().getChallonge();
     }
 }

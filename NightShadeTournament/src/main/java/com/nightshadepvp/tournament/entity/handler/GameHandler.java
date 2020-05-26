@@ -1,12 +1,10 @@
 package com.nightshadepvp.tournament.entity.handler;
 
-import at.stefangeyer.challonge.Challonge;
-import at.stefangeyer.challonge.model.Credentials;
-import at.stefangeyer.challonge.rest.retrofit.RetrofitRestClient;
-import at.stefangeyer.challonge.serializer.gson.GsonSerializer;
 import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Logger;
 import com.nightshadepvp.tournament.Tournament;
+import com.nightshadepvp.tournament.challonge.Challonge;
+import com.nightshadepvp.tournament.challonge.MatchWrapper;
 import com.nightshadepvp.tournament.entity.TPlayer;
 import com.nightshadepvp.tournament.entity.TPlayerColl;
 import com.nightshadepvp.tournament.entity.objects.data.Kit;
@@ -22,8 +20,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
+import org.json.JSONObject;
 
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 /**
@@ -44,7 +44,6 @@ public class GameHandler {
     private int teamSize;
     private boolean chatFrozen;
 
-    private Challonge challonge;
     private String bracketLink;
 
     private HashSet<String> whitelist;
@@ -70,7 +69,7 @@ public class GameHandler {
         this.whitelist = new HashSet<>();
         this.whitelistOn = false;
 
-        this.challonge = new Challonge(new Credentials("NightShadePvP", "PC4Qd6rMkNxBn4v7KKLTXJRGyDwlgOOdd6gnArUp"), new GsonSerializer(), new RetrofitRestClient());
+
         this.bracketLink = "https://challonge.com/users/nightshadepvp/tournaments";
 
         Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
@@ -124,10 +123,12 @@ public class GameHandler {
 
         int i = 1;
         TPlayer tPlayer;
+        Challonge challonge = Tournament.get().getChallonge();
         for (Map.Entry<UUID, Double> entry : f.entrySet()){
             tPlayer = TPlayer.get(entry.getKey());
             tPlayer.setSeed(i);
             tPlayer.msg(ChatUtils.message("&eYou are seeded: &3" + i));
+            challonge.getParticipants().add(tPlayer.getName());
             i++;
         }
         seeded = true;
@@ -135,6 +136,7 @@ public class GameHandler {
 
 
     public void assignMatches() {
+        Challonge challonge = Tournament.get().getChallonge();
         if (getTeamSize() == 1) {
             ArrayDeque<TPlayer> players = new ArrayDeque<>();
             TPlayerColl.get().getAllOnline().stream().filter(TPlayer::isSeeded).forEach(players::add);
@@ -147,27 +149,51 @@ public class GameHandler {
 
                 @Override
                 public void run() {
+//
+//                    if (players.size() == 0) {
+//                        cancel();
+//                        //Call start tasks
+//                        new StartRoundTask().runTaskTimer(Tournament.get(), 0, 20);
+//                        Core.get().getLogManager().log(Logger.LogType.DEBUG, "Amount of matches in this list: " +RoundHandler.getInstance().getMatchesByRoundNumber(RoundHandler.getInstance().getRound()).size());
+//                        if(RoundHandler.getInstance().getMatchesByRoundNumber(RoundHandler.getInstance().getRound()).size() == 1){
+//                            //Its the champ game
+//                            setChampionship(RoundHandler.getInstance().getMatchesByRoundNumber(RoundHandler.getInstance().getRound()).stream().findFirst().get());
+//                        }
+//                        return;
+//                    }
+//
+//                    tPlayer1 = players.getFirst();
+//                    tPlayer2 = players.getLast();
+//                    SoloMatch soloMatch = new SoloMatch(tPlayer1, tPlayer2);
+//                    Core.get().getLogManager().log(Logger.LogType.DEBUG, "Players: " + tPlayer1.getName() + " And " + tPlayer2.getName());
+//                    RoundHandler.getInstance().addMatch(RoundHandler.getInstance().getRound(), soloMatch);
+//                    MatchHandler.getInstance().addMatch(soloMatch);
+//                    players.remove(tPlayer1);
+//                    players.remove(tPlayer2);
 
-                    if (players.size() == 0) {
-                        cancel();
-                        //Call start tasks
+
+                    try {
+                        for (JSONObject match : challonge.getMatchesByRound(RoundHandler.getInstance().getRound()).get()) {
+                            String[] players = MatchWrapper.getPlayerNames(match.getString("id"), challonge);
+                            if (players == null) continue;
+                            TPlayer tPlayer1 = TPlayer.get(Bukkit.getPlayer(players[0]));
+                            TPlayer tPlayer2 = TPlayer.get(Bukkit.getPlayer(players[1]));
+                            SoloMatch soloMatch = new SoloMatch(tPlayer1, tPlayer2);
+                            Core.get().getLogManager().log(Logger.LogType.DEBUG, "Players: " + tPlayer1.getName() + " And " + tPlayer2.getName());
+                            RoundHandler.getInstance().addMatch(RoundHandler.getInstance().getRound(), soloMatch);
+                            MatchHandler.getInstance().addMatch(soloMatch);
+                        }
                         new StartRoundTask().runTaskTimer(Tournament.get(), 0, 20);
-                        Core.get().getLogManager().log(Logger.LogType.DEBUG, "Amount of matches in this list: " +RoundHandler.getInstance().getMatchesByRoundNumber(RoundHandler.getInstance().getRound()).size());
-                        if(RoundHandler.getInstance().getMatchesByRoundNumber(RoundHandler.getInstance().getRound()).size() == 1){
+                       // Core.get().getLogManager().log(Logger.LogType.DEBUG, "Amount of matches in this list: " +RoundHandler.getInstance().getMatchesByRoundNumber(RoundHandler.getInstance().getRound()).size());
+                        if(challonge.getMatchesByRound(RoundHandler.getInstance().getRound()).get().size() == 1){
                             //Its the champ game
                             setChampionship(RoundHandler.getInstance().getMatchesByRoundNumber(RoundHandler.getInstance().getRound()).stream().findFirst().get());
                         }
-                        return;
+
+                    } catch (InterruptedException | ExecutionException e) {
+                        e.printStackTrace();
                     }
 
-                    tPlayer1 = players.getFirst();
-                    tPlayer2 = players.getLast();
-                    SoloMatch soloMatch = new SoloMatch(tPlayer1, tPlayer2);
-                    Core.get().getLogManager().log(Logger.LogType.DEBUG, "Players: " + tPlayer1.getName() + " And " + tPlayer2.getName());
-                    RoundHandler.getInstance().addMatch(RoundHandler.getInstance().getRound(), soloMatch);
-                    MatchHandler.getInstance().addMatch(soloMatch);
-                    players.remove(tPlayer1);
-                    players.remove(tPlayer2);
                 }
             }.runTaskTimer(Tournament.get(), 0, 2);
         }
@@ -233,9 +259,6 @@ public class GameHandler {
         this.whitelistOn = whitelistOn;
     }
 
-    public Challonge getChallonge() {
-        return challonge;
-    }
 
     public String getBracketLink() {
         return bracketLink;

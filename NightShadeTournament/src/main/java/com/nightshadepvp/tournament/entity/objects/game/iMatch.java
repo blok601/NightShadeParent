@@ -23,6 +23,18 @@ public interface iMatch {
 
     /**
      *
+     * @return Challonge Match ID
+     */
+    String getChallongeMatchID();
+
+    /**
+     * Set the challonge match id
+     * @param id
+     */
+    void setChallongeMatchID(String id);
+
+    /**
+     *
      * @return Team 1 Players
      */
     List<TPlayer> getTeam1();

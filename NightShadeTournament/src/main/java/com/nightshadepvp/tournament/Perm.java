@@ -33,6 +33,7 @@ public enum Perm implements Identified
 	OFF,
 	HELPOP,
 	STATS,
+	POST,
 	VERSION;
 	
 	private final String id;

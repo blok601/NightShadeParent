@@ -20,6 +20,7 @@ public class CmdTournament extends NightShadeTournamentCommand {
     public CmdTournamentSetSpawn cmdTournamentSetSpawn = new CmdTournamentSetSpawn();
     public CmdTournamentSlots cmdTournamentSlots = new CmdTournamentSlots();
     public CmdTournamentSetEditLocation cmdTournamentSetEditLocation = new CmdTournamentSetEditLocation();
+    public CmdTournamentPost cmdTournamentPost = new CmdTournamentPost();
 
     @Override
     public List<String> getAliases() {

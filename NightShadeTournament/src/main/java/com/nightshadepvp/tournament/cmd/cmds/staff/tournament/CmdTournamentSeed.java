@@ -5,12 +5,17 @@ import com.massivecraft.massivecore.command.requirement.RequirementIsPlayer;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.cmd.req.ReqRankHasAtLeast;
 import com.nightshadepvp.tournament.Tournament;
+import com.nightshadepvp.tournament.challonge.Challonge;
 import com.nightshadepvp.tournament.cmd.NightShadeTournamentCommand;
 import com.nightshadepvp.tournament.entity.TPlayer;
 import com.nightshadepvp.tournament.entity.handler.GameHandler;
+import com.nightshadepvp.tournament.entity.handler.MatchHandler;
+import com.nightshadepvp.tournament.entity.handler.RoundHandler;
 import com.nightshadepvp.tournament.utils.ChatUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Blok on 7/18/2018.
@@ -29,8 +34,28 @@ public class CmdTournamentSeed extends NightShadeTournamentCommand {
         new BukkitRunnable(){
             @Override
             public void run() {
-                GameHandler.getInstance().assignSeeds();
-                p.sendMessage(ChatUtils.message("&eSeeds have been set!"));
+                Challonge challonge = Tournament.get().getChallonge();
+                if (challonge == null) {
+                    p.sendMessage(ChatUtils.message("&cThe tournament has not been posted yet!"));
+                    cancel();
+                    return;
+                }
+
+
+                try {
+                    GameHandler.getInstance().assignSeeds();
+                    challonge.addParticpants().get();
+                    challonge.indexMatches();
+
+                    MatchHandler.getInstance().setupChallonge();
+                    RoundHandler.getInstance().setupChallonge();
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                    p.sendMessage(ChatUtils.message("&cThere was a problem assigning seeds... contact an admin if the problem persists!"));
+                    return;
+                }
+
+                p.sendMessage(ChatUtils.message("&bSeeds have been set and participants have been added to the bracket!"));
             }
         }.runTaskLater(Tournament.get(), 20*5);
     }
