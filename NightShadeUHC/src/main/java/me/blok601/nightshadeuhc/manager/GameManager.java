@@ -100,6 +100,8 @@ public class GameManager {
     public ShowPlayerTask showPlayerTask;
     @Getter@Setter
     private int currentEditingBorderIndex = -1;
+    @Getter@Setter
+    private boolean arenaOpen;
 
 
 

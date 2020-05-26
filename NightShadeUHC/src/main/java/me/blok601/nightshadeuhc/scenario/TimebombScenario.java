@@ -1,7 +1,9 @@
 package me.blok601.nightshadeuhc.scenario;
 
+import me.blok601.nightshadeuhc.entity.object.Team;
 import me.blok601.nightshadeuhc.event.CustomDeathEvent;
 import me.blok601.nightshadeuhc.manager.GameManager;
+import me.blok601.nightshadeuhc.manager.TeamManager;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Bukkit;
@@ -16,26 +18,29 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Collections;
+import java.util.HashSet;
+
 import static com.wimbli.WorldBorder.WorldBorder.plugin;
 
 /**
  * Created by Blok on 6/17/2017.
  */
-public class TimebombScenario extends Scenario{
+public class TimebombScenario extends Scenario {
 
     public TimebombScenario() {
         super("Timebomb", "When someone dies, there loot is placed in a chest that explodes in 30 seconds", new ItemBuilder(Material.CHEST).name("Timebomb").make());
     }
 
     @EventHandler
-    public void onDeath(CustomDeathEvent e){
-        if(!isEnabled()){
+    public void onDeath(CustomDeathEvent e) {
+        if (!isEnabled()) {
             return;
         }
 
         e.setDropItems(false);
 
-        if(GameManager.get().getWorld() == null || !e.getKilled().getLocation().getWorld().getName().equalsIgnoreCase(GameManager.get().getWorld().getName())){
+        if (GameManager.get().getWorld() == null || !e.getKilled().getLocation().getWorld().getName().equalsIgnoreCase(GameManager.get().getWorld().getName())) {
             return;
         }
 
@@ -45,6 +50,17 @@ public class TimebombScenario extends Scenario{
         b.setType(Material.CHEST);
 
         Chest c = (Chest) b.getState();
+        if (scenarioManager.getScen("Safeloot").isEnabled()) {
+            SafelootScenario safelootScenario = (SafelootScenario) scenarioManager.getScen("Safeloot");
+            Team team = TeamManager.getInstance().getTeam(p.getName());
+            if(team == null){
+                safelootScenario.getCanOpen().put(c, Collections.singletonList(p.getName()));
+            }else{
+                safelootScenario.getCanOpen().put(c, team.getMembers());
+            }
+
+        }
+
 
         b = b.getRelative(BlockFace.NORTH);
         b.setType(Material.CHEST);
@@ -79,17 +95,17 @@ public class TimebombScenario extends Scenario{
                 if (time == 0) {
                     l.getWorld().createExplosion(l.add(0.5, 0.5, 0.5), 5, false);
                     c.getWorld().strikeLightning(c.getLocation());
-                    Bukkit.broadcastMessage(ChatUtils.format(getPrefix()+ "&6" + p.getName() + "'s corpse has exploded!"));
+                    Bukkit.broadcastMessage(ChatUtils.format(getPrefix() + "&6" + p.getName() + "'s corpse has exploded!"));
                     armorStand.setCustomNameVisible(false);
                     armorStand.setVisible(false);
                     armorStand.remove();
                     cancel();
                     return;
-                }else if(time <= 3){
+                } else if (time <= 3) {
                     armorStand.setCustomName("§4" + time + "s");
-                }else if(time <= 15){
+                } else if (time <= 15) {
                     armorStand.setCustomName("§e" + time + "s");
-                }else{
+                } else {
                     armorStand.setCustomName("§a" + time + "s");
                 }
             }

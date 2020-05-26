@@ -70,5 +70,4 @@ public class WorldBorderListener implements Listener {
             PregenTask.getPregenQueue().remove(queue);
         }
     }
-
 }

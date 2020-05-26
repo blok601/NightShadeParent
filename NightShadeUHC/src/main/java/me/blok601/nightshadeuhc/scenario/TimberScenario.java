@@ -32,9 +32,9 @@ public class TimberScenario extends Scenario{
 
     private void handleBreak(Block tree, int broken) {
 
-        if (broken > 20) return; // Prevent an  Infinate For Loop
+        if (broken > 20) return; // Prevent an infinite For Loop
 
-        if (tree == null || tree.getType() == Material.AIR) return; // We've seen a block thats log a log. so stop.
+        if (tree == null || tree.getType() == Material.AIR) return; // We've seen a block thats not a log. so stop.
 
         if (tree.getType() != Material.LOG && tree.getType() != Material.LOG_2)
             return; // Ensure the block were breaking is a log type

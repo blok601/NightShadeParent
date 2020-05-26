@@ -53,18 +53,14 @@ public class TeamBaseCommand implements UHCCommand{
 	}
 	
 	public void sendAdminHelp(Player p){
-        p.sendMessage(ChatUtils.message("&aTeam Commands"));
-        p.sendMessage(ChatUtils.message("&a/team create"));
-        p.sendMessage(ChatUtils.message("&a/team invite <player>"));
-        p.sendMessage(ChatUtils.message("&a/team kick <player>"));
-        p.sendMessage(ChatUtils.message("&a/team list [player]"));
-        p.sendMessage(ChatUtils.message("&a/team join <player>"));
-        p.sendMessage(ChatUtils.message("&aAdmin Commands"));
-        p.sendMessage(ChatUtils.message("&a/team limit <size>"));
-        p.sendMessage(ChatUtils.message("&a/team reset"));
-        p.sendMessage(ChatUtils.message("&a/team man <on/off>"));
-        p.sendMessage(ChatUtils.message("&a/team ff <on/off>"));
-        p.sendMessage(ChatUtils.message("&a/team remove <player>"));
+	    sendHelp(p);
+        p.sendMessage(ChatUtils.message("&eStaff Commands"));
+        p.sendMessage(ChatUtils.message("&e/team limit <size>"));
+        p.sendMessage(ChatUtils.message("&e/team reset"));
+        p.sendMessage(ChatUtils.message("&e/team man <on/off>"));
+        p.sendMessage(ChatUtils.message("&e/team ff <on/off>"));
+        p.sendMessage(ChatUtils.message("&e/team remove <player>"));
+        p.sendMessage(ChatUtils.message("&e/team random"));
 	}
 
     @Override

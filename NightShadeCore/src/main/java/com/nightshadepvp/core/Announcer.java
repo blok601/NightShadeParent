@@ -35,6 +35,7 @@ public class Announcer {
             messages.add("&bBe sure to apply for staff on the forums! www.nightshadepvp.com");
             messages.add("&bFix the invis glitch by doing /show <player>");
             messages.add("&bToggle your private messages with /togglepm");
+            messages.add("&BWe are always looking for new staff! Apply with /apply");
 
             if (ServerType.getType() == ServerType.UHC) {
                 messages.add("&bUse /config to view the game config!");

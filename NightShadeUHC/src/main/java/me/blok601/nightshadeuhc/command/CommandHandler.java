@@ -13,6 +13,7 @@ import me.blok601.nightshadeuhc.command.server.eWhitelistCommand;
 import me.blok601.nightshadeuhc.command.staff.*;
 import me.blok601.nightshadeuhc.command.staff.admin.ResetStatsCommand;
 import me.blok601.nightshadeuhc.command.staff.admin.SetArenaSpawnCommand;
+import me.blok601.nightshadeuhc.component.ComponentHandler;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.scenario.SlaveMarketScenario;
@@ -42,11 +43,14 @@ public class CommandHandler  {
     private UHC uhc;
     private GameManager gameManager;
     private ScenarioManager scenarioManager;
+    private ComponentHandler componentHandler;
+
     private HashSet<UHCCommand> commands;
 
-    public CommandHandler(UHC uhc, GameManager gameManager, ScenarioManager scenarioManager) {
+    public CommandHandler(UHC uhc, GameManager gameManager, ScenarioManager scenarioManager, ComponentHandler componentHandler) {
         this.gameManager = gameManager;
         this.scenarioManager = scenarioManager;
+        this.componentHandler = componentHandler;
         this.commands = Sets.newHashSet();
         registerCommand(new FeedAll());
         registerCommand(new FreezeAll());
@@ -69,7 +73,7 @@ public class CommandHandler  {
         registerCommand(new ManualGameCommand(gameManager));
         registerCommand(new ClaimHostCommand());
         registerCommand(new SitCommand());
-        registerCommand(new ScenarioManager(uhc, gameManager));
+        registerCommand(new ScenarioManager(uhc, gameManager, componentHandler));
         registerCommand(new TeamsCommand(scenarioManager));
         registerCommand(new TeamBaseCommand(scenarioManager));
         registerCommand(new MaxplayersCommand());
@@ -104,7 +108,7 @@ public class CommandHandler  {
         registerCommand(new SpectatorCommand());
         registerCommand(new SetSpawnCommand());
         registerCommand(new SetArenaSpawnCommand());
-        registerCommand(new ArenaCommand());
+        registerCommand(new ArenaCommand(gameManager));
         registerCommand(new WallsCommand());
         registerCommand(new DonateHealthCommand(scenarioManager));
         registerCommand(new CancelPregenCommand());

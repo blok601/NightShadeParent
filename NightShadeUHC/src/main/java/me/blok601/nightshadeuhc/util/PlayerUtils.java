@@ -4,7 +4,9 @@ import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.entity.MConf;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.object.PlayerStatus;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -61,6 +63,7 @@ public class PlayerUtils {
     public static void giveItem(ItemStack itemStack, Player player) {
         if (inventoryFull(player)) {
             player.getWorld().dropItemNaturally(player.getLocation().add(0.5, 0.5, 0.5), itemStack);
+            player.sendMessage(ChatUtils.message("&eYour inventory was full..dropping &b" + itemStack.getAmount() + " " + ChatUtils.materialToString(itemStack.getType())));
             return;
         }
 
@@ -78,7 +81,7 @@ public class PlayerUtils {
     }
 
     public static boolean isPlaying(Player player) {
-        return UHCPlayer.get(player).getPlayerStatus() == PlayerStatus.PLAYING;
+        return UHCPlayer.get(player).getPlayerStatus() == PlayerStatus.PLAYING && isPlaying(player);
     }
 
     public static boolean isPlaying(UUID uuid) {
@@ -88,6 +91,13 @@ public class PlayerUtils {
         return uhcPlayer.getPlayerStatus() == PlayerStatus.PLAYING;
     }
 
+    public static void playSound(Sound sound, Player player){
+        player.playSound(player.getLocation(), sound, 5f, 5f);
+    }
+
+    public static void broadcastSound(Sound sound){
+        Bukkit.getOnlinePlayers().forEach(o -> playSound(sound, o));
+    }
 
 
 }
