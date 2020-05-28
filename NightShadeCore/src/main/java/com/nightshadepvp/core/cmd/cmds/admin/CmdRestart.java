@@ -20,7 +20,7 @@ public class CmdRestart extends NightShadeCoreCommand{
 
     public CmdRestart() {
         this.addAliases("restart");
-        this.addRequirements(ReqRankHasAtLeast.get(Rank.ADMIN));
+        this.addRequirements(ReqRankHasAtLeast.get(Rank.STAFF));
     }
 
     @Override

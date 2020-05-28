@@ -101,7 +101,7 @@ public class GameManager {
     @Getter@Setter
     private int currentEditingBorderIndex = -1;
     @Getter@Setter
-    private boolean arenaOpen;
+    private boolean arenaOpen = true;
 
 
 
