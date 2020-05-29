@@ -16,7 +16,10 @@ public class GoldenRetrieverScenario extends Scenario{
   public void onDeath (CustomDeathEvent e) {
     if (!isEnabled()) return;
     ItemStack apple = new ItemBuilder(Material.GOLDEN_APPLE).name(ChatUtils.format("&6Golden Head")).make();
+    ItemStack skull1 = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+    ItemStack newSkull1 = new ItemBuilder(skull1).skullOwner(e.getKilled().getName()).name(e.getKilled().getName()).make();
 
+    e.getItems().remove(newSkull1);
     e.getItems().add(apple);
   }
 
