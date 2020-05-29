@@ -4,6 +4,7 @@ import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.gui.setup.HostGUI;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
+import me.blok601.nightshadeuhc.util.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -46,6 +47,7 @@ public class ComponentHandler {
         addComponent(new StripminingComponent());
         addComponent(new StrCompentent());
         addComponent(new HardEnchantComponent());
+        addComponent(new CaneBuffComponent());
 
         this.components.sort(Comparator.comparing(Component::getName));
     }
@@ -83,6 +85,14 @@ public class ComponentHandler {
 
         if (getComponent(stack.getType()) != null) {
             Component c = getComponent(stack.getType());
+
+            if(c.isLocked()){
+                e.setCancelled(true);
+                Player player = (Player) e.getWhoClicked();
+                player.closeInventory();
+                player.sendMessage(ChatUtils.message("&cThis feature is locked and can't be changed!"));
+                return false;
+            }
 
             c.click(e, slot);
         }else{
