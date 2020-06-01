@@ -1,7 +1,9 @@
 package me.blok601.nightshadeuhc.command.player.teams;
 
 import com.nightshadepvp.core.Rank;
+import com.nightshadepvp.core.entity.NSPlayer;
 import me.blok601.nightshadeuhc.command.UHCCommand;
+import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.object.Team;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.manager.TeamManager;
@@ -19,9 +21,11 @@ import org.bukkit.entity.Player;
 public class TeamsCommand implements UHCCommand{
 
     private ScenarioManager scenarioManager;
+    private GameManager gameManager;
 
-    public TeamsCommand(ScenarioManager scenarioManager) {
+    public TeamsCommand(ScenarioManager scenarioManager, GameManager gameManager) {
         this.scenarioManager = scenarioManager;
+        this.gameManager = gameManager;
     }
 
     @Override
@@ -33,25 +37,26 @@ public class TeamsCommand implements UHCCommand{
 
     @Override
     public void onCommand(CommandSender s, Command cmd, String l, String[] args) {
-        Player p = (Player) s;
+        UHCPlayer uhcPlayer = UHCPlayer.get(s);
 
-        if(!GameManager.get().isIsTeam()){
-            p.sendMessage(ChatUtils.message("&cIt is not a teams game!"));
+        if(!gameManager.isIsTeam()){
+            uhcPlayer.msg(ChatUtils.message("&cIt is not a teams game!"));
             return;
         }
 
         Scenario scenario = scenarioManager.getScen("Secret Teams");
         if(scenario != null && scenario.isEnabled()){
-            p.sendMessage(ChatUtils.format(scenario.getPrefix() + "&cYou can't view the teams in Secret Teams!"));
+            if(!NSPlayer.get(s).hasRank(Rank.TRIAL) && !uhcPlayer.isSpectator())
+            uhcPlayer.msg(ChatUtils.format(scenario.getPrefix() + "&cYou can't view the teams in Secret Teams!"));
             return;
         }
 
         if (TeamManager.getInstance().getTeams().size() == 0) {
-            p.sendMessage(ChatUtils.message("&cThere are no teams currently!"));
+            uhcPlayer.msg(ChatUtils.message("&cThere are no teams currently!"));
             return;
         }
 
-        p.sendMessage(ChatUtils.format("&5&m-----------------------------------"));
+        uhcPlayer.msg(ChatUtils.format("&5&m-----------------------------------"));
         StringBuilder stringBuilder;
         for (Team team : TeamManager.getInstance().getTeams()){
             stringBuilder = new StringBuilder();
@@ -67,15 +72,15 @@ public class TeamsCommand implements UHCCommand{
             }
 
             String f = stringBuilder.toString().trim();
-            p.sendMessage(ChatUtils.format("&e" + team.getName() + "&8: &5" + f.substring(0, stringBuilder.toString().length()-1)));
+            uhcPlayer.msg(ChatUtils.format("&e" + team.getName() + "&8: &5" + f.substring(0, stringBuilder.toString().length()-1)));
         }
-        p.sendMessage(ChatUtils.format("&5&m-----------------------------------"));
+        uhcPlayer.msg(ChatUtils.format("&5&m-----------------------------------"));
 
     }
 
     @Override
     public boolean playerOnly() {
-        return true;
+        return false;
     }
 
     @Override

@@ -2,6 +2,7 @@ package me.blok601.nightshadeuhc.command.player.teams;
 
 import com.google.common.base.Joiner;
 import com.nightshadepvp.core.Rank;
+import com.nightshadepvp.core.entity.NSPlayer;
 import me.blok601.nightshadeuhc.command.UHCCommand;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.object.Team;
@@ -56,8 +57,10 @@ public class CheckTeamCommand implements UHCCommand {
         } else {
             Scenario scenario = scenarioManager.getScen("Secret Teams");
             if (scenario != null && scenario.isEnabled()) {
-                uhcPlayer.msg(ChatUtils.format(scenario.getPrefix() + "&cYou can't view other player's teams in Secret Teams!"));
-                return;
+                if(!NSPlayer.get(s).hasRank(Rank.TRIAL) && !uhcPlayer.isSpectator()){
+                    uhcPlayer.msg(ChatUtils.format(scenario.getPrefix() + "&cYou can't view other player's teams in Secret Teams!"));
+                    return;
+                }
             }
 
             Player target = Bukkit.getPlayer(args[0]);
