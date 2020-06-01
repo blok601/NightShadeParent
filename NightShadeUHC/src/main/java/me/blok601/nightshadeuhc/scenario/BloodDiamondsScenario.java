@@ -19,7 +19,14 @@ public class BloodDiamondsScenario extends Scenario{
         if(!isEnabled()) return;
 
         if (e.getBlock().getType() == Material.DIAMOND_ORE){
-            e.getPlayer().damage(1.0);
+
+            VeinminerScenario veinminerScenario = (VeinminerScenario) scenarioManager.getScen("Veinminer");
+            if(veinminerScenario.isEnabled()){
+                e.getPlayer().damage(veinminerScenario.getBlocks(e.getBlock(), 2, Material.DIAMOND_ORE).size() * 1.0);
+            }else{
+                e.getPlayer().damage(1.0);
+            }
+            
             e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.BAT_DEATH, 3, 3);
         }
     }
