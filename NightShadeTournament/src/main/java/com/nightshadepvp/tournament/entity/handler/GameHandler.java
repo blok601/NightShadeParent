@@ -138,64 +138,29 @@ public class GameHandler {
     public void assignMatches() {
         Challonge challonge = Tournament.get().getChallonge();
         if (getTeamSize() == 1) {
-            ArrayDeque<TPlayer> players = new ArrayDeque<>();
-            TPlayerColl.get().getAllOnline().stream().filter(TPlayer::isSeeded).forEach(players::add);
-            Core.get().getLogManager().log(Logger.LogType.DEBUG, "Player Amount: " + players.size());
             RoundHandler.getInstance().populateRound(RoundHandler.getInstance().getRound());
 
-            new BukkitRunnable() {
-                TPlayer tPlayer1;
-                TPlayer tPlayer2;
-
-                @Override
-                public void run() {
-//
-//                    if (players.size() == 0) {
-//                        cancel();
-//                        //Call start tasks
-//                        new StartRoundTask().runTaskTimer(Tournament.get(), 0, 20);
-//                        Core.get().getLogManager().log(Logger.LogType.DEBUG, "Amount of matches in this list: " +RoundHandler.getInstance().getMatchesByRoundNumber(RoundHandler.getInstance().getRound()).size());
-//                        if(RoundHandler.getInstance().getMatchesByRoundNumber(RoundHandler.getInstance().getRound()).size() == 1){
-//                            //Its the champ game
-//                            setChampionship(RoundHandler.getInstance().getMatchesByRoundNumber(RoundHandler.getInstance().getRound()).stream().findFirst().get());
-//                        }
-//                        return;
-//                    }
-//
-//                    tPlayer1 = players.getFirst();
-//                    tPlayer2 = players.getLast();
-//                    SoloMatch soloMatch = new SoloMatch(tPlayer1, tPlayer2);
-//                    Core.get().getLogManager().log(Logger.LogType.DEBUG, "Players: " + tPlayer1.getName() + " And " + tPlayer2.getName());
-//                    RoundHandler.getInstance().addMatch(RoundHandler.getInstance().getRound(), soloMatch);
-//                    MatchHandler.getInstance().addMatch(soloMatch);
-//                    players.remove(tPlayer1);
-//                    players.remove(tPlayer2);
-
-
-                    try {
-                        for (JSONObject match : challonge.getMatchesByRound(RoundHandler.getInstance().getRound()).get()) {
-                            String[] players = MatchWrapper.getPlayerNames(match.getString("id"), challonge);
-                            if (players == null) continue;
-                            TPlayer tPlayer1 = TPlayer.get(Bukkit.getPlayer(players[0]));
-                            TPlayer tPlayer2 = TPlayer.get(Bukkit.getPlayer(players[1]));
-                            SoloMatch soloMatch = new SoloMatch(tPlayer1, tPlayer2);
-                            Core.get().getLogManager().log(Logger.LogType.DEBUG, "Players: " + tPlayer1.getName() + " And " + tPlayer2.getName());
-                            RoundHandler.getInstance().addMatch(RoundHandler.getInstance().getRound(), soloMatch);
-                            MatchHandler.getInstance().addMatch(soloMatch);
-                        }
-                        new StartRoundTask().runTaskTimer(Tournament.get(), 0, 20);
-                       // Core.get().getLogManager().log(Logger.LogType.DEBUG, "Amount of matches in this list: " +RoundHandler.getInstance().getMatchesByRoundNumber(RoundHandler.getInstance().getRound()).size());
-                        if(challonge.getMatchesByRound(RoundHandler.getInstance().getRound()).get().size() == 1){
-                            //Its the champ game
-                            setChampionship(RoundHandler.getInstance().getMatchesByRoundNumber(RoundHandler.getInstance().getRound()).stream().findFirst().get());
-                        }
-
-                    } catch (InterruptedException | ExecutionException e) {
-                        e.printStackTrace();
-                    }
-
+            try {
+                for (JSONObject match : challonge.getMatchesByRound(RoundHandler.getInstance().getRound()).get()) {
+                    String[] players = MatchWrapper.getPlayerNames(match.getString("id"), challonge);
+                    if (players == null) continue;
+                    TPlayer tPlayer1 = TPlayer.get(Bukkit.getPlayer(players[0]));
+                    TPlayer tPlayer2 = TPlayer.get(Bukkit.getPlayer(players[1]));
+                    SoloMatch soloMatch = new SoloMatch(tPlayer1, tPlayer2);
+                    Core.get().getLogManager().log(Logger.LogType.DEBUG, "Players: " + tPlayer1.getName() + " And " + tPlayer2.getName());
+                    RoundHandler.getInstance().addMatch(RoundHandler.getInstance().getRound(), soloMatch);
+                    MatchHandler.getInstance().addMatch(soloMatch);
                 }
-            }.runTaskTimer(Tournament.get(), 0, 2);
+                new StartRoundTask().runTaskTimer(Tournament.get(), 0, 20);
+                Core.get().getLogManager().log(Logger.LogType.DEBUG, "Amount of matches in this list: " +RoundHandler.getInstance().getMatchesByRoundNumber(RoundHandler.getInstance().getRound()).size());
+                if(challonge.getMatchesByRound(RoundHandler.getInstance().getRound()).get().size() == 1){
+                    //Its the champ game
+                    setChampionship(RoundHandler.getInstance().getMatchesByRoundNumber(RoundHandler.getInstance().getRound()).stream().findFirst().get());
+                }
+
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
         }
     }
 
