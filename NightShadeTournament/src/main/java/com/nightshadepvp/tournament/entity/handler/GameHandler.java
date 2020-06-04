@@ -147,7 +147,7 @@ public class GameHandler {
 
             try {
                 for (JSONObject match : challonge.getMatchesByRound(RoundHandler.getInstance().getRound()).get()) {
-                    String[] players = MatchWrapper.getPlayerNames(match.getString("id"), challonge);
+                    String[] players = MatchWrapper.getPlayerNames(match.getInt("id"), challonge);
                     if (players == null) continue;
                     TPlayer tPlayer1 = TPlayer.get(Bukkit.getPlayer(players[0]));
                     TPlayer tPlayer2 = TPlayer.get(Bukkit.getPlayer(players[1]));

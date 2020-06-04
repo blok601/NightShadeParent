@@ -7,9 +7,9 @@ import java.util.concurrent.ExecutionException;
  */
 public class MatchWrapper {
 
-    public static String[] getPlayerNames(String matchID, Challonge challonge) {
+    public static String[] getPlayerNames(int matchID, Challonge challonge) {
         try {
-            Integer[] partids = challonge.getMatchParticipants(challonge.getMatchIdFromChallongeId(matchID)).get();
+            Integer[] partids = challonge.getMatchParticipants(challonge.getMatchIdFromChallongeId(String.valueOf(matchID))).get();
             return new String[]{
                     challonge.getNameFromId(partids[0]),
                     challonge.getNameFromId(partids[1])
