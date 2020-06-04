@@ -42,7 +42,7 @@ public class RoundHandler {
     }
 
     public void incrementRound() {
-        this.round--;
+        this.round++;
     }
 
     public int getRound() {
