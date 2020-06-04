@@ -351,11 +351,11 @@ public class Challonge {
         return supplyAsync(() -> {
             List<Map.Entry<Integer, String>> entryList =
                     new ArrayList<>(matchIds.entrySet());
-            Map.Entry<Integer, String> first =
-                    entryList.get(0);
+            Map.Entry<Integer, String> last =
+                    entryList.get(entryList.size()-1);
 
             try {
-                return getMatch(first.getKey()).get().getJSONObject(0).getJSONObject("match").getInt("round");
+                return getMatch(last.getKey()).get().getJSONObject(0).getJSONObject("match").getInt("round");
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
                 return -1;

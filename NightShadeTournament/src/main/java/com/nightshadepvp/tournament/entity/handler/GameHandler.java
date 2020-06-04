@@ -140,7 +140,7 @@ public class GameHandler {
         if (getTeamSize() == 1) {
             RoundHandler.getInstance().populateRound(RoundHandler.getInstance().getRound());
             try {
-                Core.get().getLogManager().log(Logger.LogType.DEBUG, "There will be " + challonge.getMatchesByRound(RoundHandler.getInstance().getRound()).get().size() + " matches in this round");
+                Core.get().getLogManager().log(Logger.LogType.DEBUG, "There will be " + challonge.getMatchesByRound(RoundHandler.getInstance().getRound()).get().size() + " matches in this round:" + RoundHandler.getInstance().getRound() + "");
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
