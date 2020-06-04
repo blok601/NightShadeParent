@@ -1,9 +1,10 @@
 package com.nightshadepvp.tournament.challonge;
 
 
-import kong.unirest.HttpResponse;
-import kong.unirest.JsonNode;
-import kong.unirest.Unirest;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import lombok.Getter;
 import lombok.Setter;
 import org.json.JSONArray;
@@ -62,16 +63,21 @@ public class Challonge {
         return -1;
     }
 
-    public CompletableFuture<Boolean> post() {
+    public CompletableFuture<Boolean> post(){
         return supplyAsync(() -> {
-            HttpResponse<JsonNode> response = Unirest.post("https://" + username + ":" + api + "@api.challonge.com/v1/tournaments.json")
-                    .header("accept", "application/json")
-                    .field("api_key", api)
-                    .field("tournament[name]", name)
-                    .field("tournament[url]", url)
-                    .field("tournament[tournament_type]", gameType.getName())
-                    .field("tournament[description]", description)
-                    .asJson();
+            HttpResponse<JsonNode> response = null;
+            try {
+                response = Unirest.post("https://" + username + ":" + api + "@api.challonge.com/v1/tournaments.json")
+                        .header("accept", "application/json")
+                        .field("api_key", api)
+                        .field("tournament[name]", name)
+                        .field("tournament[url]", url)
+                        .field("tournament[tournament_type]", gameType.getName())
+                        .field("tournament[description]", description)
+                        .asJson();
+            } catch (UnirestException e) {
+                e.printStackTrace();
+            }
             this.response = response;
             return response.getStatus() == 200;
 
@@ -80,11 +86,16 @@ public class Challonge {
 
     public CompletableFuture<Boolean> addParticpants() {
         return supplyAsync(() -> {
-            HttpResponse<JsonNode> response = Unirest.post("https://" + username + ":" + api + "@api.challonge.com/v1/tournaments/{tournament}/participants/bulk_add.json".replace("{tournament}", url))
-                    .header("accept", "application/json")
-                    .field("api_key", api)
-                    .field("participants[][name]", participants)
-                    .asJson();
+            HttpResponse<JsonNode> response = null;
+            try {
+                response = Unirest.post("https://" + username + ":" + api + "@api.challonge.com/v1/tournaments/{tournament}/participants/bulk_add.json".replace("{tournament}", url))
+                        .header("accept", "application/json")
+                        .field("api_key", api)
+                        .field("participants[][name]", participants)
+                        .asJson();
+            } catch (UnirestException e) {
+                e.printStackTrace();
+            }
 
             JSONArray jsonObject = response.getBody().getArray();
             for (int i = 0; i < jsonObject.length(); i++) {
@@ -108,10 +119,15 @@ public class Challonge {
 
     public CompletableFuture<Boolean> indexMatches() {
         return supplyAsync(() -> {
-            HttpResponse<JsonNode> response = Unirest.get("https://" + username + ":" + api + "@api.challonge.com/v1/tournaments/{tournament}/matches.json".replace("{tournament}", url))
-                    .header("accept", "application/json")
-                    .queryString("api_key", api)
-                    .asJson();
+            HttpResponse<JsonNode> response = null;
+            try {
+                response = Unirest.get("https://" + username + ":" + api + "@api.challonge.com/v1/tournaments/{tournament}/matches.json".replace("{tournament}", url))
+                        .header("accept", "application/json")
+                        .queryString("api_key", api)
+                        .asJson();
+            } catch (UnirestException e) {
+                e.printStackTrace();
+            }
 
             int m = 1;
             JSONArray jsonObject = response.getBody().getArray();
@@ -142,10 +158,15 @@ public class Challonge {
 
     public CompletableFuture<Boolean> start() {
         return supplyAsync(() -> {
-            HttpResponse<JsonNode> response = Unirest.post("https://" + username + ":" + api + "@api.challonge.com/v1/tournaments/{tournament}/start.json".replace("{tournament}", url))
-                    .header("accept", "application/json")
-                    .field("api_key", api)
-                    .asJson();
+            HttpResponse<JsonNode> response = null;
+            try {
+                response = Unirest.post("https://" + username + ":" + api + "@api.challonge.com/v1/tournaments/{tournament}/start.json".replace("{tournament}", url))
+                        .header("accept", "application/json")
+                        .field("api_key", api)
+                        .asJson();
+            } catch (UnirestException e) {
+                e.printStackTrace();
+            }
             return response.getStatus() == 200;
         });
     }
@@ -157,10 +178,15 @@ public class Challonge {
      */
     public CompletableFuture<Boolean> end() {
         return supplyAsync(() -> {
-            HttpResponse<JsonNode> response = Unirest.post("https://" + username + ":" + api + "@api.challonge.com/v1/tournaments/{tournament}/finalize.json".replace("{tournament}", url))
-                    .header("accept", "application/json")
-                    .field("api_key", api)
-                    .asJson();
+            HttpResponse<JsonNode> response = null;
+            try {
+                response = Unirest.post("https://" + username + ":" + api + "@api.challonge.com/v1/tournaments/{tournament}/finalize.json".replace("{tournament}", url))
+                        .header("accept", "application/json")
+                        .field("api_key", api)
+                        .asJson();
+            } catch (UnirestException e) {
+                e.printStackTrace();
+            }
             return response.getStatus() == 200;
         });
     }
@@ -172,36 +198,51 @@ public class Challonge {
      */
     public CompletableFuture<Boolean> randomize() {
         return supplyAsync(() -> {
-            HttpResponse<JsonNode> response = Unirest.post("https://" + username + ":" + api + "@api.challonge.com/v1/tournaments/{tournament}/randomize.json".replace("{tournament}", url))
-                    .header("accept", "application/json")
-                    .field("api_key", api)
-                    .asJson();
+            HttpResponse<JsonNode> response = null;
+            try {
+                response = Unirest.post("https://" + username + ":" + api + "@api.challonge.com/v1/tournaments/{tournament}/randomize.json".replace("{tournament}", url))
+                        .header("accept", "application/json")
+                        .field("api_key", api)
+                        .asJson();
+            } catch (UnirestException e) {
+                e.printStackTrace();
+            }
             return response.getStatus() == 200;
         });
     }
 
     public CompletableFuture<JSONArray> getMatch(int id) {
         return supplyAsync(() -> {
-            HttpResponse<JsonNode> response = Unirest.get("https://" + username + ":" + api + "@api.challonge.com/v1/tournaments/{tournament}/matches/{match_id}.json".
-                    replace("{tournament}", url)
-                    .replace("{match_id}", matchIds.get(id)))
-                    .header("accept", "application/json")
-                    .queryString("api_key", api)
-                    .asJson();
+            HttpResponse<JsonNode> response = null;
+            try {
+                response = Unirest.get("https://" + username + ":" + api + "@api.challonge.com/v1/tournaments/{tournament}/matches/{match_id}.json".
+                        replace("{tournament}", url)
+                        .replace("{match_id}", matchIds.get(id)))
+                        .header("accept", "application/json")
+                        .queryString("api_key", api)
+                        .asJson();
+            } catch (UnirestException e) {
+                e.printStackTrace();
+            }
             return response.getBody().getArray();
         });
     }
 
     public CompletableFuture<Boolean> updateMatch(int id, String name) {
         return supplyAsync(() -> {
-            HttpResponse<JsonNode> response = Unirest.put("https://" + username + ":" + api + "@api.challonge.com/v1/tournaments/{tournament}/matches/{match_id}.json".
-                    replace("{tournament}", url)
-                    .replace("{match_id}", matchIds.get(id)))
-                    .header("accept", "application/json")
-                    .field("api_key", api)
-                    .field("match[scores_csv]", "1-0")
-                    .field("match[winner_id]", String.valueOf(partId.get(name)))
-                    .asJson();
+            HttpResponse<JsonNode> response = null;
+            try {
+                response = Unirest.put("https://" + username + ":" + api + "@api.challonge.com/v1/tournaments/{tournament}/matches/{match_id}.json".
+                        replace("{tournament}", url)
+                        .replace("{match_id}", matchIds.get(id)))
+                        .header("accept", "application/json")
+                        .field("api_key", api)
+                        .field("match[scores_csv]", "1-0")
+                        .field("match[winner_id]", String.valueOf(partId.get(name)))
+                        .asJson();
+            } catch (UnirestException e) {
+                e.printStackTrace();
+            }
 
             return response.getStatus() == 200;
         });
@@ -209,14 +250,19 @@ public class Challonge {
 
     public CompletableFuture<Boolean> updateMatch(int id, int winneriD) {
         return supplyAsync(() -> {
-            HttpResponse<JsonNode> response = Unirest.put("https://" + username + ":" + api + "@api.challonge.com/v1/tournaments/{tournament}/matches/{match_id}.json".
-                    replace("{tournament}", url)
-                    .replace("{match_id}", matchIds.get(id)))
-                    .header("accept", "application/json")
-                    .field("api_key", api)
-                    .field("match[scores_csv]", "1-0")
-                    .field("match[winner_id]", String.valueOf(winneriD))
-                    .asJson();
+            HttpResponse<JsonNode> response = null;
+            try {
+                response = Unirest.put("https://" + username + ":" + api + "@api.challonge.com/v1/tournaments/{tournament}/matches/{match_id}.json".
+                        replace("{tournament}", url)
+                        .replace("{match_id}", matchIds.get(id)))
+                        .header("accept", "application/json")
+                        .field("api_key", api)
+                        .field("match[scores_csv]", "1-0")
+                        .field("match[winner_id]", String.valueOf(winneriD))
+                        .asJson();
+            } catch (UnirestException e) {
+                e.printStackTrace();
+            }
 
             return response.getStatus() == 200;
         });
@@ -224,12 +270,17 @@ public class Challonge {
 
     public CompletableFuture<Boolean> markAsUnderway(int matchId) {
         return supplyAsync(() -> {
-            HttpResponse<JsonNode> response = Unirest.post("https://" + username + ":" + api + "@api.challonge.com/v1/tournaments/{tournament}/matches/{match_id}/mark_as_underway.json".
-                    replace("{tournament}", url)
-                    .replace("{match_id}", matchIds.get(matchId)))
-                    .header("accept", "application/json")
-                    .field("api_key", api)
-                    .asJson();
+            HttpResponse<JsonNode> response = null;
+            try {
+                response = Unirest.post("https://" + username + ":" + api + "@api.challonge.com/v1/tournaments/{tournament}/matches/{match_id}/mark_as_underway.json".
+                        replace("{tournament}", url)
+                        .replace("{match_id}", matchIds.get(matchId)))
+                        .header("accept", "application/json")
+                        .field("api_key", api)
+                        .asJson();
+            } catch (UnirestException e) {
+                e.printStackTrace();
+            }
 
             return response.getStatus() == 200;
         });
@@ -237,12 +288,17 @@ public class Challonge {
 
     public CompletableFuture<Boolean> unMarkAsUnderway(int matchId) {
         return supplyAsync(() -> {
-            HttpResponse<JsonNode> response = Unirest.post("https://" + username + ":" + api + "@api.challonge.com/v1/tournaments/{tournament}/matches/{match_id}/unmark_as_underway.json".
-                    replace("{tournament}", url)
-                    .replace("{match_id}", matchIds.get(matchId)))
-                    .header("accept", "application/json")
-                    .field("api_key", api)
-                    .asJson();
+            HttpResponse<JsonNode> response = null;
+            try {
+                response = Unirest.post("https://" + username + ":" + api + "@api.challonge.com/v1/tournaments/{tournament}/matches/{match_id}/unmark_as_underway.json".
+                        replace("{tournament}", url)
+                        .replace("{match_id}", matchIds.get(matchId)))
+                        .header("accept", "application/json")
+                        .field("api_key", api)
+                        .asJson();
+            } catch (UnirestException e) {
+                e.printStackTrace();
+            }
 
             return response.getStatus() == 200;
         });
