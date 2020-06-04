@@ -66,11 +66,6 @@ public class RoundHandler {
 
     public void setupChallonge() {
         challonge = Tournament.get().getChallonge();
-        try {
-            this.round = challonge.getRounds().get();
-        } catch (InterruptedException | ExecutionException e) {
-            Core.get().getLogManager().log(Logger.LogType.SEVERE, "Error processing the rounds! Error:");
-            e.printStackTrace();
-        }
+        this.round = 1;
     }
 }
