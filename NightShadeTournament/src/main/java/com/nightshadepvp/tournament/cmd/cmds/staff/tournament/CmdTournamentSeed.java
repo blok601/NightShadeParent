@@ -45,6 +45,7 @@ public class CmdTournamentSeed extends NightShadeTournamentCommand {
                 try {
                     GameHandler.getInstance().assignSeeds();
                     challonge.addParticpants().get();
+                    challonge.start().get();
                     challonge.indexMatches().get();
 
 

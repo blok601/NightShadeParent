@@ -32,14 +32,8 @@ public class CmdTournamentStart extends NightShadeTournamentCommand {
         new BukkitRunnable(){
             @Override
             public void run() {
-                try {
-                    if (Tournament.get().getChallonge().start().get()) {
-                        GameHandler.getInstance().assignMatches();
-                        tPlayer.msg(ChatUtils.message("&eMatches have been assigned and started!"));
-                    }
-                } catch (InterruptedException | ExecutionException e) {
-                    e.printStackTrace();
-                }
+                GameHandler.getInstance().assignMatches();
+                tPlayer.msg(ChatUtils.message("&eMatches have been assigned and started!"));
             }
         }.runTaskLater(Tournament.get(), 10*20);
     }
