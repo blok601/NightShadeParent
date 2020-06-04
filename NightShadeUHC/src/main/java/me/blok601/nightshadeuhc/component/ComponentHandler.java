@@ -48,6 +48,7 @@ public class ComponentHandler {
         addComponent(new StrCompentent());
         addComponent(new HardEnchantComponent());
         addComponent(new CaneBuffComponent());
+        addComponent(new FireAspectComponent());
 
         this.components.sort(Comparator.comparing(Component::getName));
     }

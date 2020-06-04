@@ -26,7 +26,7 @@ public class BloodDiamondsScenario extends Scenario{
             }else{
                 e.getPlayer().damage(1.0);
             }
-            
+
             e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.BAT_DEATH, 3, 3);
         }
     }
