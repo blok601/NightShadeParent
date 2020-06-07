@@ -236,52 +236,13 @@ public class GameListener implements Listener {
     @EventHandler
     public void onSpectate(PlayerStartSpectatingEvent e) {
         Player p = e.getPlayer();
-
-        UHCPlayerColl.get().getAllOnlinePlayers().forEach(u -> {
-            PlayerScoreboard playerScoreboard = uhc.getScoreboardManager().getPlayerScoreboard(u.getPlayer());
-            org.bukkit.scoreboard.Team specTeam = playerScoreboard.getBukkitScoreboard().getTeam("spec");
-            if (specTeam != null) {
-                specTeam.addEntry(p.getName());
-            }
-            CachedColor cachedColor = new CachedColor(p.getName());
-            cachedColor.setColor("&7&o");
-            cachedColor.setPlayer(p.getName());
-            TeamManager.getInstance().getCachedColors().add(cachedColor);
-        });
+        p.setPlayerListName("§7§o" + p.getName());
     }
 
     @EventHandler
     public void onStopSpectate(PlayerStopSpectatingEvent e) {
         Player p = e.getPlayer();
-        UHCPlayerColl.get().getSpectators().forEach(u -> {
-            PlayerScoreboard playerScoreboard = uhc.getScoreboardManager().getPlayerScoreboard(u.getPlayer());
-            org.bukkit.scoreboard.Team specTeam = playerScoreboard.getBukkitScoreboard().getTeam("spec");
-            if (specTeam != null) {
-                specTeam.removeEntry(p.getName());
-            }
-        });
-
-        Collection<CachedColor> cachedColors = TeamManager.getInstance().getCachedColors(p);
-        if (!cachedColors.isEmpty()) {
-            TeamManager.getInstance().getCachedColors().removeAll(cachedColors); //Clear them out of there
-        }
-
-        //Now update every player's board
-        UHCPlayerColl.get().getAllOnlinePlayers().forEach(uhcPlayer -> {
-            PlayerScoreboard playerScoreboard = uhc.getScoreboardManager().getPlayerScoreboard(uhcPlayer.getPlayer());
-            Team newTeam;
-            String name;
-            String playerString = p.getName().length() >= 13 ? p.getName().substring(0, 11) : p.getName();
-            name = "UHC" + playerString;
-            if (playerScoreboard.getBukkitScoreboard().getTeam(name) != null) {
-                playerScoreboard.getBukkitScoreboard().getTeam(name).unregister();
-            }
-
-            newTeam = playerScoreboard.getBukkitScoreboard().registerNewTeam(name);
-
-            newTeam.setPrefix(ChatUtils.format("&7&o&m"));
-            newTeam.addEntry(p.getName()); //Updated that for everyone
-        });
+        p.setPlayerListName(p.getName());
     }
 
     private String get(int i){

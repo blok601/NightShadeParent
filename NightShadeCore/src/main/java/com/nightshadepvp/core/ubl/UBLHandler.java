@@ -265,7 +265,7 @@ public class UBLHandler implements Runnable {
     }
 
     public String getTargetBanMessage(UBLEntry entry) {
-        return "\n" + "§5&m--------------------------------" +
+        return "§5&m--------------------------------" + "\n" +
                 "§7► §8Banned on§7: " + entry.getCreated()
                 + "\n" +
                 "§7► §8Reason§7: " + entry.getReason()
