@@ -1,5 +1,6 @@
 package com.nightshadepvp.tournament.task;
 
+import com.nightshadepvp.tournament.Tournament;
 import com.nightshadepvp.tournament.entity.handler.GameHandler;
 import com.nightshadepvp.tournament.entity.handler.MatchHandler;
 import com.nightshadepvp.tournament.entity.handler.RoundHandler;
@@ -17,6 +18,7 @@ public class RoundCheckTask extends BukkitRunnable{
         if(MatchHandler.getInstance().getActiveMatches().size() == 0){
             cancel();
             Bukkit.broadcastMessage(ChatUtils.message("&eRound &3" + RoundHandler.getInstance().getRound() + " &ehas finished!"));
+            Bukkit.broadcastMessage(ChatUtils.message("&eThe bracket has been updated, check " + Tournament.get().getChallonge().getUrl() + " for live updates!"));
             RoundHandler.getInstance().incrementRound();
             if(GameHandler.getInstance().getChampionship() != null) { //Have to check if its final game
                 return;

@@ -4,11 +4,13 @@ import com.massivecraft.massivecore.store.SenderEntity;
 import com.massivecraft.massivecore.util.MUtil;
 import com.nightshadepvp.core.fanciful.FancyMessage;
 import com.nightshadepvp.tournament.Tournament;
+import com.nightshadepvp.tournament.challonge.Challonge;
 import com.nightshadepvp.tournament.entity.TPlayer;
 import com.nightshadepvp.tournament.entity.enums.MatchState;
 import com.nightshadepvp.tournament.entity.enums.PlayerStatus;
 import com.nightshadepvp.tournament.entity.handler.GameHandler;
 import com.nightshadepvp.tournament.entity.handler.InventoryManager;
+import com.nightshadepvp.tournament.entity.handler.MatchHandler;
 import com.nightshadepvp.tournament.entity.objects.data.Arena;
 import com.nightshadepvp.tournament.entity.objects.data.Kit;
 import com.nightshadepvp.tournament.entity.objects.player.PlayerInv;
@@ -35,6 +37,7 @@ import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Blok on 7/18/2018.
@@ -51,6 +54,7 @@ public class SoloMatch implements iMatch {
     private Set<TPlayer> spectators;
     private HashSet<Location> blocks;
     private long startTime;
+    private Challonge challonge;
 
     private String timer;
     private HashMap<UUID, Scoreboard> scoreboards;
@@ -69,6 +73,7 @@ public class SoloMatch implements iMatch {
         this.logOutTimers = new HashMap<>();
         this.blocks = new HashSet<>();
         freezePlayers();
+        this.challonge = Tournament.get().getChallonge();
     }
 
     public int getMatchID() {
@@ -281,6 +286,12 @@ public class SoloMatch implements iMatch {
         this.spectators.forEach(tPlayer -> tPlayer.getPlayer().teleport(Tournament.get().getSpawnLocation()));
         this.spectators.clear();
 
+        try {
+            this.challonge.updateMatch(this.getMatchID(), winner.getName()).get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+
         if (GameHandler.getInstance().getChampionship() != null) {
             if (GameHandler.getInstance().getChampionship().getMatchID() == getMatchID()) {
                 //This is the champ game
@@ -303,6 +314,12 @@ public class SoloMatch implements iMatch {
                 Bukkit.broadcastMessage(ChatUtils.message("&3" + winner.getName() + " &ehas won a NightShadePvP Tournament! Congratulations"));
                 winner.setTournamentsWon(winner.getTournamentsWon() + 1);
                 winner.setTournamentsPlayed(winner.getTournamentsPlayed() + 1); //Not incremented since they didn't die
+
+                try {
+                    this.challonge.end().get();
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -311,7 +328,6 @@ public class SoloMatch implements iMatch {
     public void setTimer(String timer) {
         this.timer = timer;
     }
-
 
     public void setWinner(TPlayer winner) {
         getWinners().add(winner);
