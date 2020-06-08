@@ -158,7 +158,7 @@ public class GameHandler {
                 }
                 new StartRoundTask().runTaskTimer(Tournament.get(), 0, 20);
                 Core.get().getLogManager().log(Logger.LogType.DEBUG, "Amount of matches in this list: " +RoundHandler.getInstance().getMatchesByRoundNumber(RoundHandler.getInstance().getRound()).size());
-                if(challonge.getMatchesByRound(RoundHandler.getInstance().getRound()).get().size() == 1){
+                if(RoundHandler.getInstance().getRound() == challonge.getRounds().get()){
                     //Its the champ game
                     setChampionship(RoundHandler.getInstance().getMatchesByRoundNumber(RoundHandler.getInstance().getRound()).stream().findFirst().get());
                 }
