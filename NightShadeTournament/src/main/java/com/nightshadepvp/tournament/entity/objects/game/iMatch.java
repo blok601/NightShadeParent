@@ -3,6 +3,7 @@ package com.nightshadepvp.tournament.entity.objects.game;
 import com.nightshadepvp.core.fanciful.FancyMessage;
 import com.nightshadepvp.tournament.entity.TPlayer;
 import com.nightshadepvp.tournament.entity.enums.MatchState;
+import com.nightshadepvp.tournament.entity.handler.GameHandler;
 import com.nightshadepvp.tournament.entity.objects.data.Arena;
 import com.nightshadepvp.tournament.scoreboard.type.Scoreboard;
 import com.nightshadepvp.tournament.task.LogOutTimerTask;
@@ -188,7 +189,19 @@ public interface iMatch {
 
     /**
      * Get the starting milliseconds
-     * @return The starting milliseconds
+     * @return The starting milliseconds in long
      */
     long getStartTimeMillis();
+
+    /**
+     * See if this is the championship game or not
+     * @return True if the game is the championship game, false if it is not
+     */
+    boolean isChampionshipGame();
+
+    /**
+     * Get game handler instance
+     * @return GameHandler instance
+     */
+    GameHandler getGameHandler();
 }

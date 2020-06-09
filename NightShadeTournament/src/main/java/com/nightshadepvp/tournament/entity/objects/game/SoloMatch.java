@@ -55,11 +55,11 @@ public class SoloMatch implements iMatch {
     private HashSet<Location> blocks;
     private long startTime;
     private Challonge challonge;
+    private boolean championshipGame;
 
     private String timer;
     private HashMap<UUID, Scoreboard> scoreboards;
     private HashMap<UUID, LogOutTimerTask> logOutTimers;
-
 
 
     public SoloMatch(TPlayer player1, TPlayer player2) {
@@ -176,12 +176,17 @@ public class SoloMatch implements iMatch {
         TPlayer loser = getOpponents(winner).get(0);
         Player loserPlayer = loser.getPlayer();
         loser.setSeed(-1);
+        try {
+            this.challonge.updateMatch(this.getMatchID(), winner.getName()).get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
 
         setMatchState(MatchState.DONE);
         setWinners(Collections.singletonList(winner));
 
         InventoryManager.getInstance().addInventory(winner.getPlayer());
-        if(loser.isOnline()){
+        if (loser.isOnline()) {
             InventoryManager.getInstance().addInventory(loserPlayer);
         }
 
@@ -190,18 +195,18 @@ public class SoloMatch implements iMatch {
 
         broadcastAllFormat("&3&m-----------------");
 
-        if(winner.isOnline()){
+        if (winner.isOnline()) {
             msg = new FancyMessage("Winner").color(ChatColor.DARK_PURPLE).then(": ").color(ChatColor.DARK_GRAY).then(winner.getName()).color(ChatColor.GOLD).command("/viewplayerinventory " + winner.getName());
             broadcastAllFancy(msg);
         }
 
-        if(loser.isOnline()){
+        if (loser.isOnline()) {
             msg = new FancyMessage("Loser").color(ChatColor.DARK_PURPLE).then(": ").color(ChatColor.DARK_GRAY).then(loser.getName()).color(ChatColor.GOLD).command("/viewplayerinventory " + getOpponents(winner).get(0).getName());
             broadcastAllFancy(msg);
         }
 
         broadcastAllFormat("&3&m-----------------");
-        broadcastAllFormat("&5Kit&8: &6" + GameHandler.getInstance().getKit().getName());
+        broadcastAllFormat("&5Kit&8: &6" + getGameHandler().getKit().getName());
 
         broadcastAllFormat("&5Duration&8: &6" + getTimer());
 
@@ -223,7 +228,7 @@ public class SoloMatch implements iMatch {
         } else {
             //Died to PvE or plugin, or anything else in general
 
-            if(event instanceof PlayerDeathEvent){
+            if (event instanceof PlayerDeathEvent) {
                 PlayerDeathEvent playerDeathEvent = (PlayerDeathEvent) event;
                 playerDeathEvent.getDrops().clear();
             }
@@ -231,19 +236,19 @@ public class SoloMatch implements iMatch {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                   if(loserPlayer.isOnline()){
-                       loserPlayer.spigot().respawn();
-                       loserPlayer.teleport(winner.getPlayer().getLocation());
+                    if (loserPlayer.isOnline()) {
+                        loserPlayer.spigot().respawn();
+                        loserPlayer.teleport(winner.getPlayer().getLocation());
 
-                       loserPlayer.getWorld().strikeLightningEffect(loserPlayer.getLocation());
-                       addSpectator(loser);
-                       loserPlayer.setAllowFlight(true);
-                       loserPlayer.setFlying(true);
-                       loserPlayer.setFlySpeed(0.2F);
-                       loserPlayer.setHealth(loserPlayer.getMaxHealth());
-                       loserPlayer.setCanPickupItems(false);
-                       winner.getPlayer().hidePlayer(loserPlayer);
-                   }
+                        loserPlayer.getWorld().strikeLightningEffect(loserPlayer.getLocation());
+                        addSpectator(loser);
+                        loserPlayer.setAllowFlight(true);
+                        loserPlayer.setFlying(true);
+                        loserPlayer.setFlySpeed(0.2F);
+                        loserPlayer.setHealth(loserPlayer.getMaxHealth());
+                        loserPlayer.setCanPickupItems(false);
+                        winner.getPlayer().hidePlayer(loserPlayer);
+                    }
                 }
             }.runTaskLater(Tournament.get(), 2L);
         }
@@ -286,40 +291,32 @@ public class SoloMatch implements iMatch {
         this.spectators.forEach(tPlayer -> tPlayer.getPlayer().teleport(Tournament.get().getSpawnLocation()));
         this.spectators.clear();
 
-        try {
-            this.challonge.updateMatch(this.getMatchID(), winner.getName()).get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+        if (isChampionshipGame()) {
+            //This is the champ game
 
-        if (GameHandler.getInstance().getChampionship() != null) {
-            if (GameHandler.getInstance().getChampionship().getMatchID() == getMatchID()) {
-                //This is the champ game
+            if (winner.isOnline()) {
+                //Solo match
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        Firework fw = (Firework) winner.getPlayer().getWorld().spawnEntity(winner.getPlayer().getLocation(), EntityType.FIREWORK);
+                        FireworkMeta fireworkMeta = fw.getFireworkMeta();
+                        fireworkMeta.addEffect(FireworkEffect.builder().flicker(true).with(FireworkEffect.Type.BURST).withColor(Color.PURPLE, Color.BLUE, Color.ORANGE).withFade(Color.YELLOW).trail(true).build());
+                        fireworkMeta.setPower(2);
+                        fw.setFireworkMeta(fireworkMeta);
+                        fw.detonate();
+                    }
+                }.runTaskLater(Tournament.get(), 60L);
+            }
 
-                if (winner.isOnline()) {
-                    //Solo match
-                    new BukkitRunnable(){
-                        @Override
-                        public void run() {
-                            Firework fw = (Firework) winner.getPlayer().getWorld().spawnEntity(winner.getPlayer().getLocation(), EntityType.FIREWORK);
-                            FireworkMeta fireworkMeta = fw.getFireworkMeta();
-                            fireworkMeta.addEffect(FireworkEffect.builder().flicker(true).with(FireworkEffect.Type.BURST).withColor(Color.PURPLE, Color.BLUE, Color.ORANGE).withFade(Color.YELLOW).trail(true).build());
-                            fireworkMeta.setPower(2);
-                            fw.setFireworkMeta(fireworkMeta);
-                            fw.detonate();
-                        }
-                    }.runTaskLater(Tournament.get(), 60L);
-                }
+            Bukkit.broadcastMessage(ChatUtils.message("&3" + winner.getName() + " &ehas won a NightShadePvP Tournament! Congratulations"));
+            winner.setTournamentsWon(winner.getTournamentsWon() + 1);
+            winner.setTournamentsPlayed(winner.getTournamentsPlayed() + 1); //Not incremented since they didn't die
 
-                Bukkit.broadcastMessage(ChatUtils.message("&3" + winner.getName() + " &ehas won a NightShadePvP Tournament! Congratulations"));
-                winner.setTournamentsWon(winner.getTournamentsWon() + 1);
-                winner.setTournamentsPlayed(winner.getTournamentsPlayed() + 1); //Not incremented since they didn't die
-
-                try {
-                    this.challonge.end().get();
-                } catch (InterruptedException | ExecutionException e) {
-                    e.printStackTrace();
-                }
+            try {
+                this.challonge.end().get();
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
             }
         }
 
@@ -350,8 +347,8 @@ public class SoloMatch implements iMatch {
     private void setupBoard() {
         Scoreboard scoreboard;
         for (TPlayer tPlayer : getPlayers()) {
-            if(!tPlayer.isOnline()) {
-
+            if (!tPlayer.isOnline()) {
+                continue;
             }
             scoreboard = ScoreboardLib.createScoreboard(tPlayer.getPlayer()).setHandler(new ScoreboardHandler() {
 
@@ -380,7 +377,7 @@ public class SoloMatch implements iMatch {
                             .blank()
                             .next("&6Opponent: &e" + getOpponents(tPlayer).get(0).getName())
                             .blank()
-                            .next("&6Kit: &e" + GameHandler.getInstance().getKit().getName())
+                            .next("&6Kit: &e" + getGameHandler().getKit().getName())
                             .blank()
                             .next("&6Spectators: &e" + getSpectators().size())
                             .next((getOpponents(TPlayer.get(player)).get(0) != null && TPlayer.get(player).getName().length() >= 10 ? ScoreboardSettings.SCOREBOARD_SPACER_LARGE : ScoreboardSettings.SPACER) + ScoreboardSettings.SPACER + ScoreboardSettings.SPACER)
@@ -395,7 +392,7 @@ public class SoloMatch implements iMatch {
 
 
     public void start() {
-        Kit kit = GameHandler.getInstance().getKit();
+        Kit kit = getGameHandler().getKit();
         setMatchState(MatchState.STARTING);
         setupBoard();
         getPlayers().forEach(tPlayer -> {
@@ -403,7 +400,7 @@ public class SoloMatch implements iMatch {
                 PlayerInv inv = tPlayer.getInv(kit);
                 tPlayer.getPlayer().getInventory().setArmorContents(inv.getArmorContents());
                 tPlayer.getPlayer().getInventory().setContents(inv.getContents());
-                tPlayer.getPlayer().sendMessage(ChatUtils.message("&eYou are fighting &3" + getOpponents(tPlayer).get(0).getName() + "&e using kit &3" + GameHandler.getInstance().getKit().getName()));
+                tPlayer.getPlayer().sendMessage(ChatUtils.message("&eYou are fighting &3" + getOpponents(tPlayer).get(0).getName() + "&e using kit &3" + getGameHandler().getKit().getName()));
                 tPlayer.getPlayer().setCanPickupItems(true);
                 tPlayer.setStatus(PlayerStatus.PLAYING);
             }
@@ -543,8 +540,8 @@ public class SoloMatch implements iMatch {
     }
 
     @Override
-    public void stopLogOutTimer(TPlayer tPlayer){
-        if(this.logOutTimers.containsKey(tPlayer.getUuid())){
+    public void stopLogOutTimer(TPlayer tPlayer) {
+        if (this.logOutTimers.containsKey(tPlayer.getUuid())) {
             LogOutTimerTask logOutTimerTask = this.logOutTimers.get(tPlayer.getUuid());
             logOutTimerTask.cancel();
             this.logOutTimers.remove(tPlayer.getUuid());
@@ -576,5 +573,15 @@ public class SoloMatch implements iMatch {
     @Override
     public long getStartTimeMillis() {
         return this.startTime;
+    }
+
+    @Override
+    public boolean isChampionshipGame() {
+        return getGameHandler().getChampionship() != null && getGameHandler().getChampionship().getMatchID() == getMatchID();
+    }
+
+    @Override
+    public GameHandler getGameHandler() {
+        return GameHandler.getInstance();
     }
 }

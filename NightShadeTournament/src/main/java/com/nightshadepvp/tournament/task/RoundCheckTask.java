@@ -18,11 +18,13 @@ public class RoundCheckTask extends BukkitRunnable{
         if(MatchHandler.getInstance().getActiveMatches().size() == 0){
             cancel();
             Bukkit.broadcastMessage(ChatUtils.message("&eRound &3" + RoundHandler.getInstance().getRound() + " &ehas finished!"));
-            Bukkit.broadcastMessage(ChatUtils.message("&eThe bracket has been updated, check " + Tournament.get().getChallonge().getUrl() + " for live updates!"));
-            RoundHandler.getInstance().incrementRound();
             if(GameHandler.getInstance().getChampionship() != null) { //Have to check if its final game
+                Bukkit.broadcastMessage(ChatUtils.message("&eThis Tournament has concluded! Check &b" + Tournament.get().getChallonge().getUrl() + " &e for the final bracket!"));
                 return;
             }
+            Bukkit.broadcastMessage(ChatUtils.message("&eThe bracket has been updated, check " + Tournament.get().getChallonge().getUrl() + " for live updates!"));
+            RoundHandler.getInstance().incrementRound();
+
             GameHandler.getInstance().assignMatches();
         }
     }
