@@ -234,7 +234,8 @@ public class Challonge {
             try {
                 response = Unirest.put("https://" + username + ":" + api + "@api.challonge.com/v1/tournaments/{tournament}/matches/{match_id}.json".
                         replace("{tournament}", url)
-                        .replace("{match_id}", matchIds.get(id)))
+                        .replace("{match_id}", matchIds
+                                .get(id)))
                         .header("accept", "application/json")
                         .field("api_key", api)
                         .field("match[scores_csv]", "1-0")
