@@ -2,6 +2,8 @@ package com.nightshadepvp.tournament.entity.objects.game;
 
 import com.massivecraft.massivecore.store.SenderEntity;
 import com.massivecraft.massivecore.util.MUtil;
+import com.nightshadepvp.core.Core;
+import com.nightshadepvp.core.Logger;
 import com.nightshadepvp.core.fanciful.FancyMessage;
 import com.nightshadepvp.tournament.Tournament;
 import com.nightshadepvp.tournament.challonge.Challonge;
@@ -395,6 +397,9 @@ public class SoloMatch implements iMatch {
         Kit kit = getGameHandler().getKit();
         setMatchState(MatchState.STARTING);
         setupBoard();
+
+        Core.get().getLogManager().log(Logger.LogType.DEBUG, "The match id for this game is: " + this.getMatchID());
+        Core.get().getLogManager().log(Logger.LogType.DEBUG, "Printing id list: " + this.challonge.matchIds);
         getPlayers().forEach(tPlayer -> {
             if (tPlayer.isOnline()) {
                 PlayerInv inv = tPlayer.getInv(kit);
