@@ -293,7 +293,7 @@ public class TPlayer extends SenderEntity<TPlayer> {
                         .blank()
                         .next("&fPlayers: &b" + TPlayerColl.get().getAllOnline().stream().filter(tPlayer -> !tPlayer.isSpectator()).count() + "/" + GameHandler.getInstance().getSlots())
                         .blank()
-                        .next("fbKit: &b" + (GameHandler.getInstance().getKit() == null ? "Not Set" : GameHandler.getInstance().getKit().getName()))
+                        .next("&fKit: &b" + (GameHandler.getInstance().getKit() == null ? "Not Set" : GameHandler.getInstance().getKit().getName()))
                         .blank()
                         .next("&fRound: &b" + RoundHandler.getInstance().getRound())
                         .next((GameHandler.getInstance().getHost() != null && GameHandler.getInstance().getHost().getName().length() >= 10 ? ScoreboardSettings.SCOREBOARD_SPACER_LARGE : ScoreboardSettings.SPACER) + ScoreboardSettings.SPACER + ScoreboardSettings.SPACER)
