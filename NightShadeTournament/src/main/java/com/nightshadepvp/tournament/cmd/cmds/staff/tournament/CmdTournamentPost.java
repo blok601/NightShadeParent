@@ -39,7 +39,31 @@ public class CmdTournamentPost extends NightShadeTournamentCommand {
             return;
         }
 
-        Challonge challonge = new Challonge("pSsOoEKn0mpSHDVLKaexohUGbmvLIOeqFpXjPbxy", "NightShadePvP", "ns" + System.currentTimeMillis(), gameHandler.getHost().getName() + "'s " + gameHandler.getKit().getName() + " NightShadePvP Tournament", "Minecraft PvP Tournament on NightShadePvP", GameType.SINGLE);
+        int timesHosted = TPlayer.get(gameHandler.getHost()).getTournamentsHosted() + 1;
+        String suffix= "";
+        if(timesHosted < 10){
+            if(timesHosted == 1){
+                suffix = "st";
+            }else if(timesHosted == 2){
+                suffix = "nd";
+            }else if(timesHosted == 3){
+                suffix = "rd";
+            }else{
+                suffix = "th";
+            }
+        }else if(timesHosted > 10 && timesHosted < 100){
+            if(timesHosted % 10 == 1){
+                suffix = "st";
+            }else if(timesHosted % 10 == 2){
+                suffix = "nd";
+            }else if(timesHosted % 10 == 3){
+                suffix = "rd";
+            }else{
+                suffix = "th";
+            }
+        }
+        String tourneyName = gameHandler.getHost().getName() + "'s " + timesHosted + "" + suffix + " Tournament";
+        Challonge challonge = new Challonge("pSsOoEKn0mpSHDVLKaexohUGbmvLIOeqFpXjPbxy", "NightShadePvP", "ns" + System.currentTimeMillis(), tourneyName, "PvP Tournament on NightShadePvP with " + gameHandler.getKit().getName() + " kit", GameType.SINGLE);
         tPlayer.msg(ChatUtils.message("&bPosting bracket..."));
         try {
             if (challonge.post().get()) {

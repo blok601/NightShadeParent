@@ -30,7 +30,7 @@ public class RoundHandler {
 
     public void setup() {
         matches = new HashMap<>();
-        round = -1;
+        round = 0;
     }
 
     public HashSet<iMatch> getMatchesByRoundNumber(int round) {

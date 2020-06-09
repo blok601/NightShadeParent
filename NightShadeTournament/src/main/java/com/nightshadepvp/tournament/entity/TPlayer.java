@@ -43,6 +43,7 @@ public class TPlayer extends SenderEntity<TPlayer> {
     private int fightsLost = 0;
     private int tournamentsWon = 0;
     private int tournamentsPlayed = 0;
+    private int tournamentsHosted = 0;
 
     // -------------------------------------------- //
     // Prefs start
@@ -74,6 +75,7 @@ public class TPlayer extends SenderEntity<TPlayer> {
         this.setFightsLost(that.fightsLost);
         this.setTournamentsWon(that.tournamentsWon);
         this.setTournamentsPlayed(that.tournamentsPlayed);
+        this.setTournamentsHosted(that.tournamentsHosted);
 
         this.receivingHelpop = true;
 
@@ -372,5 +374,13 @@ public class TPlayer extends SenderEntity<TPlayer> {
 
     public boolean isSpecMatchAlert() {
         return specMatchAlert;
+    }
+
+    public int getTournamentsHosted() {
+        return tournamentsHosted;
+    }
+
+    public void setTournamentsHosted(int tournamentsHosted) {
+        this.tournamentsHosted = tournamentsHosted;
     }
 }

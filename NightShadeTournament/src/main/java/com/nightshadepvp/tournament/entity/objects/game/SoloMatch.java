@@ -314,6 +314,8 @@ public class SoloMatch implements iMatch {
             Bukkit.broadcastMessage(ChatUtils.message("&3" + winner.getName() + " &ehas won a NightShadePvP Tournament! Congratulations"));
             winner.setTournamentsWon(winner.getTournamentsWon() + 1);
             winner.setTournamentsPlayed(winner.getTournamentsPlayed() + 1); //Not incremented since they didn't die
+            TPlayer host = TPlayer.get(getGameHandler().getHost());
+            host.setTournamentsHosted(host.getTournamentsHosted() + 1);
 
             try {
                 this.challonge.end().get();
