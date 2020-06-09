@@ -154,8 +154,8 @@ public class GameHandler {
                     TPlayer tPlayer2 = TPlayer.get(Bukkit.getPlayer(players[1]));
                     SoloMatch soloMatch = new SoloMatch(tPlayer1, tPlayer2);
                     Core.get().getLogManager().log(Logger.LogType.DEBUG, "Players: " + tPlayer1.getName() + " And " + tPlayer2.getName());
-                    RoundHandler.getInstance().addMatch(round, soloMatch);
                     MatchHandler.getInstance().addMatch(soloMatch);
+                    RoundHandler.getInstance().addMatch(round, soloMatch);
                 }
                 new StartRoundTask().runTaskTimer(Tournament.get(), 0, 20);
                 Core.get().getLogManager().log(Logger.LogType.DEBUG, "Amount of matches in this list: " +RoundHandler.getInstance().getMatchesByRoundNumber(round).size());
