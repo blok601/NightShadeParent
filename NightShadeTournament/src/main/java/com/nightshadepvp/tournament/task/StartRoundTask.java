@@ -45,11 +45,11 @@ public class StartRoundTask extends BukkitRunnable {
             for (iMatch match : RoundHandler.getInstance().getMatchesByRoundNumber(round)) {
                 if (match instanceof SoloMatch) {
                     SoloMatch soloMatch = (SoloMatch) match;
-                    arena = ArenaHandler.getInstance().getAvailableArenas().get(0);
-                    if (arena == null) {
+                    if(ArenaHandler.getInstance().getAvailableArenas().size() == 0){
                         Bukkit.broadcastMessage("&4Ran out of arena's! SoloMatch ID: &a" + soloMatch.getMatchID() + "&4. Players: &a" + soloMatch.getPlayer1().getName() + " and " + soloMatch.getPlayer2().getName() + " &4Skipping!");
                         continue;
                     }
+                    arena = ArenaHandler.getInstance().getAvailableArenas().get(0);
                     soloMatch.setArena(arena);
                     arena.setInUse(true);
                     TPlayer player1 = soloMatch.getPlayer1();
