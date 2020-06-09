@@ -179,7 +179,7 @@ public class SoloMatch implements iMatch {
         Player loserPlayer = loser.getPlayer();
         loser.setSeed(-1);
         try {
-            this.challonge.updateMatch(this.getMatchID(), winner.getName()).get();
+            this.challonge.updateMatch(this.getMatchID(), winner.getName()).thenAccept(aBoolean -> Core.get().getLogManager().log(Logger.LogType.DEBUG, "Sent " + winner.getName() + " to the api!")).get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
@@ -379,7 +379,7 @@ public class SoloMatch implements iMatch {
                             .next((getOpponents(TPlayer.get(player)).get(0) != null && TPlayer.get(player).getName().length() >= 10 ? ScoreboardSettings.SCOREBOARD_SPACER_LARGE : ScoreboardSettings.SPACER) + ScoreboardSettings.SPACER + ScoreboardSettings.SPACER)
                             .next("&fDuration: &b" + getTimer())
                             .blank()
-                            .next("f6Opponent: &b" + getOpponents(tPlayer).get(0).getName())
+                            .next("&fOpponent: &b" + getOpponents(tPlayer).get(0).getName())
                             .blank()
                             .next("&fKit: &b" + getGameHandler().getKit().getName())
                             .blank()
@@ -407,7 +407,7 @@ public class SoloMatch implements iMatch {
                 PlayerInv inv = tPlayer.getInv(kit);
                 tPlayer.getPlayer().getInventory().setArmorContents(inv.getArmorContents());
                 tPlayer.getPlayer().getInventory().setContents(inv.getContents());
-                tPlayer.getPlayer().sendMessage(ChatUtils.message("&bYou are fighting &f" + getOpponents(tPlayer).get(0).getName() + "&e using kit &3" + getGameHandler().getKit().getName()));
+                tPlayer.getPlayer().sendMessage(ChatUtils.message("&bYou are fighting &f" + getOpponents(tPlayer).get(0).getName() + "&b using kit &f" + getGameHandler().getKit().getName()));
                 tPlayer.getPlayer().setCanPickupItems(true);
                 tPlayer.setStatus(PlayerStatus.PLAYING);
             }
