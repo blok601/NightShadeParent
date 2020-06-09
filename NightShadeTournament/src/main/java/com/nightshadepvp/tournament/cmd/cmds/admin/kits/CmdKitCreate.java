@@ -47,8 +47,8 @@ public class CmdKitCreate extends NightShadeTournamentCommand {
         kit.setArmor(p.getInventory().getArmorContents());
         kit.setDisplay(new ItemBuilder(Material.DIAMOND_SWORD).name("&6" + name).make());
         KitHandler.getInstance().getKits().add(kit);
-        p.sendMessage(ChatUtils.message("&eSuccessfully created kit: " + kit.getName()));
-        p.sendMessage(ChatUtils.message("&eMake sure to set the display item and reload the kits!"));
+        p.sendMessage(ChatUtils.message("&bSuccessfully created kit: &f" + kit.getName()));
+        p.sendMessage(ChatUtils.message("&bMake sure to set the display item and reload the kits!"));
         return;
     }
 }

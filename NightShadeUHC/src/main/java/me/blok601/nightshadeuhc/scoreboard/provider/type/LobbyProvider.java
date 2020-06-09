@@ -38,7 +38,7 @@ public class LobbyProvider extends ScoreboardProvider {
      */
     @Override
     public String getTitle(Player p) {
-        return ChatUtils.format("&5NightShade PvP");
+        return ChatUtils.format("&5NightShadePvP");
     }
     
 

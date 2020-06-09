@@ -24,11 +24,11 @@ public class CmdKitList extends NightShadeTournamentCommand {
     @Override
     public void perform() throws MassiveException {
         Player p = TPlayer.get(sender).getPlayer();
-        p.sendMessage(ChatUtils.message("&eKits:"));
-        p.sendMessage(ChatUtils.format("&3&m-------------------"));
+        p.sendMessage(ChatUtils.message("&bKits:"));
+        p.sendMessage(ChatUtils.format("&f&m-------------------"));
         for (Kit k : KitHandler.getInstance().getKits()){
-            p.sendMessage(ChatUtils.format("&e- " + k.getName()));
+            p.sendMessage(ChatUtils.format("&b- " + k.getName()));
         }
-        p.sendMessage(ChatUtils.format("&3&m-------------------"));
+        p.sendMessage(ChatUtils.format("&f&m-------------------"));
     }
 }

@@ -8,8 +8,8 @@ import com.nightshadepvp.tournament.utils.ChatUtils;
 public class ScoreboardSettings {
 
 
-    public static String SPACER = ChatUtils.format("&5&m-------");
+    public static String SPACER = ChatUtils.format("&f&m-------");
 
-    public static String SCOREBOARD_SPACER_LARGE = ChatUtils.format("&5&m----------");
+    public static String SCOREBOARD_SPACER_LARGE = ChatUtils.format("&f&m----------");
 
 }

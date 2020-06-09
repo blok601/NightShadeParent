@@ -1,5 +1,6 @@
 package com.nightshadepvp.tournament.cmd.cmds.staff.whitelist;
 
+import com.google.common.base.Joiner;
 import com.massivecraft.massivecore.MassiveException;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.cmd.req.ReqRankHasAtLeast;
@@ -20,13 +21,8 @@ public class CmdWhitelistList extends NightShadeTournamentCommand {
     @Override
     public void perform() throws MassiveException {
         TPlayer tPlayer = TPlayer.get(sender);
-        StringBuilder stringBuilder = new StringBuilder();
-        for (String s : GameHandler.getInstance().getWhitelist()) {
-            stringBuilder.append(s).append(", ");
-        }
 
-        String list = stringBuilder.toString().trim();
-        String sub = list.substring(0, list.length() - 1);
-        tPlayer.msg("&eWhitelited Players&8: &3" + sub);
+        String l = Joiner.on("&7,&b").join(GameHandler.getInstance().getWhitelist());
+        tPlayer.msg("&bWhitelited Players&8: &b" + l);
     }
 }

@@ -37,7 +37,7 @@ public class CmdKitRemove extends NightShadeTournamentCommand {
 
         Kit kit = KitHandler.getInstance().getKit(name);
         KitHandler.getInstance().removeKit(kit);
-        p.sendMessage(ChatUtils.message("&eSuccessfully removed kit: " + kit.getName()));
-        p.sendMessage(ChatUtils.message("&eMake sure to reload kits!"));
+        p.sendMessage(ChatUtils.message("&bSuccessfully removed kit: &f" + kit.getName()));
+        p.sendMessage(ChatUtils.message("&bMake sure to reload kits!"));
     }
 }

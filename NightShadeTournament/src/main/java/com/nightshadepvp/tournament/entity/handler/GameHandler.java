@@ -127,7 +127,7 @@ public class GameHandler {
         for (Map.Entry<UUID, Double> entry : f.entrySet()){
             tPlayer = TPlayer.get(entry.getKey());
             tPlayer.setSeed(i);
-            tPlayer.msg(ChatUtils.message("&eYou are seeded: &3" + i));
+            tPlayer.msg(ChatUtils.message("&bYou are seeded: &f" + i));
             challonge.getParticipants().add(tPlayer.getName());
             i++;
         }

@@ -26,6 +26,6 @@ public class CmdArenaReload extends NightShadeTournamentCommand {
     public void perform() throws MassiveException {
         Player p = TPlayer.get(sender).getPlayer();
         ArenaHandler.getInstance().reload();
-        p.sendMessage(ChatUtils.message("&eReloaded arena!"));
+        p.sendMessage(ChatUtils.message("&bReloaded arenas!"));
     }
 }

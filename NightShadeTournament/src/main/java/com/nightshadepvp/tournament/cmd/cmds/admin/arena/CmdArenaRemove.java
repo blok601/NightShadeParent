@@ -43,7 +43,7 @@ public class CmdArenaRemove extends NightShadeTournamentCommand {
         }
 
         ArenaHandler.getInstance().removeArena(arena);
-        p.sendMessage(ChatUtils.message("&eSuccessfully removed arena: " + arena));
+        p.sendMessage(ChatUtils.message("&bSuccessfully removed arena: &f" + arena));
         return;
     }
 }

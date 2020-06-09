@@ -55,7 +55,7 @@ public class CmdSaveKit extends NightShadeTournamentCommand {
 
         tPlayer.getPlayerKits().put(kit, InventoryUtils.playerInventoryFromPlayer(p));
         EngineInventory.edtingMap.remove(p.getUniqueId());
-        p.sendMessage(ChatUtils.message("&eSuccessfully saved kit &3" + kit.getName()));
+        p.sendMessage(ChatUtils.message("&bSuccessfully saved kit &f" + kit.getName()));
         tPlayer.sendSpawn();
     }
 }

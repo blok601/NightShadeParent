@@ -92,7 +92,7 @@ public class EngineSpectator extends Engine {
 
             if(match instanceof SoloMatch){
                 SoloMatch mat = (SoloMatch) match;
-                tPlayer.msg(ChatUtils.message("&eYou are now spectating &6" + mat.getPlayer1().getName() + " &evs. &6" + mat.getPlayer2().getName()));
+                tPlayer.msg(ChatUtils.message("&bYou are now spectating &f" + mat.getPlayer1().getName() + " &bvs. &f" + mat.getPlayer2().getName()));
             }
 
 
@@ -157,7 +157,7 @@ public class EngineSpectator extends Engine {
                 match.addSpectator(TPlayer.get(p));
                 if(match instanceof SoloMatch){
                     SoloMatch soloMatch = (SoloMatch) match;
-                    p.sendMessage(ChatUtils.message("&eYou are now spectating &6" + soloMatch.getPlayer1().getName() + " &evs. &6" + soloMatch.getPlayer2().getName()));
+                    p.sendMessage(ChatUtils.message("&bYou are now spectating &f" + soloMatch.getPlayer1().getName() + " &bvs. &f" + soloMatch.getPlayer2().getName()));
                 }
 
             }
@@ -223,7 +223,7 @@ public class EngineSpectator extends Engine {
                 effects.add(ef.getType().getName() + " " + ef.getAmplifier() + 1 + " (" + NumberUtils.formatSecs(ef.getDuration() / 20) + ")");
             }
             ViewableInventory inventory = new ViewableInventory(clicked.getName(), clicked.getHealth(), clicked.getFoodLevel(), effects, PlayerInv.fromPlayerInventory(clicked.getInventory()));
-            clicker.sendMessage(ChatUtils.message("&eOpening " + clicked.getName() + "'s inventory..."));
+            clicker.sendMessage(ChatUtils.message("&bOpening " + clicked.getName() + "'s inventory..."));
             clicker.openInventory(inventory.getInventory());
         }
     }

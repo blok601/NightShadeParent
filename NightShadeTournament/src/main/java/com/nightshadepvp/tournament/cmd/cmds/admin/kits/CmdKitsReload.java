@@ -26,6 +26,6 @@ public class CmdKitsReload extends NightShadeTournamentCommand {
     public void perform() throws MassiveException {
         Player p = TPlayer.get(sender).getPlayer();
         KitHandler.getInstance().reload();
-        p.sendMessage(ChatUtils.message("&eReloaded kits!"));
+        p.sendMessage(ChatUtils.message("&bReloaded kits!"));
     }
 }

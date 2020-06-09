@@ -52,7 +52,7 @@ public class EngineInventory extends Engine {
                 tPlayer.editKits(kit);
                 edtingMap.replace(p.getUniqueId(), kit);
                 p.closeInventory();
-                p.sendMessage(ChatUtils.message("&eWhen you are done editing &3" + kit.getName() + "&e use /savekit to save the kit and return to spawn."));
+                p.sendMessage(ChatUtils.message("&bWhen you are done editing &f" + kit.getName() + "&b, use &f/savekit&b to save the kit and return to spawn."));
                 //Basically done here
             }else{
                 Kit kit = KitHandler.getInstance().getKit(e.getCurrentItem());
@@ -63,7 +63,7 @@ public class EngineInventory extends Engine {
 
                 GameHandler.getInstance().setKit(kit);
                 p.closeInventory();
-                p.sendMessage(ChatUtils.message("&eSelected " + kit.getName() + " as the kit!"));
+                p.sendMessage(ChatUtils.message("&bSelected &f" + kit.getName() + " &bas the kit!"));
                 return;
             }
         }

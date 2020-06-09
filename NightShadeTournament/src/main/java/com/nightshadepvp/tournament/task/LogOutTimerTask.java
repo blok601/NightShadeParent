@@ -43,8 +43,8 @@ public class LogOutTimerTask extends BukkitRunnable {
             this.running = false;
             if (match instanceof SoloMatch) {
                 SoloMatch soloMatch = (SoloMatch) match;
-                soloMatch.broadcastAll("&3" + tPlayer.getName() + " &3has been logged out for too long!");
-                soloMatch.broadcastAll("&3" + soloMatch.getOpponents(tPlayer).get(0).getName() + " &ewins!");
+                soloMatch.broadcastAll("&f" + tPlayer.getName() + " &bhas been logged out for too long!");
+                soloMatch.broadcastAll("&f" + soloMatch.getOpponents(tPlayer).get(0).getName() + " &bwins!");
                 soloMatch.endMatch(soloMatch.getOpponents(tPlayer), null);
             }
             return;
@@ -53,21 +53,21 @@ public class LogOutTimerTask extends BukkitRunnable {
         if (counter == 30) {
             if (match instanceof SoloMatch) {
                 SoloMatch soloMatch = (SoloMatch) match;
-                soloMatch.broadcastAll("&eIf &3" + tPlayer.getName() + " &edoes not log in in &3" + counter + " seconds, they will be disqualified!");
+                soloMatch.broadcastAll("&bIf &f" + tPlayer.getName() + " &bdoes not log in in &f" + counter + " &bseconds, they will be disqualified!");
             }
         }
 
         if (counter == 15) {
             if (match instanceof SoloMatch) {
                 SoloMatch soloMatch = (SoloMatch) match;
-                soloMatch.broadcastAll("&eIf &3" + tPlayer.getName() + " &edoes not log in in &3" + counter + " seconds, they will be disqualified!");
+                soloMatch.broadcastAll("&bIf &f" + tPlayer.getName() + " &bdoes not log in in &f" + counter + " &bseconds, they will be disqualified!");
             }
         }
 
         if (counter < 5 && counter != 0) {
             if (match instanceof SoloMatch) {
                 SoloMatch soloMatch = (SoloMatch) match;
-                soloMatch.broadcastAll("&eIf &3" + tPlayer.getName() + " &edoes not log in in &3" + counter + " seconds, they will be disqualified!");
+                soloMatch.broadcastAll("&bIf &f" + tPlayer.getName() + " &bdoes not log in in &f" + counter + " &bseconds, they will be disqualified!");
             }
         }
 

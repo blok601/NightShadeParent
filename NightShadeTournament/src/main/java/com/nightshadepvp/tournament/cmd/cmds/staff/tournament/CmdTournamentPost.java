@@ -73,7 +73,7 @@ public class CmdTournamentPost extends NightShadeTournamentCommand {
             }
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
-            tPlayer.msg(ChatUtils.message("&eThere was an error trying to post the bracket! Make sure all the settings have been set..."));
+            tPlayer.msg(ChatUtils.message("&cThere was an error trying to post the bracket! Make sure all the settings have been set..."));
             tPlayer.msg(ChatUtils.message("&cIf the problem persists, contact an administrator."));
         }
     }

@@ -23,6 +23,6 @@ public class CmdWhitelistClear extends NightShadeTournamentCommand {
         TPlayer tPlayer = TPlayer.get(sender);
         GameHandler.getInstance().getWhitelist().clear();
         GameHandler.getInstance().setWhitelistOn(false);
-        tPlayer.msg(ChatUtils.message("&eCleared and Disabled the whitelist!"));
+        tPlayer.msg(ChatUtils.message("&bCleared and Disabled the whitelist!"));
     }
 }

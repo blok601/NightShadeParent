@@ -289,13 +289,13 @@ public class TPlayer extends SenderEntity<TPlayer> {
             public List<Entry> getEntries(Player player) {
                 return new EntryBuilder()
                         .next((GameHandler.getInstance().getHost() != null && GameHandler.getInstance().getHost().getName().length() >= 10 ? ScoreboardSettings.SCOREBOARD_SPACER_LARGE : ScoreboardSettings.SPACER) + ScoreboardSettings.SPACER + ScoreboardSettings.SPACER)
-                        .next("&6Host: &e" + (GameHandler.getInstance().getHost() == null ? "Not Set" : GameHandler.getInstance().getHost().getName()))
+                        .next("&fHost: &b" + (GameHandler.getInstance().getHost() == null ? "Not Set" : GameHandler.getInstance().getHost().getName()))
                         .blank()
-                        .next("&6Players: &e" + TPlayerColl.get().getAllOnline().stream().filter(tPlayer -> !tPlayer.isSpectator()).count() + "/" + GameHandler.getInstance().getSlots())
+                        .next("&fPlayers: &b" + TPlayerColl.get().getAllOnline().stream().filter(tPlayer -> !tPlayer.isSpectator()).count() + "/" + GameHandler.getInstance().getSlots())
                         .blank()
-                        .next("&6Kit: &e" + (GameHandler.getInstance().getKit() == null ? "Not Set" : GameHandler.getInstance().getKit().getName()))
+                        .next("fbKit: &b" + (GameHandler.getInstance().getKit() == null ? "Not Set" : GameHandler.getInstance().getKit().getName()))
                         .blank()
-                        .next("&6Round: &e" + RoundHandler.getInstance().getRound())
+                        .next("&fRound: &b" + RoundHandler.getInstance().getRound())
                         .next((GameHandler.getInstance().getHost() != null && GameHandler.getInstance().getHost().getName().length() >= 10 ? ScoreboardSettings.SCOREBOARD_SPACER_LARGE : ScoreboardSettings.SPACER) + ScoreboardSettings.SPACER + ScoreboardSettings.SPACER)
                         .build();
             }
@@ -348,7 +348,7 @@ public class TPlayer extends SenderEntity<TPlayer> {
         p.teleport(Tournament.get().getEditLocation());
         p.getInventory().setArmorContents(kit.getArmor());
         p.getInventory().setContents(kit.getItems());
-        p.sendMessage(ChatUtils.message("&eNow edting kit: &3" + kit.getName()));
+        p.sendMessage(ChatUtils.message("&bNow edting kit: &f" + kit.getName()));
 
     }
 

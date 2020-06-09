@@ -36,6 +36,6 @@ public class CmdKitSetRegen extends NightShadeTournamentCommand {
         }
         Kit kit = KitHandler.getInstance().getKit(kitName);
         kit.setAllowRegen(toggle);
-        tPlayer.msg(ChatUtils.message("&eRegen is now&8: " + (kit.isAllowRegen() ? "&atrue" : "&cfalse") + "&e for kit&8: &3" + kit.getName() + "&e."));
+        tPlayer.msg(ChatUtils.message("&bRegen is now&8: " + (kit.isAllowRegen() ? "&atrue" : "&cfalse") + "&b for kit&8: &f" + kit.getName() + "&b."));
     }
 }

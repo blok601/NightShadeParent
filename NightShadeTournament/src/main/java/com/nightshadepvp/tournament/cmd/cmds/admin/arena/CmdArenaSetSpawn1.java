@@ -39,6 +39,6 @@ public class CmdArenaSetSpawn1 extends NightShadeTournamentCommand {
         }
 
         arena.setSpawnLocation1(p.getLocation());
-        p.sendMessage(ChatUtils.message("&eSuccessfully set the first spawn location for arena: " + arena.getName()));
+        p.sendMessage(ChatUtils.message("&bSuccessfully set the first spawn location for arena: &f" + arena.getName()));
     }
 }

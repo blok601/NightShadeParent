@@ -28,6 +28,6 @@ public class CmdTournamentClaimHost extends NightShadeTournamentCommand {
             return;
         }
         GameHandler.getInstance().setHost(p);
-        p.sendMessage(ChatUtils.message("&eYou are now the host!"));
+        p.sendMessage(ChatUtils.message("&bYou are now the host!"));
     }
 }

@@ -45,6 +45,6 @@ public class CmdSetDisplay extends NightShadeTournamentCommand {
 
         Kit kit = KitHandler.getInstance().getKit(name);
         kit.setDisplay(p.getItemInHand());
-        p.sendMessage(ChatUtils.message("&eSet the display item for&8: &3" + kit.getName()));
+        p.sendMessage(ChatUtils.message("&bSet the display item for&8: &f" + kit.getName()));
     }
 }

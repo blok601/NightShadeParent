@@ -43,7 +43,7 @@ public class CmdSetInv extends NightShadeTournamentCommand {
         Kit kit = KitHandler.getInstance().getKit(name);
         kit.setItems(p.getInventory().getContents());
         kit.setArmor(p.getInventory().getArmorContents());
-        p.sendMessage(ChatUtils.message("&eSuccessfully set the inventory for kit: " + kit.getName()));
-        p.sendMessage(ChatUtils.message("&eMake sure to reload kits!"));
+        p.sendMessage(ChatUtils.message("&bSuccessfully set the inventory for kit: &f" + kit.getName()));
+        p.sendMessage(ChatUtils.message("&bMake sure to reload kits!"));
     }
 }

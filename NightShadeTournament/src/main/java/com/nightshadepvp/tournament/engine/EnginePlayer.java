@@ -115,7 +115,7 @@ public class EnginePlayer extends Engine {
             //TODO: Logger check
         }
 
-        player.sendMessage(ChatUtils.message("&eWelcome to &5NightShade Tourney's &ev" + Tournament.get().getDescription().getVersion()));
+        player.sendMessage(ChatUtils.message("&bWelcome to &5NightShade Tourney's &fv" + Tournament.get().getDescription().getVersion()));
     }
 
     @EventHandler

@@ -36,7 +36,7 @@ public class CmdHelpop extends NightShadeTournamentCommand {
                 nsPlayer.msg((ChatUtils.format("&8[&3HelpOP&8] &3" + senderT.getName() + "&8: &e" + helpopMessage)));
             }
         }
-        senderT.msg(ChatUtils.message("&eYour message was sent to the moderators."));
+        senderT.msg(ChatUtils.message("&bYour message was sent to the moderators."));
     }
 
 }

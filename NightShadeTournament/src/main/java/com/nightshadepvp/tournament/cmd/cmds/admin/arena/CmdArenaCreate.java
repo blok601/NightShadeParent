@@ -50,8 +50,8 @@ public class CmdArenaCreate extends NightShadeTournamentCommand  {
         arena.setSelection(Tournament.get().getWorldEdit().getSelection(p));
 
         ArenaHandler.getInstance().getArenas().add(arena);
-        p.sendMessage(ChatUtils.message("&eSuccessfully created arena: " + name));
-        p.sendMessage(ChatUtils.message("&eMake sure to finish setting the arena up!"));
+        p.sendMessage(ChatUtils.message("&fSuccessfully created arena: &b" + name));
+        p.sendMessage(ChatUtils.message("&fMake sure to finish setting the arena up!"));
         return;
     }
 }

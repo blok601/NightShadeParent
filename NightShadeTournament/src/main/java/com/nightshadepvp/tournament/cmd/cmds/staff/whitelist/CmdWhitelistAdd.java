@@ -27,16 +27,16 @@ public class CmdWhitelistAdd extends NightShadeTournamentCommand {
         TPlayer tPlayer = TPlayer.get(sender);
         if(typeString.equalsIgnoreCase("*") || typeString.equalsIgnoreCase("all")){
             Bukkit.getOnlinePlayers().stream().filter(o -> !GameHandler.getInstance().getWhitelist().contains(o.getName())).forEach(o -> GameHandler.getInstance().getWhitelist().add(o.getName()));
-            tPlayer.msg(ChatUtils.message("&eAdded everyone to the whitelist!"));
+            tPlayer.msg(ChatUtils.message("&bAdded everyone to the whitelist!"));
             return;
         }
 
         if(GameHandler.getInstance().getWhitelist().contains(typeString.toLowerCase())){
-            tPlayer.msg(ChatUtils.message("&eThat player is already on the whitelist!"));
+            tPlayer.msg(ChatUtils.message("&cThat player is already on the whitelist!"));
             return;
         }
 
         GameHandler.getInstance().getWhitelist().add(typeString.toLowerCase());
-        tPlayer.msg(ChatUtils.message("&eAdded &3" + typeString + " &eto the whitelist!"));
+        tPlayer.msg(ChatUtils.message("&bAdded &f" + typeString + " &bto the whitelist!"));
     }
 }

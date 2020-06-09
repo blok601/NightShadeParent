@@ -36,6 +36,6 @@ public class CmdKitSetBuild extends NightShadeTournamentCommand {
         }
         Kit kit = KitHandler.getInstance().getKit(kitName);
         kit.setBuild(toggle);
-        tPlayer.msg(ChatUtils.message("&eBuilding is now&8: " + (kit.isBuild() ? "&atrue" : "&cfalse") + "&e for kit&8: &3" + kit.getName() + "&e."));
+        tPlayer.msg(ChatUtils.message("&bBuilding is now&8: " + (kit.isBuild() ? "&atrue" : "&cfalse") + "&b for kit&8: &f" + kit.getName() + "&b."));
     }
 }

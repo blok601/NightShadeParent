@@ -26,11 +26,11 @@ public class CmdFreezeChat extends NightShadeTournamentCommand {
         TPlayer tPlayer = TPlayer.get(sender);
         if(GameHandler.getInstance().isChatFrozen()){
             GameHandler.getInstance().setChatFrozen(false);
-            tPlayer.msg(ChatUtils.message("&eChat is now&8: &aunfrozen"));
+            tPlayer.msg(ChatUtils.message("&bChat is now&8: &aunfrozen"));
             return;
         }
 
         GameHandler.getInstance().setChatFrozen(true);
-        tPlayer.msg(ChatUtils.message("&eChat is now&8: &cfrozen"));
+        tPlayer.msg(ChatUtils.message("&bChat is now&8: &cfrozen"));
     }
 }

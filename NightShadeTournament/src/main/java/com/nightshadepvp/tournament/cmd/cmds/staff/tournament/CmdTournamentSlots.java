@@ -50,7 +50,7 @@ public class CmdTournamentSlots extends NightShadeTournamentCommand {
             }
 
             GameHandler.getInstance().setSlots((int) slots);
-            tPlayer.msg(ChatUtils.message("&eYou have set the slots to " + (int) slots));
+            tPlayer.msg(ChatUtils.message("&bYou have set the slots to &f" + (int) slots));
             return;
         }
     }

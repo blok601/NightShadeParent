@@ -26,16 +26,16 @@ public class CmdWhitelistRemove extends NightShadeTournamentCommand {
         String type = this.readArg();
         if(type.equalsIgnoreCase("*") || type.equalsIgnoreCase("all")){
             GameHandler.getInstance().getWhitelist().clear();
-            tPlayer.msg(ChatUtils.message("&eSuccessfully cleared the whitelist!"));
+            tPlayer.msg(ChatUtils.message("&bSuccessfully cleared the whitelist!"));
             return;
         }
 
         if(GameHandler.getInstance().getWhitelist().contains(type.toLowerCase())){
             GameHandler.getInstance().getWhitelist().remove(type.toLowerCase());
-            tPlayer.msg(ChatUtils.message("&eRemoved &3" + type + " &efrom the whitelist!"));
+            tPlayer.msg(ChatUtils.message("&bRemoved &f" + type + " &bfrom the whitelist!"));
             return;
         }
 
-        tPlayer.msg(ChatUtils.message("&eThat player isn't on the whitelist!"));
+        tPlayer.msg(ChatUtils.message("&cThat player isn't on the whitelist!"));
     }
 }

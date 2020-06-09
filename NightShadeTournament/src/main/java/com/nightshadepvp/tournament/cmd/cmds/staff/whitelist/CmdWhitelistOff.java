@@ -22,6 +22,6 @@ public class CmdWhitelistOff extends NightShadeTournamentCommand {
     public void perform() throws MassiveException {
         TPlayer tPlayer = TPlayer.get(sender);
         GameHandler.getInstance().setWhitelistOn(false);
-        tPlayer.msg(ChatUtils.message("&eThe whitelist is now&8: &coff"));
+        tPlayer.msg(ChatUtils.message("&bThe whitelist is now&8: &coff"));
     }
 }

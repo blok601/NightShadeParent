@@ -261,8 +261,8 @@ public class SoloMatch implements iMatch {
         getScoreboards().values().forEach(Scoreboard::deactivate); //Turn all boards off
         scoreboards.clear();
 
-        loserPlayer.sendMessage(ChatUtils.message("&eYou have died! Thank you for playing on NightShadePvP!"));
-        loserPlayer.sendMessage(ChatUtils.message("&eJoin the Discord at discord.me/NightShadePvP for updates and more!"));
+        loserPlayer.sendMessage(ChatUtils.message("&bYou have died! Thank you for playing on NightShadePvP!"));
+        loserPlayer.sendMessage(ChatUtils.message("&bJoin the Discord at discord.me/NightShadePvP for updates and more!"));
 
         new BukkitRunnable() {
             int counter = 5;
@@ -311,7 +311,7 @@ public class SoloMatch implements iMatch {
                 }.runTaskLater(Tournament.get(), 60L);
             }
 
-            Bukkit.broadcastMessage(ChatUtils.message("&3" + winner.getName() + " &ehas won a NightShadePvP Tournament! Congratulations"));
+            Bukkit.broadcastMessage(ChatUtils.message("&3" + winner.getName() + " &bhas won a NightShadePvP Tournament! Congratulations"));
             winner.setTournamentsWon(winner.getTournamentsWon() + 1);
             winner.setTournamentsPlayed(winner.getTournamentsPlayed() + 1); //Not incremented since they didn't die
             TPlayer host = TPlayer.get(getGameHandler().getHost());
@@ -364,7 +364,7 @@ public class SoloMatch implements iMatch {
                  */
                 @Override
                 public String getTitle(Player player) {
-                    return "&3NightShadePvP";
+                    return "&5NightShadePvP";
                 }
 
                 /**
@@ -377,13 +377,13 @@ public class SoloMatch implements iMatch {
                 public List<Entry> getEntries(Player player) {
                     return new EntryBuilder()
                             .next((getOpponents(TPlayer.get(player)).get(0) != null && TPlayer.get(player).getName().length() >= 10 ? ScoreboardSettings.SCOREBOARD_SPACER_LARGE : ScoreboardSettings.SPACER) + ScoreboardSettings.SPACER + ScoreboardSettings.SPACER)
-                            .next("&6Duration: &e" + getTimer())
+                            .next("&fDuration: &b" + getTimer())
                             .blank()
-                            .next("&6Opponent: &e" + getOpponents(tPlayer).get(0).getName())
+                            .next("f6Opponent: &b" + getOpponents(tPlayer).get(0).getName())
                             .blank()
-                            .next("&6Kit: &e" + getGameHandler().getKit().getName())
+                            .next("&fKit: &b" + getGameHandler().getKit().getName())
                             .blank()
-                            .next("&6Spectators: &e" + getSpectators().size())
+                            .next("&fSpectators: &b" + getSpectators().size())
                             .next((getOpponents(TPlayer.get(player)).get(0) != null && TPlayer.get(player).getName().length() >= 10 ? ScoreboardSettings.SCOREBOARD_SPACER_LARGE : ScoreboardSettings.SPACER) + ScoreboardSettings.SPACER + ScoreboardSettings.SPACER)
                             .build();
                 }
@@ -407,7 +407,7 @@ public class SoloMatch implements iMatch {
                 PlayerInv inv = tPlayer.getInv(kit);
                 tPlayer.getPlayer().getInventory().setArmorContents(inv.getArmorContents());
                 tPlayer.getPlayer().getInventory().setContents(inv.getContents());
-                tPlayer.getPlayer().sendMessage(ChatUtils.message("&eYou are fighting &3" + getOpponents(tPlayer).get(0).getName() + "&e using kit &3" + getGameHandler().getKit().getName()));
+                tPlayer.getPlayer().sendMessage(ChatUtils.message("&bYou are fighting &f" + getOpponents(tPlayer).get(0).getName() + "&e using kit &3" + getGameHandler().getKit().getName()));
                 tPlayer.getPlayer().setCanPickupItems(true);
                 tPlayer.setStatus(PlayerStatus.PLAYING);
             }
@@ -439,7 +439,7 @@ public class SoloMatch implements iMatch {
                     for (TPlayer tPlayer : getPlayers()) {
                         if (tPlayer.isOnline()) {
                             if (tPlayer.isUsingOldVersion()) {
-                                tPlayer.msg("&3The game will start in &e" + counter);
+                                tPlayer.msg("&b&oThe game will start in &f&o" + counter);
                                 continue;
                             }
                             ((CraftPlayer) tPlayer.getPlayer()).getHandle().playerConnection.sendPacket(packet);

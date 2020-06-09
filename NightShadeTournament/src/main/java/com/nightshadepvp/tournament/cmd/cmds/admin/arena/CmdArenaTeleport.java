@@ -32,6 +32,6 @@ public class CmdArenaTeleport extends NightShadeTournamentCommand {
         }
 
         p.teleport(ArenaHandler.getInstance().getArena(name).getSpawnLocation1());
-        p.sendMessage(ChatUtils.message("&eTeleported to arena: " + name));
+        p.sendMessage(ChatUtils.message("&bTeleported to arena: &f" + name));
     }
 }

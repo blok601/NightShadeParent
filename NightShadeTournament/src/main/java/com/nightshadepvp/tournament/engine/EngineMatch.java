@@ -309,21 +309,21 @@ public class EngineMatch extends Engine {
     public void onSpectate(PlayerSpectateMatchEvent e){
         for (TPlayer tPlayer : e.getMatch().getPlayers()){
             if(tPlayer.isSpecMatchAlert()){
-                tPlayer.msg(ChatUtils.format("&5" + e.getTPlayer().getName() + " &eis now spectating."));
+                tPlayer.msg(ChatUtils.format("&5" + e.getTPlayer().getName() + " &bis now spectating."));
             }
         }
 
-        e.getMatch().getSpectators().forEach(tPlayer -> tPlayer.msg(ChatUtils.format("&5" + e.getTPlayer().getName() + " &eis now spectating.")));
+        e.getMatch().getSpectators().forEach(tPlayer -> tPlayer.msg(ChatUtils.format("&5" + e.getTPlayer().getName() + " &bis now spectating.")));
     }
 
     @EventHandler
     public void onUnSpectate(PlayerUnSpectateMatchEvent e){
         for (TPlayer tPlayer : e.getMatch().getPlayers()){
             if(tPlayer.isSpecMatchAlert()){
-                tPlayer.msg(ChatUtils.format("&5" + e.getTPlayer().getName() + " &eis no longer spectating."));
+                tPlayer.msg(ChatUtils.format("&5" + e.getTPlayer().getName() + " &bis no longer spectating."));
             }
         }
 
-        e.getMatch().getSpectators().forEach(tPlayer -> tPlayer.msg(ChatUtils.format("&5" + e.getTPlayer().getName() + " &eis no longer spectating.")));
+        e.getMatch().getSpectators().forEach(tPlayer -> tPlayer.msg(ChatUtils.format("&5" + e.getTPlayer().getName() + " &bis no longer spectating.")));
     }
 }

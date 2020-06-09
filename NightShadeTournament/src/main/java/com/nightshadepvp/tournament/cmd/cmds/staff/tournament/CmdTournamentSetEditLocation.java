@@ -23,6 +23,6 @@ public class CmdTournamentSetEditLocation extends NightShadeTournamentCommand {
     public void perform() throws MassiveException {
         TPlayer tPlayer = TPlayer.get(sender);
         Tournament.get().setEditLocation(tPlayer.getPlayer().getLocation());
-        tPlayer.msg(ChatUtils.message("&eUpdated the kit editing location!"));
+        tPlayer.msg(ChatUtils.message("&bUpdated the kit editing location!"));
     }
 }

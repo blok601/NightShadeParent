@@ -28,12 +28,12 @@ public class CmdTournamentStart extends NightShadeTournamentCommand {
     public void perform() throws MassiveException {
         TPlayer tPlayer = TPlayer.get(sender);
 
-        tPlayer.msg(ChatUtils.message("&eStarting the tournament in 10 seconds..."));
+        tPlayer.msg(ChatUtils.message("&bStarting the tournament in &f10&b seconds..."));
         new BukkitRunnable(){
             @Override
             public void run() {
                 GameHandler.getInstance().assignMatches();
-                tPlayer.msg(ChatUtils.message("&eMatches have been assigned and started!"));
+                tPlayer.msg(ChatUtils.message("&bMatches have been assigned and started!"));
             }
         }.runTaskLater(Tournament.get(), 10*20);
     }

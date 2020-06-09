@@ -23,6 +23,6 @@ public class CmdTournamentSetSpawn extends NightShadeTournamentCommand {
     public void perform() throws MassiveException {
         TPlayer tPlayer = TPlayer.get(sender);
         Tournament.get().setSpawnLocation(tPlayer.getPlayer().getLocation());
-        tPlayer.msg(ChatUtils.message("&eUpdated the server spawn!"));
+        tPlayer.msg(ChatUtils.message("&bUpdated the server spawn!"));
     }
 }
