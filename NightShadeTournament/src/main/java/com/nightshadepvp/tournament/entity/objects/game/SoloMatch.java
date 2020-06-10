@@ -178,11 +178,7 @@ public class SoloMatch implements iMatch {
         TPlayer loser = getOpponents(winner).get(0);
         Player loserPlayer = loser.getPlayer();
         loser.setSeed(-1);
-        try {
-            this.challonge.updateMatch(this.getMatchID(), winner.getName()).thenAccept(aBoolean -> Core.get().getLogManager().log(Logger.LogType.DEBUG, "Sent " + winner.getName() + " to the api!")).get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+        this.challonge.updateMatch(this.getMatchID(), winner.getName()).thenAccept(aBoolean -> Core.get().getLogManager().log(Logger.LogType.DEBUG, "Sent " + winner.getName() + " to the api!"));
 
         //setMatchState(MatchState.DONE);
         setMatchState(MatchState.RESETTING);
