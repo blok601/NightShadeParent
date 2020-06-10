@@ -4,6 +4,7 @@ import com.nightshadepvp.tournament.Tournament;
 import com.nightshadepvp.tournament.challonge.Challonge;
 import com.nightshadepvp.tournament.entity.TPlayer;
 import com.nightshadepvp.tournament.entity.enums.MatchState;
+import com.nightshadepvp.tournament.entity.objects.data.Arena;
 import com.nightshadepvp.tournament.entity.objects.game.SoloMatch;
 import com.nightshadepvp.tournament.entity.objects.game.iMatch;
 import org.bukkit.entity.Player;
@@ -76,5 +77,9 @@ public class MatchHandler {
 
     public void setupChallonge(){
         challonge = Tournament.get().getChallonge();
+    }
+
+    public iMatch getMatchFromArena(Arena arena){
+        return this.matches.stream().filter(match -> match.getMatchState() != MatchState.DONE).filter(match -> match.getArena().getName().equalsIgnoreCase(arena.getName())).findFirst().orElse(null);
     }
 }

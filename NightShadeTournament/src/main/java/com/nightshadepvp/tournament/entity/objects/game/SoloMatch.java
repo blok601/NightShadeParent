@@ -184,7 +184,8 @@ public class SoloMatch implements iMatch {
             e.printStackTrace();
         }
 
-        setMatchState(MatchState.DONE);
+        //setMatchState(MatchState.DONE);
+        setMatchState(MatchState.RESETTING);
         setWinners(Collections.singletonList(winner));
 
         InventoryManager.getInstance().addInventory(winner.getPlayer());
@@ -283,12 +284,14 @@ public class SoloMatch implements iMatch {
                 if (counter == 0) {
                     counter = -10;
                     cancel();
+                    setMatchState(MatchState.DONE);
                     return;
                 }
 
                 counter--;
             }
         }.runTaskTimer(Tournament.get(), 0, 20);
+
 
         this.spectators.forEach(tPlayer -> tPlayer.getPlayer().teleport(Tournament.get().getSpawnLocation()));
         this.spectators.clear();

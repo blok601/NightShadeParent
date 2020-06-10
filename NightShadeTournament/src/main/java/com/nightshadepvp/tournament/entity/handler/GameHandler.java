@@ -159,11 +159,11 @@ public class GameHandler {
                 }
                 new StartRoundTask().runTaskTimer(Tournament.get(), 0, 20);
                 Core.get().getLogManager().log(Logger.LogType.DEBUG, "Amount of matches in this list: " +RoundHandler.getInstance().getMatchesByRoundNumber(round).size());
-                int rounds = challonge.getRounds().get();
-                if(round == rounds){
-                    //Its the champ game
-                    setChampionship(RoundHandler.getInstance().getMatchesByRoundNumber(round).stream().findFirst().get());
-                }
+//                int rounds = challonge.getRounds().get();
+//                if(round == rounds){
+//                    //Its the champ game
+//                    setChampionship(RoundHandler.getInstance().getMatchesByRoundNumber(round).stream().findFirst().get());
+//                }
 
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();

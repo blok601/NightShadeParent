@@ -5,6 +5,6 @@ package com.nightshadepvp.tournament.entity.enums;
  */
 public enum  MatchState {
 
-    STARTING, INGAME, DONE
+    STARTING, INGAME, RESETTING, DONE
 
 }

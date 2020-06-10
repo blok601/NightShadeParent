@@ -24,16 +24,18 @@ public class StartRoundTask extends BukkitRunnable {
 
     private int counter;
     private int round;
+    private RoundHandler roundHandler;
 
     public StartRoundTask() {
         counter = 25; //30 second total countdown
-        round = RoundHandler.getInstance().getRound(); //Round always from same place
+        this.roundHandler = RoundHandler.getInstance();
+        this.round = roundHandler.getRound(); //Round always from same place
     }
 
     @Override
     public void run() {
         if(counter == 0){
-            RoundHandler.getInstance().getMatchesByRoundNumber(round).forEach(iMatch::start);
+            roundHandler.getMatchesByRoundNumber(round).forEach(iMatch::start);
             cancel();
             new RoundCheckTask().runTaskTimer(Tournament.get(), 0, 40);
             return;
@@ -41,8 +43,8 @@ public class StartRoundTask extends BukkitRunnable {
             ChatUtils.broadcast("&bRound &f" + round + " &bwill start in &f10 &bseconds...");
             //Teleport now
             Arena arena;
-            Core.get().getLogManager().log(Logger.LogType.DEBUG, "Number of Matches Per round: " + RoundHandler.getInstance().getMatchesByRoundNumber(round).size());
-            for (iMatch match : RoundHandler.getInstance().getMatchesByRoundNumber(round)) {
+            Core.get().getLogManager().log(Logger.LogType.DEBUG, "Number of Matches Per round: " + roundHandler.getMatchesByRoundNumber(round).size());
+            for (iMatch match : roundHandler.getMatchesByRoundNumber(round)) {
                 if (match instanceof SoloMatch) {
                     SoloMatch soloMatch = (SoloMatch) match;
                     if(ArenaHandler.getInstance().getAvailableArenas().size() == 0){

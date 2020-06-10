@@ -3,6 +3,7 @@ package com.nightshadepvp.tournament.engine;
 import com.massivecraft.massivecore.Engine;
 import com.nightshadepvp.tournament.Tournament;
 import com.nightshadepvp.tournament.entity.TPlayer;
+import com.nightshadepvp.tournament.entity.enums.MatchState;
 import com.nightshadepvp.tournament.entity.handler.ArenaHandler;
 import com.nightshadepvp.tournament.entity.handler.GameHandler;
 import com.nightshadepvp.tournament.entity.handler.MatchHandler;
@@ -14,6 +15,7 @@ import com.nightshadepvp.tournament.event.PlayerUnSpectateMatchEvent;
 import com.nightshadepvp.tournament.utils.ChatUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Arrow;
@@ -21,6 +23,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockFromToEvent;
+import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -28,6 +31,7 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.weather.WeatherChangeEvent;
+import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
@@ -333,5 +337,50 @@ public class EngineMatch extends Engine {
         if(e.toWeatherState()){
             e.setCancelled(true);
         }
+    }
+
+    @EventHandler
+    public void on(BlockPhysicsEvent event) {
+        Block block = event.getBlock();
+        Arena arena = ArenaHandler.getInstance().getFromBlock(block);
+        iMatch match = MatchHandler.getInstance().getMatchFromArena(arena);
+
+        if (arena == null) {
+            return;
+        }
+
+       if(match.getMatchState() != MatchState.RESETTING){
+           return;
+       }
+
+        event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void on(BlockFromToEvent event) {
+        Block block = event.getBlock();
+        Arena arena = ArenaHandler.getInstance().getFromBlock(block);
+        iMatch match = MatchHandler.getInstance().getMatchFromArena(arena);
+
+        if (arena == null) {
+            return;
+        }
+
+        if(match.getMatchState() != MatchState.RESETTING){
+            return;
+        }
+
+        event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void on(ChunkUnloadEvent event) {
+        World world = event.getWorld();
+
+        if(!world.getName().equalsIgnoreCase(ArenaHandler.getInstance().getArenas().get(0).getWorld().getName())){
+            return;
+        }
+
+        event.setCancelled(true);
     }
 }
