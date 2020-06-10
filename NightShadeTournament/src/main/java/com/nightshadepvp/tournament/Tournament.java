@@ -1,13 +1,17 @@
 package com.nightshadepvp.tournament;
 
 
+import com.google.common.base.Joiner;
 import com.massivecraft.massivecore.MassivePlugin;
+import com.nightshadepvp.core.Core;
+import com.nightshadepvp.core.Logger;
 import com.nightshadepvp.tournament.challonge.Challonge;
 import com.nightshadepvp.tournament.entity.handler.ArenaHandler;
 import com.nightshadepvp.tournament.entity.handler.GameHandler;
 import com.nightshadepvp.tournament.entity.handler.KitHandler;
 import com.nightshadepvp.tournament.entity.handler.RoundHandler;
 import com.nightshadepvp.tournament.scoreboard.ScoreboardLib;
+import com.nightshadepvp.tournament.task.WeatherTask;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -43,6 +47,10 @@ public final class Tournament extends MassivePlugin {
         ScoreboardLib.setPluginInstance(this);
         loadSpawn();
         loadEdit();
+
+
+        new WeatherTask(this).runTaskTimer(this, 0, 3600);
+        Core.get().getLogManager().log(Logger.LogType.INFO, "Tournaments v" + this.getDescription().getVersion() + " by " + Joiner.on(", ").join(this.getDescription().getAuthors()));
     }
 
 

@@ -38,7 +38,7 @@ public class StartRoundTask extends BukkitRunnable {
             new RoundCheckTask().runTaskTimer(Tournament.get(), 0, 40);
             return;
         }else if(counter == 5){
-            ChatUtils.broadcast("&bRound &f" + round + " &bwill start in &310 &bseconds...");
+            ChatUtils.broadcast("&bRound &f" + round + " &bwill start in &f10 &bseconds...");
             //Teleport now
             Arena arena;
             Core.get().getLogManager().log(Logger.LogType.DEBUG, "Number of Matches Per round: " + RoundHandler.getInstance().getMatchesByRoundNumber(round).size());

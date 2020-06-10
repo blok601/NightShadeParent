@@ -195,7 +195,7 @@ public class SoloMatch implements iMatch {
 
         FancyMessage msg;
 
-        broadcastAllFormat("&3&m-----------------");
+        broadcastAllFormat("&f&m-----------------");
 
         if (winner.isOnline()) {
             msg = new FancyMessage("Winner").color(ChatColor.DARK_PURPLE).then(": ").color(ChatColor.DARK_GRAY).then(winner.getName()).color(ChatColor.GOLD).command("/viewplayerinventory " + winner.getName());
@@ -207,10 +207,10 @@ public class SoloMatch implements iMatch {
             broadcastAllFancy(msg);
         }
 
-        broadcastAllFormat("&3&m-----------------");
-        broadcastAllFormat("&5Kit&8: &6" + getGameHandler().getKit().getName());
+        broadcastAllFormat("&f&m-----------------");
+        broadcastAllFormat("&bKit&8: &f" + getGameHandler().getKit().getName());
 
-        broadcastAllFormat("&5Duration&8: &6" + getTimer());
+        broadcastAllFormat("&bDuration&8: &f" + getTimer());
 
         if (event != null & event instanceof EntityDamageByEntityEvent) { //Player kill
 
@@ -311,7 +311,7 @@ public class SoloMatch implements iMatch {
                 }.runTaskLater(Tournament.get(), 60L);
             }
 
-            Bukkit.broadcastMessage(ChatUtils.message("&3" + winner.getName() + " &bhas won a NightShadePvP Tournament! Congratulations"));
+            Bukkit.broadcastMessage(ChatUtils.message("&f" + winner.getName() + " &bhas won a NightShadePvP Tournament! Congratulations"));
             winner.setTournamentsWon(winner.getTournamentsWon() + 1);
             winner.setTournamentsPlayed(winner.getTournamentsPlayed() + 1); //Not incremented since they didn't die
             TPlayer host = TPlayer.get(getGameHandler().getHost());
@@ -425,7 +425,7 @@ public class SoloMatch implements iMatch {
                     for (TPlayer tPlayer : getPlayers()) {
                         if (tPlayer.isOnline()) {
                             if (tPlayer.isUsingOldVersion()) {
-                                tPlayer.msg(ChatUtils.message("&3Go!"));
+                                tPlayer.msg(ChatUtils.message("&bGo!"));
                                 continue;
                             }
                             ((CraftPlayer) tPlayer.getPlayer()).getHandle().playerConnection.sendPacket(packet);

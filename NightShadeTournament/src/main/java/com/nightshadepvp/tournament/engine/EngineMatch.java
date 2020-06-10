@@ -27,6 +27,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
@@ -325,5 +326,12 @@ public class EngineMatch extends Engine {
         }
 
         e.getMatch().getSpectators().forEach(tPlayer -> tPlayer.msg(ChatUtils.format("&5" + e.getTPlayer().getName() + " &bis no longer spectating.")));
+    }
+
+    @EventHandler
+    public void onWeatherChange(WeatherChangeEvent e){
+        if(e.toWeatherState()){
+            e.setCancelled(true);
+        }
     }
 }

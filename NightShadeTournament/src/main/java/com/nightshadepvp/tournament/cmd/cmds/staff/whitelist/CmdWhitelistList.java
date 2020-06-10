@@ -22,7 +22,7 @@ public class CmdWhitelistList extends NightShadeTournamentCommand {
     public void perform() throws MassiveException {
         TPlayer tPlayer = TPlayer.get(sender);
 
-        String l = Joiner.on("&7,&b").join(GameHandler.getInstance().getWhitelist());
+        String l = Joiner.on("&7,&b ").join(GameHandler.getInstance().getWhitelist());
         tPlayer.msg("&bWhitelited Players&8: &b" + l);
     }
 }
