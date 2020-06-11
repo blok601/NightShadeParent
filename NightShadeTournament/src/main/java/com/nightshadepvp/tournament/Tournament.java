@@ -129,12 +129,12 @@ public final class Tournament extends MassivePlugin {
         FileConfiguration config = Settings.getSettings().getArenas();
 
         ConfigurationSection section = config.getConfigurationSection("edit");
-        config.set("world", getEditLocation().getWorld().getName());
-        config.set("x", getEditLocation().getX());
-        config.set("y", getEditLocation().getY());
-        config.set("z", getEditLocation().getZ());
+        section.set("world", getEditLocation().getWorld().getName());
+        section.set("x", getEditLocation().getX());
+        section.set("y", getEditLocation().getY());
+        section.set("z", getEditLocation().getZ());
 
-        if(section.contains("selection")){
+        if(this.editLocationSelection != null){
             section.set("max.x", this.editLocationSelection.getMaximumPoint().getX());
             section.set("max.y", this.editLocationSelection.getMaximumPoint().getY());
             section.set("max.z", this.editLocationSelection.getMaximumPoint().getZ());
