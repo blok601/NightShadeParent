@@ -26,6 +26,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -34,6 +35,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.*;
 import us.myles.ViaVersion.api.ViaVersion;
@@ -402,6 +404,20 @@ public class EnginePlayer extends Engine {
             PlayerUtils.clearPlayer(player, true);
         }
 
+    }
+
+    @EventHandler
+    public void onShoot(EntityShootBowEvent event){
+        Entity entity = event.getEntity();
+        if(!(entity instanceof Player)){
+            return;
+        }
+
+        Player player = (Player) entity;
+        TPlayer tPlayer = TPlayer.get(player);
+        if(tPlayer.getStatus() == PlayerStatus.EDITING){
+            event.setCancelled(true);
+        }
     }
 
 }

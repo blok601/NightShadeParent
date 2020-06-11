@@ -135,13 +135,13 @@ public final class Tournament extends MassivePlugin {
         section.set("z", getEditLocation().getZ());
 
         if(this.editLocationSelection != null){
-            section.set("max.x", this.editLocationSelection.getMaximumPoint().getX());
-            section.set("max.y", this.editLocationSelection.getMaximumPoint().getY());
-            section.set("max.z", this.editLocationSelection.getMaximumPoint().getZ());
+            section.set("selection.max.x", this.editLocationSelection.getMaximumPoint().getX());
+            section.set("selection.max.y", this.editLocationSelection.getMaximumPoint().getY());
+            section.set("selection.max.z", this.editLocationSelection.getMaximumPoint().getZ());
 
-            section.set("min.x", this.editLocationSelection.getMinimumPoint().getX());
-            section.set("min.y", this.editLocationSelection.getMinimumPoint().getY());
-            section.set("min.z", this.editLocationSelection.getMinimumPoint().getZ());
+            section.set("selection.min.x", this.editLocationSelection.getMinimumPoint().getX());
+            section.set("selection.min.y", this.editLocationSelection.getMinimumPoint().getY());
+            section.set("selection.min.z", this.editLocationSelection.getMinimumPoint().getZ());
         }
 
 
