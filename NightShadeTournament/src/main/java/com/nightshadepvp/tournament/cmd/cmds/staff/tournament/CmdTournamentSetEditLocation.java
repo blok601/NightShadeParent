@@ -8,6 +8,7 @@ import com.nightshadepvp.tournament.Tournament;
 import com.nightshadepvp.tournament.cmd.NightShadeTournamentCommand;
 import com.nightshadepvp.tournament.entity.TPlayer;
 import com.nightshadepvp.tournament.utils.ChatUtils;
+import com.sk89q.worldedit.bukkit.selections.Selection;
 
 /**
  * Created by Blok on 7/25/2018.
@@ -23,6 +24,14 @@ public class CmdTournamentSetEditLocation extends NightShadeTournamentCommand {
     public void perform() throws MassiveException {
         TPlayer tPlayer = TPlayer.get(sender);
         Tournament.get().setEditLocation(tPlayer.getPlayer().getLocation());
+
+        Selection selection = Tournament.get().getWorldEdit().getSelection(tPlayer.getPlayer());
+        if(selection == null){
+            tPlayer.msg(ChatUtils.message("&cYou must have a valid selection!"));
+            return;
+        }
+
+        Tournament.get().setEditLocationSelection(Tournament.get().getWorldEdit().getSelection(tPlayer.getPlayer()));
         tPlayer.msg(ChatUtils.message("&bUpdated the kit editing location!"));
     }
 }

@@ -182,4 +182,12 @@ public final class Tournament extends MassivePlugin {
     public void setChallonge(Challonge challonge) {
         this.challonge = challonge;
     }
+
+    public Selection getEditLocationSelection() {
+        return editLocationSelection;
+    }
+
+    public void setEditLocationSelection(Selection editLocationSelection) {
+        this.editLocationSelection = editLocationSelection;
+    }
 }

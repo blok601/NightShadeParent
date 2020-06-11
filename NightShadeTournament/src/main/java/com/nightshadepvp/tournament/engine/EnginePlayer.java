@@ -19,7 +19,10 @@ import com.nightshadepvp.tournament.entity.objects.game.iMatch;
 import com.nightshadepvp.tournament.entity.objects.player.PlayerInv;
 import com.nightshadepvp.tournament.utils.ChatUtils;
 import com.nightshadepvp.tournament.utils.InventoryUtils;
+import com.nightshadepvp.tournament.utils.PlayerUtils;
+import com.sk89q.worldedit.bukkit.selections.Selection;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -322,10 +325,10 @@ public class EnginePlayer extends Engine {
 
     @EventHandler
     public void onRightClick(PlayerInteractEvent e) {
-        if(e.getAction() == null) return;
+        if (e.getAction() == null) return;
         if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             Player p = e.getPlayer();
-            if(e.getItem() == null || e.getItem().getType() == Material.AIR) return;
+            if (e.getItem() == null || e.getItem().getType() == Material.AIR) return;
             if (e.getItem().getType() == Material.BOOK) {
                 TPlayer tPlayer = TPlayer.get(p);
                 if (tPlayer.getStatus() == PlayerStatus.LOBBY) {
@@ -372,13 +375,32 @@ public class EnginePlayer extends Engine {
         Player p = e.getPlayer();
         TPlayer tPlayer = TPlayer.get(p);
         NSPlayer nsPlayer = NSPlayer.get(p);
-        if(MatchHandler.getInstance().getActiveMatch(p) == null){
+        if (MatchHandler.getInstance().getActiveMatch(p) == null) {
             //They are not in the match
-            if(!nsPlayer.hasRank(Rank.ADMIN)){
+            if (!nsPlayer.hasRank(Rank.ADMIN)) {
                 e.setCancelled(true);
                 return;
             }
         }
+    }
+
+    @EventHandler
+    public void onMove(PlayerMoveEvent e) {
+        if (e.getFrom().getX() == e.getTo().getX() && e.getFrom().getZ() == e.getTo().getZ()) {
+            return;
+        }
+
+        Player player = e.getPlayer();
+        Location from = e.getFrom();
+        Location to = e.getTo();
+        Selection selection = Tournament.get().getEditLocationSelection();
+        if (selection.contains(from) && !selection.contains(to)) {
+            // TPlayer tPlayer = TPlayer.get(player);
+            //tPlayer.getPlayerKits().put(kit, InventoryUtils.playerInventoryFromPlayer(p));
+            EngineInventory.edtingMap.remove(player.getUniqueId());
+            PlayerUtils.clearPlayer(player, false);
+        }
+
     }
 
 }

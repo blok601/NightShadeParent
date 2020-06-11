@@ -2,7 +2,7 @@ name: Tournament
 version: 1.1-BETA
 main: com.nightshadepvp.tournament.Tournament
 authors: [Blok]
-depend: [Core, ViaVersion, MassiveCore]
+depend: [Core, ViaVersion, MassiveCore, WorldEdit]
 description: NightShadePvP Tournament Plugin
 website: www.nightshadepvp.com
 commands:
