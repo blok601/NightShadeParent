@@ -9,6 +9,9 @@ import com.nightshadepvp.tournament.utils.ChatUtils;
 
 public class CmdBracket extends NightShadeTournamentCommand {
 
+    private static CmdBracket i = new CmdBracket();
+    public static CmdBracket get() {return i;}
+
     public CmdBracket() {
         this.addAliases("bracket");
     }

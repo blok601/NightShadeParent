@@ -18,6 +18,7 @@ import java.util.ArrayList;
  * Created by Blok on 6/12/2018.
  */
 public class KitHandler {
+
     private static KitHandler ourInstance = new KitHandler();
 
     public static KitHandler getInstance() {

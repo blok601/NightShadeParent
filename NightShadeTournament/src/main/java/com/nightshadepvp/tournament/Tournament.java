@@ -13,9 +13,12 @@ import com.nightshadepvp.tournament.entity.handler.RoundHandler;
 import com.nightshadepvp.tournament.scoreboard.ScoreboardLib;
 import com.nightshadepvp.tournament.task.WeatherTask;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+import com.sk89q.worldedit.bukkit.selections.CuboidSelection;
+import com.sk89q.worldedit.bukkit.selections.Selection;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 
@@ -30,6 +33,7 @@ public final class Tournament extends MassivePlugin {
     private Location spawnLocation;
     private Location editLocation;
     private Challonge challonge;
+    private Selection editLocationSelection;
 
 
     @Override
@@ -97,22 +101,50 @@ public final class Tournament extends MassivePlugin {
         if (!config.contains("edit")) {
             return;
         }
+        ConfigurationSection section = config.getConfigurationSection("edit");
 
-        World world = Bukkit.getWorld(config.getString("edit.world"));
-        double x = config.getDouble("edit.x");
-        double y = config.getDouble("edit.y");
-        double z = config.getDouble("edit.z");
+        World world = Bukkit.getWorld(section.getString("world"));
+        double x = section.getDouble("x");
+        double y = section.getDouble("y");
+        double z = section.getDouble("z");
         if (world == null) world = Bukkit.getWorlds().get(0);
         this.editLocation = new Location(world, x, y, z);
+        Core.get().getLogManager().log(Logger.LogType.INFO, "Registered kit editing location");
+
+        if(!section.contains("selection")) return;
+
+        double maxx = section.getDouble("selection.max.x");
+        double maxy = section.getDouble("selection.max.y");
+        double maxz = section.getDouble("selection.max.z");
+        double minx = section.getDouble("selection.min.x");
+        double miny = section.getDouble("selection.min.y");
+        double minz = section.getDouble("selection.min.z");
+        Location max = new Location(world, maxx, maxy, maxz);
+        Location min = new Location(world, minx, miny, minz);
+        this.editLocationSelection = new CuboidSelection(world, min, max);
+        Core.get().getLogManager().log(Logger.LogType.INFO, "Registered kit editing selection!");
     }
 
     private void saveEdit() {
         FileConfiguration config = Settings.getSettings().getArenas();
 
-        config.set("edit.world", getEditLocation().getWorld().getName());
-        config.set("edit.x", getEditLocation().getX());
-        config.set("edit.y", getEditLocation().getY());
-        config.set("edit.z", getEditLocation().getZ());
+        ConfigurationSection section = config.getConfigurationSection("edit");
+        config.set("world", getEditLocation().getWorld().getName());
+        config.set("x", getEditLocation().getX());
+        config.set("y", getEditLocation().getY());
+        config.set("z", getEditLocation().getZ());
+
+        if(section.contains("selection")){
+            section.set("max.x", this.editLocationSelection.getMaximumPoint().getX());
+            section.set("max.y", this.editLocationSelection.getMaximumPoint().getY());
+            section.set("max.z", this.editLocationSelection.getMaximumPoint().getZ());
+
+            section.set("min.x", this.editLocationSelection.getMinimumPoint().getX());
+            section.set("min.y", this.editLocationSelection.getMinimumPoint().getY());
+            section.set("min.z", this.editLocationSelection.getMinimumPoint().getZ());
+        }
+
+
         Settings.getSettings().saveArenas();
     }
 

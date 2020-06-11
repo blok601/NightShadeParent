@@ -24,10 +24,7 @@ import me.blok601.nightshadeuhc.scoreboard.PlayerScoreboard;
 import me.blok601.nightshadeuhc.scoreboard.ScoreboardManager;
 import me.blok601.nightshadeuhc.scoreboard.provider.DefaultProvider;
 import me.blok601.nightshadeuhc.stat.handler.StatsHandler;
-import me.blok601.nightshadeuhc.task.PregenTask;
-import me.blok601.nightshadeuhc.task.ScoreboardHealthTask;
-import me.blok601.nightshadeuhc.task.StaffTrackTask;
-import me.blok601.nightshadeuhc.task.WorldLoadTask;
+import me.blok601.nightshadeuhc.task.*;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.Lag;
 import me.blok601.nightshadeuhc.util.Util;
@@ -167,6 +164,8 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
             Core.get().getLogManager().log(Logger.LogType.INFO, "Successfully loaded all worlds!");
 
         }, this).run();
+
+        new MobCheckTask(this, gameManager).runTaskTimer(this, 0, 200);
 
     }
 
