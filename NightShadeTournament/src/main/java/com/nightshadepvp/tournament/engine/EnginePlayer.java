@@ -395,9 +395,10 @@ public class EnginePlayer extends Engine {
         Location to = e.getTo();
         Selection selection = Tournament.get().getEditLocationSelection();
         if (selection.contains(from) && !selection.contains(to)) {
-            // TPlayer tPlayer = TPlayer.get(player);
+            TPlayer tPlayer = TPlayer.get(player);
             //tPlayer.getPlayerKits().put(kit, InventoryUtils.playerInventoryFromPlayer(p));
             EngineInventory.edtingMap.remove(player.getUniqueId());
+            tPlayer.setStatus(PlayerStatus.LOBBY);
             PlayerUtils.clearPlayer(player, true);
         }
 
