@@ -398,7 +398,7 @@ public class EnginePlayer extends Engine {
             // TPlayer tPlayer = TPlayer.get(player);
             //tPlayer.getPlayerKits().put(kit, InventoryUtils.playerInventoryFromPlayer(p));
             EngineInventory.edtingMap.remove(player.getUniqueId());
-            PlayerUtils.clearPlayer(player, false);
+            PlayerUtils.clearPlayer(player, true);
         }
 
     }
