@@ -205,10 +205,13 @@ public class SoloMatch implements iMatch {
             broadcastAllFancy(msg);
         }
 
-        broadcastAllFormat("&f&m-----------------");
+        broadcastAll("    ");
         broadcastAllFormat("&bKit&8: &f" + getGameHandler().getKit().getName());
 
         broadcastAllFormat("&bDuration&8: &f" + getTimer());
+
+        broadcastAllFormat("&f&m-----------------");
+
 
         if (event != null & event instanceof EntityDamageByEntityEvent) { //Player kill
 
@@ -216,15 +219,17 @@ public class SoloMatch implements iMatch {
 
             e.setDamage(0);
             e.setCancelled(true);
-            loserPlayer.getWorld().strikeLightningEffect(loserPlayer.getLocation());
+            if(loserPlayer.isOnline()){
+                loserPlayer.getWorld().strikeLightningEffect(loserPlayer.getLocation());
 
-            addSpectator(loser);
-            loserPlayer.setAllowFlight(true);
-            loserPlayer.setFlying(true);
-            loserPlayer.setFlySpeed(0.2F);
-            loserPlayer.setHealth(loserPlayer.getMaxHealth());
-            loserPlayer.setCanPickupItems(false);
-            winner.getPlayer().hidePlayer(loserPlayer);
+                addSpectator(loser);
+                loserPlayer.setAllowFlight(true);
+                loserPlayer.setFlying(true);
+                loserPlayer.setFlySpeed(0.2F);
+                loserPlayer.setHealth(loserPlayer.getMaxHealth());
+                loserPlayer.setCanPickupItems(false);
+                winner.getPlayer().hidePlayer(loserPlayer);
+            }
         } else {
             //Died to PvE or plugin, or anything else in general
 

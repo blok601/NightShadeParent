@@ -132,7 +132,7 @@ public class EngineMatch extends Engine {
         iMatch im = MatchHandler.getInstance().getActiveMatch(p);
         if (im == null) return; //Not in game
         TPlayer tPlayer = TPlayer.get(p);
-        if (im.getPlayers().size() == 2) {
+        if (im instanceof SoloMatch) {
             //Solo game
             SoloMatch match = (SoloMatch) im;
             match.endMatch(Collections.singletonList(match.getOpponents(tPlayer).get(0)), event);
@@ -219,6 +219,9 @@ public class EngineMatch extends Engine {
             match.stopLogOutTimer(tPlayer);
             match.setupBoard();
             tPlayer.setStatus(PlayerStatus.PLAYING);
+            p.setFlySpeed(0.1F);
+            p.setFlying(false);
+            p.setAllowFlight(false);
             //Continue play
         }
     }
