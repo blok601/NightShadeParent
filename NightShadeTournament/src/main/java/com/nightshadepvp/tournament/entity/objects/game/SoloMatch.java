@@ -348,7 +348,8 @@ public class SoloMatch implements iMatch {
     }
 
 
-    private void setupBoard() {
+    @Override
+    public void setupBoard() {
         Scoreboard scoreboard;
         for (TPlayer tPlayer : getPlayers()) {
             if (!tPlayer.isOnline()) {
