@@ -403,7 +403,6 @@ public class EnginePlayer extends Engine {
             tPlayer.setStatus(PlayerStatus.LOBBY);
             PlayerUtils.clearPlayer(player, true);
         }
-
     }
 
     @EventHandler

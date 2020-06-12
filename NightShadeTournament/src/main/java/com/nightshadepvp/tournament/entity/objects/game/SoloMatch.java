@@ -76,6 +76,7 @@ public class SoloMatch implements iMatch {
         this.blocks = new HashSet<>();
         freezePlayers();
         this.challonge = Tournament.get().getChallonge();
+        this.startTime = 0;
     }
 
     public int getMatchID() {
