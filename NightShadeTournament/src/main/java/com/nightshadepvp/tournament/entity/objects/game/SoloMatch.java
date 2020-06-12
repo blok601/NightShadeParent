@@ -156,7 +156,7 @@ public class SoloMatch implements iMatch {
     }
 
     public String getTimer() {
-        return TimeUtils.formatElapsingNanoseconds(startTime);
+       return this.getMatchState() == MatchState.STARTING ? "&bStarting..." : TimeUtils.formatElapsingNanoseconds(startTime);
     }
 
     /**
@@ -241,7 +241,7 @@ public class SoloMatch implements iMatch {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    if (loserPlayer.isOnline()) {
+                    if (loser.isOnline()) {
                         loserPlayer.spigot().respawn();
                         loserPlayer.teleport(winner.getPlayer().getLocation());
 

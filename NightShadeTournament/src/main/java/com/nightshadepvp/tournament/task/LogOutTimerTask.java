@@ -78,7 +78,7 @@ public class LogOutTimerTask extends BukkitRunnable {
 
             if (!opponent.isOnline()) continue;
 
-            ActionBarUtil.sendActionBarMessage(opponent.getPlayer(), "§5" + tPlayer.getName() + "'s Combat Timer§8» §3" + this.counter);
+            ActionBarUtil.sendActionBarMessage(opponent.getPlayer(), "§f" + tPlayer.getName() + "&b's Logout Timer§8» §f" + this.counter);
         }
         counter--;
     }
