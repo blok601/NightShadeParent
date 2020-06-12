@@ -571,6 +571,7 @@ public class SoloMatch implements iMatch {
     @Override
     public void resetBlocks() {
         this.blocks.forEach(location -> location.getWorld().getBlockAt(location).setType(Material.AIR)); //Clear all the blocks
+
     }
 
     @Override

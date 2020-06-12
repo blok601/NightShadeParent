@@ -20,6 +20,7 @@ public class CmdArena extends NightShadeTournamentCommand {
     public CmdArenaSetSpawn1 cmdArenaSetSpawn1 = new CmdArenaSetSpawn1();
     public CmdArenaSetSpawn2 cmdArenaSetSpawn2 = new CmdArenaSetSpawn2();
     public CmdArenaTeleport cmdArenaTeleport = new CmdArenaTeleport();
+    public CmdArenaList cmdArenaList = new CmdArenaList();
 
     @Override
     public List<String> getAliases() {
