@@ -15,6 +15,7 @@ import com.nightshadepvp.tournament.entity.handler.GameHandler;
 import com.nightshadepvp.tournament.entity.handler.KitHandler;
 import com.nightshadepvp.tournament.entity.handler.MatchHandler;
 import com.nightshadepvp.tournament.entity.objects.data.Kit;
+import com.nightshadepvp.tournament.entity.objects.game.SoloMatch;
 import com.nightshadepvp.tournament.entity.objects.game.iMatch;
 import com.nightshadepvp.tournament.entity.objects.player.PlayerInv;
 import com.nightshadepvp.tournament.utils.ChatUtils;

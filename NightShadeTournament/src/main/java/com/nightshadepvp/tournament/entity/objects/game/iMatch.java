@@ -204,4 +204,6 @@ public interface iMatch {
      * @return GameHandler instance
      */
     GameHandler getGameHandler();
+
+    void setupBoard();
 }

@@ -80,6 +80,17 @@ public class MatchHandler {
     }
 
     public iMatch getMatchFromArena(Arena arena){
-        return this.matches.stream().filter(match -> match.getMatchState() != MatchState.DONE).filter(match -> match.getArena().getName().equalsIgnoreCase(arena.getName())).findFirst().orElse(null);
+        //return this.matches.stream().filter(match -> match.getMatchState() != MatchState.DONE).filter(match -> match.getArena().getName().equalsIgnoreCase(arena.getName())).findFirst().orElse(null);
+        for (iMatch match : this.matches){
+            if(match.getMatchState() == MatchState.DONE){
+                continue;
+            }
+
+            if(match.getArena().getName().equalsIgnoreCase(arena.getName())){
+                return match;
+            }
+        }
+
+        return null;
     }
 }

@@ -394,7 +394,6 @@ public class SoloMatch implements iMatch {
         }
     }
 
-
     public void start() {
         Kit kit = getGameHandler().getKit();
         setMatchState(MatchState.STARTING);

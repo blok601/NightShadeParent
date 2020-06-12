@@ -4,6 +4,7 @@ import com.massivecraft.massivecore.Engine;
 import com.nightshadepvp.tournament.Tournament;
 import com.nightshadepvp.tournament.entity.TPlayer;
 import com.nightshadepvp.tournament.entity.enums.MatchState;
+import com.nightshadepvp.tournament.entity.enums.PlayerStatus;
 import com.nightshadepvp.tournament.entity.handler.ArenaHandler;
 import com.nightshadepvp.tournament.entity.handler.GameHandler;
 import com.nightshadepvp.tournament.entity.handler.MatchHandler;
@@ -216,6 +217,8 @@ public class EngineMatch extends Engine {
         if (match.getLogOutTimer(tPlayer) != null) {
             //They have a timer
             match.stopLogOutTimer(tPlayer);
+            match.setupBoard();
+            tPlayer.setStatus(PlayerStatus.PLAYING);
             //Continue play
         }
     }
@@ -345,9 +348,9 @@ public class EngineMatch extends Engine {
         Arena arena = ArenaHandler.getInstance().getFromBlock(block);
         iMatch match = MatchHandler.getInstance().getMatchFromArena(arena);
 
-        if (arena == null) {
-            return;
-        }
+        if(match == null) return;
+
+        if (arena == null) return;
 
        if(match.getMatchState() != MatchState.RESETTING){
            return;
@@ -362,9 +365,9 @@ public class EngineMatch extends Engine {
         Arena arena = ArenaHandler.getInstance().getFromBlock(block);
         iMatch match = MatchHandler.getInstance().getMatchFromArena(arena);
 
-        if (arena == null) {
-            return;
-        }
+        if(match == null) return;
+
+        if (arena == null) return;
 
         if(match.getMatchState() != MatchState.RESETTING){
             return;
