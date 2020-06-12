@@ -86,7 +86,9 @@ public class MatchHandler {
                 continue;
             }
 
-            if(match.getArena().getName().equalsIgnoreCase(arena.getName())){
+            if(match
+                    .getArena()
+                    .equals(arena)){
                 return match;
             }
         }

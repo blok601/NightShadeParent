@@ -205,7 +205,7 @@ public class SoloMatch implements iMatch {
             broadcastAllFancy(msg);
         }
 
-        broadcastAll("    ");
+        broadcastAllFormat("    ");
         broadcastAllFormat("&bKit&8: &f" + getGameHandler().getKit().getName());
 
         broadcastAllFormat("&bDuration&8: &f" + getTimer());

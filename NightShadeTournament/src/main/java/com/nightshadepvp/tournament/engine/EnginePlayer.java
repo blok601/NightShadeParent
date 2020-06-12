@@ -394,12 +394,13 @@ public class EnginePlayer extends Engine {
         }
 
         Player player = e.getPlayer();
+        TPlayer tPlayer = TPlayer.get(player);
+        if(tPlayer.getStatus() != PlayerStatus.EDITING) return;
+
         Location from = e.getFrom();
         Location to = e.getTo();
         Selection selection = Tournament.get().getEditLocationSelection();
         if (selection.contains(from) && !selection.contains(to)) {
-            TPlayer tPlayer = TPlayer.get(player);
-            //tPlayer.getPlayerKits().put(kit, InventoryUtils.playerInventoryFromPlayer(p));
             EngineInventory.edtingMap.remove(player.getUniqueId());
             tPlayer.setStatus(PlayerStatus.LOBBY);
             PlayerUtils.clearPlayer(player, true);
