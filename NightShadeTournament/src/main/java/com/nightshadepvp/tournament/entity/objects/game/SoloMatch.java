@@ -1,5 +1,6 @@
 package com.nightshadepvp.tournament.entity.objects.game;
 
+import com.google.common.collect.Lists;
 import com.massivecraft.massivecore.store.SenderEntity;
 import com.massivecraft.massivecore.util.MUtil;
 import com.nightshadepvp.core.Core;
@@ -40,6 +41,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 import java.util.concurrent.ExecutionException;
+import java.util.function.Consumer;
 
 /**
  * Created by Blok on 7/18/2018.
@@ -415,6 +417,16 @@ public class SoloMatch implements iMatch {
                 tPlayer.getPlayer().sendMessage(ChatUtils.message("&bYou are fighting &f" + getOpponents(tPlayer).get(0).getName() + "&b using kit &f" + getGameHandler().getKit().getName()));
                 tPlayer.getPlayer().setCanPickupItems(true);
                 tPlayer.setStatus(PlayerStatus.PLAYING);
+            }else{
+                ArrayList<Consumer<UUID>> list = Core.get().getLoginTasks().getOrDefault(tPlayer.getUuid(), new ArrayList<>());
+                TPlayer offlinePlayer = TPlayer.get(tPlayer.getUuid());
+                PlayerInv inv = offlinePlayer.getInv(kit);
+                offlinePlayer.getPlayer().getInventory().setArmorContents(inv.getArmorContents());
+                offlinePlayer.getPlayer().getInventory().setContents(inv.getContents());
+                offlinePlayer.getPlayer().sendMessage(ChatUtils.message("&bYou are fighting &f" + getOpponents(offlinePlayer).get(0).getName() + "&b using kit &f" + getGameHandler().getKit().getName()));
+                offlinePlayer.getPlayer().setCanPickupItems(true);
+                offlinePlayer.setStatus(PlayerStatus.PLAYING);
+                Core.get().getLoginTasks().put(tPlayer.getUuid(), list);
             }
         });
         new BukkitRunnable() {
