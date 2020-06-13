@@ -74,7 +74,7 @@ public class GameHandler {
 
         Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
 
-        if(scoreboard.getObjective("health") != null) scoreboard.getObjective("health").unregister();
+        if (scoreboard.getObjective("health") != null) scoreboard.getObjective("health").unregister();
         Objective health = scoreboard.registerNewObjective("health", "health");
         health.setDisplayName(ChatColor.RED + "❤");
         health.setDisplaySlot(DisplaySlot.BELOW_NAME);
@@ -112,20 +112,20 @@ public class GameHandler {
         this.slots = slots;
     }
 
-    public void assignSeeds(){
-        HashMap<UUID, Double> wins = new HashMap<>();
+    public void assignSeeds() {
+        HashMap<TPlayer, Double> wins = new HashMap<>();
         TPlayerColl.get().getAllOnline().stream().filter(tPlayer -> !tPlayer.isSpectator())
-                .forEach(tPlayer -> wins.put(tPlayer.getUuid(), tPlayer.getWinPCT()));
+                .forEach(tPlayer -> wins.put(tPlayer, tPlayer.getWinPCT()));
 
-        LinkedHashMap<UUID, Double> f = wins.entrySet().stream()
+        LinkedHashMap<TPlayer, Double> f = wins.entrySet().stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                .collect(Collectors.toMap(Map.Entry::getKey,Map.Entry::getValue, (aDouble, aDouble2) -> aDouble, LinkedHashMap::new));
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (aDouble, aDouble2) -> aDouble, LinkedHashMap::new));
 
         int i = 1;
         TPlayer tPlayer;
         Challonge challonge = Tournament.get().getChallonge();
-        for (Map.Entry<UUID, Double> entry : f.entrySet()){
-            tPlayer = TPlayer.get(entry.getKey());
+        for (Map.Entry<TPlayer, Double> entry : f.entrySet()) {
+            tPlayer = entry.getKey();
             tPlayer.setSeed(i);
             tPlayer.msg(ChatUtils.message("&bYou are seeded: &f" + i));
             challonge.getParticipants().add(tPlayer.getName());
@@ -158,9 +158,9 @@ public class GameHandler {
                     RoundHandler.getInstance().addMatch(round, soloMatch);
                 }
                 new StartRoundTask().runTaskTimer(Tournament.get(), 0, 20);
-                Core.get().getLogManager().log(Logger.LogType.DEBUG, "Amount of matches in this list: " +RoundHandler.getInstance().getMatchesByRoundNumber(round).size());
+                Core.get().getLogManager().log(Logger.LogType.DEBUG, "Amount of matches in this list: " + RoundHandler.getInstance().getMatchesByRoundNumber(round).size());
                 int rounds = challonge.getRounds().get();
-                if(round == rounds){
+                if (round == rounds) {
                     //Its the champ game
                     setChampionship(RoundHandler.getInstance().getMatchesByRoundNumber(round).stream().findFirst().get());
                 }
