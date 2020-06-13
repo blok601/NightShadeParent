@@ -114,7 +114,7 @@ public class GameHandler {
 
     public void assignSeeds() {
         HashMap<TPlayer, Double> wins = new HashMap<>();
-        TPlayerColl.get().getAllOnline().stream().filter(tPlayer -> !tPlayer.isSpectator())
+        TPlayerColl.get().getAllOnline().stream().filter(TPlayer::isPlayer).filter(tPlayer -> !tPlayer.isSpectator())
                 .forEach(tPlayer -> wins.put(tPlayer, tPlayer.getWinPCT()));
 
         LinkedHashMap<TPlayer, Double> f = wins.entrySet().stream()
