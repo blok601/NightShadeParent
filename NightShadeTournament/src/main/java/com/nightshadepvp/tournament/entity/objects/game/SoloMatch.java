@@ -14,6 +14,7 @@ import com.nightshadepvp.tournament.entity.enums.PlayerStatus;
 import com.nightshadepvp.tournament.entity.handler.GameHandler;
 import com.nightshadepvp.tournament.entity.handler.InventoryManager;
 import com.nightshadepvp.tournament.entity.handler.MatchHandler;
+import com.nightshadepvp.tournament.entity.handler.RoundHandler;
 import com.nightshadepvp.tournament.entity.objects.data.Arena;
 import com.nightshadepvp.tournament.entity.objects.data.Kit;
 import com.nightshadepvp.tournament.entity.objects.player.PlayerInv;
@@ -181,7 +182,16 @@ public class SoloMatch implements iMatch {
         TPlayer loser = getOpponents(winner).get(0);
         Player loserPlayer = loser.getPlayer();
         loser.setSeed(-1);
-        this.challonge.updateMatch(this.getMatchID(), winner.getName()).thenAccept(aBoolean -> Core.get().getLogManager().log(Logger.LogType.DEBUG, "Sent " + winner.getName() + " to the api!"));
+        if(RoundHandler.getInstance().getRound() % 2 ==0){
+            //even
+            try {
+                this.challonge.updateMatch(this.getMatchID(), winner.getName()).thenAccept(aBoolean -> Core.get().getLogManager().log(Logger.LogType.DEBUG, "Sent " + winner.getName() + " to the api!")).get();
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        }else{
+            this.challonge.updateMatch(this.getMatchID(), winner.getName()).thenAccept(aBoolean -> Core.get().getLogManager().log(Logger.LogType.DEBUG, "Sent " + winner.getName() + " to the api!"));
+        }
 
         //setMatchState(MatchState.DONE);
         setMatchState(MatchState.RESETTING);
