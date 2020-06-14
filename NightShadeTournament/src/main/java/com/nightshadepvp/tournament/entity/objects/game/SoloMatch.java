@@ -266,8 +266,8 @@ public class SoloMatch implements iMatch {
         getScoreboards().values().forEach(Scoreboard::deactivate); //Turn all boards off
         scoreboards.clear();
 
-        loserPlayer.sendMessage(ChatUtils.message("&bYou have died! Thank you for playing on NightShadePvP!"));
-        loserPlayer.sendMessage(ChatUtils.message("&bJoin the Discord at discord.me/NightShadePvP for updates and more!"));
+        loser.msg(ChatUtils.message("&bYou have died! Thank you for playing on NightShadePvP!"));
+        loser.msg(ChatUtils.message("&bJoin the Discord at discord.me/NightShadePvP for updates and more!"));
 
         new BukkitRunnable() {
             int counter = 5;
