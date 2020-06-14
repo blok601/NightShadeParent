@@ -41,7 +41,7 @@ public class CmdTournamentPost extends NightShadeTournamentCommand {
 
         int timesHosted = TPlayer.get(gameHandler.getHost()).getTournamentsHosted() + 1;
         String suffix= "";
-        if(timesHosted < 10){
+        if(timesHosted <= 10){
             if(timesHosted == 1){
                 suffix = "st";
             }else if(timesHosted == 2){

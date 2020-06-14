@@ -182,16 +182,14 @@ public class SoloMatch implements iMatch {
         TPlayer loser = getOpponents(winner).get(0);
         Player loserPlayer = loser.getPlayer();
         loser.setSeed(-1);
-        if(RoundHandler.getInstance().getRound() % 2 ==0){
-            //even
-            try {
-                this.challonge.updateMatch(this.getMatchID(), winner.getName()).thenAccept(aBoolean -> Core.get().getLogManager().log(Logger.LogType.DEBUG, "Sent " + winner.getName() + " to the api!")).get();
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
+        try {
+            if(!this.challonge.updateMatch(this.getMatchID(), winner.getName()).get()){
+                Core.get().getLogManager().log(Logger.LogType.DEBUG, "The request failed!");
             }
-        }else{
-            this.challonge.updateMatch(this.getMatchID(), winner.getName()).thenAccept(aBoolean -> Core.get().getLogManager().log(Logger.LogType.DEBUG, "Sent " + winner.getName() + " to the api!"));
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
         }
+
 
         //setMatchState(MatchState.DONE);
         setMatchState(MatchState.RESETTING);
