@@ -1,6 +1,8 @@
 package com.nightshadepvp.tournament.entity.objects.game;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.massivecraft.massivecore.store.SenderEntity;
 import com.massivecraft.massivecore.util.MUtil;
 import com.nightshadepvp.core.Core;
@@ -31,12 +33,11 @@ import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Firework;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -61,6 +62,7 @@ public class SoloMatch implements iMatch {
     private long startTime;
     private Challonge challonge;
     private boolean championshipGame;
+    private ArrayList<Item> drops;
 
     private String timer;
     private HashMap<UUID, Scoreboard> scoreboards;
@@ -69,17 +71,18 @@ public class SoloMatch implements iMatch {
 
     public SoloMatch(TPlayer player1, TPlayer player2) {
         this.player1 = player1;
-        this.winners = new ArrayList<>();
-        this.spectators = new HashSet<>();
+        this.winners = Lists.newArrayList();
+        this.spectators = Sets.newHashSet();
         this.player2 = player2;
         this.timer = "&eWaiting...";
-        this.scoreboards = new HashMap<>();
-        this.spectators = new HashSet<>();
-        this.logOutTimers = new HashMap<>();
-        this.blocks = new HashSet<>();
+        this.scoreboards = Maps.newHashMap();
+        this.spectators = Sets.newHashSet();
+        this.logOutTimers = Maps.newHashMap();
+        this.blocks = Sets.newHashSet();
         freezePlayers();
         this.challonge = Tournament.get().getChallonge();
         this.startTime = 0;
+        this.drops = Lists.newArrayList();
     }
 
     public int getMatchID() {
@@ -184,7 +187,8 @@ public class SoloMatch implements iMatch {
         loser.setSeed(-1);
         try {
             if(!this.challonge.updateMatch(this.getMatchID(), winner.getName()).get()){
-                Core.get().getLogManager().log(Logger.LogType.DEBUG, "The request failed!");
+                Core.get().getLogManager().log(Logger.LogType.SEVERE, "The request failed!");
+                Core.get().getLogManager().log(Logger.LogType.SEVERE, winner.getName() + " could not be sent to challonge api!");
             }
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
@@ -591,7 +595,11 @@ public class SoloMatch implements iMatch {
     @Override
     public void resetBlocks() {
         this.blocks.forEach(location -> location.getWorld().getBlockAt(location).setType(Material.AIR)); //Clear all the blocks
+    }
 
+    @Override
+    public void resetDrops() {
+        this.getDrops().stream().filter(Objects::nonNull).forEach(Entity::remove);
     }
 
     @Override
@@ -616,5 +624,10 @@ public class SoloMatch implements iMatch {
     @Override
     public GameHandler getGameHandler() {
         return GameHandler.getInstance();
+    }
+
+    @Override
+    public ArrayList<Item> getDrops() {
+        return drops;
     }
 }

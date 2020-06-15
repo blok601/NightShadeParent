@@ -19,13 +19,11 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockFromToEvent;
-import org.bukkit.event.block.BlockPhysicsEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
@@ -169,7 +167,15 @@ public class EngineMatch extends Engine {
     public void onDrop(PlayerDropItemEvent e){
         Player p = e.getPlayer();
         TPlayer tPlayer = TPlayer.get(p);
-        if(tPlayer.isFrozen()) e.setCancelled(true);
+        if(tPlayer.isFrozen()) {
+            e.setCancelled(true);
+            return;
+        }
+
+        iMatch match = MatchHandler.getInstance().getActiveMatch(tPlayer);
+        if(match == null) return;
+
+        match.getDrops().add(e.getItemDrop());
     }
 
     @EventHandler
@@ -345,39 +351,39 @@ public class EngineMatch extends Engine {
         }
     }
 
-    @EventHandler
-    public void on(BlockPhysicsEvent event) {
-        Block block = event.getBlock();
-        Arena arena = ArenaHandler.getInstance().getFromBlock(block);
-        iMatch match = MatchHandler.getInstance().getMatchFromArena(arena);
-
-        if(match == null) return;
-
-        if (arena == null) return;
-
-       if(match.getMatchState() != MatchState.RESETTING){
-           return;
-       }
-
-        event.setCancelled(true);
-    }
-
-    @EventHandler
-    public void on(BlockFromToEvent event) {
-        Block block = event.getBlock();
-        Arena arena = ArenaHandler.getInstance().getFromBlock(block);
-        iMatch match = MatchHandler.getInstance().getMatchFromArena(arena);
-
-        if(match == null) return;
-
-        if (arena == null) return;
-
-        if(match.getMatchState() != MatchState.RESETTING){
-            return;
-        }
-
-        event.setCancelled(true);
-    }
+//    @EventHandler
+//    public void on(BlockPhysicsEvent event) {
+//        Block block = event.getBlock();
+//        Arena arena = ArenaHandler.getInstance().getFromBlock(block);
+//        iMatch match = MatchHandler.getInstance().getMatchFromArena(arena);
+//
+//        if(match == null) return;
+//
+//        if (arena == null) return;
+//
+//       if(match.getMatchState() != MatchState.RESETTING){
+//           return;
+//       }
+//
+//        event.setCancelled(true);
+//    }
+//
+//    @EventHandler
+//    public void on(BlockFromToEvent event) {
+//        Block block = event.getBlock();
+//        Arena arena = ArenaHandler.getInstance().getFromBlock(block);
+//        iMatch match = MatchHandler.getInstance().getMatchFromArena(arena);
+//
+//        if(match == null) return;
+//
+//        if (arena == null) return;
+//
+//        if(match.getMatchState() != MatchState.RESETTING){
+//            return;
+//        }
+//
+//        event.setCancelled(true);
+//    }
 
     @EventHandler
     public void on(ChunkUnloadEvent event) {
@@ -388,5 +394,19 @@ public class EngineMatch extends Engine {
         }
 
         event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onForm(BlockFormEvent event){
+        BlockState newState = event.getNewState();
+        Arena arena = ArenaHandler.getInstance().getFromBlock(newState.getBlock());
+        if(arena == null) return;
+
+        if(!arena.isInUse()) return;
+
+        iMatch match = MatchHandler.getInstance().getMatchFromArena(arena);
+        if(match == null) return;
+
+        match.getBlocks().add(newState.getLocation());
     }
 }

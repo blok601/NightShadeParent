@@ -8,7 +8,9 @@ import com.nightshadepvp.tournament.entity.objects.data.Arena;
 import com.nightshadepvp.tournament.scoreboard.type.Scoreboard;
 import com.nightshadepvp.tournament.task.LogOutTimerTask;
 import org.bukkit.Location;
+import org.bukkit.entity.Item;
 import org.bukkit.event.entity.EntityEvent;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
@@ -206,4 +208,15 @@ public interface iMatch {
     GameHandler getGameHandler();
 
     void setupBoard();
+
+    /**
+     * Get all dropped items in the game
+     * @return Collection of dropped items
+     */
+    Collection<Item> getDrops();
+
+    /**
+     * Method to clear all dropped items
+     */
+    void resetDrops();
 }
