@@ -288,6 +288,7 @@ public class SoloMatch implements iMatch {
             public void run() {
                 if (counter == 2) {
                     resetBlocks();
+                    resetDrops();
                     getArena().setInUse(false);
                     //Teleport everyone out - completely finished
                     for (TPlayer tPlayer : getPlayers()) {

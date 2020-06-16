@@ -14,6 +14,7 @@ import com.nightshadepvp.tournament.entity.objects.game.iMatch;
 import com.nightshadepvp.tournament.event.PlayerSpectateMatchEvent;
 import com.nightshadepvp.tournament.event.PlayerUnSpectateMatchEvent;
 import com.nightshadepvp.tournament.utils.ChatUtils;
+import net.sf.cglib.asm.$ByteVector;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -285,6 +286,15 @@ public class EngineMatch extends Engine {
         Block to3 = e.getToBlock().getRelative(BlockFace.SOUTH);
         Block to4 = e.getToBlock().getRelative(BlockFace.NORTH);
 
+        if(e.getToBlock().getType() == Material.COBBLESTONE || e.getToBlock().getType() == Material.OBSIDIAN){
+            Arena arena = ArenaHandler.getInstance().getFromBlock(e.getToBlock());
+            for (iMatch g : MatchHandler.getInstance().getActiveMatches()) {
+                if (g.getArena() == arena) {
+                    g.getBlocks().add(e.getToBlock().getLocation());
+                }
+            }
+        }
+
         if (to1.getData() == 0 && b.hasMetadata("toRemove")) {
             Arena arena = ArenaHandler.getInstance().getFromBlock(b);
             for (iMatch g : MatchHandler.getInstance().getActiveMatches()) {
@@ -401,8 +411,6 @@ public class EngineMatch extends Engine {
         BlockState newState = event.getNewState();
         Arena arena = ArenaHandler.getInstance().getFromBlock(newState.getBlock());
         if(arena == null) return;
-
-        if(!arena.isInUse()) return;
 
         iMatch match = MatchHandler.getInstance().getMatchFromArena(arena);
         if(match == null) return;
