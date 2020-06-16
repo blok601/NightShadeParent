@@ -50,6 +50,16 @@ public class EngineMatch extends Engine {
     private static EngineMatch i = new EngineMatch();
     public static EngineMatch get() {return i;}
 
+    private final BlockFace[] faces = new BlockFace[]{
+            BlockFace.SELF,
+            BlockFace.UP,
+            BlockFace.DOWN,
+            BlockFace.NORTH,
+            BlockFace.EAST,
+            BlockFace.SOUTH,
+            BlockFace.WEST
+    };
+
     @EventHandler
     public void onPlace(BlockPlaceEvent e) {
         Player p = e.getPlayer();
@@ -279,12 +289,12 @@ public class EngineMatch extends Engine {
 
     @EventHandler
     public void onSpread(BlockFromToEvent e) {
-        Block b = e.getBlock();
+        Block b = e.getToBlock();
 
-        Block to1 = e.getToBlock().getRelative(BlockFace.EAST);
-        Block to2 = e.getToBlock().getRelative(BlockFace.WEST);
-        Block to3 = e.getToBlock().getRelative(BlockFace.SOUTH);
-        Block to4 = e.getToBlock().getRelative(BlockFace.NORTH);
+//        Block to1 = e.getToBlock().getRelative(BlockFace.EAST);
+//        Block to2 = e.getToBlock().getRelative(BlockFace.WEST);
+//        Block to3 = e.getToBlock().getRelative(BlockFace.SOUTH);
+//        Block to4 = e.getToBlock().getRelative(BlockFace.NORTH);
 
         if(e.getToBlock().getType() == Material.COBBLESTONE || e.getToBlock().getType() == Material.OBSIDIAN){
             Arena arena = ArenaHandler.getInstance().getFromBlock(e.getToBlock());
@@ -295,41 +305,57 @@ public class EngineMatch extends Engine {
             }
         }
 
-        if (to1.getData() == 0 && b.hasMetadata("toRemove")) {
-            Arena arena = ArenaHandler.getInstance().getFromBlock(b);
-            for (iMatch g : MatchHandler.getInstance().getActiveMatches()) {
-                if (g.getArena() == arena) {
-                    g.getBlocks().add(to1.getLocation());
+        Material type = e.getBlock().getType();
+        if (type == Material.WATER || type == Material.STATIONARY_WATER || type == Material.LAVA || type == Material.STATIONARY_LAVA){
+            if (b.getType() == Material.AIR){
+                if (generatesCobble(type, b)){
+                    Arena arena = ArenaHandler.getInstance().getFromBlock(e.getToBlock());
+                    for (iMatch g : MatchHandler.getInstance().getActiveMatches()) {
+                        if (g.getArena() == arena) {
+                            g.getBlocks().add(e.getToBlock().getLocation());
+                        }
+                    }
                 }
             }
         }
 
-        if (to2.getData() == 0 && b.hasMetadata("toRemove")) {
-            Arena arena = ArenaHandler.getInstance().getFromBlock(b);
-            for (iMatch g : MatchHandler.getInstance().getActiveMatches()) {
-                if (g.getArena() == arena) {
-                    g.getBlocks().add(to2.getLocation());
-                }
-            }
-        }
 
-        if (to3.getData() == 0 && b.hasMetadata("toRemove")) {
-            Arena arena = ArenaHandler.getInstance().getFromBlock(b);
-            for (iMatch g : MatchHandler.getInstance().getActiveMatches()) {
-                if (g.getArena() == arena) {
-                    g.getBlocks().add(to3.getLocation());
-                }
-            }
-        }
 
-        if (to4.getData() == 0 && b.hasMetadata("toRemove")) {
-            Arena arena = ArenaHandler.getInstance().getFromBlock(b);
-            for (iMatch g : MatchHandler.getInstance().getActiveMatches()) {
-                if (g.getArena() == arena) {
-                    g.getBlocks().add(to4.getLocation());
-                }
-            }
-        }
+//        if (to1.getData() == 0 && b.hasMetadata("toRemove")) {
+//            Arena arena = ArenaHandler.getInstance().getFromBlock(b);
+//            for (iMatch g : MatchHandler.getInstance().getActiveMatches()) {
+//                if (g.getArena() == arena) {
+//                    g.getBlocks().add(to1.getLocation());
+//                }
+//            }
+//        }
+//
+//        if (to2.getData() == 0 && b.hasMetadata("toRemove")) {
+//            Arena arena = ArenaHandler.getInstance().getFromBlock(b);
+//            for (iMatch g : MatchHandler.getInstance().getActiveMatches()) {
+//                if (g.getArena() == arena) {
+//                    g.getBlocks().add(to2.getLocation());
+//                }
+//            }
+//        }
+//
+//        if (to3.getData() == 0 && b.hasMetadata("toRemove")) {
+//            Arena arena = ArenaHandler.getInstance().getFromBlock(b);
+//            for (iMatch g : MatchHandler.getInstance().getActiveMatches()) {
+//                if (g.getArena() == arena) {
+//                    g.getBlocks().add(to3.getLocation());
+//                }
+//            }
+//        }
+//
+//        if (to4.getData() == 0 && b.hasMetadata("toRemove")) {
+//            Arena arena = ArenaHandler.getInstance().getFromBlock(b);
+//            for (iMatch g : MatchHandler.getInstance().getActiveMatches()) {
+//                if (g.getArena() == arena) {
+//                    g.getBlocks().add(to4.getLocation());
+//                }
+//            }
+//        }
     }
 
     @EventHandler
@@ -417,4 +443,18 @@ public class EngineMatch extends Engine {
 
         match.getBlocks().add(newState.getLocation());
     }
+
+    public boolean generatesCobble(Material type, Block b){
+        Material mirrorID1 = (type == Material.WATER || type == Material.STATIONARY_WATER ? Material.LAVA : Material.WATER);
+        Material mirrorID2 = (type == Material.WATER || type == Material.STATIONARY_WATER ? Material.STATIONARY_LAVA : Material.STATIONARY_WATER);
+        for (BlockFace face : faces){
+            Block r = b.getRelative(face, 1);
+            if (r.getType() == mirrorID1 || r.getType() == mirrorID2){
+                return true;
+            }
+        }
+        return false;
+    }
 }
+
+
