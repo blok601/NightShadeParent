@@ -1,6 +1,8 @@
 package com.nightshadepvp.tournament.engine;
 
 import com.massivecraft.massivecore.Engine;
+import com.nightshadepvp.core.Core;
+import com.nightshadepvp.core.Logger;
 import com.nightshadepvp.tournament.Tournament;
 import com.nightshadepvp.tournament.entity.TPlayer;
 import com.nightshadepvp.tournament.entity.enums.MatchState;
@@ -301,6 +303,7 @@ public class EngineMatch extends Engine {
             for (iMatch g : MatchHandler.getInstance().getActiveMatches()) {
                 if (g.getArena() == arena) {
                     g.getBlocks().add(e.getToBlock().getLocation());
+                    Core.get().getLogManager().log(Logger.LogType.DEBUG, "Generated (1): " + e.getToBlock().getType().name());
                 }
             }
         }
@@ -313,6 +316,7 @@ public class EngineMatch extends Engine {
                     for (iMatch g : MatchHandler.getInstance().getActiveMatches()) {
                         if (g.getArena() == arena) {
                             g.getBlocks().add(e.getToBlock().getLocation());
+                            Core.get().getLogManager().log(Logger.LogType.DEBUG, "Generated (2): " + e.getToBlock().getType().name());
                         }
                     }
                 }
