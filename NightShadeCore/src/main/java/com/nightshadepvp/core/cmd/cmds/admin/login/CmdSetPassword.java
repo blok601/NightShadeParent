@@ -4,7 +4,6 @@ import com.massivecraft.massivecore.MassiveException;
 import com.massivecraft.massivecore.command.requirement.RequirementIsPlayer;
 import com.massivecraft.massivecore.command.type.primitive.TypeString;
 import com.nightshadepvp.core.Core;
-import com.nightshadepvp.core.Encrypter;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.cmd.NightShadeCoreCommand;
 import com.nightshadepvp.core.cmd.req.ReqRankHasAtLeast;
@@ -18,7 +17,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 /**
  * Created by Blok on 6/20/2019.
  */
-public class CmdSetPassword extends NightShadeCoreCommand implements Encrypter {
+public class CmdSetPassword extends NightShadeCoreCommand implements CmdLogin.Encrypter {
 
     private static CmdSetPassword i = new CmdSetPassword();
 

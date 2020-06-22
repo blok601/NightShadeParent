@@ -159,6 +159,7 @@ public class CommandHandler  {
         registerCommand(new ShowCommand(uhc));
         registerCommand(new BTCListCommand(scenarioManager));
         registerCommand(new BTCAddCommand(scenarioManager));
+        registerCommand(new XrayCommand());
     }
 
 

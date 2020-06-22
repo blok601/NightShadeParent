@@ -8,10 +8,24 @@ import com.massivecraft.massivecore.store.DriverMongo;
 import com.nightshadepvp.core.entity.MConf;
 import com.nightshadepvp.core.entity.NSPlayerColl;
 import com.nightshadepvp.core.listener.LiteBansListener;
+import com.nightshadepvp.core.lunar.LunarClientImplementation;
+import com.nightshadepvp.core.lunar.api.LunarClientAPI;
+import com.nightshadepvp.core.lunar.api.event.impl.AuthenticateEvent;
+import com.nightshadepvp.core.lunar.api.module.border.BorderManager;
+import com.nightshadepvp.core.lunar.api.module.hologram.HologramManager;
+import com.nightshadepvp.core.lunar.api.module.waypoint.WaypointManager;
+import com.nightshadepvp.core.lunar.api.user.User;
+import com.nightshadepvp.core.lunar.api.user.UserManager;
+import com.nightshadepvp.core.lunar.listener.ClientListener;
+import com.nightshadepvp.core.lunar.listener.PlayerListener;
+import com.nightshadepvp.core.lunar.module.border.BorderManagerImplementation;
+import com.nightshadepvp.core.lunar.module.hologram.HologramManagerImplementation;
+import com.nightshadepvp.core.lunar.module.waypoint.WaypointManagerImplementation;
 import com.nightshadepvp.core.punishment.PunishmentHandler;
 import com.nightshadepvp.core.store.NSStore;
 import com.nightshadepvp.core.store.NSStoreConf;
 import com.nightshadepvp.core.ubl.UBLHandler;
+import com.nightshadepvp.core.utils.BufferUtils;
 import com.nightshadepvp.core.utils.ChatUtils;
 import litebans.api.Events;
 import org.bukkit.Bukkit;
@@ -21,6 +35,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import redis.clients.jedis.Jedis;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -42,6 +57,15 @@ public class Core extends MassivePlugin implements PluginMessageListener {
     private Announcer announcer;
     private HashMap<UUID, ArrayList<Consumer<UUID>>> loginTasks;
 
+
+    //Lunar Api
+    private LunarClientAPI api;
+    /* Lunar Managers */
+    private UserManager userManager;
+    private HologramManager hologramManager;
+    private WaypointManager waypointManager;
+    private BorderManager borderManager;
+
     @Override
     public void onEnableInner() {
         NSStoreConf.get().load();
@@ -52,6 +76,49 @@ public class Core extends MassivePlugin implements PluginMessageListener {
 
         logger = new Logger();
         this.loginTasks = new HashMap<>();
+
+        //LUNAR
+        api = new LunarClientImplementation(this);
+
+        // Construct manager classes
+        this.userManager = new UserManager();
+        this.hologramManager = new HologramManagerImplementation(this);
+        this.waypointManager = new WaypointManagerImplementation(this);
+        this.borderManager = new BorderManagerImplementation(this);
+
+        // Setup configuration
+        this.getConfig().options().copyDefaults(true);
+        this.saveConfig();
+
+        // Add our channel listeners
+        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "Lunar-Client");
+        this.getServer().getMessenger().registerIncomingPluginChannel(this, "Lunar-Client", (channel, player, bytes) -> {
+            if (bytes[0] == 26) {
+                final UUID outcoming = BufferUtils.getUUIDFromBytes(Arrays.copyOfRange(bytes, 1, 30));
+
+                // To stop server wide spoofing.
+                if (!outcoming.equals(player.getUniqueId())) {
+                    return;
+                }
+
+                User user = getApi().getUserManager().getPlayerData(player);
+
+                if (user != null && !user.isLunarClient()){
+                    user.setLunarClient(true);
+                    new AuthenticateEvent(player).call(this);
+                }
+
+                for (Player other : Bukkit.getOnlinePlayers()) {
+                    if (getApi().isAuthenticated(other)) {
+                        other.sendPluginMessage(this, channel, bytes);
+                    }
+                }
+            }
+        });
+
+        // Register listeners
+        this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new ClientListener(), this);
 
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "Maintenance");
         Bukkit.getMessenger().registerIncomingPluginChannel(this, "Maintenance", this);
@@ -200,5 +267,25 @@ public class Core extends MassivePlugin implements PluginMessageListener {
 
     public HashMap<UUID, ArrayList<Consumer<UUID>>> getLoginTasks() {
         return loginTasks;
+    }
+
+    public UserManager getUserManager() {
+        return userManager;
+    }
+
+    public HologramManager getHologramManager() {
+        return hologramManager;
+    }
+
+    public WaypointManager getWaypointManager() {
+        return waypointManager;
+    }
+
+    public BorderManager getBorderManager() {
+        return borderManager;
+    }
+
+    public LunarClientAPI getApi() {
+        return api;
     }
 }

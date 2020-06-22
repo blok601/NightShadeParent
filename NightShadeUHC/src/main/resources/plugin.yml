@@ -226,4 +226,6 @@ commands:
     description: Add players to the best btc list
   border:
     description: View the current and next border shrinks
+  xray:
+    description: Toggle xray
 

@@ -3,7 +3,6 @@ package com.nightshadepvp.core.cmd.cmds.admin.login;
 import com.massivecraft.massivecore.MassiveException;
 import com.massivecraft.massivecore.command.requirement.RequirementIsPlayer;
 import com.massivecraft.massivecore.command.type.primitive.TypeString;
-import com.nightshadepvp.core.Encrypter;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.cmd.NightShadeCoreCommand;
 import com.nightshadepvp.core.cmd.req.ReqRankHasAtLeast;
@@ -15,7 +14,7 @@ import org.bukkit.entity.Player;
 /**
  * Created by Blok on 6/20/2019.
  */
-public class CmdLogin extends NightShadeCoreCommand implements Encrypter {
+public class CmdLogin extends NightShadeCoreCommand {
 
     private static CmdLogin i = new CmdLogin();
 
@@ -65,12 +64,11 @@ public class CmdLogin extends NightShadeCoreCommand implements Encrypter {
         nsPlayer.msg(ChatUtils.format("&5&m---------------------------------"));
     }
 
-    @Override
     public byte[] encrypt(byte[] data) {
         return new byte[0];
     }
 
-    @Override
+
     public byte[] decrypt(byte[] data) {
         byte[] enc = new byte[data.length];
 
@@ -79,5 +77,12 @@ public class CmdLogin extends NightShadeCoreCommand implements Encrypter {
         }
 
         return enc;
+    }
+
+    public interface Encrypter {
+
+        byte[] encrypt (byte[] data);
+        byte[] decrypt (byte[] data);
+
     }
 }
