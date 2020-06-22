@@ -38,6 +38,9 @@ public class XrayCommand implements UHCCommand {
         if(args[0].equalsIgnoreCase("on")){
             try {
                 Core.get().getApi().toggleStaffModule(player, StaffModule.XRAY, true);
+                uhcPlayer.msg(ChatUtils.message("&aEnabled xray!"));
+                Core.get().getApi().toggleStaffModule(player, StaffModule.BUNNY_HOP, true);
+                Core.get().getApi().toggleStaffModule(player, StaffModule.NAME_TAGS, true);
             } catch (IOException e) {
                 e.printStackTrace();
                 uhcPlayer.msg(ChatUtils.message("&cThere was an error trying to enable xray!"));
