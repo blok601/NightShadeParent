@@ -38,6 +38,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -305,9 +306,15 @@ public class EngineMatch extends Engine {
             }
             for (iMatch g : MatchHandler.getInstance().getActiveMatches()) {
                 if (g.getArena() == arena) {
-                    g.getBlocks().add(e.getToBlock().getLocation());
-                    Core.get().getLogManager().log(Logger.LogType.DEBUG, "Generated (1): " + e.getToBlock().getType().name());
-                }
+                    new BukkitRunnable(){
+                        @Override
+                        public void run() {
+                            g.getBlocks().add(e.getToBlock().getLocation());
+                            Core.get().getLogManager().log(Logger.LogType.DEBUG, "Generated (1): " + e.getToBlock().getType().name());
+
+                        }
+                    }.runTaskLater(Core.get(), 2);
+                   }
             }
         }
 
@@ -321,8 +328,13 @@ public class EngineMatch extends Engine {
                     }
                     for (iMatch g : MatchHandler.getInstance().getActiveMatches()) {
                         if (g.getArena() == arena) {
-                            g.getBlocks().add(e.getToBlock().getLocation());
-                            Core.get().getLogManager().log(Logger.LogType.DEBUG, "Generated (2): " + e.getToBlock().getType().name());
+                            new BukkitRunnable(){
+                                @Override
+                                public void run() {
+                                    g.getBlocks().add(e.getToBlock().getLocation());
+                                    Core.get().getLogManager().log(Logger.LogType.DEBUG, "Generated (2): " + e.getToBlock().getType().name());
+                                }
+                            }.runTaskLater(Core.get(), 2);
                         }
                     }
                 }
