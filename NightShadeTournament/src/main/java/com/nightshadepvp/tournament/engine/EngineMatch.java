@@ -300,6 +300,9 @@ public class EngineMatch extends Engine {
 
         if(e.getToBlock().getType() == Material.COBBLESTONE || e.getToBlock().getType() == Material.OBSIDIAN){
             Arena arena = ArenaHandler.getInstance().getFromBlock(e.getToBlock());
+            if(arena == null){
+                System.out.println("Arena was null Line 304");
+            }
             for (iMatch g : MatchHandler.getInstance().getActiveMatches()) {
                 if (g.getArena() == arena) {
                     g.getBlocks().add(e.getToBlock().getLocation());
@@ -313,6 +316,9 @@ public class EngineMatch extends Engine {
             if (b.getType() == Material.AIR){
                 if (generatesCobble(type, b)){
                     Arena arena = ArenaHandler.getInstance().getFromBlock(e.getToBlock());
+                    if(arena == null){
+                        System.out.println("Arena was null Line 320");
+                    }
                     for (iMatch g : MatchHandler.getInstance().getActiveMatches()) {
                         if (g.getArena() == arena) {
                             g.getBlocks().add(e.getToBlock().getLocation());
