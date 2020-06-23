@@ -1,5 +1,6 @@
 package com.nightshadepvp.tournament.entity.handler;
 
+import com.google.common.collect.Range;
 import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Logger;
 import com.nightshadepvp.tournament.Settings;
@@ -109,8 +110,8 @@ public class ArenaHandler {
             configuration.set(arena.getName() + ".selection.max.y", arena.getSelection().getMaximumPoint().getY());
             configuration.set(arena.getName() + ".selection.max.z", arena.getSelection().getMaximumPoint().getZ());
             configuration.set(arena.getName() + ".selection.min.x", arena.getSelection().getMinimumPoint().getX());
-            configuration.set(arena.getName() + ".selection.min.x", arena.getSelection().getMinimumPoint().getY());
-            configuration.set(arena.getName() + ".selection.min.x", arena.getSelection().getMinimumPoint().getZ());
+            configuration.set(arena.getName() + ".selection.min.y", arena.getSelection().getMinimumPoint().getY());
+            configuration.set(arena.getName() + ".selection.min.z", arena.getSelection().getMinimumPoint().getZ());
             Core.get().getLogManager().log(Logger.LogType.DEBUG, "Saved Arena: " + arena.getName());
         }
         Settings.getSettings().saveArenas();
