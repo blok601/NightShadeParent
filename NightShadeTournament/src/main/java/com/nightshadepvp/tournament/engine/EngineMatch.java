@@ -51,7 +51,10 @@ import java.util.Collections;
 public class EngineMatch extends Engine {
 
     private static EngineMatch i = new EngineMatch();
-    public static EngineMatch get() {return i;}
+
+    public static EngineMatch get() {
+        return i;
+    }
 
     private final BlockFace[] faces = new BlockFace[]{
             BlockFace.SELF,
@@ -83,6 +86,44 @@ public class EngineMatch extends Engine {
         Block block = e.getBlock();
         soloMatch.getBlocks().add(block.getLocation());
     }
+
+    @EventHandler
+    public void onPlaceFluid(PlayerInteractEvent event) {
+
+        Player p = event.getPlayer();
+        TPlayer tPlayer = TPlayer.get(p);
+
+        iMatch soloMatch = MatchHandler.getInstance().getActiveMatch(tPlayer);
+        if (soloMatch == null) return; //Not in game, not in spawn..where else are they ?
+
+        if (!GameHandler.getInstance().getKit().isBuild()) {
+            event.setCancelled(true);
+        }
+
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+        Material type;
+        if (event.getItem() == null) return;
+        if (event.getItem().getType() == Material.WATER_BUCKET) {
+            type = Material.WATER;
+        } else if (event.getItem().getType() == Material.LAVA_BUCKET) {
+            type = Material.LAVA;
+        } else return;
+        Block block = event.getClickedBlock().getRelative(event.getBlockFace());
+        if (generates(type, block)) {
+            return;
+        } else {
+            BlockFace[] nesw = {BlockFace.DOWN, BlockFace.UP, BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST};
+            for (BlockFace face : nesw) {
+                if (generates(type, block.getRelative(face))) {
+                    //System.out.println(face);
+                    //event.setCancelled(true);
+                    soloMatch.getBlocks().add(block.getRelative(face).getLocation());
+                    return;
+                }
+            }
+        }
+    }
+
 
     @EventHandler
     public void onBreak(BlockBreakEvent e) {
@@ -178,16 +219,16 @@ public class EngineMatch extends Engine {
     }
 
     @EventHandler
-    public void onDrop(PlayerDropItemEvent e){
+    public void onDrop(PlayerDropItemEvent e) {
         Player p = e.getPlayer();
         TPlayer tPlayer = TPlayer.get(p);
-        if(tPlayer.isFrozen()) {
+        if (tPlayer.isFrozen()) {
             e.setCancelled(true);
             return;
         }
 
         iMatch match = MatchHandler.getInstance().getActiveMatch(tPlayer);
-        if(match == null) return;
+        if (match == null) return;
 
         match.getDrops().add(e.getItemDrop());
     }
@@ -299,48 +340,44 @@ public class EngineMatch extends Engine {
 //        Block to3 = e.getToBlock().getRelative(BlockFace.SOUTH);
 //        Block to4 = e.getToBlock().getRelative(BlockFace.NORTH);
 
-        if(e.getToBlock().getType() == Material.COBBLESTONE || e.getToBlock().getType() == Material.OBSIDIAN){
-            Arena arena = ArenaHandler.getInstance().getFromBlock(e.getToBlock());
-            if(arena == null){
-                System.out.println("Arena was null Line 304");
-            }
-            for (iMatch g : MatchHandler.getInstance().getActiveMatches()) {
-                if (g.getArena() == arena) {
-                    new BukkitRunnable(){
-                        @Override
-                        public void run() {
-                            g.getBlocks().add(e.getToBlock().getLocation());
-                            Core.get().getLogManager().log(Logger.LogType.DEBUG, "Generated (1): " + e.getToBlock().getType().name());
+        Arena arena = ArenaHandler.getInstance().getFromBlock(e.getBlock());
+        iMatch match = MatchHandler.getInstance().getMatchFromArena(arena);
+        if (arena == null || match == null) return;
 
-                        }
-                    }.runTaskLater(Core.get(), 2);
-                   }
-            }
+        if (e.getToBlock().getType() == Material.COBBLESTONE || e.getToBlock().getType() == Material.OBSIDIAN) {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    match.getBlocks().add(e.getToBlock().getLocation());
+                    Core.get().getLogManager().log(Logger.LogType.DEBUG, "Generated (1): " + e.getToBlock().getType().name());
+
+                }
+            }.runTaskLater(Core.get(), 2);
         }
 
         Material type = e.getBlock().getType();
-        if (type == Material.WATER || type == Material.STATIONARY_WATER || type == Material.LAVA || type == Material.STATIONARY_LAVA){
-            if (b.getType() == Material.AIR){
-                if (generatesCobble(type, b)){
-                    Arena arena = ArenaHandler.getInstance().getFromBlock(e.getToBlock());
-                    if(arena == null){
-                        System.out.println("Arena was null Line 320");
-                    }
-                    for (iMatch g : MatchHandler.getInstance().getActiveMatches()) {
-                        if (g.getArena() == arena) {
-                            new BukkitRunnable(){
-                                @Override
-                                public void run() {
-                                    g.getBlocks().add(e.getToBlock().getLocation());
-                                    Core.get().getLogManager().log(Logger.LogType.DEBUG, "Generated (2): " + e.getToBlock().getType().name());
-                                }
-                            }.runTaskLater(Core.get(), 2);
+        if (type == Material.WATER || type == Material.STATIONARY_WATER || type == Material.LAVA || type == Material.STATIONARY_LAVA) {
+            if (b.getType() == Material.AIR) {
+                if (generatesCobble(type, b)) {
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            match.getBlocks().add(e.getToBlock().getLocation());
+                            Core.get().getLogManager().log(Logger.LogType.DEBUG, "Generated (2): " + e.getToBlock().getType().name());
                         }
-                    }
+                    }.runTaskLater(Core.get(), 2);
+
                 }
             }
         }
 
+        BlockFace[] nesw = {BlockFace.DOWN, BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST};
+        for (BlockFace face : nesw) {
+            if (generates(e.getBlock(), e.getToBlock().getRelative(face))) {
+                match.getBlocks().add(e.getToBlock().getRelative(face).getLocation());
+                return;
+            }
+        }
 
 
 //        if (to1.getData() == 0 && b.hasMetadata("toRemove")) {
@@ -381,9 +418,9 @@ public class EngineMatch extends Engine {
     }
 
     @EventHandler
-    public void onSpectate(PlayerSpectateMatchEvent e){
-        for (TPlayer tPlayer : e.getMatch().getPlayers()){
-            if(tPlayer.isSpecMatchAlert()){
+    public void onSpectate(PlayerSpectateMatchEvent e) {
+        for (TPlayer tPlayer : e.getMatch().getPlayers()) {
+            if (tPlayer.isSpecMatchAlert()) {
                 tPlayer.msg(ChatUtils.format("&5" + e.getTPlayer().getName() + " &bis now spectating."));
             }
         }
@@ -392,9 +429,9 @@ public class EngineMatch extends Engine {
     }
 
     @EventHandler
-    public void onUnSpectate(PlayerUnSpectateMatchEvent e){
-        for (TPlayer tPlayer : e.getMatch().getPlayers()){
-            if(tPlayer.isSpecMatchAlert()){
+    public void onUnSpectate(PlayerUnSpectateMatchEvent e) {
+        for (TPlayer tPlayer : e.getMatch().getPlayers()) {
+            if (tPlayer.isSpecMatchAlert()) {
                 tPlayer.msg(ChatUtils.format("&5" + e.getTPlayer().getName() + " &bis no longer spectating."));
             }
         }
@@ -403,8 +440,8 @@ public class EngineMatch extends Engine {
     }
 
     @EventHandler
-    public void onWeatherChange(WeatherChangeEvent e){
-        if(e.toWeatherState()){
+    public void onWeatherChange(WeatherChangeEvent e) {
+        if (e.toWeatherState()) {
             e.setCancelled(true);
         }
     }
@@ -447,7 +484,7 @@ public class EngineMatch extends Engine {
     public void on(ChunkUnloadEvent event) {
         World world = event.getWorld();
 
-        if(!world.getName().equalsIgnoreCase(ArenaHandler.getInstance().getArenas().get(0).getWorld().getName())){
+        if (!world.getName().equalsIgnoreCase(ArenaHandler.getInstance().getArenas().get(0).getWorld().getName())) {
             return;
         }
 
@@ -455,27 +492,47 @@ public class EngineMatch extends Engine {
     }
 
     @EventHandler
-    public void onForm(BlockFormEvent event){
+    public void onForm(BlockFormEvent event) {
         BlockState newState = event.getNewState();
         Arena arena = ArenaHandler.getInstance().getFromBlock(newState.getBlock());
-        if(arena == null) return;
+        if (arena == null) return;
 
         iMatch match = MatchHandler.getInstance().getMatchFromArena(arena);
-        if(match == null) return;
+        if (match == null) return;
 
         match.getBlocks().add(newState.getLocation());
     }
 
-    public boolean generatesCobble(Material type, Block b){
+    public boolean generatesCobble(Material type, Block b) {
         Material mirrorID1 = (type == Material.WATER || type == Material.STATIONARY_WATER ? Material.LAVA : Material.WATER);
         Material mirrorID2 = (type == Material.WATER || type == Material.STATIONARY_WATER ? Material.STATIONARY_LAVA : Material.STATIONARY_WATER);
-        for (BlockFace face : faces){
+        for (BlockFace face : faces) {
             Block r = b.getRelative(face, 1);
-            if (r.getType() == mirrorID1 || r.getType() == mirrorID2){
+            if (r.getType() == mirrorID1 || r.getType() == mirrorID2) {
                 return true;
             }
         }
         return false;
+    }
+
+    private boolean generates(Block from, Block to) {
+        if (!to.isLiquid()) return false;
+        return generates(from.getType(), to.getType());
+    }
+
+    private boolean generates(Material from, Block to) {
+        if (!to.isLiquid()) return false;
+        return generates(from, to.getType());
+    }
+
+    private boolean generates(Material from, Material to) {
+        if (from == Material.STATIONARY_WATER) from = Material.WATER;
+        else if (from == Material.STATIONARY_LAVA) from = Material.LAVA;
+
+        if (to == Material.STATIONARY_WATER) to = Material.WATER;
+        else if (to == Material.STATIONARY_LAVA) to = Material.LAVA;
+
+        return from != to;
     }
 }
 
