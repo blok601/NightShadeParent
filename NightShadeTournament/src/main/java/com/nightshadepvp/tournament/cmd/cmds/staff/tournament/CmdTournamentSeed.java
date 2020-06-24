@@ -30,6 +30,12 @@ public class CmdTournamentSeed extends NightShadeTournamentCommand {
     @Override
     public void perform() throws MassiveException {
         Player p = TPlayer.get(sender).getPlayer();
+
+        if(GameHandler.getInstance().isRunning()){
+            p.sendMessage(ChatUtils.message("&cYou can't seed players while a tournament is already running!"));
+            return;
+        }
+
         p.sendMessage(ChatUtils.message("&bSeeding players in &f10&b seconds...Make sure all spectators are in spectator mode to avoid a mis-seed!"));
         new BukkitRunnable(){
             @Override

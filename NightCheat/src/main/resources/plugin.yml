@@ -1,0 +1,6 @@
+name: NightCheat
+version: ${project.version}
+main: com.nightshadepvp.nightcheat.NightCheat
+authors: [Blok]
+description: Exploit and minimal cheat prevention
+website: discord.nightshadepvp.com

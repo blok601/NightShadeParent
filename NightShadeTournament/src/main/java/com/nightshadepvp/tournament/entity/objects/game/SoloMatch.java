@@ -32,6 +32,7 @@ import com.nightshadepvp.tournament.utils.TimeUtils;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -595,7 +596,15 @@ public class SoloMatch implements iMatch {
      */
     @Override
     public void resetBlocks() {
-        this.blocks.forEach(location -> location.getWorld().getBlockAt(location).setType(Material.AIR)); //Clear all the blocks
+        Block block;
+        for (Location location : this.getBlocks()){
+           if(location.getBlock().isLiquid()){
+               location.getBlock().setType(Material.AIR);
+               continue;
+           }
+
+           location.getBlock().breakNaturally();
+        }
     }
 
     @Override

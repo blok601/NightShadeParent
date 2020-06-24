@@ -55,6 +55,7 @@ public final class Tournament extends MassivePlugin {
 
         new WeatherTask(this).runTaskTimer(this, 0, 3600);
         Core.get().getLogManager().log(Logger.LogType.INFO, "Tournaments v" + this.getDescription().getVersion() + " by " + Joiner.on(", ").join(this.getDescription().getAuthors()));
+
     }
 
 

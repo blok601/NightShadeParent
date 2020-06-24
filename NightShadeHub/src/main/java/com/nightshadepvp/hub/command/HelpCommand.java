@@ -32,7 +32,7 @@ public class HelpCommand extends HubCommand {
 
         nsPlayer.msg(ChatUtils.format("&7&m--&7&m+&7&m--------------------------------&8&m+&7&m--"));
         nsPlayer.msg(ChatUtils.format("&5Twitter: &r@NightShadePvPMC"));
-        nsPlayer.msg(ChatUtils.format("&5Discord: &rdiscord.me/NightShadeMC"));
+        nsPlayer.msg(ChatUtils.format("&5Discord: &rdiscord.nightshadepvp.com"));
         nsPlayer.msg(ChatUtils.format("&5Store: &rwww.nightshadepvp.com/shop/"));
         nsPlayer.msg(" ");
         nsPlayer.msg(ChatUtils.format("&5Helpful Commands:"));

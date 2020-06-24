@@ -234,8 +234,9 @@ public class EnginePlayer extends Engine {
         }
 
         if(name == null) return;
+        if(event.getToRank().getPexRank() == null) return;
 
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "pex user " + name + " group set " + event.getToRank().getPexRank());
+        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "pex user " + name + " group add " + event.getToRank().getPexRank());
 
     }
 }

@@ -7,6 +7,7 @@ import com.nightshadepvp.tournament.challonge.Challonge;
 import com.nightshadepvp.tournament.challonge.MatchWrapper;
 import com.nightshadepvp.tournament.entity.TPlayer;
 import com.nightshadepvp.tournament.entity.TPlayerColl;
+import com.nightshadepvp.tournament.entity.enums.TournamentState;
 import com.nightshadepvp.tournament.entity.objects.data.Kit;
 import com.nightshadepvp.tournament.entity.objects.game.SoloMatch;
 import com.nightshadepvp.tournament.entity.objects.game.iMatch;
@@ -55,6 +56,7 @@ public class GameHandler {
     private iMatch championship;
 
     private HashMap<UUID, Location> teleportQueue;
+    private TournamentState tournamentState;
 
 
     public void setup() {
@@ -68,6 +70,7 @@ public class GameHandler {
         this.chatFrozen = false;
         this.whitelist = new HashSet<>();
         this.whitelistOn = false;
+        this.tournamentState = TournamentState.WAITING;
 
 
         this.bracketLink = "https://challonge.com/users/nightshadepvp/tournaments";
@@ -238,5 +241,17 @@ public class GameHandler {
 
     public void setBracketLink(String bracketLink) {
         this.bracketLink = bracketLink;
+    }
+
+    public TournamentState getTournamentState() {
+        return tournamentState;
+    }
+
+    public void setTournamentState(TournamentState tournamentState) {
+        this.tournamentState = tournamentState;
+    }
+
+    public boolean isRunning(){
+        return this.tournamentState != TournamentState.WAITING;
     }
 }

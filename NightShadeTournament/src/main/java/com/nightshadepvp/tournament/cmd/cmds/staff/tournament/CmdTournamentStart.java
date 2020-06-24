@@ -7,6 +7,7 @@ import com.nightshadepvp.core.cmd.req.ReqRankHasAtLeast;
 import com.nightshadepvp.tournament.Tournament;
 import com.nightshadepvp.tournament.cmd.NightShadeTournamentCommand;
 import com.nightshadepvp.tournament.entity.TPlayer;
+import com.nightshadepvp.tournament.entity.enums.TournamentState;
 import com.nightshadepvp.tournament.entity.handler.GameHandler;
 import com.nightshadepvp.tournament.utils.ChatUtils;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -27,14 +28,22 @@ public class CmdTournamentStart extends NightShadeTournamentCommand {
     @Override
     public void perform() throws MassiveException {
         TPlayer tPlayer = TPlayer.get(sender);
+        GameHandler gameHandler = GameHandler.getInstance();
+
+        if(gameHandler.isRunning()){
+            tPlayer.msg(ChatUtils.message("&cYou can't start a tournament right now!"));
+            return;
+        }
 
         tPlayer.msg(ChatUtils.message("&bStarting the tournament in &f10&b seconds..."));
-        new BukkitRunnable(){
+        gameHandler.setTournamentState(TournamentState.STARTING);
+        new BukkitRunnable() {
             @Override
             public void run() {
-                GameHandler.getInstance().assignMatches();
+                gameHandler.setTournamentState(TournamentState.IN_PROGRESS);
+                gameHandler.assignMatches();
                 tPlayer.msg(ChatUtils.message("&bMatches have been assigned and started!"));
             }
-        }.runTaskLater(Tournament.get(), 10*20);
+        }.runTaskLater(Tournament.get(), 10 * 20);
     }
 }

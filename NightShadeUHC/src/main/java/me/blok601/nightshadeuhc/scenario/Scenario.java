@@ -16,7 +16,6 @@ import static me.blok601.nightshadeuhc.util.ChatUtils.format;
  */
 public class Scenario implements Listener {
 
-
     private String name;
     private String desc;
     private boolean enabled;
