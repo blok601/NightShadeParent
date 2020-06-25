@@ -607,17 +607,28 @@ public class SoloMatch implements iMatch {
 //           //location.getBlock().breakNaturally();
 //        }
 
+        this.getBlocks().forEach(location -> location.getBlock().setType(Material.AIR));
+
         new BukkitRunnable(){
             final List<BlockState> blocks = new ArrayList<>(arena.getBlocks());
+            final long startTime = System.currentTimeMillis();
             @Override
             public void run() {
                 if(blocks.isEmpty()){
+                    long endTime = System.currentTimeMillis();
+                    long totalTime = endTime - startTime;
+                    long seconds = totalTime / 1000;
+                    long millis = totalTime % 1000;
+
+                    Core.get().getLogManager().log(Logger.LogType.DEBUG, "Finished clearing " + arena.getName() + " in " + seconds + "." + millis + " seconds");
                     cancel();
                     return;
                 }
                 BlockState state = blocks.get(0);
                 Block toChange = state.getLocation().getBlock();
-                if(toChange.getType() == state.getType()) return;
+                if(toChange.getType() == state.getType() || toChange.getType() == Material.AIR){
+                    return;
+                }
 
                 toChange.setType(state.getType());
                 toChange.setData(state.getBlock().getData());
