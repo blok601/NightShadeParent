@@ -201,6 +201,10 @@ public class EngineMatch extends Engine {
             if (tPlayer.isFrozen()) {
                 e.setCancelled(true);
             }
+
+            iMatch match = MatchHandler.getInstance().getActiveMatch(p);
+            if(match == null) return;
+            if(match.getMatchState() == MatchState.RESETTING) e.setCancelled(true);
         }
     }
 
@@ -209,13 +213,25 @@ public class EngineMatch extends Engine {
         if (e.getFrom().getX() == e.getTo().getX() && e.getFrom().getZ() == e.getTo().getZ()) {
             return;
         }
-
         Player p = e.getPlayer();
 
         TPlayer tPlayer = TPlayer.get(p);
         if (tPlayer.isFrozen()) {
             e.setTo(e.getFrom());
         }
+
+        iMatch match = MatchHandler.getInstance().getActiveMatch(p);
+        if(match == null) return;
+        if(!match.getArena().getSelection().contains(e.getTo())) e.setTo(e.getFrom());
+    }
+
+    @EventHandler
+    public void onPearl(PlayerTeleportEvent e){
+        if(e.getCause() != PlayerTeleportEvent.TeleportCause.ENDER_PEARL) return;
+        Player p = e.getPlayer();
+        iMatch match = MatchHandler.getInstance().getActiveMatch(p);
+        if(match == null) return;
+        e.setCancelled(true);
     }
 
     @EventHandler
@@ -448,40 +464,6 @@ public class EngineMatch extends Engine {
             e.setCancelled(true);
         }
     }
-
-//    @EventHandler
-//    public void on(BlockPhysicsEvent event) {
-//        Block block = event.getBlock();
-//        Arena arena = ArenaHandler.getInstance().getFromBlock(block);
-//        iMatch match = MatchHandler.getInstance().getMatchFromArena(arena);
-//
-//        if(match == null) return;
-//
-//        if (arena == null) return;
-//
-//       if(match.getMatchState() != MatchState.RESETTING){
-//           return;
-//       }
-//
-//        event.setCancelled(true);
-//    }
-//
-//    @EventHandler
-//    public void on(BlockFromToEvent event) {
-//        Block block = event.getBlock();
-//        Arena arena = ArenaHandler.getInstance().getFromBlock(block);
-//        iMatch match = MatchHandler.getInstance().getMatchFromArena(arena);
-//
-//        if(match == null) return;
-//
-//        if (arena == null) return;
-//
-//        if(match.getMatchState() != MatchState.RESETTING){
-//            return;
-//        }
-//
-//        event.setCancelled(true);
-//    }
 
     @EventHandler
     public void on(ChunkUnloadEvent event) {
