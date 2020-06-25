@@ -33,6 +33,7 @@ import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -596,15 +597,37 @@ public class SoloMatch implements iMatch {
      */
     @Override
     public void resetBlocks() {
-        Block block;
-        for (Location location : this.getBlocks()){
-           if(location.getBlock().isLiquid()){
-               location.getBlock().setType(Material.AIR);
-               continue;
-           }
+//        Block block;
+//        for (Location location : this.getBlocks()){
+//           if(location.getBlock().isLiquid()){
+//               location.getBlock().setType(Material.AIR);
+//               continue;
+//           }
+//
+//           //location.getBlock().breakNaturally();
+//        }
 
-           location.getBlock().breakNaturally();
-        }
+        new BukkitRunnable(){
+            final List<BlockState> blocks = new ArrayList<>(arena.getBlocks());
+            @Override
+            public void run() {
+                if(blocks.isEmpty()){
+                    cancel();
+                    return;
+                }
+                BlockState state = blocks.get(0);
+                Block toChange = state.getLocation().getBlock();
+                if(toChange.getType() == state.getType()) return;
+
+                toChange.setType(state.getType());
+                toChange.setData(state.getBlock().getData());
+                toChange.setBiome(state.getBlock().getBiome());
+                toChange.getState().update(true, false);
+
+                blocks.remove(state);
+            }
+        }.runTaskTimer(Core.get(), 0, 1);
+
     }
 
     @Override

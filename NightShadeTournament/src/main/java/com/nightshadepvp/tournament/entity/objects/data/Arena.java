@@ -1,8 +1,12 @@
 package com.nightshadepvp.tournament.entity.objects.data;
 
+import com.google.common.collect.Lists;
 import com.sk89q.worldedit.bukkit.selections.Selection;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.BlockState;
+
+import java.util.List;
 
 /**
  * Created by Blok on 6/12/2018.
@@ -16,10 +20,12 @@ public class Arena {
     private World world;
     private boolean inUse;
     private Selection selection;
+    private List<BlockState> blocks;
 
 
     public Arena(String name) {
         this.name = name;
+        this.blocks = Lists.newArrayList();
     }
 
     public Arena() {
@@ -80,5 +86,13 @@ public class Arena {
 
     public void setSelection(Selection selection) {
         this.selection = selection;
+    }
+
+    public List<BlockState> getBlocks() {
+        return blocks;
+    }
+
+    public void setBlocks(List<BlockState> blocks) {
+        this.blocks = blocks;
     }
 }

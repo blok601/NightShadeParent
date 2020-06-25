@@ -5,6 +5,7 @@ import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Logger;
 import com.nightshadepvp.tournament.Settings;
 import com.nightshadepvp.tournament.entity.objects.data.Arena;
+import com.nightshadepvp.tournament.utils.WorldUtils;
 import com.sk89q.worldedit.bukkit.selections.CuboidSelection;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -14,6 +15,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Blok on 6/12/2018.
@@ -87,8 +89,9 @@ public class ArenaHandler {
             Location max = new Location(tempArena.getWorld(), maxx, maxy, maxz);
             Location min = new Location(tempArena.getWorld(), minx, miny, minz);
             tempArena.setSelection(new CuboidSelection(tempArena.getWorld(), min, max));
+            tempArena.setBlocks(WorldUtils.blocksFromTwoPoints(max, min).stream().map(Block::getState).collect(Collectors.toList()));
             arenas.add(tempArena);
-            Core.get().getLogManager().log(Logger.LogType.INFO, "Registered arena: " + tempArena.getName());
+            Core.get().getLogManager().log(Logger.LogType.INFO, "Registered arena: " + tempArena.getName() + " with " + tempArena.getBlocks().size() + " blocks");
         }
     }
 
@@ -171,9 +174,9 @@ public class ArenaHandler {
             Location max = new Location(tempArena.getWorld(), maxx, maxy, maxz);
             Location min = new Location(tempArena.getWorld(), minx, miny, minz);
             tempArena.setSelection(new CuboidSelection(tempArena.getWorld(), min, max));
-
+            tempArena.setBlocks(WorldUtils.blocksFromTwoPoints(max, min).stream().map(Block::getState).collect(Collectors.toList()));
             arenas.add(tempArena);
-            Core.get().getLogManager().log(Logger.LogType.INFO, "Registered arena: " + tempArena.getName());
+            Core.get().getLogManager().log(Logger.LogType.INFO, "Registered arena: " + tempArena.getName() + " with " + tempArena.getBlocks().size() + " blocks");
         }
     }
 
