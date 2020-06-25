@@ -6,7 +6,7 @@ jobs:
     working_directory: ~/blok
     steps:
       - checkout
-      - run: mvn clean package -pl NightShadeCore, NightShadeUHC, NightShadeTournament
+      - run: mvn -P ci clean package
       - run: ls
       - store_artifacts:
           path: NightShadeUHC/target/UHC.jar
