@@ -2,25 +2,42 @@ package com.nightshadepvp.tournament;
 
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 import com.massivecraft.massivecore.MassivePlugin;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
 import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Logger;
+import com.nightshadepvp.core.utils.ItemBuilder;
 import com.nightshadepvp.tournament.challonge.Challonge;
+import com.nightshadepvp.tournament.entity.TPlayer;
 import com.nightshadepvp.tournament.entity.handler.ArenaHandler;
 import com.nightshadepvp.tournament.entity.handler.GameHandler;
 import com.nightshadepvp.tournament.entity.handler.KitHandler;
 import com.nightshadepvp.tournament.entity.handler.RoundHandler;
+import com.nightshadepvp.tournament.entity.objects.data.CachedGame;
 import com.nightshadepvp.tournament.scoreboard.ScoreboardLib;
 import com.nightshadepvp.tournament.task.WeatherTask;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.bukkit.selections.CuboidSelection;
 import com.sk89q.worldedit.bukkit.selections.Selection;
+import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.Plugin;
+
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public final class Tournament extends MassivePlugin {
 
@@ -34,6 +51,9 @@ public final class Tournament extends MassivePlugin {
     private Location editLocation;
     private Challonge challonge;
     private Selection editLocationSelection;
+    private CachedGame cachedGame;
+    private MongoCollection<Document> tourneyCollection;
+    private ArrayList<ItemStack> hofInventoryItems;
 
 
     @Override
@@ -51,11 +71,14 @@ public final class Tournament extends MassivePlugin {
         ScoreboardLib.setPluginInstance(this);
         loadSpawn();
         loadEdit();
+        setupExtraDatabase();
 
 
         new WeatherTask(this).runTaskTimer(this, 0, 3600);
         Core.get().getLogManager().log(Logger.LogType.INFO, "Tournaments v" + this.getDescription().getVersion() + " by " + Joiner.on(", ").join(this.getDescription().getAuthors()));
-
+        this.cachedGame = new CachedGame();
+        Core.get().getLogManager().log(Logger.LogType.INFO, "Attempting to load HOF");
+        setupHOF();
     }
 
 
@@ -190,5 +213,94 @@ public final class Tournament extends MassivePlugin {
 
     public void setEditLocationSelection(Selection editLocationSelection) {
         this.editLocationSelection = editLocationSelection;
+    }
+
+    public CachedGame getCachedGame() {
+        return cachedGame;
+    }
+
+    private void setupExtraDatabase() {
+        Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
+            final String URI = "mongodb://localhost:27017/network";
+            MongoClient mongoClient = new MongoClient(new MongoClientURI(URI));
+
+            MongoDatabase mongoDatabase = mongoClient.getDatabase("network");
+            this.tourneyCollection = mongoDatabase.getCollection("tourneyGames");
+            Core.get().getLogManager().log(Logger.LogType.SERVER, "Successfully connected to Mongo DB!");
+        });
+    }
+
+    public MongoCollection<Document> getTourneyCollection() {
+        return tourneyCollection;
+    }
+
+    private void setupHOF(){
+        this.hofInventoryItems = Lists.newArrayList();
+        getServer().getScheduler().runTaskAsynchronously(this, () ->{
+            ArrayList<CachedGame> cachedGames = new ArrayList<>();
+            FindIterable<Document> documents = this.getTourneyCollection().find();
+            MongoCursor<Document> cursor = documents.iterator();
+            try {
+                while (cursor.hasNext()) {
+                    Document doc = cursor.next();
+                    CachedGame tempGame = new CachedGame();
+                    tempGame.setHost(doc.getString("host"));
+                    tempGame.setWinners((List<String>) doc.get("winners"));
+                    tempGame.setKit(doc.getString("kit"));
+                    tempGame.setFill(doc.getInteger("players"));
+                    tempGame.setBracketLink(doc.getString("bracket"));
+                    tempGame.setTeamType(doc.getString("teamType"));
+                    tempGame.setStart(doc.getLong("startTime"));
+                    tempGame.setEnd(doc.getLong("endTime"));
+                    tempGame.setServer(doc.getString("server"));
+                    tempGame.setTourneyID(doc.getLong("matchID"));
+//                    if (tempGame.getFill() > 10)
+//                        cachedGames.add(tempGame);
+                }
+            } finally {
+                cursor.close();
+            }
+
+
+            cachedGames.sort(Comparator.comparing(CachedGame::getEnd));
+            ArrayList<ItemStack> items = new ArrayList<>();
+            SkullMeta skullMeta;
+            ItemStack head;
+            ItemBuilder itemBuilder;
+            TPlayer host;
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm:ss aa MM/dd/YYYY");
+            for (CachedGame cachedGame : cachedGames) {
+                host = TPlayer.get(UUID.fromString(cachedGame.getHost()));
+                head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+                skullMeta = (SkullMeta) head.getItemMeta();
+                skullMeta.setOwner(host.getName());
+                head.setItemMeta(skullMeta);
+                itemBuilder = new ItemBuilder(head);
+                itemBuilder.name("&6" + host.getName() + "&8»");
+                itemBuilder.lore("&eStart Time&8» &b" + simpleDateFormat.format(new Date(cachedGame.getStart())));
+                itemBuilder.lore("&eEnd Time&8» &b" + simpleDateFormat.format(new Date(cachedGame.getEnd())));
+                itemBuilder.lore(" ");
+                itemBuilder.lore("&eFill&8» &b" + cachedGame.getFill());
+                itemBuilder.lore("&eTeam Type&8» &b" + cachedGame.getTeamType());
+                itemBuilder.lore(" ");
+                itemBuilder.lore("&eKit8» &b" + cachedGame.getKit());
+                String winnerName;
+                itemBuilder.lore("&eWinner&7(&es&7)&8»");
+                //itemBuilder.lore("&eWinner&7(&es&7)&8» &b" + winnerName + " &8[&3" + cachedGame.getWinnerKills().get(cachedGame.getWinners().get(0)) + "&8]");
+                for (String w : cachedGame.getWinners()) {
+                    winnerName = TPlayer.get(UUID.fromString(w)).getName();
+                    itemBuilder.lore("  &8→ &b" + winnerName);
+                }
+                itemBuilder.lore(" ");
+                itemBuilder.lore("&eBracket Link8» &b" + cachedGame.getBracketLink());
+                itemBuilder.lore("&eRounds8» &b" + cachedGame.getRounds());
+                items.add(itemBuilder.make());
+            }
+            Core.get().getLogManager().log(Logger.LogType.INFO, "HOF Successfully setup!");
+        });
+    }
+
+    public ArrayList<ItemStack> getHofInventoryItems() {
+        return hofInventoryItems;
     }
 }

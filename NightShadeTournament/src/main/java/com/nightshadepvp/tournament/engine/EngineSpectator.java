@@ -141,6 +141,12 @@ public class EngineSpectator extends Engine {
                 p.openInventory(inv.pages.get(inv.currpage));
             }
         } else {
+
+            if(event.getInventory().getName().contains("Hall of Fame")){
+                event.setCancelled(true);
+                return;
+            }
+
             ItemStack stack = event.getCurrentItem();
             if(stack.getType() != Material.PAPER) return;
             if(!stack.hasItemMeta()) return;

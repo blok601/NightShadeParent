@@ -119,7 +119,7 @@ public class TPlayer extends SenderEntity<TPlayer> {
         if(getFightsLost() == 0){
             return format.format(getFightsWon());
         }
-        double kd = getFightsWon()/(getFightsLost() * 1.0);
+        double kd = getFightsWon()/(getFightsLost() * 100.0);
         return format.format(kd);
 
     }
@@ -130,7 +130,7 @@ public class TPlayer extends SenderEntity<TPlayer> {
         if(getTournamentsPlayed() == 0){
             return format.format(getTournamentsWon());
         }
-        double wg = getTournamentsWon()/(getTournamentsPlayed() * 1.0);
+        double wg = getTournamentsWon()/(getTournamentsPlayed() * 100.0);
         return format.format(wg);
     }
 

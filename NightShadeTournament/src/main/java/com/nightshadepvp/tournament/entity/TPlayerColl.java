@@ -1,9 +1,11 @@
 package com.nightshadepvp.tournament.entity;
 
+import com.massivecraft.massivecore.command.type.sender.TypePlayer;
 import com.massivecraft.massivecore.store.SenderColl;
 import com.nightshadepvp.core.entity.MConf;
 import com.nightshadepvp.core.store.NSStore;
 import com.nightshadepvp.tournament.Tournament;
+import com.nightshadepvp.tournament.entity.enums.PlayerStatus;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -46,6 +48,10 @@ public class TPlayerColl extends SenderColl<TPlayer> {
 
 
     public Collection<TPlayer> getAllPlayers(){
-        return getAllOnline().stream().filter(TPlayer::isSeeded).filter(tPlayer -> !tPlayer.isSpectator()).collect(Collectors.toList());
+        return getAllOnline().stream().filter(TPlayer::isPlayer).filter(TPlayer::isSeeded).filter(tPlayer -> !tPlayer.isSpectator()).collect(Collectors.toList());
+    }
+
+    public Collection<TPlayer> getSpectators(){
+        return getAllOnline().stream().filter(TPlayer::isPlayer).filter(tPlayer -> tPlayer.isSpectator() && tPlayer.getStatus() == PlayerStatus.SPECTATING).collect(Collectors.toList());
     }
 }

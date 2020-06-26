@@ -20,6 +20,9 @@ import com.nightshadepvp.tournament.entity.handler.RoundHandler;
 import com.nightshadepvp.tournament.entity.objects.data.Arena;
 import com.nightshadepvp.tournament.entity.objects.data.Kit;
 import com.nightshadepvp.tournament.entity.objects.player.PlayerInv;
+import com.nightshadepvp.tournament.event.MatchEndEvent;
+import com.nightshadepvp.tournament.event.MatchStartEvent;
+import com.nightshadepvp.tournament.event.TournamentEndEvent;
 import com.nightshadepvp.tournament.scoreboard.ScoreboardLib;
 import com.nightshadepvp.tournament.scoreboard.ScoreboardSettings;
 import com.nightshadepvp.tournament.scoreboard.common.EntryBuilder;
@@ -277,8 +280,10 @@ public class SoloMatch implements iMatch {
         //Doesn't matter how they died but do this stuff
         winner.setFightsWon(winner.getFightsWon() + 1);
         loser.setFightsLost(loser.getFightsLost() + 1);
+        loser.setTournamentsHosted(loser.getTournamentsPlayed() + 1);
         getScoreboards().values().forEach(Scoreboard::deactivate); //Turn all boards off
         scoreboards.clear();
+        Tournament.get().getServer().getPluginManager().callEvent(new MatchEndEvent(this));
 
         loser.msg(ChatUtils.message("&bYou have died! Thank you for playing on NightShadePvP!"));
         loser.msg(ChatUtils.message("&bJoin the Discord at discord.me/NightShadePvP for updates and more!"));
@@ -344,6 +349,8 @@ public class SoloMatch implements iMatch {
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
+
+            Tournament.get().getServer().getPluginManager().callEvent(new TournamentEndEvent(this));
         }
 
     }
@@ -466,6 +473,7 @@ public class SoloMatch implements iMatch {
                     unfreezePlayers();
                     setMatchState(MatchState.INGAME);
 
+
                 } else {
                     PacketPlayOutTitle packet = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + counter + "\",\"color\":\"dark_aqua\",\"bold\":true}"), 0, 10, 0);
                     for (TPlayer tPlayer : getPlayers()) {
@@ -483,6 +491,7 @@ public class SoloMatch implements iMatch {
                 counter--;
             }
         }.runTaskTimer(Tournament.get(), 0, 20);
+        Tournament.get().getServer().getPluginManager().callEvent(new MatchStartEvent(this));
     }
 
     @Override

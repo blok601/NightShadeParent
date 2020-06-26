@@ -2,6 +2,7 @@ package com.nightshadepvp.tournament.cmd.cmds.staff.tournament;
 
 import com.massivecraft.massivecore.MassiveException;
 import com.massivecraft.massivecore.command.requirement.RequirementIsPlayer;
+import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.cmd.req.ReqRankHasAtLeast;
 import com.nightshadepvp.tournament.Tournament;
@@ -9,6 +10,7 @@ import com.nightshadepvp.tournament.cmd.NightShadeTournamentCommand;
 import com.nightshadepvp.tournament.entity.TPlayer;
 import com.nightshadepvp.tournament.entity.enums.TournamentState;
 import com.nightshadepvp.tournament.entity.handler.GameHandler;
+import com.nightshadepvp.tournament.event.TournamentStartEvent;
 import com.nightshadepvp.tournament.utils.ChatUtils;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -41,6 +43,7 @@ public class CmdTournamentStart extends NightShadeTournamentCommand {
             @Override
             public void run() {
                 gameHandler.setTournamentState(TournamentState.IN_PROGRESS);
+                Tournament.get().getServer().getPluginManager().callEvent(new TournamentStartEvent());
                 gameHandler.assignMatches();
                 tPlayer.msg(ChatUtils.message("&bMatches have been assigned and started!"));
             }
