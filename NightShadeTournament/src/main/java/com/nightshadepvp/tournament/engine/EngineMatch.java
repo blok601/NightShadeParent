@@ -221,7 +221,7 @@ public class EngineMatch extends Engine {
         }
 
         iMatch match = MatchHandler.getInstance().getActiveMatch(p);
-        if(match == null) return;
+        if(match == null || match.getMatchState() != MatchState.INGAME) return;
         if(!match.getArena().getSelection().contains(e.getTo())) e.setTo(e.getFrom());
     }
 
@@ -351,11 +351,6 @@ public class EngineMatch extends Engine {
     public void onSpread(BlockFromToEvent e) {
         Block b = e.getToBlock();
 
-//        Block to1 = e.getToBlock().getRelative(BlockFace.EAST);
-//        Block to2 = e.getToBlock().getRelative(BlockFace.WEST);
-//        Block to3 = e.getToBlock().getRelative(BlockFace.SOUTH);
-//        Block to4 = e.getToBlock().getRelative(BlockFace.NORTH);
-
         Arena arena = ArenaHandler.getInstance().getFromBlock(e.getBlock());
         iMatch match = MatchHandler.getInstance().getMatchFromArena(arena);
         if (arena == null || match == null) return;
@@ -365,7 +360,6 @@ public class EngineMatch extends Engine {
                 @Override
                 public void run() {
                     match.getBlocks().add(e.getToBlock().getLocation());
-//                    e.setCancelled(true);
                     Core.get().getLogManager().log(Logger.LogType.DEBUG, "Generated (1): " + e.getToBlock().getType().name());
 
                 }
@@ -380,7 +374,6 @@ public class EngineMatch extends Engine {
                         @Override
                         public void run() {
                             match.getBlocks().add(e.getToBlock().getLocation());
-//                            e.setCancelled(true);
                             Core.get().getLogManager().log(Logger.LogType.DEBUG, "Generated (2): " + e.getToBlock().getType().name());
                         }
                     }.runTaskLater(Core.get(), 2);
@@ -388,52 +381,6 @@ public class EngineMatch extends Engine {
                 }
             }
         }
-
-        BlockFace[] nesw = {BlockFace.DOWN, BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST};
-        for (BlockFace face : nesw) {
-            if (generates(e.getBlock(), e.getToBlock().getRelative(face))) {
-                //match.getBlocks().add(e.getToBlock().getRelative(face).getLocation());
-                e.setCancelled(true);
-                return;
-            }
-        }
-
-
-//        if (to1.getData() == 0 && b.hasMetadata("toRemove")) {
-//            Arena arena = ArenaHandler.getInstance().getFromBlock(b);
-//            for (iMatch g : MatchHandler.getInstance().getActiveMatches()) {
-//                if (g.getArena() == arena) {
-//                    g.getBlocks().add(to1.getLocation());
-//                }
-//            }
-//        }
-//
-//        if (to2.getData() == 0 && b.hasMetadata("toRemove")) {
-//            Arena arena = ArenaHandler.getInstance().getFromBlock(b);
-//            for (iMatch g : MatchHandler.getInstance().getActiveMatches()) {
-//                if (g.getArena() == arena) {
-//                    g.getBlocks().add(to2.getLocation());
-//                }
-//            }
-//        }
-//
-//        if (to3.getData() == 0 && b.hasMetadata("toRemove")) {
-//            Arena arena = ArenaHandler.getInstance().getFromBlock(b);
-//            for (iMatch g : MatchHandler.getInstance().getActiveMatches()) {
-//                if (g.getArena() == arena) {
-//                    g.getBlocks().add(to3.getLocation());
-//                }
-//            }
-//        }
-//
-//        if (to4.getData() == 0 && b.hasMetadata("toRemove")) {
-//            Arena arena = ArenaHandler.getInstance().getFromBlock(b);
-//            for (iMatch g : MatchHandler.getInstance().getActiveMatches()) {
-//                if (g.getArena() == arena) {
-//                    g.getBlocks().add(to4.getLocation());
-//                }
-//            }
-//        }
     }
 
     @EventHandler
