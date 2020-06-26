@@ -364,8 +364,8 @@ public class EngineMatch extends Engine {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    //match.getBlocks().add(e.getToBlock().getLocation());
-                    e.setCancelled(true);
+                    match.getBlocks().add(e.getToBlock().getLocation());
+//                    e.setCancelled(true);
                     Core.get().getLogManager().log(Logger.LogType.DEBUG, "Generated (1): " + e.getToBlock().getType().name());
 
                 }
@@ -379,8 +379,8 @@ public class EngineMatch extends Engine {
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-                            //match.getBlocks().add(e.getToBlock().getLocation());
-                            e.setCancelled(true);
+                            match.getBlocks().add(e.getToBlock().getLocation());
+//                            e.setCancelled(true);
                             Core.get().getLogManager().log(Logger.LogType.DEBUG, "Generated (2): " + e.getToBlock().getType().name());
                         }
                     }.runTaskLater(Core.get(), 2);
