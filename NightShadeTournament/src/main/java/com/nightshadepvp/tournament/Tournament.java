@@ -77,8 +77,10 @@ public final class Tournament extends MassivePlugin {
         new WeatherTask(this).runTaskTimer(this, 0, 3600);
         Core.get().getLogManager().log(Logger.LogType.INFO, "Tournaments v" + this.getDescription().getVersion() + " by " + Joiner.on(", ").join(this.getDescription().getAuthors()));
         this.cachedGame = new CachedGame();
-        Core.get().getLogManager().log(Logger.LogType.INFO, "Attempting to load HOF");
-        setupHOF();
+        getServer().getScheduler().runTaskLater(this, () -> {
+            Core.get().getLogManager().log(Logger.LogType.INFO, "Attempting to load HOF");
+            setupHOF();
+        }, 200);
     }
 
 

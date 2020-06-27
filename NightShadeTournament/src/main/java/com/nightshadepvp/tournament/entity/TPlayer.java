@@ -119,6 +119,7 @@ public class TPlayer extends SenderEntity<TPlayer> {
         if(getFightsLost() == 0){
             return format.format(getFightsWon());
         }
+
         double kd = getFightsWon()/(getFightsLost() * 100.0);
         return format.format(kd);
 

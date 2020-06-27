@@ -31,6 +31,6 @@ public class CmdLunar extends NightShadeCoreCommand {
     public void perform() throws MassiveException {
         NSPlayer nsPlayer = NSPlayer.get(sender);
         LunarClientAPI api = Core.get().getApi();
-        nsPlayer.msg(ChatUtils.message("&bPlayers using Lunar Client:" + Joiner.on("&7, &f").join(Bukkit.getOnlinePlayers().stream().filter(api::isAuthenticated).map(HumanEntity::getName).collect(Collectors.toList()))));
+        nsPlayer.msg(ChatUtils.message("&bPlayers using Lunar Client: " + Joiner.on("&7, &f").join(Bukkit.getOnlinePlayers().stream().filter(api::isAuthenticated).map(HumanEntity::getName).collect(Collectors.toList()))));
     }
 }
