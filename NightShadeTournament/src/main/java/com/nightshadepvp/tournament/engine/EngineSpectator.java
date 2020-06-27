@@ -142,7 +142,7 @@ public class EngineSpectator extends Engine {
             }
         } else {
 
-            if(event.getInventory().getName().contains("Hall of Fame")){
+            if(event.getInventory().getName().contains(ChatColor.stripColor("Hall of Fame"))){
                 event.setCancelled(true);
                 return;
             }

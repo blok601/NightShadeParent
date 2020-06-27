@@ -52,7 +52,7 @@ public class PagedInventory {
 
     //This creates a blank page with the next and prev buttons
     private Inventory getBlankPage(String name) {
-        Inventory page = Bukkit.createInventory(null, 54, name);
+        Inventory page = Bukkit.createInventory(null, 54, ChatUtils.format(name));
 
         ItemStack nextpage = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 5);
         ItemMeta meta = nextpage.getItemMeta();

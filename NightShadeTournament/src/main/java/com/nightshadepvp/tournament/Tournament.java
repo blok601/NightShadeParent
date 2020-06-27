@@ -38,6 +38,7 @@ import org.bukkit.plugin.Plugin;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 public final class Tournament extends MassivePlugin {
 
@@ -71,16 +72,15 @@ public final class Tournament extends MassivePlugin {
         ScoreboardLib.setPluginInstance(this);
         loadSpawn();
         loadEdit();
-        setupExtraDatabase();
+        setupExtraDatabase().thenAcceptAsync(aBoolean -> {
+            Core.get().getLogManager().log(Logger.LogType.INFO, "Attempting to load HOF");
+            setupHOF();
+        });
 
 
         new WeatherTask(this).runTaskTimer(this, 0, 3600);
         Core.get().getLogManager().log(Logger.LogType.INFO, "Tournaments v" + this.getDescription().getVersion() + " by " + Joiner.on(", ").join(this.getDescription().getAuthors()));
         this.cachedGame = new CachedGame();
-        getServer().getScheduler().runTaskLater(this, () -> {
-            Core.get().getLogManager().log(Logger.LogType.INFO, "Attempting to load HOF");
-            setupHOF();
-        }, 200);
     }
 
 
@@ -221,14 +221,16 @@ public final class Tournament extends MassivePlugin {
         return cachedGame;
     }
 
-    private void setupExtraDatabase() {
-        Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
+    private CompletableFuture<Boolean> setupExtraDatabase() {
+        return CompletableFuture.supplyAsync(() -> {
             final String URI = "mongodb://localhost:27017/network";
             MongoClient mongoClient = new MongoClient(new MongoClientURI(URI));
 
             MongoDatabase mongoDatabase = mongoClient.getDatabase("network");
             this.tourneyCollection = mongoDatabase.getCollection("tourneyGames");
             Core.get().getLogManager().log(Logger.LogType.SERVER, "Successfully connected to Mongo DB!");
+
+            return true;
         });
     }
 

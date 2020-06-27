@@ -20,6 +20,6 @@ public class CmdHOF extends NightShadeTournamentCommand {
     @Override
     public void perform() throws MassiveException {
         Player player = (Player) sender;
-        new PagedInventory(Tournament.get().getHofInventoryItems(), "Hall of Fame", player);
+        new PagedInventory(Tournament.get().getHofInventoryItems(), "&bHall of Fame", player);
     }
 }
