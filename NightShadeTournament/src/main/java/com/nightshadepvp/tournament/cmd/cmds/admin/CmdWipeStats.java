@@ -12,6 +12,7 @@ import com.nightshadepvp.tournament.entity.TPlayerColl;
 import com.nightshadepvp.tournament.utils.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
 public class CmdWipeStats extends NightShadeTournamentCommand {
 
@@ -65,6 +66,14 @@ public class CmdWipeStats extends NightShadeTournamentCommand {
                 }
 
                 TPlayer tPlayer = TPlayer.get(offlinePlayer.getUniqueId());
+                tPlayer.setFightsWon(0);
+                tPlayer.setFightsLost(0);
+                tPlayer.setTournamentsWon(0);
+                tPlayer.setTournamentsPlayed(0);
+                nsPlayer.msg(ChatUtils.message("&bSuccessfully cleared the stats of &f" + tPlayer.getName()));
+            }else{
+                Player target = Bukkit.getPlayer(arg);
+                TPlayer tPlayer = TPlayer.get(target);
                 tPlayer.setFightsWon(0);
                 tPlayer.setFightsLost(0);
                 tPlayer.setTournamentsWon(0);
