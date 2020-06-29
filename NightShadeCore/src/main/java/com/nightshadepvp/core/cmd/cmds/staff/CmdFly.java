@@ -13,7 +13,10 @@ import org.bukkit.entity.Player;
 public class CmdFly extends NightShadeCoreCommand {
 
     private static CmdFly i = new CmdFly();
-    public static CmdFly get() {return i;}
+
+    public static CmdFly get() {
+        return i;
+    }
 
     public CmdFly() {
         this.addAliases("fly");
@@ -27,13 +30,15 @@ public class CmdFly extends NightShadeCoreCommand {
         Player player = (Player) sender;
         boolean state = this.readArg();
         Player target = this.readArg(player);
-        if(target == null){
+        if (target == null) {
             player.sendMessage(ChatUtils.message("&cThat player couldn't be found!"));
             return;
         }
 
         target.setAllowFlight(state);
-        target.setFlying(true);
+        if (state) {
+            target.setFlying(true);
+        }
         player.sendMessage(ChatUtils.message("&bSet fly mode " + (state ? "&aenabled" : "&cdisabled") + " &bfor &f" + target.getName()));
     }
 }

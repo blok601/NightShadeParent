@@ -18,7 +18,7 @@ public class FireAspectComponent extends Component{
 
     @EventHandler
     public void on(EnchantItemEvent event) {
-        if(!isEnabled()) return;
+        if(isEnabled()) return;
 
         Map<Enchantment, Integer> toAdd = event.getEnchantsToAdd();
 

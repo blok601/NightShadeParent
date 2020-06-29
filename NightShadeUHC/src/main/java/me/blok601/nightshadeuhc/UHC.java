@@ -38,6 +38,7 @@ import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 public class UHC extends MassivePlugin implements PluginMessageListener {
 
@@ -95,13 +96,12 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         }
 
         api = getServer().getServicesManager().getRegistration(DisguiseAPI.class).getProvider();
-        setupExtraDatabase();
+        setupExtraDatabase().thenAcceptAsync(aBoolean -> StatsHandler.getInstance().setup());
 
 
         getConfig().options().copyDefaults(true);
         saveConfig();
         SettingsManager.getInstance().setup(this);
-        StatsHandler.getInstance().setup();
         new GoldenHeadRecipe();
         FakePlayerManager.getInstance().setup(this);
         LoggerManager.getInstance().setup();
@@ -238,14 +238,15 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
     }
 
 
-    private void setupExtraDatabase() {
-        Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
-            final String URI = "mongodb://localhost:27017/network";
-            MongoClient mongoClient = new MongoClient(new MongoClientURI(URI));
+    private CompletableFuture<Boolean> setupExtraDatabase() {
+        return CompletableFuture.supplyAsync(() -> {
+                final String URI = "mongodb://localhost:27017/network";
+                MongoClient mongoClient = new MongoClient(new MongoClientURI(URI));
 
-            MongoDatabase mongoDatabase = mongoClient.getDatabase("network");
-            this.gameCollection = mongoDatabase.getCollection("uhcGames");
-            Core.get().getLogManager().log(Logger.LogType.SERVER, "Successfully connected to Mongo DB!");
+                MongoDatabase mongoDatabase = mongoClient.getDatabase("network");
+                this.gameCollection = mongoDatabase.getCollection("uhcGames");
+                Core.get().getLogManager().log(Logger.LogType.SERVER, "Successfully connected to Mongo DB!");
+                return true;
         });
     }
 

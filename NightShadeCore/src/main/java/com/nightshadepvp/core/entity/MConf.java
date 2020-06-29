@@ -4,6 +4,8 @@ import com.massivecraft.massivecore.command.editor.annotation.EditorName;
 import com.massivecraft.massivecore.store.Entity;
 import com.massivecraft.massivecore.util.TimeUnit;
 import com.nightshadepvp.core.ServerType;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 
 import java.util.ArrayList;
 
@@ -21,6 +23,7 @@ public class MConf extends Entity<MConf> {
         this.setExempt(that.exempt);
         this.setMaintenance(that.maintenance);
         this.setAnnouncerMessages(that.announcer);
+        this.setSpawnLocation(that.spawnLocation);
         return this;
     }
 
@@ -32,6 +35,7 @@ public class MConf extends Entity<MConf> {
     private ArrayList<String> exempt = new ArrayList<>();
     private boolean maintenance = false;
     private ArrayList<String> announcer = new ArrayList<>();
+    private Location spawnLocation = new Location(Bukkit.getWorlds().get(0), 0, 0, 0);
 
 
     public String getServerName() {
@@ -67,5 +71,13 @@ public class MConf extends Entity<MConf> {
 
     public void setMaintenance(boolean maintenance) {
         this.maintenance = maintenance;
+    }
+
+    public Location getSpawnLocation() {
+        return spawnLocation;
+    }
+
+    public void setSpawnLocation(Location spawnLocation) {
+        this.spawnLocation = spawnLocation;
     }
 }
