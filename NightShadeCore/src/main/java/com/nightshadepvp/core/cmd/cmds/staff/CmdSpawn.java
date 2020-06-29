@@ -2,6 +2,7 @@ package com.nightshadepvp.core.cmd.cmds.staff;
 
 import com.massivecraft.massivecore.MassiveException;
 import com.massivecraft.massivecore.command.type.sender.TypePlayer;
+import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.cmd.NightShadeCoreCommand;
 import com.nightshadepvp.core.cmd.req.ReqRankHasAtLeast;
@@ -31,7 +32,7 @@ public class CmdSpawn extends NightShadeCoreCommand {
                 return;
             }
 
-            target.teleport(MConf.get().getSpawnLocation());
+            target.teleport(Core.get().getSpawn());
             nsPlayer.msg(ChatUtils.message("&bSent &f" + target.getName() + " &bto spawn!"));
             return;
         }
@@ -46,7 +47,7 @@ public class CmdSpawn extends NightShadeCoreCommand {
             return;
         }
 
-        target.teleport(MConf.get().getSpawnLocation());
+        target.teleport(Core.get().getSpawn());
         nsPlayer.msg(ChatUtils.message("&bSent &f" + target.getName() + " &bto spawn!"));
         return;
 

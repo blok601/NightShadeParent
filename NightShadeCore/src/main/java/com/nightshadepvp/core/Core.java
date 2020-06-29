@@ -29,6 +29,9 @@ import com.nightshadepvp.core.utils.BufferUtils;
 import com.nightshadepvp.core.utils.ChatUtils;
 import litebans.api.Events;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -56,6 +59,7 @@ public class Core extends MassivePlugin implements PluginMessageListener {
     private Jedis jedis;
     private Announcer announcer;
     private HashMap<UUID, ArrayList<Consumer<UUID>>> loginTasks;
+    private Location spawn;
 
 
     //Lunar Api
@@ -87,8 +91,7 @@ public class Core extends MassivePlugin implements PluginMessageListener {
         this.borderManager = new BorderManagerImplementation(this);
 
         // Setup configuration
-        this.getConfig().options().copyDefaults(true);
-        this.saveConfig();
+        this.loadSpawn();
 
         // Add our channel listeners
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "Lunar-Client");
@@ -103,7 +106,7 @@ public class Core extends MassivePlugin implements PluginMessageListener {
 
                 User user = getApi().getUserManager().getPlayerData(player);
 
-                if (user != null && !user.isLunarClient()){
+                if (user != null && !user.isLunarClient()) {
                     user.setLunarClient(true);
                     new AuthenticateEvent(player).call(this);
                 }
@@ -139,7 +142,7 @@ public class Core extends MassivePlugin implements PluginMessageListener {
         PunishmentHandler.getInstance().setup();
         ServerType.setType(MConf.get().serverType);
 
-        new BukkitRunnable(){
+        new BukkitRunnable() {
             @Override
             public void run() {
                 jedis = new Jedis("localhost");
@@ -147,12 +150,12 @@ public class Core extends MassivePlugin implements PluginMessageListener {
             }
         }.runTaskAsynchronously(this);
 
-        new BukkitRunnable(){
+        new BukkitRunnable() {
             @Override
             public void run() {
                 NSPlayerColl.get().getAllOnline().forEach(nsPlayer -> {
                     nsPlayer.setCurrentAFKTime(nsPlayer.getCurrentAFKTime() + 1);
-                    if(nsPlayer.getCurrentAFKTime() >= 10){
+                    if (nsPlayer.getCurrentAFKTime() >= 10) {
                         nsPlayer.setAFK(true); //If they haven't done shit for 10 seconds they are afk
                     }
                 });
@@ -171,6 +174,7 @@ public class Core extends MassivePlugin implements PluginMessageListener {
     public void onDisable() {
         i = null;
         MConf.get().setAnnouncerMessages(this.announcer.getMessages());
+        this.saveSpawn();
         this.getServer().getMessenger().unregisterIncomingPluginChannel(this, "WDL|INIT");
         this.getServer().getMessenger().unregisterOutgoingPluginChannel(this, "WDL|CONTROL");
     }
@@ -202,7 +206,7 @@ public class Core extends MassivePlugin implements PluginMessageListener {
             String msg = in.readUTF();
 
             NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> nsPlayer.hasRank(Rank.TRIAL)).forEach(nsPlayer -> nsPlayer.msg(ChatUtils.format("&8[&cStaff Chat&8] &a" + playerName + "&8: &r" + msg)));
-        }else if(channel.equalsIgnoreCase("Maintenance")){
+        } else if (channel.equalsIgnoreCase("Maintenance")) {
             ByteArrayDataInput in = ByteStreams.newDataInput(message);
             String playerName = in.readUTF();
             boolean state = in.readBoolean();
@@ -212,11 +216,11 @@ public class Core extends MassivePlugin implements PluginMessageListener {
             MConf.get().setMaintenance(state);
             MConf.get().changed();
 
-            if(state){
-                if(MConf.get().isMaintenance()){
+            if (state) {
+                if (MConf.get().isMaintenance()) {
                     Bukkit.broadcastMessage(ChatUtils.format("&5Proxy&8 » &b" + playerName + " &ahas enabled maintenance mode!"));
                     Bukkit.broadcastMessage(ChatUtils.format("&5Proxy&8 » &aThe server will enter maintenance mode in 5 seconds..."));
-                    new BukkitRunnable(){
+                    new BukkitRunnable() {
                         @Override
                         public void run() {
                             NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> !nsPlayer.hasRank(Rank.TRIAL)).forEach(nsPlayer -> {
@@ -226,8 +230,8 @@ public class Core extends MassivePlugin implements PluginMessageListener {
                         }
                     }.runTaskLater(this, 100);
                 }
-            }else{
-                if(!MConf.get().isMaintenance()){
+            } else {
+                if (!MConf.get().isMaintenance()) {
                     Bukkit.broadcastMessage(ChatUtils.format("&5Proxy&8 » &b" + playerName + " &chas disabled maintenance mode!"));
                     Bukkit.broadcastMessage(ChatUtils.format("&5Proxy&8 » &cThe server will exit maintenance mode..."));
                     MConf.get().setMaintenance(false);
@@ -242,7 +246,7 @@ public class Core extends MassivePlugin implements PluginMessageListener {
     }
 
     public Jedis getJedis() {
-        if(jedis == null || !jedis.isConnected()){
+        if (jedis == null || !jedis.isConnected()) {
             jedis = new Jedis("localhost");
         }
 
@@ -287,5 +291,44 @@ public class Core extends MassivePlugin implements PluginMessageListener {
 
     public LunarClientAPI getApi() {
         return api;
+    }
+
+    public Location getSpawn() {
+        return spawn;
+    }
+
+    public void setSpawn(Location spawn) {
+        this.spawn = spawn;
+    }
+
+    private void loadSpawn() {
+        FileConfiguration config = this.getConfig();
+        if (!config.contains("spawn")) {
+            this.spawn = new Location(Bukkit.getWorlds().get(0), 0, 0, 0);
+            return;
+        }
+
+        double x, y, z;
+        float pitch, yaw;
+        World world;
+        world = Bukkit.getWorld(config.getString("spawn.x"));
+        x = config.getDouble("spawn.x");
+        y = config.getDouble("spawn.y");
+        z = config.getDouble("spawn.z");
+        yaw = config.getFloat("spawn.yaw");
+        pitch = config.getFloat("spawn.pitch");
+        this.spawn = new Location(world, x, y, z, yaw, pitch);
+    }
+
+    private void saveSpawn() {
+        FileConfiguration config = this.getConfig();
+        config.set("spawn.world", spawn.getWorld().getName());
+        config.set("spawn.x", spawn.getX());
+        config.set("spawn.y", spawn.getY());
+        config.set("spawn.z", spawn.getZ());
+        config.set("spawn.yaw", spawn.getYaw());
+        config.set("spawn.pitch", spawn.getPitch());
+        this.saveConfig();
+        ;
     }
 }
