@@ -11,6 +11,7 @@ import me.blok601.nightshadeuhc.entity.object.ArenaSession;
 import me.blok601.nightshadeuhc.entity.object.PlayerStatus;
 import me.blok601.nightshadeuhc.event.PlayerStartSpectatingEvent;
 import me.blok601.nightshadeuhc.event.PlayerStopSpectatingEvent;
+import me.blok601.nightshadeuhc.event.UHCStatUpdateEvent;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
 import me.blok601.nightshadeuhc.util.Util;
@@ -155,6 +156,11 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
     }
 
     public void handleBlockBreak(Block block){
+        UHCStatUpdateEvent updateEvent = new UHCStatUpdateEvent(this);
+        Bukkit.getPluginManager().callEvent(updateEvent);
+        if(updateEvent.isCancelled()){
+            return;
+        }
         if(block.getType() == Material.DIAMOND_ORE){
             this.diamondsMined++;
             addPoints(0.1);

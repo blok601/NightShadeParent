@@ -9,6 +9,7 @@ import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.object.PlayerStatus;
 import me.blok601.nightshadeuhc.entity.object.Team;
 import me.blok601.nightshadeuhc.event.GameEndEvent;
+import me.blok601.nightshadeuhc.event.UHCStatUpdateEvent;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.manager.TeamManager;
 import me.blok601.nightshadeuhc.scenario.MolesScenario;
@@ -140,35 +141,39 @@ public class EndGameCommand implements UHCCommand {
                     winners.add(pl.getUniqueId());
 
 //                user.setPrefix(ChatColor.RED + "[Winner] ");
-                    double toAdd = 0;
-                    gamePlayer.setGamesWon(gamePlayer.getGamesWon() + 1);
-                    gamePlayer.setGamesPlayed(gamePlayer.getGamesPlayed() + 1);
-                    toAdd += (10 / targetTeam.getMembers().size());
-                    gamePlayer.addPoints(toAdd);
+                    UHCStatUpdateEvent updateEvent = new UHCStatUpdateEvent(gamePlayer);
+                    Bukkit.getPluginManager().callEvent(updateEvent);
+                    if(!updateEvent.isCancelled()){
+                        double toAdd = 0;
+                        gamePlayer.setGamesWon(gamePlayer.getGamesWon() + 1);
+                        gamePlayer.setGamesPlayed(gamePlayer.getGamesPlayed() + 1);
+                        toAdd += (10 / targetTeam.getMembers().size());
+                        gamePlayer.addPoints(toAdd);
 //                    double curr = GameManager.get().getPointChanges().get(gamePlayer.getUuid());
 //                    GameManager.get().getPointChanges().put(gamePlayer.getUuid(), curr + toAdd);
-                    if (user.getRank() == Rank.PLAYER) {
-                        if (gamePlayer.getGamesWon() == 1) {
-                            user.setPrefix(ChatUtils.format("&8[&c★&8]"));
+                        if (user.getRank() == Rank.PLAYER) {
+                            if (gamePlayer.getGamesWon() == 1) {
+                                user.setPrefix(ChatUtils.format("&8[&c★&8]"));
+                            }
+                            if (gamePlayer.getGamesWon() == 2) {
+                                user.setPrefix(ChatUtils.format("&8[&c★★&8]"));
+                            }
+                            if (gamePlayer.getGamesWon() == 3) {
+                                user.setPrefix(ChatUtils.format("&8[&c★★★&8]"));
+                            }
+                            if (gamePlayer.getGamesWon() == 4) {
+                                user.setPrefix(ChatUtils.format("&8[&c★★★★&8]"));
+                            }
+                            if (gamePlayer.getGamesWon() >= 5 && gamePlayer.getGamesWon() < 10) {
+                                user.setPrefix(ChatUtils.format("&8[&c-=★=-&8]"));
+                            }
+                            if (gamePlayer.getGamesWon() >= 10) {
+                                user.setPrefix(ChatUtils.format("&8[&c-=(★)=-&8]"));
+                            }
                         }
-                        if (gamePlayer.getGamesWon() == 2) {
-                            user.setPrefix(ChatUtils.format("&8[&c★★&8]"));
-                        }
-                        if (gamePlayer.getGamesWon() == 3) {
-                            user.setPrefix(ChatUtils.format("&8[&c★★★&8]"));
-                        }
-                        if (gamePlayer.getGamesWon() == 4) {
-                            user.setPrefix(ChatUtils.format("&8[&c★★★★&8]"));
-                        }
-                        if (gamePlayer.getGamesWon() >= 5 && gamePlayer.getGamesWon() < 10) {
-                            user.setPrefix(ChatUtils.format("&8[&c-=★=-&8]"));
-                        }
-                        if (gamePlayer.getGamesWon() >= 10) {
-                            user.setPrefix(ChatUtils.format("&8[&c-=(★)=-&8]"));
-                        }
+                        gamePlayer.changed();
+                        gamePlayer.msg(ChatUtils.message("&eYour stats have been updated! Do /stats to check them."));
                     }
-                    gamePlayer.changed();
-                    gamePlayer.msg(ChatUtils.message("&eYour stats have been updated! Do /stats to check them."));
                     sb.append(pl.getName()).append(", ");
                 }
 
@@ -198,38 +203,42 @@ public class EndGameCommand implements UHCCommand {
         } else {
             NSPlayer user = NSPlayer.get(target.getUniqueId());
             UHCPlayer gamePlayer = UHCPlayer.get(target.getUniqueId());
+            UHCStatUpdateEvent updateEvent = new UHCStatUpdateEvent(gamePlayer);
+            Bukkit.getPluginManager().callEvent(updateEvent);
+            if(!updateEvent.isCancelled()){
 
-            double points = 0;
-            gamePlayer.setGamesWon(gamePlayer.getGamesWon() + 1);
-            gamePlayer.setGamesPlayed(gamePlayer.getGamesPlayed() + 1);
-            if (GameManager.get().getKills().containsKey(p.getUniqueId())) {
-                points += GameManager.get().getKills().get(p.getUniqueId());
-            }
-            gamePlayer.addPoints(10 + points);
+                double points = 0;
+                gamePlayer.setGamesWon(gamePlayer.getGamesWon() + 1);
+                gamePlayer.setGamesPlayed(gamePlayer.getGamesPlayed() + 1);
+                if (GameManager.get().getKills().containsKey(p.getUniqueId())) {
+                    points += GameManager.get().getKills().get(p.getUniqueId());
+                }
+                gamePlayer.addPoints(10 + points);
 //            double curr = GameManager.get().getPointChanges().get(gamePlayer.getUuid());
 //            GameManager.get().getPointChanges().put(gamePlayer.getUuid(), curr + 10);
-            if (user.getRank() == Rank.PLAYER) {
-                if (gamePlayer.getGamesWon() == 1) {
-                    user.setPrefix(ChatUtils.format("&8[&c★&8]"));
-                }
-                if (gamePlayer.getGamesWon() == 2) {
-                    user.setPrefix(ChatUtils.format("&8[&c★★&8]"));
-                }
-                if (gamePlayer.getGamesWon() == 3) {
-                    user.setPrefix(ChatUtils.format("&8[&c★★★&8]"));
-                }
-                if (gamePlayer.getGamesWon() == 4) {
-                    user.setPrefix(ChatUtils.format("&8[&c★★★★&8]"));
-                }
-                if (gamePlayer.getGamesWon() >= 5 && gamePlayer.getGamesWon() < 10) {
-                    user.setPrefix(ChatUtils.format("&8[&c-=★=-&8]"));
-                }
-                if (gamePlayer.getGamesWon() >= 10) {
-                    user.setPrefix(ChatUtils.format("&8[&c-=(★)=-&8]"));
+                if (user.getRank() == Rank.PLAYER) {
+                    if (gamePlayer.getGamesWon() == 1) {
+                        user.setPrefix(ChatUtils.format("&8[&c★&8]"));
+                    }
+                    if (gamePlayer.getGamesWon() == 2) {
+                        user.setPrefix(ChatUtils.format("&8[&c★★&8]"));
+                    }
+                    if (gamePlayer.getGamesWon() == 3) {
+                        user.setPrefix(ChatUtils.format("&8[&c★★★&8]"));
+                    }
+                    if (gamePlayer.getGamesWon() == 4) {
+                        user.setPrefix(ChatUtils.format("&8[&c★★★★&8]"));
+                    }
+                    if (gamePlayer.getGamesWon() >= 5 && gamePlayer.getGamesWon() < 10) {
+                        user.setPrefix(ChatUtils.format("&8[&c-=★=-&8]"));
+                    }
+                    if (gamePlayer.getGamesWon() >= 10) {
+                        user.setPrefix(ChatUtils.format("&8[&c-=(★)=-&8]"));
 
+                    }
                 }
+                gamePlayer.changed();
             }
-            gamePlayer.changed();
             Bukkit.getPluginManager().callEvent(new GameEndEvent(Collections.singletonList(target.getUniqueId())));
 
             PacketPlayOutTitle title = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, IChatBaseComponent.ChatSerializer.a("{\"text\":\"Congratulations!\",\"color\":\"dark_aqua\",\"bold\":true}"), 0, 60, 0);

@@ -10,6 +10,7 @@ import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.entity.object.PlayerRespawn;
 import me.blok601.nightshadeuhc.entity.object.PlayerStatus;
 import me.blok601.nightshadeuhc.event.CustomDeathEvent;
+import me.blok601.nightshadeuhc.event.UHCStatUpdateEvent;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.util.ItemBuilder;
 import org.bukkit.Bukkit;
@@ -138,8 +139,13 @@ public class GameDeathListener implements Listener {
             uhcPlayer.setPlayerStatus(PlayerStatus.DEAD);
 
             if (damager != null) {
-                gamePlayer1.addKill(1);
-                gamePlayer1.addPoints(1);
+                UHCStatUpdateEvent updateEvent = new UHCStatUpdateEvent(gamePlayer1);
+                Bukkit.getPluginManager().callEvent(updateEvent);
+                if(!updateEvent.isCancelled()){
+                    gamePlayer1.addKill(1);
+                    gamePlayer1.addPoints(1);
+                }
+
 //                double curr = GameManager.get().getPointChanges().get(gamePlayer1.getUuid());
 //                GameManager.get().getPointChanges().put(gamePlayer1.getUuid(), curr + 1);
 
@@ -151,20 +157,24 @@ public class GameDeathListener implements Listener {
 
             }
 
-            uhcPlayer.setDeaths(uhcPlayer.getDeaths() + 1);
-            uhcPlayer.setGamesPlayed(uhcPlayer.getGamesPlayed() + 1);
-            double points = -0.25;
-            //if(GameManager.get().getPointChanges().containsKey(p.getUniqueId())){
+            UHCStatUpdateEvent updateEvent = new UHCStatUpdateEvent(uhcPlayer);
+            Bukkit.getPluginManager().callEvent(updateEvent);
+            if(!updateEvent.isCancelled()){
+                uhcPlayer.setDeaths(uhcPlayer.getDeaths() + 1);
+                uhcPlayer.setGamesPlayed(uhcPlayer.getGamesPlayed() + 1);
+                double points = -0.25;
+                //if(GameManager.get().getPointChanges().containsKey(p.getUniqueId())){
                 if (GameManager.get().getKills().containsKey(p.getUniqueId())) {
                     points += GameManager.get().getKills().get(p.getUniqueId());
                 }
                 //points += uhcPlayer.getChangedLevel();
 
-                DecimalFormat decimalFormat = new DecimalFormat("##.##");
 //                double curr = GameManager.get().getPointChanges().get(uhcPlayer.getUuid());
 //                GameManager.get().getPointChanges().put(uhcPlayer.getUuid(), curr + points);
                 uhcPlayer.addPoints(points);
-            uhcPlayer.changed();
+                uhcPlayer.changed();
+            }
+            DecimalFormat decimalFormat = new DecimalFormat("##.##");
             String changed = decimalFormat.format(uhcPlayer.getChangedLevel());
 
                 p.sendMessage(ChatUtils.message("&eYou have died! Thank you for playing on NightShadePvP!"));
