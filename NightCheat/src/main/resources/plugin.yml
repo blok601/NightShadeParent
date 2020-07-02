@@ -2,5 +2,6 @@ name: NightCheat
 version: ${project.version}
 main: com.nightshadepvp.nightcheat.NightCheat
 authors: [Blok]
+depends: [ProtocolLib]
 description: Exploit and minimal cheat prevention
 website: discord.nightshadepvp.com

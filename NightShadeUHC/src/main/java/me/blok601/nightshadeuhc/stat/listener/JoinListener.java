@@ -72,7 +72,20 @@ public class JoinListener implements Listener {
             new BukkitRunnable(){
                 @Override
                 public void run() {
-                    TeamManager.getInstance().colorAllTeams();
+                    for (me.blok601.nightshadeuhc.entity.object.Team team : TeamManager.getInstance().getTeams()){
+                        if (scoreboard.getTeam(team.getName()) != null) {
+                            scoreboard.getTeam(team.getName()).unregister();
+                        }
+
+                        org.bukkit.scoreboard.Team t = scoreboard.registerNewTeam(team.getName());
+                        t.setPrefix(team.getColor());
+                        for (String mem : team.getMembers()) {
+                            t.addEntry(mem);
+                        }
+                    }
+
+
+
                 }
             }.runTaskAsynchronously(uhc);
         }
