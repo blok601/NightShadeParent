@@ -90,5 +90,9 @@ public class ChatUtils {
         }
     }
 
+    public static void broadcast(String message, Rank requiredRank){
+        NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> nsPlayer.hasRank(requiredRank)).forEach(nsPlayer -> nsPlayer.msg(ChatUtils.format(message)));
+    }
+
 
 }

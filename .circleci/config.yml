@@ -17,6 +17,9 @@ jobs:
       - store_artifacts:
           path: NightShadeTournament/target/Tournament.jar
           destination: artifacts
+      - store_artifacts:
+          path: NightCheat/target/NightCheat.jar
+          destination: artifacts
       - add_ssh_keys
       - deploy:
           name: Deploy to servers
@@ -25,4 +28,5 @@ jobs:
             scp NightShadeUHC/target/UHC.jar dhillon@158.69.121.66:~/minecraft/template/UHC.jar
             scp NightShadeCore/target/Core.jar dhillon@158.69.121.66:~/minecraft/template/Core.jar
             scp NightShadeTournament/target/Tournament.jar dhillon@158.69.121.66:~/minecraft/template/Tournament.jar
+            scp NightCheat/target/NightCheat.jar dhillon@158.69.121.66:~/minecraft/template/NightCheat.jar
             echo "Finished uploading jars!"

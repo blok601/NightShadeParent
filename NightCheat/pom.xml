@@ -80,5 +80,12 @@
             <scope>system</scope>
             <systemPath>${basedir}/src/main/resources/libs/Core.jar</systemPath>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/io.netty/netty-buffer -->
+        <!-- https://mvnrepository.com/artifact/io.netty/netty-buffer -->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-buffer</artifactId>
+            <version>4.1.49.Final</version>
+        </dependency>
     </dependencies>
 </project>
