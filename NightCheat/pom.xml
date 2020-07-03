@@ -41,6 +41,7 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
+                            <finalName>NightCheat</finalName>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                         </configuration>
                     </execution>
