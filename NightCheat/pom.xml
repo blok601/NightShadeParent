@@ -87,5 +87,12 @@
             <artifactId>netty-buffer</artifactId>
             <version>4.1.49.Final</version>
         </dependency>
+        <dependency>
+            <groupId>com.massivecraft</groupId>
+            <artifactId>MassiveCore</artifactId>
+            <version>LATEST</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/src/main/resources/libs/MassiveCore.jar</systemPath>
+        </dependency>
     </dependencies>
 </project>

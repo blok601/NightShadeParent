@@ -1,5 +1,7 @@
 package com.nightshadepvp.pluginmanager;
 
+import com.google.common.collect.Lists;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -8,7 +10,7 @@ import java.util.List;
  */
 public enum ServerType {
 
-    UHC(Collections.singletonList("UHC.jar")), HUB(Collections.singletonList("Hub.jar")), MINIGAME(Collections.emptyList()), TOURNAMENT(Collections.singletonList("Tournament.jar"));
+    UHC(Lists.newArrayList("UHC.jar", "NightCheat.jar")), HUB(Collections.singletonList("Hub.jar")), MINIGAME(Collections.emptyList()), TOURNAMENT(Lists.newArrayList("Tournament.jar", "NightCheat.jar"));
 
     private List<String> need;
 

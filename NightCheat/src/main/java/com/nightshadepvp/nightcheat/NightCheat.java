@@ -5,7 +5,6 @@ import com.comphenix.protocol.ProtocolManager;
 import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Logger;
 import com.nightshadepvp.nightcheat.cheat.CheatManager;
-import com.nightshadepvp.nightcheat.exploit.Exploit;
 import com.nightshadepvp.nightcheat.exploit.ExploitManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
