@@ -60,6 +60,7 @@ public class EngineLogin extends Engine {
         NSPlayer nsPlayer = NSPlayer.get(player);
         nsPlayer.setLoggedIn(false); //value will be lost on log out anyway
         nsPlayer.setLastSeen(new Date());
+        nsPlayer.changed();
     }
 
     @EventHandler(priority = EventPriority.LOWEST)

@@ -91,7 +91,8 @@ public class Core extends MassivePlugin implements PluginMessageListener {
         this.borderManager = new BorderManagerImplementation(this);
 
         // Setup configuration
-        this.loadSpawn();
+        //this.loadSpawn();
+
 
         // Add our channel listeners
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "Lunar-Client");
@@ -141,6 +142,9 @@ public class Core extends MassivePlugin implements PluginMessageListener {
 
         PunishmentHandler.getInstance().setup();
         ServerType.setType(MConf.get().serverType);
+        if(ServerType.getType() == ServerType.UHC){
+            this.spawn = new Location(Bukkit.getWorld("spawntest"), 0, 11, 0);
+        }
 
         new BukkitRunnable() {
             @Override
@@ -174,7 +178,7 @@ public class Core extends MassivePlugin implements PluginMessageListener {
     public void onDisable() {
         i = null;
         MConf.get().setAnnouncerMessages(this.announcer.getMessages());
-        this.saveSpawn();
+        //this.saveSpawn();
         this.getServer().getMessenger().unregisterIncomingPluginChannel(this, "WDL|INIT");
         this.getServer().getMessenger().unregisterOutgoingPluginChannel(this, "WDL|CONTROL");
     }
@@ -329,6 +333,5 @@ public class Core extends MassivePlugin implements PluginMessageListener {
         config.set("spawn.yaw", spawn.getYaw());
         config.set("spawn.pitch", spawn.getPitch());
         this.saveConfig();
-        ;
     }
 }
