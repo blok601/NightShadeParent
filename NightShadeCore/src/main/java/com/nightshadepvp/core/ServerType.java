@@ -5,7 +5,7 @@ package com.nightshadepvp.core;
  */
 public enum  ServerType {
 
-    PRACTICE, UHC;
+    PRACTICE, UHC, TOURNAMENT;
 
     private static ServerType type;
 

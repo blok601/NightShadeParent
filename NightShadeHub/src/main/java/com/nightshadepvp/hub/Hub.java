@@ -7,6 +7,7 @@ import com.nightshadepvp.hub.command.CommandHandler;
 import com.nightshadepvp.hub.command.HubCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -18,8 +19,8 @@ public final class Hub extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        commandHandler = new CommandHandler(this);
-        commandHandler.setup();
+        this.commandHandler = new CommandHandler(this);
+        this.commandHandler.setup();
 
     }
 
@@ -51,7 +52,7 @@ public final class Hub extends JavaPlugin {
                         }
                     }
 
-                    if (!(sender instanceof Player)) {
+                    if (sender instanceof ConsoleCommandSender && hubCommand.isAllowConsole()) {
                         try {
                             hubCommand.run(sender, args);
                         } catch (Exception e) {

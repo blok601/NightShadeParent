@@ -115,10 +115,8 @@ public class EnginePunish extends Engine {
         }
 
         UBLHandler handler = Core.get().getUblHandler();
-
-        if (handler.isUBLed(uuid) && !handler.isExempt(e.getName())) {
+        if (handler.isUBLed(uuid) && !handler.isExempt(NSPlayer.get(uuid).getName())) {
             e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, handler.getBanMessage(uuid));
         }
-
     }
 }

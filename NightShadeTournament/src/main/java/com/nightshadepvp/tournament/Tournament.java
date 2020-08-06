@@ -12,6 +12,7 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Logger;
+import com.nightshadepvp.core.ServerType;
 import com.nightshadepvp.core.utils.ItemBuilder;
 import com.nightshadepvp.tournament.challonge.Challonge;
 import com.nightshadepvp.tournament.entity.TPlayer;
@@ -79,6 +80,7 @@ public final class Tournament extends MassivePlugin {
 
 
         new WeatherTask(this).runTaskTimer(this, 0, 3600);
+        ServerType.setType(ServerType.PRACTICE); //TODO: Change
         Core.get().getLogManager().log(Logger.LogType.INFO, "Tournaments v" + this.getDescription().getVersion() + " by " + Joiner.on(", ").join(this.getDescription().getAuthors()));
         this.cachedGame = new CachedGame();
     }

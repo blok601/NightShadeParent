@@ -10,9 +10,7 @@ import com.nightshadepvp.core.entity.objects.PlayerColor;
 import com.nightshadepvp.core.entity.objects.PlayerEffect;
 import com.nightshadepvp.core.entity.objects.PlayerTag;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.UUID;
+import java.util.*;
 
 public class NSPlayer extends SenderEntity<NSPlayer> {
     // -------------------------------------------- //
@@ -53,6 +51,8 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
 
     private boolean hasReferred = false;
 
+    private Date lastSeen = null;
+
     private transient boolean frozen = false;
     private transient boolean receivingPMs = true;
     private transient NSPlayer lastMessaged = null;
@@ -80,6 +80,7 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
     @Override
     public NSPlayer load(NSPlayer that) {
         this.setLastActivityMillis(that.lastActivityMillis);
+        this.setLastSeen(that.lastSeen);
 
         this.setRank(that.rank);
         this.setPrefix(that.prefix);
@@ -116,7 +117,6 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
     public Rank getRank() {
         return rank;
     }
-
 
     public boolean hasRank(Rank rank) {
         return getRank().getValue() >= rank.getValue();
@@ -419,5 +419,13 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
 
     public void setCompletedQuests(HashSet<Integer> completedQuests) {
         this.completedQuests = completedQuests;
+    }
+
+    public Date getLastSeen() {
+        return lastSeen;
+    }
+
+    public void setLastSeen(Date lastSeen) {
+        this.lastSeen = lastSeen;
     }
 }

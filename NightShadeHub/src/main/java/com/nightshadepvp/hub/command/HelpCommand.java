@@ -19,7 +19,7 @@ public class HelpCommand extends HubCommand {
 
     @Override
     public String getDescription() {
-        return "Receive useful links and instructions for NightShadePvP!";
+        return "Receive useful links and instructions for NightShadePvP";
     }
 
     @Override

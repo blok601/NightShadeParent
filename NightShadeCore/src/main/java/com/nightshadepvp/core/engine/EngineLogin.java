@@ -18,6 +18,7 @@ import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -58,6 +59,7 @@ public class EngineLogin extends Engine {
         Player player = e.getPlayer();
         NSPlayer nsPlayer = NSPlayer.get(player);
         nsPlayer.setLoggedIn(false); //value will be lost on log out anyway
+        nsPlayer.setLastSeen(new Date());
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
