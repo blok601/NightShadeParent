@@ -22,7 +22,7 @@ public class TeamInventoryScenario extends Scenario{
     public static HashMap<UUID, Inventory> soloInventories = null;
 
     public TeamInventoryScenario() {
-        super("Team Inventory", "Each team get's their own shared inventory", "TI", new ItemBuilder(Material.ENDER_CHEST).name("Team Inventory").make());
+        super("Team Inventory", "Each team gets their own shared inventory", "TI", new ItemBuilder(Material.ENDER_CHEST).name("Team Inventory").make());
     }
 
     @EventHandler

@@ -164,16 +164,6 @@ public class EnginePlayer extends Engine {
             user.setCurrentAFKTime(0);
             user.setAFK(false);
         }
-        if (e.getMessage().startsWith("//calc") || e.getMessage().startsWith("//calculate")) {
-            NSPlayer nsPlayer = NSPlayer.get(e.getPlayer());
-            if (nsPlayer.hasRank(Rank.ADMIN)) {
-                nsPlayer.msg(ChatUtils.message("&4No need to do that command..."));
-                nsPlayer.msg(ChatUtils.message("&4Please stop trying to exploit bugs. This incident has been reported to the moderators."));
-                NSPlayerColl.get().getAllPlayerStaffOnline().stream().forEach(nsPlayer1 -> {
-                    nsPlayer1.msg(ChatUtils.message("&e" + nsPlayer.getName() + " &4tried to exploit the //calc bug!"));
-                });
-            }
-        }
     }
 
     @EventHandler

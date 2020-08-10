@@ -52,6 +52,7 @@ public class EngineLogin extends Engine {
         } else {
             nsPlayer.setLoggedIn(true);
         }
+        ChatUtils.broadcast("&a&l+ " + player.getName(), Rank.PLAYER);
     }
 
     @EventHandler
@@ -61,6 +62,7 @@ public class EngineLogin extends Engine {
         nsPlayer.setLoggedIn(false); //value will be lost on log out anyway
         nsPlayer.setLastSeen(new Date());
         nsPlayer.changed();
+        ChatUtils.broadcast("&c&l- " + player.getName(), Rank.PLAYER);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)

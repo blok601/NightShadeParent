@@ -70,7 +70,7 @@ public class ViolationManager {
             this.violationMap = violationMap;
         }
 
-        public void incrementAdvantage(Advantage advantage, int modification) {
+        public int incrementAdvantage(Advantage advantage, int modification) {
             int violations = violationMap.getOrDefault(advantage, 0);
             if (violations + modification < 0) {
                 violations = 0;
@@ -79,6 +79,7 @@ public class ViolationManager {
             }
 
             violationMap.put(advantage, violations);
+            return violations;
         }
     }
 }
