@@ -191,7 +191,7 @@ public class EnginePlayer extends Engine {
                 player.playSound(player.getLocation(), Sound.NOTE_BASS, 5, 5);
             }
         }.runTaskLater(Core.get(), 2L);
-        e.setJoinMessage("&a&l+ " + player.getName());
+        e.setJoinMessage(ChatUtils.format("&a&l+ " + player.getName()));
 
 
         if (!Core.get().getLoginTasks().containsKey(player.getUniqueId())) {

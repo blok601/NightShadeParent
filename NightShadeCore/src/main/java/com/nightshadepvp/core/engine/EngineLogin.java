@@ -61,7 +61,7 @@ public class EngineLogin extends Engine {
         nsPlayer.setLoggedIn(false); //value will be lost on log out anyway
         nsPlayer.setLastSeen(new Date());
         nsPlayer.changed();
-        e.setQuitMessage("&c&l- " + player.getName());
+        e.setQuitMessage(ChatUtils.format("&c&l- " + player.getName()));
     }
 
     @EventHandler(priority = EventPriority.LOWEST)

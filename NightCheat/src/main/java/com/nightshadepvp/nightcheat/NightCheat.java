@@ -27,7 +27,7 @@ public final class NightCheat extends JavaPlugin {
         long totalTimeInMillis = System.currentTimeMillis() - now;
         long seconds = totalTimeInMillis / 1000;
         long millis = totalTimeInMillis % 1000;
-        Core.get().getLogManager().log(Logger.LogType.INFO, "[NightCheat] Enable finished in (" + seconds + "." + millis + ")");
+        Core.get().getLogManager().log(Logger.LogType.INFO, "[NightCheat] Enable finished in (" + seconds + "." + millis + "s)");
         Core.get().getLogManager().log(Logger.LogType.INFO, "[NightCheat] NightCheat v" + this.getDescription().getVersion() + " Enabled!");
 
     }
