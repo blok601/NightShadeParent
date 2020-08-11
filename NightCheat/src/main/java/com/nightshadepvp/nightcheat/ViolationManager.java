@@ -3,12 +3,16 @@ package com.nightshadepvp.nightcheat;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.bukkit.Bukkit;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.UUID;
 
-public class ViolationManager {
+public class ViolationManager implements Listener {
 
     private NightCheat plugin;
     private HashSet<PlayerViolation> violations;
@@ -19,7 +23,7 @@ public class ViolationManager {
         startCleanTask();
     }
 
-    public PlayerViolation getPlayerViolation(UUID uuid){
+    public PlayerViolation getPlayerViolation(UUID uuid) {
         return this.violations.stream().filter(playerViolation -> playerViolation.getUuid().equals(uuid)).findFirst().orElse(null);
     }
 
@@ -57,8 +61,8 @@ public class ViolationManager {
             return violationMap;
         }
 
-        public int getViolations(Advantage advantage){
-            if(this.violationMap.containsKey(advantage)){
+        public int getViolations(Advantage advantage) {
+            if (this.violationMap.containsKey(advantage)) {
                 return violationMap.get(advantage);
             }
 
@@ -81,5 +85,16 @@ public class ViolationManager {
             violationMap.put(advantage, violations);
             return violations;
         }
+    }
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event) {
+        this.violations.add(new PlayerViolation(event.getPlayer().getUniqueId(), Maps.newHashMap()));
+    }
+
+    @EventHandler
+    public void onLeave(PlayerQuitEvent event) {
+        if (getPlayerViolation(event.getPlayer().getUniqueId()) == null) return;
+        this.violations.remove(getPlayerViolation(event.getPlayer().getUniqueId()));
     }
 }

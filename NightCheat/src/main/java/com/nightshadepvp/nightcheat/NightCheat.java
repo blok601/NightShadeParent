@@ -23,6 +23,7 @@ public final class NightCheat extends JavaPlugin {
         this.protocolManager = ProtocolLibrary.getProtocolManager();
         this.cheatManager = new CheatManager(this);
         this.exploitManager = new ExploitManager(this);
+        this.getServer().getPluginManager().registerEvents(violationManager, this);
         long totalTimeInMillis = System.currentTimeMillis() - now;
         long seconds = totalTimeInMillis / 1000;
         long millis = totalTimeInMillis % 1000;
