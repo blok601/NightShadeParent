@@ -200,8 +200,8 @@ public class Team {
             if (playerPlayerScoreboardEntry.getValue() == null) continue;
             scoreboard = playerPlayerScoreboardEntry.getValue().getBukkitScoreboard();
             org.bukkit.scoreboard.Team team = scoreboard.getPlayerTeam(p);
+            if(team == null) continue;
             team.removePlayer(p);
-
         }
     }
 

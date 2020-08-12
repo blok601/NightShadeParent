@@ -89,7 +89,7 @@ public abstract class Cheat implements Listener, Advantage {
 
     @Override
     public void log(Player player, String message) {
-        ChatUtils.broadcast("&8[&cNightCheat&8] &7" + player.getName() + " &7failed &b" + this.getName() + " &8[&4" + this.getViolationManager().getPlayerViolation(player.getUniqueId()).getViolations(this) + "&8]", Rank.TRIAL);
+        ChatUtils.broadcast("&8[&cNightCheat&8] &c" + player.getName() + " &7failed &c" + this.getName() + " &7(" + message + ") &8[&4" + this.getViolationManager().getPlayerViolation(player.getUniqueId()).getViolations(this) + "&8]", Rank.TRIAL);
         System.out.println("[NightCheat] " + player.getName() + " failed " + this.getName() + "[ " + this.getViolationManager().getPlayerViolation(player.getUniqueId()).getViolations(this) + "]");
     }
 }
