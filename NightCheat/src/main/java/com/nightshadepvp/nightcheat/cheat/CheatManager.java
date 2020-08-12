@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Logger;
 import com.nightshadepvp.nightcheat.NightCheat;
+import com.nightshadepvp.nightcheat.cheat.combat.ReachCheat;
 import com.nightshadepvp.nightcheat.cheat.movement.ToggleSneakCheat;
 
 import java.util.HashSet;
@@ -17,6 +18,7 @@ public class CheatManager {
         this.plugin = plugin;
         cheats = Sets.newHashSet();
         registerCheat(new ToggleSneakCheat());
+        registerCheat(new ReachCheat());
     }
 
     private void registerCheat(Cheat cheat){
