@@ -79,21 +79,6 @@ public class EnginePlayer extends Engine {
             nsPlayer.setCurrentAFKTime(0);
             nsPlayer.setAFK(false);
         }
-//        nsPlayer.incrementToggleSneak();
-//        FancyMessage fancyMessage = new FancyMessage();
-//        fancyMessage.command("/tp " + p.getName());
-//        if (nsPlayer.getToggleSneakVL() >= 15) {
-//            fancyMessage.text(ChatUtils.format("&4" + p.getName() + " &cmay be using ToggleSneak! &8[&4" + nsPlayer.getToggleSneakVL() + "&8] &8(&eType&8: &cInventory&8)"));
-//        } else if (nsPlayer.getToggleSneakVL() >= 10) {
-//            fancyMessage.text(ChatUtils.format("&c" + p.getName() + " &cmay be using ToggleSneak! &8[&c" + nsPlayer.getToggleSneakVL() + "&8] &8(&eType&8: &cInventory&8)"));
-//        } else if (nsPlayer.getToggleSneakVL() >= 5) {
-//            fancyMessage.text(ChatUtils.format("&6" + p.getName() + " &cmay be using ToggleSneak! &8[&c" + nsPlayer.getToggleSneakVL() + "&8] &8(&eType&8: &cInventory&8)"));
-//        } else if (nsPlayer.getToggleSneakVL() >= 1) {
-//            fancyMessage.text(ChatUtils.format("&a" + p.getName() + " &cmay be using ToggleSneak! &8[&a" + nsPlayer.getToggleSneakVL() + "&8] &8(&eType&8: &cInventory&8)"));
-//        }
-//        NSPlayerColl.get().getAllPlayerStaffOnline().stream().filter(NSPlayer::isReceivingToggleSneak).forEach(nsPlayer1 -> {
-//            fancyMessage.send(nsPlayer1.getPlayer());
-//        });
     }
 
     @EventHandler
@@ -110,18 +95,6 @@ public class EnginePlayer extends Engine {
             nsPlayer.setCurrentAFKTime(0);
             nsPlayer.setAFK(false);
         }
-//        nsPlayer.incrementToggleSneak();
-//        NSPlayerColl.get().getAllPlayerStaffOnline().stream().filter(NSPlayer::isReceivingToggleSneak).forEach(nsPlayer1 -> {
-//            if(nsPlayer.getToggleSneakVL() >= 15){
-//                nsPlayer1.msg(ChatUtils.format("&4" + p.getName() + " &cmay be using ToggleSneak! &8[&4" + nsPlayer.getToggleSneakVL() + "&8] &8(&eType&8: &cChat&8)"));
-//            }else if(nsPlayer.getToggleSneakVL() >= 10){
-//                nsPlayer1.msg(ChatUtils.format("&c" + p.getName() + " &cmay be using ToggleSneak! &8[&c" + nsPlayer.getToggleSneakVL() + "&8] &8(&eType&8: &cChat&8)"));
-//            }else if(nsPlayer.getToggleSneakVL() >= 5){
-//                nsPlayer1.msg(ChatUtils.format("&6" + p.getName() + " &cmay be using ToggleSneak! &8[&c" + nsPlayer.getToggleSneakVL() + "&8] &8(&eType&8: &cChat&8)"));
-//            }else if(nsPlayer.getToggleSneakVL() >= 1){
-//                nsPlayer1.msg(ChatUtils.format("&a" + p.getName() + " &cmay be using ToggleSneak! &8[&a" + nsPlayer.getToggleSneakVL() + "&8] &8(&eType&8: &cChat&8)"));
-//            }
-//        });
     }
 
     @EventHandler
@@ -141,18 +114,6 @@ public class EnginePlayer extends Engine {
             nsPlayer.setCurrentAFKTime(0);
             nsPlayer.setAFK(false);
         }
-//        nsPlayer.incrementToggleSneak();
-//        NSPlayerColl.get().getAllPlayerStaffOnline().stream().filter(NSPlayer::isReceivingToggleSneak).forEach(nsPlayer1 -> {
-//            if(nsPlayer.getToggleSneakVL() >= 15){
-//                nsPlayer1.msg(ChatUtils.format("&4" + p.getName() + " &cmay be using ToggleSneak! &8[&4" + nsPlayer.getToggleSneakVL() + "&8] &8(&eType&8: &cInventory&8)"));
-//            }else if(nsPlayer.getToggleSneakVL() >= 10){
-//                nsPlayer1.msg(ChatUtils.format("&c" + p.getName() + " &cmay be using ToggleSneak! &8[&c" + nsPlayer.getToggleSneakVL() + "&8] &8(&eType&8: &cInventory&8)"));
-//            }else if(nsPlayer.getToggleSneakVL() >= 5){
-//                nsPlayer1.msg(ChatUtils.format("&6" + p.getName() + " &cmay be using ToggleSneak! &8[&c" + nsPlayer.getToggleSneakVL() + "&8] &8(&eType&8: &cInventory&8)"));
-//            }else if(nsPlayer.getToggleSneakVL() >= 1){
-//                nsPlayer1.msg(ChatUtils.format("&a" + p.getName() + " &cmay be using ToggleSneak! &8[&a" + nsPlayer.getToggleSneakVL() + "&8] &8(&eType&8: &cInventory&8)"));
-//            }
-//        });
     }
 
     @EventHandler

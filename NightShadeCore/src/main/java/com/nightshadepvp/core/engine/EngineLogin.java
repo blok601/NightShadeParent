@@ -12,10 +12,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -62,6 +59,16 @@ public class EngineLogin extends Engine {
         nsPlayer.setLastSeen(new Date());
         nsPlayer.changed();
         e.setQuitMessage(ChatUtils.format("&c&l- " + player.getName()));
+    }
+
+    @EventHandler
+    public void onKick(PlayerKickEvent event){
+        Player player = event.getPlayer();
+        NSPlayer nsPlayer = NSPlayer.get(player);
+        nsPlayer.setLoggedIn(false); //value will be lost on log out anyway
+        nsPlayer.setLastSeen(new Date());
+        nsPlayer.changed();
+        event.setLeaveMessage(ChatUtils.format("&c&l- " + player.getName()));
     }
 
     @EventHandler(priority = EventPriority.LOWEST)

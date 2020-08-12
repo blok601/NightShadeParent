@@ -9,6 +9,7 @@ import com.nightshadepvp.core.entity.objects.Friend;
 import com.nightshadepvp.core.entity.objects.PlayerColor;
 import com.nightshadepvp.core.entity.objects.PlayerEffect;
 import com.nightshadepvp.core.entity.objects.PlayerTag;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 
 import java.util.*;
 
@@ -427,5 +428,10 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
 
     public void setLastSeen(Date lastSeen) {
         this.lastSeen = lastSeen;
+    }
+
+    public int getPing(){
+        if(!isPlayer()) return -1;
+        return ((CraftPlayer)  getPlayer()).getHandle().ping;
     }
 }

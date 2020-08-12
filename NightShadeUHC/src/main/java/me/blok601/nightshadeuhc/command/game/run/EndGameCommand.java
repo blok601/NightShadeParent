@@ -1,5 +1,6 @@
 package me.blok601.nightshadeuhc.command.game.run;
 
+import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
 import me.blok601.nightshadeuhc.UHC;
@@ -262,7 +263,7 @@ public class EndGameCommand implements UHCCommand {
             @Override
             public void run() {
                 Bukkit.getOnlinePlayers().forEach(onlinePlayer -> {
-                    onlinePlayer.teleport(MConf.get().getSpawnLocation().asBukkitLocation(true));
+                    onlinePlayer.teleport(Core.get().getSpawn());
                     onlinePlayer.getInventory().clear();
                     onlinePlayer.getInventory().setArmorContents(null);
                 });
@@ -289,7 +290,7 @@ public class EndGameCommand implements UHCCommand {
             @Override
             public void run() {
                 Bukkit.getOnlinePlayers().stream().filter(o -> !NSPlayer.get(o.getUniqueId()).hasRank(Rank.TRIAL)).forEach(o -> o.kickPlayer("The game has concluded! Thanks for playing! \n Follow us on twitter @NightShadePvPMC \n Join our Discord @ discord.nightshadepvp.com"));
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "restart");
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "stop");
             }
         }.runTaskLater(UHC.get(), 30 * 20);
     }
