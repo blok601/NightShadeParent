@@ -38,7 +38,7 @@ public class CmdRestart extends NightShadeCoreCommand{
 
                 if(counter == 0){
                     this.cancel();
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spigot:restart");
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "stop");
                     return;
                 }
 
