@@ -141,7 +141,7 @@ public class Core extends MassivePlugin implements PluginMessageListener {
         Events.get().register(new LiteBansListener());
 
         PunishmentHandler.getInstance().setup();
-        ServerType.setType(MConf.get().serverType);
+        ServerType.setType(MConf.get().getServerType());
         if(ServerType.getType() == ServerType.UHC){
             this.spawn = new Location(Bukkit.getWorld("spawntest"), 0, 11, 0);
         }

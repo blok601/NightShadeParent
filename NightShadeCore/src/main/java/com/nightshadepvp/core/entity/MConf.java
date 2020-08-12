@@ -23,13 +23,14 @@ public class MConf extends Entity<MConf> {
         this.setExempt(that.exempt);
         this.setMaintenance(that.maintenance);
         this.setAnnouncerMessages(that.announcer);
+        this.setServerType(that.serverType);
         return this;
     }
 
     public long cleanInactivityToleranceMillis = 1000 * TimeUnit.MILLIS_PER_DAY; // 60 days
 
     public long particleDelayTaskMillis = 100L;
-    public ServerType serverType = ServerType.PRACTICE;
+    public ServerType serverType = ServerType.UHC;
     private String serverName;
     private ArrayList<String> exempt = new ArrayList<>();
     private boolean maintenance = false;
@@ -70,5 +71,13 @@ public class MConf extends Entity<MConf> {
 
     public void setMaintenance(boolean maintenance) {
         this.maintenance = maintenance;
+    }
+
+    public ServerType getServerType() {
+        return serverType;
+    }
+
+    public void setServerType(ServerType serverType) {
+        this.serverType = serverType;
     }
 }
