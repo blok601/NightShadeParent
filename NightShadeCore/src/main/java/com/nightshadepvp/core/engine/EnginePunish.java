@@ -6,6 +6,7 @@ import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.MConf;
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.nightshadepvp.core.ubl.UBLHandler;
+import com.nightshadepvp.core.utils.ChatUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -92,6 +93,7 @@ public class EnginePunish extends Engine {
         if (nsPlayer.isFrozen()) {
             this.freezePersist.add(nsPlayer.getUuid());
         }
+        e.setQuitMessage(ChatUtils.format("&c&l- " + e.getPlayer().getName()));
     }
 
     @EventHandler

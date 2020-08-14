@@ -50,7 +50,4 @@ public class AngleCheat extends Cheat {
     public AngleCheat() {
         super("Angle", CheatType.COMBAT);
     }
-
-
-
 }

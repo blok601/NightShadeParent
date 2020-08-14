@@ -87,5 +87,4 @@ public class EngineLogin extends Engine {
         player.playSound(player.getLocation(), Sound.NOTE_BASS, 0.5F, 0.5F);
         player.sendMessage(ChatUtils.message("&cYou must log in with /login first, &b" + player.getName()));
     }
-
 }
