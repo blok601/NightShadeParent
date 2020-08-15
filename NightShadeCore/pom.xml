@@ -61,7 +61,7 @@
         </repository>
         <repository>
             <id>sonatype</id>
-            <url>https://oss.sonatype.org/content/groups/public/</url>
+            <url>https://oss.sonatype.org/content/repositories/releases/</url>
         </repository>
         <repository>
             <id>jcenter</id>
@@ -71,6 +71,9 @@
         <repository>
             <id>dmulloy2-repo</id>
             <url>http://repo.dmulloy2.net/nexus/repository/public/</url>
+        </repository>
+        <repository>
+            <url>https://repo1.maven.org/maven2/</url>
         </repository>
     </repositories>
 
@@ -143,8 +146,5 @@
             <version>1.4.9</version>
             <scope>compile</scope>
         </dependency>
-
     </dependencies>
-
-
 </project>

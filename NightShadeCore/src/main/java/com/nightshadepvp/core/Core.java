@@ -5,6 +5,7 @@ import com.google.common.io.ByteStreams;
 import com.massivecraft.massivecore.MassivePlugin;
 import com.massivecraft.massivecore.store.DriverFlatfile;
 import com.massivecraft.massivecore.store.DriverMongo;
+import com.nightshadepvp.core.cmd.cmds.player.CmdTwitter;
 import com.nightshadepvp.core.entity.MConf;
 import com.nightshadepvp.core.entity.NSPlayerColl;
 import com.nightshadepvp.core.listener.LiteBansListener;
@@ -60,6 +61,7 @@ public class Core extends MassivePlugin implements PluginMessageListener {
     private Announcer announcer;
     private HashMap<UUID, ArrayList<Consumer<UUID>>> loginTasks;
     private Location spawn;
+    //private Twitter twitter;
 
 
     //Lunar Api
@@ -92,6 +94,7 @@ public class Core extends MassivePlugin implements PluginMessageListener {
 
         // Setup configuration
         //this.loadSpawn();
+
 
 
         // Add our channel listeners
@@ -140,6 +143,7 @@ public class Core extends MassivePlugin implements PluginMessageListener {
         saveConfig();
         Events.get().register(new LiteBansListener());
 
+        //setupTwitter();
         PunishmentHandler.getInstance().setup();
         ServerType.setType(MConf.get().getServerType());
         if(ServerType.getType() == ServerType.UHC){
@@ -334,4 +338,24 @@ public class Core extends MassivePlugin implements PluginMessageListener {
         config.set("spawn.pitch", spawn.getPitch());
         this.saveConfig();
     }
+
+//    private void setupTwitter(){
+//        new BukkitRunnable(){
+//            @Override
+//            public void run() {
+//                ConfigurationBuilder cb = new ConfigurationBuilder();
+//                cb.setDebugEnabled(true)
+//                        .setOAuthConsumerKey("xNPGesrTUA9mmm2cIse0Lsm8X")
+//                        .setOAuthConsumerSecret("iLAJSVOtom6NgnHZBwnqYqGZiZWWl4NwsoQnAjJnjeLt8VvqNL")
+//                        .setOAuthAccessToken("4825184481-lSGqD5Xdaio9sjokNF2cXhZ62rd0uASmrVHGkn8")
+//                        .setOAuthAccessTokenSecret("LCS59nRfmEAOqIfMwwoGQVFj1XxyiUXQhAtckr6T4zN9m");
+//                TwitterFactory tf = new TwitterFactory(cb.build());
+//                twitter = tf.getInstance();
+//            }
+//        }.runTaskAsynchronously(this);
+//    }
+//
+//    public Twitter getTwitter() {
+//        return twitter;
+//    }
 }
