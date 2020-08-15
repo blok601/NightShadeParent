@@ -1,6 +1,7 @@
 package me.blok601.nightshadeuhc.listener.game;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
@@ -43,10 +44,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import twitter4j.TwitterException;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by Blok on 11/11/2017.
@@ -137,7 +135,11 @@ public class GameListener implements Listener {
             uhc.getGameCollection().insertOne(document);
 
             try {
-                Core.get().getTwitter().updateStatus("Congratulations to " + Joiner.on(", ").join(cachedGame.getWinners()) + " on winning a NightShadePvP UHC with " + MathUtils.cummulativeList(cachedGame.getWinnerKills().values()) + " kills!");
+                List<String> winnerNames = Lists.newArrayList();
+                for (String uuid : cachedGame.getWinners()){
+                    winnerNames.add(UHCPlayer.get(UUID.fromString(uuid)).getName());
+                }
+                Core.get().getTwitter().updateStatus("Congratulations to " + Joiner.on(", ").join(winnerNames) + " on winning a NightShadePvP UHC with " + MathUtils.cummulativeList(cachedGame.getWinnerKills().values()) + " kills!");
             } catch (TwitterException twitterException) {
                 twitterException.printStackTrace();
             }
