@@ -5,6 +5,8 @@ import org.bukkit.World;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -65,6 +67,24 @@ public class MathUtils {
 
     public static boolean isBetween(int max, int min, int val){
         return min < val && val < max;
+    }
+
+    public static double cummulativeListDouble(Collection<Double> numbers){
+        double i = 0;
+        for (double n :  numbers){
+            i +=n;
+        }
+
+        return i;
+    }
+
+    public static int cummulativeList(Collection<Integer> numbers){
+        int i = 0;
+        for (int n :  numbers){
+            i +=n;
+        }
+
+        return i;
     }
 
 }

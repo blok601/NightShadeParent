@@ -1,8 +1,10 @@
 package me.blok601.nightshadeuhc.listener.game;
 
+import com.google.common.base.Joiner;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayer;
 import com.nightshadepvp.core.events.MatchpostUpdateEvent;
@@ -39,6 +41,7 @@ import org.joda.time.DateTimeZone;
 import org.joda.time.format.ISODateTimeFormat;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import twitter4j.TwitterException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -132,6 +135,12 @@ public class GameListener implements Listener {
             document.append("server", UHC.getServerType());
 
             uhc.getGameCollection().insertOne(document);
+
+            try {
+                Core.get().getTwitter().updateStatus("Congratulations to " + Joiner.on(", ").join(cachedGame.getWinners()) + " on winning a NightShadePvP UHC with " + MathUtils.cummulativeList(cachedGame.getWinnerKills().values()) + " kills!");
+            } catch (TwitterException twitterException) {
+                twitterException.printStackTrace();
+            }
         });
     }
 

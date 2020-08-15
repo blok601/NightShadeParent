@@ -37,6 +37,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.bukkit.scheduler.BukkitRunnable;
 import redis.clients.jedis.Jedis;
+import twitter4j.Twitter;
+import twitter4j.TwitterFactory;
+import twitter4j.conf.ConfigurationBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,7 +64,7 @@ public class Core extends MassivePlugin implements PluginMessageListener {
     private Announcer announcer;
     private HashMap<UUID, ArrayList<Consumer<UUID>>> loginTasks;
     private Location spawn;
-    //private Twitter twitter;
+    private Twitter twitter;
 
 
     //Lunar Api
@@ -143,7 +146,7 @@ public class Core extends MassivePlugin implements PluginMessageListener {
         saveConfig();
         Events.get().register(new LiteBansListener());
 
-        //setupTwitter();
+        setupTwitter();
         PunishmentHandler.getInstance().setup();
         ServerType.setType(MConf.get().getServerType());
         if(ServerType.getType() == ServerType.UHC){
@@ -339,23 +342,24 @@ public class Core extends MassivePlugin implements PluginMessageListener {
         this.saveConfig();
     }
 
-//    private void setupTwitter(){
-//        new BukkitRunnable(){
-//            @Override
-//            public void run() {
-//                ConfigurationBuilder cb = new ConfigurationBuilder();
-//                cb.setDebugEnabled(true)
-//                        .setOAuthConsumerKey("xNPGesrTUA9mmm2cIse0Lsm8X")
-//                        .setOAuthConsumerSecret("iLAJSVOtom6NgnHZBwnqYqGZiZWWl4NwsoQnAjJnjeLt8VvqNL")
-//                        .setOAuthAccessToken("4825184481-lSGqD5Xdaio9sjokNF2cXhZ62rd0uASmrVHGkn8")
-//                        .setOAuthAccessTokenSecret("LCS59nRfmEAOqIfMwwoGQVFj1XxyiUXQhAtckr6T4zN9m");
-//                TwitterFactory tf = new TwitterFactory(cb.build());
-//                twitter = tf.getInstance();
-//            }
-//        }.runTaskAsynchronously(this);
-//    }
-//
-//    public Twitter getTwitter() {
-//        return twitter;
-//    }
+    private void setupTwitter(){
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                ConfigurationBuilder cb = new ConfigurationBuilder();
+                cb.setDebugEnabled(true)
+                        .setOAuthConsumerKey("xNPGesrTUA9mmm2cIse0Lsm8X")
+                        .setOAuthConsumerSecret("iLAJSVOtom6NgnHZBwnqYqGZiZWWl4NwsoQnAjJnjeLt8VvqNL")
+                        .setOAuthAccessToken("4825184481-lSGqD5Xdaio9sjokNF2cXhZ62rd0uASmrVHGkn8")
+                        .setOAuthAccessTokenSecret("LCS59nRfmEAOqIfMwwoGQVFj1XxyiUXQhAtckr6T4zN9m");
+                TwitterFactory tf = new TwitterFactory(cb.build());
+                twitter = tf.getInstance();
+                Core.get().getLogManager().log(Logger.LogType.INFO, "Successfully connected to twitter!");
+            }
+        }.runTaskAsynchronously(this);
+    }
+
+    public Twitter getTwitter() {
+        return twitter;
+    }
 }

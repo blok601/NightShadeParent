@@ -38,6 +38,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import redis.clients.jedis.Jedis;
+import twitter4j.TwitterException;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -163,6 +164,14 @@ public class GameSetupInventoryClick implements Listener {
                         jsonObject.addProperty("matchpost", Core.get().getMatchpost());
 
                         jedis.publish("matches", jsonObject.toString());
+
+                        try {
+                            Core.get().getTwitter().updateStatus("NightShadePvP UHC» \n Teamsize: " + (TeamManager.getInstance().isRandomTeams() ? "r" : "c") + "To" + TeamManager.getInstance().getTeamSize() + "\n " +
+                                    "Scenarios: " + stringBuilder.toString().trim() + "\n Matchpost: " + Core.get().getMatchpost() + "\nIP: uhc1.nightshadepvp.com");
+                        } catch (TwitterException twitterException) {
+                            twitterException.printStackTrace();
+                            p.sendMessage(ChatUtils.message("&cThere was a problem posting your game to Twitter!"));
+                        }
                     }
                 }.runTaskAsynchronously(uhc);
                 p.sendMessage(ChatUtils.message("&eYour UHC will now be posted"));
