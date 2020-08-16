@@ -26,7 +26,7 @@ public class BaldChickenScenario extends Scenario {
 
         Entity entity = event.getEntity();
         if (entity instanceof Chicken) {
-            event.getDrops().stream().filter(itemStack -> itemStack.getType() == Material.ARROW).forEach(itemStack -> itemStack.setType(Material.AIR));
+            event.getDrops().stream().filter(itemStack -> itemStack.getType() == Material.FEATHER).forEach(itemStack -> itemStack.setType(Material.AIR));
         } else if (entity instanceof Skeleton) {
             event.getDrops().stream().filter(itemStack -> itemStack.getType() == Material.ARROW).forEach(itemStack -> itemStack.setType(Material.AIR));
 
