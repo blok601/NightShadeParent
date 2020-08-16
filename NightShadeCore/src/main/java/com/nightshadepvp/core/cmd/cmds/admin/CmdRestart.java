@@ -6,8 +6,11 @@ import com.nightshadepvp.core.Logger;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.cmd.NightShadeCoreCommand;
 import com.nightshadepvp.core.cmd.req.ReqRankHasAtLeast;
+import com.nightshadepvp.core.entity.NSPlayer;
+import com.nightshadepvp.core.events.ServerPreShutdownEvent;
 import com.nightshadepvp.core.utils.ChatUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_8_R3.util.ServerShutdownThread;
 import org.bukkit.scheduler.BukkitRunnable;
 
 /**
@@ -25,6 +28,12 @@ public class CmdRestart extends NightShadeCoreCommand{
 
     @Override
     public void perform() throws MassiveException {
+        ServerPreShutdownEvent event = new ServerPreShutdownEvent(NSPlayer.get(sender));
+        Core.get().getServer().getPluginManager().callEvent(event);
+        if(event.isCancelled()){
+            NSPlayer.get(sender).msg(ChatUtils.message("&cThe server couldn't restart because: " + event.getCancelReason()));
+            return;
+        }
         Bukkit.broadcastMessage(ChatUtils.message("&6The Server Will Restart in 5 seconds!"));
         Core.get().getLogManager().log(Logger.LogType.SERVER, "The server is restarting in ~5 seconds!");
         new BukkitRunnable(){

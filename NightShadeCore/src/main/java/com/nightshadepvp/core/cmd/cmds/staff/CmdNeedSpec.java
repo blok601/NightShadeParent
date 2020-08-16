@@ -58,6 +58,7 @@ public class CmdNeedSpec extends NightShadeCoreCommand {
 
             jedis.publish("needspec", ChatColor.stripColor(jsonObject.toString()));
         });
+        nsPlayer.msg(ChatUtils.message("&bYour request for spectators has been sent!"));
         this.cooldown.add(nsPlayer.getUuid());
         Core.get().getServer().getScheduler().scheduleSyncDelayedTask(Core.get(), () -> {
             this.cooldown.remove(nsPlayer.getUuid());

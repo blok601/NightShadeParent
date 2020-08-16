@@ -96,6 +96,7 @@ public class PvPCommand implements UHCCommand{
 			wo.setPVP(true);
 		}
 		pvp = true;
+		
 	}
 	
 	public static void disablePvP(){
@@ -120,6 +121,4 @@ public class PvPCommand implements UHCCommand{
 	}
 
 	public static boolean pvp = false;
-
-
 }

@@ -35,7 +35,7 @@ public class SiphonScenario extends Scenario{
         if(killer == null) return;
 
         //Add regen 2 hearts
-        killer.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 100, 1, false, true));
+        killer.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 100, 1, true, true));
 
         //Give book
         ItemBuilder itemBuilder = new ItemBuilder(Material.ENCHANTED_BOOK).enchantment(enchants.get(random.nextInt(enchants.size())));

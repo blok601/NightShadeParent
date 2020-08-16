@@ -11,6 +11,7 @@ import me.blok601.nightshadeuhc.component.ComponentHandler;
 import me.blok601.nightshadeuhc.entity.object.GameState;
 import me.blok601.nightshadeuhc.entity.object.PregenQueue;
 import me.blok601.nightshadeuhc.entity.object.SetupStage;
+import me.blok601.nightshadeuhc.event.PostUHCEvent;
 import me.blok601.nightshadeuhc.gui.setup.ComponentGUI;
 import me.blok601.nightshadeuhc.gui.setup.HostGUI;
 import me.blok601.nightshadeuhc.gui.setup.TimerGUI;
@@ -130,7 +131,7 @@ public class GameSetupInventoryClick implements Listener {
             } else if (slot == 14) {
                 //Post to Discord
                 //Access Jedis
-
+                p.sendMessage(ChatUtils.message("&eYour UHC will now be posted"));
                 Jedis jedis = Core.get().getJedis();
 
                 new BukkitRunnable(){
@@ -164,8 +165,15 @@ public class GameSetupInventoryClick implements Listener {
                         jsonObject.addProperty("matchpost", Core.get().getMatchpost());
 
                         jedis.publish("matches", jsonObject.toString());
+                        p.sendMessage(ChatUtils.message("&bYour UHC was posted to &fDiscord!"));
 
                         try {
+                            PostUHCEvent event = new PostUHCEvent();
+                            Bukkit.getServer().getPluginManager().callEvent(event);
+                            if(event.isCancelled()){
+                                p.sendMessage(ChatUtils.message("&cYour game was not posted to Twitter because: &c"));
+                                return;
+                            }
                             Core.get().getTwitter().updateStatus("NightShadePvP UHC» \n Teamsize: " + (TeamManager.getInstance().isRandomTeams() ? "r" : "c") + "To" + TeamManager.getInstance().getTeamSize() + "\n " +
                                     "Scenarios: " + stringBuilder.toString().trim() + "\n Matchpost: " + Core.get().getMatchpost() + "\nIP: uhc1.nightshadepvp.com");
                         } catch (TwitterException twitterException) {
@@ -174,7 +182,7 @@ public class GameSetupInventoryClick implements Listener {
                         }
                     }
                 }.runTaskAsynchronously(uhc);
-                p.sendMessage(ChatUtils.message("&eYour UHC will now be posted"));
+
 
             } else if (slot == 27) { //Starter food
                 if (clickType == ClickType.LEFT) {

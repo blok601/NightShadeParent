@@ -157,6 +157,7 @@ public class ScenarioManager implements UHCCommand{
         addScen(new OPHasteyBoysScenario());
         addScen(new SafelootScenario());
         addScen(new AirBlocksScenario());
+        addScen(new TrueLoveScenario());
 
         sortScenarios();
     }

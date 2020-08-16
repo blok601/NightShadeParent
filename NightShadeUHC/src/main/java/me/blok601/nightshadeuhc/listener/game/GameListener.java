@@ -148,7 +148,6 @@ public class GameListener implements Listener {
 
     @EventHandler
     public void on(PvPEnableEvent e){
-
         new BukkitRunnable(){
             @Override
             public void run() {
