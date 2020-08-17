@@ -316,8 +316,6 @@ public class GameManager {
                 i++;
             }
         }
-
-
     }
 
     public HashSet<String> getRespawnQueue() {

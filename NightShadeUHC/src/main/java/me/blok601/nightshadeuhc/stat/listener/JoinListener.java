@@ -199,7 +199,8 @@ public class JoinListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onLeave(PlayerQuitEvent e) {
-        UHC.get().getScoreboardManager().removeFromPlayerCache(e.getPlayer());
+        //UHC.get().getScoreboardManager().removeFromPlayerCache(e.getPlayer());
+        UHC.get().getScoreboardManager().getPlayerScoreboards().remove(e.getPlayer());
 
         Player p = e.getPlayer();
         UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
@@ -254,7 +255,8 @@ public class JoinListener implements Listener {
 
     @EventHandler
     public void onKick(PlayerKickEvent e) {
-        UHC.get().getScoreboardManager().removeFromPlayerCache(e.getPlayer());
+        //UHC.get().getScoreboardManager().removeFromPlayerCache(e.getPlayer());
+        UHC.get().getScoreboardManager().getPlayerScoreboards().remove(e.getPlayer());
         Player p = e.getPlayer();
         UHCPlayer gamePlayer = UHCPlayer.get(p.getUniqueId());
         FakePlayerManager.getInstance().getNpcs().forEach(fakePlayer -> fakePlayer.despawnFor(p));

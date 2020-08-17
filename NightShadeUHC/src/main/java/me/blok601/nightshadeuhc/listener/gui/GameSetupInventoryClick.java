@@ -171,7 +171,7 @@ public class GameSetupInventoryClick implements Listener {
                             PostUHCEvent event = new PostUHCEvent();
                             Bukkit.getServer().getPluginManager().callEvent(event);
                             if (event.isCancelled()) {
-                                p.sendMessage(ChatUtils.message("&cYour game was not posted to Twitter because: &c"));
+                                p.sendMessage(ChatUtils.message("&cYour game was not posted to Twitter because: &c" + event.getCancelReason()));
                                 return;
                             }
                             Core.get().getTwitter().updateStatus("NightShadePvP UHC» \nTeamsize: " + ((TeamManager.getInstance().isRandomTeams() ? "r" : "c") + "To" + TeamManager.getInstance().getTeamSize()) + "\n " +

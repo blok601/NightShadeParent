@@ -137,7 +137,7 @@ public class Team {
     }
 
     public void color() {
-       String color = this.color;
+        this.color = ChatUtils.generateTeamColor();
         ScoreboardManager scoreboardManager = UHC.getScoreboardManager();
         Scoreboard scoreboard;
         for (Map.Entry<Player, PlayerScoreboard> playerPlayerScoreboardEntry : scoreboardManager.getPlayerScoreboards().entrySet()) {
