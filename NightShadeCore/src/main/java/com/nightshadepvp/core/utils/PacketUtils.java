@@ -7,11 +7,10 @@ import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Logger;
+import net.md_5.bungee.api.chat.BaseComponent;
 import net.minecraft.server.v1_8_R3.*;
 import org.apache.commons.lang.Validate;
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.Server;
+import org.bukkit.*;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
@@ -20,6 +19,7 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
 
@@ -93,4 +93,67 @@ public class PacketUtils {
         return offlinePlayer.getName();
     }
 
+    @Deprecated
+    public static void sendTitle(Player player, Integer fadeIn, Integer stay, Integer fadeOut, String message)
+    {
+        sendTitle(player, fadeIn, stay, fadeOut, message, null);
+    }
+
+    @Deprecated
+    public static void sendSubtitle(Player player, Integer fadeIn, Integer stay, Integer fadeOut, String message) {
+        sendTitle(player, fadeIn, stay, fadeOut, null, message);
+    }
+
+    @Deprecated
+    public static void sendFullTitle(Player player, Integer fadeIn, Integer stay, Integer fadeOut, String title, String subtitle) {
+        sendTitle(player, fadeIn, stay, fadeOut, title, subtitle);
+    }
+
+    public static void sendTitle(Player player, int fadeIn, int stay, int fadeOut, String title, String subtitle) {
+        //net.minecraft.server.v1_8_R3.PlayerConnection connection = ((org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer) player).getHandle().playerConnection;
+
+        net.minecraft.server.v1_8_R3.PacketPlayOutTitle packetPlayOutTimes = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TIMES, new BaseComponent[]{}, fadeIn, stay, fadeOut);
+        sendPacket(player, packetPlayOutTimes);
+
+        if (subtitle != null) {
+            subtitle = subtitle.replaceAll("%player%", player.getDisplayName());
+            subtitle = ChatColor.translateAlternateColorCodes('&', subtitle);
+            net.minecraft.server.v1_8_R3.IChatBaseComponent titleSub = net.minecraft.server.v1_8_R3.IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + subtitle + "\"}");
+            net.minecraft.server.v1_8_R3.PacketPlayOutTitle packetPlayOutSubTitle = new net.minecraft.server.v1_8_R3.PacketPlayOutTitle(net.minecraft.server.v1_8_R3.PacketPlayOutTitle.EnumTitleAction.SUBTITLE, titleSub);
+            sendPacket(player, packetPlayOutSubTitle);
+        }
+
+        if (title != null) {
+            title = title.replaceAll("%player%", player.getDisplayName());
+            title = ChatUtils.format(title);
+            IChatBaseComponent titleMain = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + title + "\"}");
+            PacketPlayOutTitle packetPlayOutTitle = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, titleMain);
+            sendPacket(player, packetPlayOutTitle);
+        }
+    }
+
+    public static void sendTabTitle(Player player, String header, String footer) {
+        if (header == null) header = "";
+        header = ChatUtils.format(header);
+
+        if (footer == null) footer = "";
+        footer = ChatUtils.format(footer);
+
+        header = header.replaceAll("%player%", player.getDisplayName());
+        footer = footer.replaceAll("%player%", player.getDisplayName());
+
+        PlayerConnection connection = ((CraftPlayer) player).getHandle().playerConnection;
+        IChatBaseComponent tabTitle = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + header + "\"}");
+        IChatBaseComponent tabFoot = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + footer + "\"}");
+        PacketPlayOutPlayerListHeaderFooter headerPacket = new PacketPlayOutPlayerListHeaderFooter(tabTitle);
+        try {
+            Field field = headerPacket.getClass().getDeclaredField("b");
+            field.setAccessible(true);
+            field.set(headerPacket, tabFoot);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            connection.sendPacket(headerPacket);
+        }
+    }
 }

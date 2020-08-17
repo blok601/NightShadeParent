@@ -21,10 +21,12 @@ public class ComponentHandler {
 
     private GameManager gameManager;
     private ScenarioManager scenarioManager;
+    private UHC plugin;
 
-    public ComponentHandler(GameManager gameManager, ScenarioManager scenarioManager) {
+    public ComponentHandler(GameManager gameManager, ScenarioManager scenarioManager, UHC uhc) {
         this.gameManager = gameManager;
         this.scenarioManager = scenarioManager;
+        this.plugin = uhc;
     }
 
     private ArrayList<Component> components;
@@ -50,6 +52,7 @@ public class ComponentHandler {
         addComponent(new CaneBuffComponent());
         addComponent(new FireAspectComponent());
         addComponent(new StatsComponent());
+        addComponent(new RecordedRoundComponent(plugin, gameManager));
 
         this.components.sort(Comparator.comparing(Component::getName));
     }

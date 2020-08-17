@@ -7,6 +7,9 @@ import me.blok601.nightshadeuhc.entity.object.PlayerStatus;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.Potion;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -98,6 +101,10 @@ public class PlayerUtils {
 
     public static void dropItem(ItemStack itemStack, Location location){
         location.getWorld().dropItemNaturally(location, itemStack);
+    }
+
+    public static void givePotionEffect(Player player, PotionEffectType type, int duration, int level){
+        player.addPotionEffect(new PotionEffect(type, duration, level, true, true));
     }
 
 

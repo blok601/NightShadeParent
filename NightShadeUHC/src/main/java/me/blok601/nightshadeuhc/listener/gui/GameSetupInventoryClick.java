@@ -134,7 +134,7 @@ public class GameSetupInventoryClick implements Listener {
                 p.sendMessage(ChatUtils.message("&eYour UHC will now be posted"));
                 Jedis jedis = Core.get().getJedis();
 
-                new BukkitRunnable(){
+                new BukkitRunnable() {
                     @Override
                     public void run() {
                         JsonObject jsonObject = new JsonObject();
@@ -170,7 +170,7 @@ public class GameSetupInventoryClick implements Listener {
                         try {
                             PostUHCEvent event = new PostUHCEvent();
                             Bukkit.getServer().getPluginManager().callEvent(event);
-                            if(event.isCancelled()){
+                            if (event.isCancelled()) {
                                 p.sendMessage(ChatUtils.message("&cYour game was not posted to Twitter because: &c"));
                                 return;
                             }
@@ -713,7 +713,7 @@ public class GameSetupInventoryClick implements Listener {
             } else if (e.getClick() == ClickType.RIGHT) {
                 if (gameManager.getShrinks()[slot] - 50 < 0) return;
                 gameManager.getShrinks()[slot] = cBorder - 50; //Minus 50
-            } else if (e.getClick() == ClickType.MIDDLE){
+            } else if (e.getClick() == ClickType.MIDDLE) {
                 p.closeInventory();
                 gameManager.getSetupStageHashMap().put(p, SetupStage.BORDER);
                 gameManager.setCurrentEditingBorderIndex(slot);
@@ -867,6 +867,42 @@ public class GameSetupInventoryClick implements Listener {
             } else if (slot == 8) { //back
                 new HostGUI(p, gameManager, scenarioManager);
                 return;
+            } else if (slot == 4) {
+                //RR Time
+
+                if(!componentHandler.getComponent("Recorded Round").isEnabled()){
+                    p.sendMessage(ChatUtils.message("&cThis is not a recorded round! Enable it in the toggleable options menu!"));
+                    return;
+                }
+                if (GameState.getState() == GameState.INGAME) {
+                    p.sendMessage(ChatUtils.message("&cYou can't change this setting while the game is running!"));
+                    return;
+                }
+
+                if (e.getClick() == ClickType.LEFT) {
+                    gameManager.setRrEpisodeLength(gameManager.getRrEpisodeLength() + 300); // Add 5 mins
+                } else if (e.getClick() == ClickType.RIGHT) {
+                    if (gameManager.getRrEpisodeLength() - 300 < 0) {
+                        return;
+                    }
+                    gameManager.setRrEpisodeLength(gameManager.getRrEpisodeLength() - 300); // remove 5 mins
+                } else {
+                    return;
+                }
+
+                ItemStack itemStack = e.getCurrentItem(); // Know its the final heal one
+                ItemBuilder builder = new ItemBuilder(itemStack);
+                builder.removeLore(0);
+                int meetupTime = gameManager.getMeetupTime();
+                if (meetupTime == 0 && GameState.getState() != GameState.WAITING) {
+                    builder.lore(ChatUtils.format("&6Not set or already passed!"), true);
+                } else {
+                    builder.lore(ChatUtils.format("&6" + gameManager.getRrEpisodeLength() / 60 + " minutes"), true);
+                }
+                builder.lore("&7(&6&oi&r&7) &6&oRR Episode length");
+
+                inventory.setItem(e.getSlot(), builder.make());
+                p.updateInventory();
             } else {
                 return;
             }

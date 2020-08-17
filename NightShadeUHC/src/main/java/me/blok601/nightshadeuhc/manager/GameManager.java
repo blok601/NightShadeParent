@@ -58,6 +58,7 @@ public class GameManager {
     private  int finalHealTime = 0;
     private  int pvpTime = 0;
     private  int borderTime = 0;
+    private int rrEpisodeLength = 0;
     @Getter
     @Setter
     private  int meetupTime = 0;
@@ -329,5 +330,13 @@ public class GameManager {
 
     public void setPostedToDiscord(boolean postedToDiscord) {
         this.postedToDiscord = postedToDiscord;
+    }
+
+    public int getRrEpisodeLength() {
+        return rrEpisodeLength;
+    }
+
+    public void setRrEpisodeLength(int rrEpisodeLength) {
+        this.rrEpisodeLength = rrEpisodeLength;
     }
 }

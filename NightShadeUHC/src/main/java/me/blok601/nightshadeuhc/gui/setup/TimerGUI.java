@@ -53,12 +53,22 @@ public class TimerGUI {
         }
         mTime.lore("&7(&6&oi&r&7) &6&oTime until \"Meetup\" begins");
 
+        ItemBuilder rrTime = new ItemBuilder(Material.PAPER).name("&eEpisode Length");
+        int recordedRoundTime = GameManager.get().getRrEpisodeLength();
+        if(recordedRoundTime == 0 && GameState.getState() == GameState.WAITING){
+            rrTime.lore("&6Not Set");
+        }else{
+            rrTime.lore("&6" + recordedRoundTime / 60 + " minutes");
+        }
+
+
         ItemBuilder back = new ItemBuilder(Material.ARROW).name("&cBack");
 
         inventory.setItem(0, fHeal.make());
         inventory.setItem(1, pTime.make());
         inventory.setItem(2, bTime.make());
         inventory.setItem(3, mTime.make());
+        inventory.setItem(4, rrTime.make());
         inventory.setItem(8, back.make());
 
         player.openInventory(inventory);
