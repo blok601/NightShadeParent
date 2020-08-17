@@ -174,8 +174,8 @@ public class GameSetupInventoryClick implements Listener {
                                 p.sendMessage(ChatUtils.message("&cYour game was not posted to Twitter because: &c"));
                                 return;
                             }
-                            Core.get().getTwitter().updateStatus("NightShadePvP UHC» \n Teamsize: " + (TeamManager.getInstance().isRandomTeams() ? "r" : "c") + "To" + TeamManager.getInstance().getTeamSize() + "\n " +
-                                    "Scenarios: " + stringBuilder.toString().trim() + "\n Matchpost: " + Core.get().getMatchpost() + "\nIP: uhc1.nightshadepvp.com");
+                            Core.get().getTwitter().updateStatus("NightShadePvP UHC» \nTeamsize: " + ((TeamManager.getInstance().isRandomTeams() ? "r" : "c") + "To" + TeamManager.getInstance().getTeamSize()) + "\n " +
+                                    "Scenarios: " + stringBuilder.toString().trim() + "\nMatchpost: " + Core.get().getMatchpost() + "\nIP: uhc1.nightshadepvp.com");
                         } catch (TwitterException twitterException) {
                             twitterException.printStackTrace();
                             p.sendMessage(ChatUtils.message("&cThere was a problem posting your game to Twitter!"));
