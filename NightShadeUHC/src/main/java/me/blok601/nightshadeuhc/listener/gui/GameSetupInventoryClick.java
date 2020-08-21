@@ -174,8 +174,13 @@ public class GameSetupInventoryClick implements Listener {
                                 p.sendMessage(ChatUtils.message("&cYour game was not posted to Twitter because: &c" + event.getCancelReason()));
                                 return;
                             }
-                            Core.get().getTwitter().updateStatus("NightShadePvP UHC» \nTeamsize: " + ((TeamManager.getInstance().isRandomTeams() ? "r" : "c") + "To" + TeamManager.getInstance().getTeamSize()) + "\n " +
-                                    "Scenarios: " + stringBuilder.toString().trim() + "\nMatchpost: " + Core.get().getMatchpost() + "\nIP: uhc1.nightshadepvp.com");
+                            if(gameManager.isIsTeam()){
+                                Core.get().getTwitter().updateStatus("NightShadePvP UHC» \nTeamsize: " + ((TeamManager.getInstance().isRandomTeams() ? "r" : "c") + "To" + TeamManager.getInstance().getTeamSize()) + "\n " +
+                                        "Scenarios: " + stringBuilder.toString().trim() + "\nMatchpost: " + Core.get().getMatchpost() + "\nIP: uhc1.nightshadepvp.com");
+                            }else{
+                                Core.get().getTwitter().updateStatus("NightShadePvP UHC» \nTeamsize: FFA" + "\n " +
+                                        "Scenarios: " + stringBuilder.toString().trim() + "\nMatchpost: " + Core.get().getMatchpost() + "\nIP: uhc1.nightshadepvp.com");
+                            }
                         } catch (TwitterException twitterException) {
                             twitterException.printStackTrace();
                             p.sendMessage(ChatUtils.message("&cThere was a problem posting your game to Twitter!"));
