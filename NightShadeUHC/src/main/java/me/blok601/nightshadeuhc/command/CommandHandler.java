@@ -14,6 +14,7 @@ import me.blok601.nightshadeuhc.command.staff.*;
 import me.blok601.nightshadeuhc.command.staff.admin.ResetStatsCommand;
 import me.blok601.nightshadeuhc.command.staff.admin.SetArenaSpawnCommand;
 import me.blok601.nightshadeuhc.component.ComponentHandler;
+import me.blok601.nightshadeuhc.component.SplitEnchantsComponent;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
 import me.blok601.nightshadeuhc.scenario.SlaveMarketScenario;
@@ -160,6 +161,7 @@ public class CommandHandler  {
         registerCommand(new BTCListCommand(scenarioManager));
         registerCommand(new BTCAddCommand(scenarioManager));
         registerCommand(new XrayCommand());
+        registerCommand(new SplitEnchantsComponent());
     }
 
 

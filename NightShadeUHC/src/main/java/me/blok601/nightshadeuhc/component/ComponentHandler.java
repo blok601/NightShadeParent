@@ -53,6 +53,7 @@ public class ComponentHandler {
         addComponent(new FireAspectComponent());
         addComponent(new StatsComponent());
         addComponent(new RecordedRoundComponent(plugin, gameManager));
+        addComponent(new SplitEnchantsComponent());
 
         this.components.sort(Comparator.comparing(Component::getName));
     }

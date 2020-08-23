@@ -40,11 +40,9 @@ public class ShearsComponent extends Component {
 
         //Shears and leaves
         if (MathUtils.getChance(gameManager.getAppleRates())) {
-            if(MathUtils.getChance(GameManager.get().getAppleRates())){
                 e.getBlock().setType(Material.AIR);
                 e.getBlock().getDrops().clear();
                 e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), new ItemStack(Material.APPLE));
-            }
         }
 
     }
