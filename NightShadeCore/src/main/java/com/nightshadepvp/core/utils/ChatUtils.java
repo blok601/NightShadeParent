@@ -6,8 +6,10 @@ import com.nightshadepvp.core.entity.objects.PlayerColor;
 import com.nightshadepvp.core.entity.objects.PlayerEffect;
 import org.bukkit.ChatColor;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 
@@ -25,6 +27,8 @@ public class ChatUtils {
     public static String format(String msg){
         return ChatColor.translateAlternateColorCodes('&', msg);
     }
+
+    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM/dd/YYYY");
 
 
     public static String arrayListSerializer(ArrayList<PlayerColor> list){
@@ -92,6 +96,11 @@ public class ChatUtils {
 
     public static void broadcast(String message, Rank requiredRank){
         NSPlayerColl.get().getAllOnline().stream().filter(nsPlayer -> nsPlayer.hasRank(requiredRank)).forEach(nsPlayer -> nsPlayer.msg(ChatUtils.format(message)));
+    }
+
+    public static String formatMillisToDate(long time){
+        Date date = new Date(time);
+        return DATE_FORMAT.format(date);
     }
 
 

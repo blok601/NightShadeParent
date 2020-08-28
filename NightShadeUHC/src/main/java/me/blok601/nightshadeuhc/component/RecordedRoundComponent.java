@@ -6,6 +6,7 @@ import me.blok601.nightshadeuhc.event.GameStartEvent;
 import me.blok601.nightshadeuhc.event.UHCStatUpdateEvent;
 import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.util.PlayerUtils;
+import me.blok601.nightshadeuhc.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -58,7 +59,7 @@ public class RecordedRoundComponent extends Component {
 
                 counter -= 60;
             }
-        }.runTaskTimer(uhc, 0, 1200);
+        }.runTaskTimer(uhc, 0, 60 * Util.TICKS);
     }
 
     @EventHandler

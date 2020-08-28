@@ -45,6 +45,8 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
 
     private int coins = 0;
 
+    private ArrayList<String> notes;
+
     private byte[] adminPassword = null;
 
     private HashSet<Friend> friends = Sets.newHashSet();
@@ -110,6 +112,7 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
         this.setHasReferred(that.hasReferred);
 
         this.setCompletedQuests(that.completedQuests);
+        this.setNotes(that.notes);
 
 
         return this;
@@ -433,5 +436,13 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
     public int getPing(){
         if(!isPlayer()) return -1;
         return ((CraftPlayer)  getPlayer()).getHandle().ping;
+    }
+
+    public ArrayList<String> getNotes() {
+        return notes;
+    }
+
+    public void setNotes(ArrayList<String> notes) {
+        this.notes = notes;
     }
 }

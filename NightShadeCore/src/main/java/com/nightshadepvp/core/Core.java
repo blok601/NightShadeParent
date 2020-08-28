@@ -66,7 +66,6 @@ public class Core extends MassivePlugin implements PluginMessageListener {
     private Location spawn;
     private Twitter twitter;
 
-
     //Lunar Api
     private LunarClientAPI api;
     /* Lunar Managers */
