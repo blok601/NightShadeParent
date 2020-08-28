@@ -1,5 +1,6 @@
 package com.nightshadepvp.core.entity;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.massivecraft.massivecore.collections.MassiveList;
 import com.massivecraft.massivecore.store.SenderEntity;
@@ -45,7 +46,7 @@ public class NSPlayer extends SenderEntity<NSPlayer> {
 
     private int coins = 0;
 
-    private ArrayList<String> notes;
+    private ArrayList<String> notes = Lists.newArrayList();
 
     private byte[] adminPassword = null;
 
