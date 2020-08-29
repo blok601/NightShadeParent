@@ -1,6 +1,7 @@
 package me.blok601.nightshadeuhc.scenario;
 
 import me.blok601.nightshadeuhc.util.ItemBuilder;
+import me.blok601.nightshadeuhc.util.MathUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -132,7 +133,8 @@ public class CutCleanScenario extends Scenario{
             en.getLocation().getWorld().dropItemNaturally(en.getLocation().add(1, 0, 0), new ItemStack(Material.COOKED_MUTTON, 3));
             en.getLocation().getWorld().dropItemNaturally(en.getLocation().add(1, 0, 0), new ItemStack(Material.LEATHER, 2));
         }else if(en.getType() == EntityType.HORSE){
-            en.getLocation().getWorld().dropItemNaturally(en.getLocation().add(1, 0, 0), new ItemStack(Material.LEATHER, 3));
+            e.getDrops().clear();
+            en.getLocation().getWorld().dropItemNaturally(en.getLocation().add(1, 0, 0), new ItemStack(Material.LEATHER, MathUtils.getRand(1, 4)));
         }
     }
 }

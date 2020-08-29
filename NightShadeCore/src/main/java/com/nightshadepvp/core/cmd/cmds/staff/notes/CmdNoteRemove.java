@@ -38,9 +38,9 @@ public class CmdNoteRemove extends NightShadeCoreCommand {
         }
 
         try{
-            target.getNotes().remove(noteNumber + 1);
+            target.getNotes().remove(noteNumber - 1);
         }catch (IndexOutOfBoundsException exception){
-            nsPlayer.msg(ChatUtils.message("&b" + target.getName() + " &cdoes not have a note #" + noteNumber + 1));
+            nsPlayer.msg(ChatUtils.message("&b" + target.getName() + " &cdoes not have a note #" + noteNumber));
             return;
         }
         nsPlayer.msg(ChatUtils.message("&bNote #f" + noteNumber + 1 + " &bremoved from &f" + target.getName()));
