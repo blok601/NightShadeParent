@@ -5,6 +5,7 @@ import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.MConf;
 import com.nightshadepvp.core.entity.NSPlayer;
+import com.nightshadepvp.core.events.NoteAddEvent;
 import com.nightshadepvp.core.ubl.UBLHandler;
 import com.nightshadepvp.core.utils.ChatUtils;
 import org.bukkit.entity.Player;
@@ -120,5 +121,10 @@ public class EnginePunish extends Engine {
         if (handler.isUBLed(uuid) && !handler.isExempt(NSPlayer.get(uuid).getName())) {
             e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, handler.getBanMessage(uuid));
         }
+    }
+
+    @EventHandler
+    public void onNote(NoteAddEvent event){
+
     }
 }

@@ -10,7 +10,7 @@ import java.util.Map;
 public class FireAspectComponent extends Component{
 
     public FireAspectComponent() {
-        super("Fire Aspect", Material.BOOK, true, "Should fire aspect be on or off?");
+        super("Fire Aspect", Material.FIREWORK_CHARGE, true, "Should fire aspect be on or off?");
     }
 
     private Enchantment fireAspectEnchant = Enchantment.FIRE_ASPECT;

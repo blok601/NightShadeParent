@@ -14,7 +14,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 public class SportsmanshipComponent extends Component {
 
     public SportsmanshipComponent() {
-        super("Sportsmanship Filter", Material.PAPER, false, "Toggle whether default players should only be allowed to say \'gg\' or \'gf\' and thank the host after death?");
+        super("Sportsmanship Filter", Material.PAPER, false, "Toggle whether default players should only be allowed to say \'gg\' or \'gf\' and thank the host after death");
     }
 
     @EventHandler
