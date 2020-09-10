@@ -1,7 +1,6 @@
 package me.blok601.nightshadeuhc.command.staff;
 
 import com.nightshadepvp.core.Rank;
-import com.sun.xml.internal.ws.api.server.WSEndpoint;
 import me.blok601.nightshadeuhc.command.UHCCommand;
 import me.blok601.nightshadeuhc.gui.leaderboards.OreLeaderboard;
 import me.blok601.nightshadeuhc.util.ChatUtils;
