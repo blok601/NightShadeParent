@@ -12,7 +12,6 @@ import me.blok601.nightshadeuhc.listener.game.*;
 import me.blok601.nightshadeuhc.listener.gui.GameSetupInventoryClick;
 import me.blok601.nightshadeuhc.listener.gui.InvClick;
 import me.blok601.nightshadeuhc.listener.gui.ScenarioClick;
-import me.blok601.nightshadeuhc.listener.misc.SpectatorInfoListener;
 import me.blok601.nightshadeuhc.listener.misc.SpectatorListener;
 import me.blok601.nightshadeuhc.listener.misc.StaffListener;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
@@ -55,7 +54,7 @@ public class ListenerHandler {
         addListener(new ScenarioClick(scenarioManager));
 
         addListener(new SpectatorListener());
-        addListener(new SpectatorInfoListener(scenarioManager));
+        //addListener(new SpectatorInfoListener(scenarioManager));
         addListener(new StaffListener());
 
         addListener(new GameListener(uhc, gameManager, scenarioManager, componentHandler));

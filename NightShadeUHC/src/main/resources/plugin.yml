@@ -226,4 +226,7 @@ commands:
     description: Toggle xray
   splitenchants:
     description: Split book enchants into multiple books
+  ores:
+    aliases: [oreleaderboard]
+    description: Command for staff to see the top mined ores
 

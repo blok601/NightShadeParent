@@ -283,7 +283,15 @@ public class UHC extends MassivePlugin implements PluginMessageListener {
         return serverType;
     }
 
+    public ScenarioManager getScenarioManager() {
+        return scenarioManager;
+    }
 
+    public ComponentHandler getComponentHandler() {
+        return componentHandler;
+    }
 
-
+    public GameManager getGameManager() {
+        return gameManager;
+    }
 }

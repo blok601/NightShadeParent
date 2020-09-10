@@ -90,6 +90,11 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
     private transient PlayerStatus playerStatus;
     private transient int combatLogTimer;
 
+    private transient int currentDiamondsMined = 0;
+    private transient int currentIronMined = 0;
+    private transient int currentgoldMined = 0;
+    private transient int currentLapisMined = 0;
+
     @Override
     public UHCPlayer load(UHCPlayer that) {
 
@@ -143,7 +148,7 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         this.setLevel(0);
     }
 
-    public void resetArenaStats(){
+    public void resetArenaStats() {
         this.setArenaDeaths(0);
         this.setArenaKills(0);
         this.setArenaBowAttempts(0);
@@ -155,53 +160,57 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         this.setPastArenaSessions(null);
     }
 
-    public void handleBlockBreak(Block block){
+    public void handleBlockBreak(Block block) {
         UHCStatUpdateEvent updateEvent = new UHCStatUpdateEvent(this);
         Bukkit.getPluginManager().callEvent(updateEvent);
-        if(updateEvent.isCancelled()){
+        if (updateEvent.isCancelled()) {
             return;
         }
-        if(block.getType() == Material.DIAMOND_ORE){
+        if (block.getType() == Material.DIAMOND_ORE) {
             this.diamondsMined++;
+            this.currentDiamondsMined++;
             addPoints(0.1);
 //            double curr = GameManager.get().getPointChanges().get(this.getUuid());
 //            GameManager.get().getPointChanges().put(this.getUuid(), curr + 0.1);
             //this.setChangedLevel(this.getChangedLevel() + 0.1);
-        }else if(block.getType() == Material.GOLD_ORE){
+        } else if (block.getType() == Material.GOLD_ORE) {
             this.goldMined++;
+            this.currentgoldMined++;
 //            this.setChangedLevel(this.getChangedLevel() + 0.25);
             this.addPoints(0.25);
-        }else if(block.getType() == Material.IRON_ORE){
+        } else if (block.getType() == Material.IRON_ORE) {
             this.ironMined++;
+            this.currentIronMined++;
 //            this.setChangedLevel(this.getChangedLevel() + 0.1);
             this.addPoints(0.1);
-        }else if(block.getType() == Material.COAL_ORE){
+        } else if (block.getType() == Material.COAL_ORE) {
             this.coalMined++;
-        }else if(block.getType() == Material.EMERALD_ORE){
+        } else if (block.getType() == Material.EMERALD_ORE) {
             this.emeraldsMined++;
-        }else if(block.getType() == Material.LAPIS_ORE){
+        } else if (block.getType() == Material.LAPIS_ORE) {
             this.lapisMined++;
+            this.currentLapisMined++;
         }
 
         this.blocksMined++;
     }
 
 
-    public String getKD(){
+    public String getKD() {
         DecimalFormat format = new DecimalFormat("##.##");
-        if(getDeaths() == 0){
+        if (getDeaths() == 0) {
             return format.format(getKills());
         }
-        double kd = getKills()/(getDeaths() * 1.0);
+        double kd = getKills() / (getDeaths() * 1.0);
         return format.format(kd);
     }
 
-    public String getWG(){
+    public String getWG() {
         DecimalFormat format = new DecimalFormat("##.##");
-        if(getGamesPlayed() == 0){
+        if (getGamesPlayed() == 0) {
             return format.format(getGamesWon());
         }
-        double wg = getGamesWon()/(getGamesPlayed() * 1.0);
+        double wg = getGamesWon() / (getGamesPlayed() * 1.0);
         return format.format(wg);
     }
 
@@ -293,7 +302,7 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         this.kills = kills;
     }
 
-    public void addKill(int amt){
+    public void addKill(int amt) {
         this.kills = this.kills + amt;
         this.changed();
     }
@@ -314,7 +323,7 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         this.points = points;
     }
 
-    public void addPoints(double points){
+    public void addPoints(double points) {
         this.points += points;
         this.changedLevel += points;
     }
@@ -439,8 +448,8 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
     }
 
 
-    public void spec(){
-        if(!isOnline()) return;
+    public void spec() {
+        if (!isOnline()) return;
         setSpectator(true);
         setPlayerStatus(PlayerStatus.SPECTATING);
         Player p = getPlayer();
@@ -456,8 +465,8 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
 
         user = NSPlayer.get(p.getUniqueId());
 
-        if(user.hasRank(Rank.TRIAL)){
-            if(!isStaffMode()){
+        if (user.hasRank(Rank.TRIAL)) {
+            if (!isStaffMode()) {
                 staffMode();
             }
         }
@@ -467,19 +476,19 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         p.setFlying(true);
         p.setFlySpeed(0.2F);
         p.sendMessage(ChatUtils.message("&6You are now a spectator!"));
-        Util.staffLog("&2" + p.getName()+ " is now a spectator!");
+        Util.staffLog("&2" + p.getName() + " is now a spectator!");
         Bukkit.getServer().getPluginManager().callEvent(new PlayerStartSpectatingEvent(p));
     }
 
-    public void unspec(){
-        if(!isOnline()) return;
-        if(!isSpectator()) return;
+    public void unspec() {
+        if (!isOnline()) return;
+        if (!isSpectator()) return;
         setSpectator(false);
         this.playerStatus = PlayerStatus.LOBBY;
         UHC.getScoreboardManager().updateCache();
         Player p = getPlayer();
 
-        for (Player pl : Bukkit.getOnlinePlayers()){
+        for (Player pl : Bukkit.getOnlinePlayers()) {
             pl.showPlayer(p);
         }
 
@@ -490,7 +499,7 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         p.getInventory().clear();
         p.getInventory().setArmorContents(null);
         p.sendMessage(ChatUtils.message("&5You are no longer a spectator!"));
-        Util.staffLog("&2" + p.getName()+ " is no longer a spectator!");
+        Util.staffLog("&2" + p.getName() + " is no longer a spectator!");
         Bukkit.getServer().getPluginManager().callEvent(new PlayerStopSpectatingEvent(p));
     }
 
@@ -506,7 +515,7 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         this.staffMode = staffMode;
     }
 
-    public void staffMode(){
+    public void staffMode() {
         Player player = getPlayer();
         setStaffMode(true);
         player.getInventory().clear();
@@ -514,7 +523,7 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
 
         ItemStack vanish = new ItemBuilder(Material.TORCH).name(ChatUtils.format("&cToggle Vanish")).make();
 
-        ItemStack randomHead = new ItemStack(Material.SKULL_ITEM, 1,  (short) 3);
+        ItemStack randomHead = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
         ItemStack randomBuilder = new ItemBuilder(randomHead).name("&cRandom Teleport").make();
 
         ItemStack inspect = new ItemBuilder(Material.BOOK).name(ChatUtils.format("&cPlayer Inventory")).make();
@@ -553,16 +562,16 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
      *
      * @param forceHide Should the given player be hidden from spectators as well
      */
-    public void vanish(boolean forceHide){
+    public void vanish(boolean forceHide) {
         setVanished(true);
-        if(forceHide){
+        if (forceHide) {
             Bukkit.getOnlinePlayers().forEach(o -> o.hidePlayer(getPlayer()));
-        }else{
+        } else {
             UHCPlayerColl.get().getAllOnline().stream().filter(uhcPlayer -> !uhcPlayer.isSpectator()).forEach(uhcPlayer -> uhcPlayer.getPlayer().hidePlayer(getPlayer()));
         }
     }
 
-    public void unVanish(){
+    public void unVanish() {
         setVanished(false);
         Bukkit.getOnlinePlayers().forEach(o -> o.showPlayer(getPlayer()));
     }
@@ -606,9 +615,9 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         }
     }
 
-    public void leaveArena(){
-        if(!this.isInArena()) return;
-        if(!this.isPlayer()) return;
+    public void leaveArena() {
+        if (!this.isInArena()) return;
+        if (!this.isPlayer()) return;
         Player p = getPlayer();
         ArenaSession session = this.arenaSession;
         session.setEnd(new Timestamp(System.currentTimeMillis()));
@@ -623,11 +632,11 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
 
     private void updateStats(ArenaSession session) {
 
-        if(session.getKills() == 0 && session.getDeaths() == 0) return;
+        if (session.getKills() == 0 && session.getDeaths() == 0) return;
 
         this.arenaKills += session.getKills();
         this.arenaDeaths += session.getDeaths();
-        if(this.highestArenaKillStreak < session.getKillstreak()){
+        if (this.highestArenaKillStreak < session.getKillstreak()) {
             this.highestArenaKillStreak = session.getKillstreak();
         }
         this.arenaSwordHits += session.getSwordHits();
@@ -820,19 +829,19 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
         return format.format(this.getArenaBowAccuracy());
     }
 
-    public double getArenaSwordAccuracy(){
-        if(this.arenaSwordHits == 0){
+    public double getArenaSwordAccuracy() {
+        if (this.arenaSwordHits == 0) {
             return 0;
         }
 
-        if(this.arenaSwordSwings == 0){
+        if (this.arenaSwordSwings == 0) {
             return this.arenaSwordHits;
         }
 
-        return this.arenaSwordHits/this.arenaSwordSwings;
+        return this.arenaSwordHits / this.arenaSwordSwings;
     }
 
-    public String getArenaSwingAccuracyFormatted(){
+    public String getArenaSwingAccuracyFormatted() {
         DecimalFormat format = new DecimalFormat("##.##");
         return format.format(this.getArenaSwordAccuracy());
     }
@@ -865,5 +874,41 @@ public class UHCPlayer extends SenderEntity<UHCPlayer> {
                 combatLogTimer--;
             }
         }.runTaskTimer(UHC.get(), 0, 20);
+    }
+
+    public int getCurrentDiamondsMined() {
+        return currentDiamondsMined;
+    }
+
+    public void setCurrentDiamondsMined(int currentDiamondsMined) {
+        this.currentDiamondsMined = currentDiamondsMined;
+    }
+
+    public int getCurrentIronMined() {
+        return currentIronMined;
+    }
+
+    public void setCurrentIronMined(int currentIronMined) {
+        this.currentIronMined = currentIronMined;
+    }
+
+    public int getCurrentGoldMined() {
+        return currentgoldMined;
+    }
+
+    public void setCurrentGoldMined(int currentgoldMined) {
+        this.currentgoldMined = currentgoldMined;
+    }
+
+    public int getCurrentLapisMined() {
+        return currentLapisMined;
+    }
+
+    public void setCurrentLapisMined(int currentLapisMined) {
+        this.currentLapisMined = currentLapisMined;
+    }
+
+    public int getCurrentOresMined(){
+        return currentDiamondsMined + currentgoldMined + currentIronMined + currentLapisMined;
     }
 }

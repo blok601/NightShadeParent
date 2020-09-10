@@ -54,6 +54,7 @@ public class ComponentHandler {
         addComponent(new StatsComponent());
         addComponent(new RecordedRoundComponent(plugin, gameManager));
         addComponent(new SplitEnchantsComponent());
+        addComponent(new SpectatorInfoComponent(plugin));
 
         this.components.sort(Comparator.comparing(Component::getName));
     }
@@ -96,7 +97,7 @@ public class ComponentHandler {
                 e.setCancelled(true);
                 Player player = (Player) e.getWhoClicked();
                 player.closeInventory();
-                player.sendMessage(ChatUtils.message("&cThis feature is locked and can't be changed!"));
+                player.sendMessage(ChatUtils.message("&cThis component is locked and can't be changed!"));
                 return false;
             }
 

@@ -84,12 +84,12 @@ public class ChatUtils {
 
     public static void sendMiningMessage(boolean diamonds, Player player, int amt) {
         if (diamonds) {
-            FancyMessage fancyMessage = new FancyMessage(format("&5Mining&8» &3" + player.getName() + " &7found &6" + amt + " &bdiamonds"));
+            FancyMessage fancyMessage = new FancyMessage(format("&5[M]&8» &3" + player.getName() + " &7found &6" + amt + " &bdiamonds"));
             fancyMessage.command("/tp " + player.getName());
             fancyMessage.tooltip(format("&eClick to teleport to the player"));
             UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).filter(UHCPlayer::isReceivingMiningAlerts).forEach(uhcPlayer -> fancyMessage.send(uhcPlayer.getPlayer()));
         } else {
-            FancyMessage fancyMessage = new FancyMessage((format("&5Mining&8» &3" + player.getName() + " &7found &6" + amt + " &6gold")));
+            FancyMessage fancyMessage = new FancyMessage((format("&5[M]&8» &3" + player.getName() + " &7found &6" + amt + " &6gold")));
             fancyMessage.command("/tp " + player.getName());
             fancyMessage.tooltip(format("&eClick to teleport to the player"));
             UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).filter(UHCPlayer::isReceivingMiningAlerts).forEach(uhcPlayer -> fancyMessage.send(uhcPlayer.getPlayer()));

@@ -1,6 +1,7 @@
-package me.blok601.nightshadeuhc.listener.misc;
+package me.blok601.nightshadeuhc.component;
 
 import com.nightshadepvp.core.fanciful.FancyMessage;
+import me.blok601.nightshadeuhc.UHC;
 import me.blok601.nightshadeuhc.entity.UHCPlayer;
 import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
 import me.blok601.nightshadeuhc.entity.object.GameState;
@@ -14,7 +15,6 @@ import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -23,19 +23,18 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.UUID;
 
-/**
- * Created by Blok on 7/10/2018.
- */
-public class SpectatorInfoListener implements Listener {
+public class SpectatorInfoComponent extends Component {
 
-    private ScenarioManager scenarioManager;
-
-    public SpectatorInfoListener(ScenarioManager scenarioManager) {
-        this.scenarioManager = scenarioManager;
+    private UHC plugin;
+    public SpectatorInfoComponent(UHC plugin) {
+        super("Spec Info", Material.NAME_TAG, true, "Spectator Info");
+        this.lock();
+        this.plugin = plugin;
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onDamage(EntityDamageEvent e) {
+        if(!isEnabled()) return;
         if (!GameState.gameHasStarted()) return;
         if (!(e.getEntity() instanceof Player)) return;
         Player p = (Player) e.getEntity();
@@ -49,7 +48,7 @@ public class SpectatorInfoListener implements Listener {
         if (e.getCause() == EntityDamageEvent.DamageCause.FALL) {
             UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).forEach(uhcPlayer -> fancyMessage.text(SpecInfoData.translate(p, p.getHealth(), null, SpecInfoData.DAMAGE_FALL)).send(uhcPlayer.getPlayer()));
         } else if (e.getCause() == EntityDamageEvent.DamageCause.FIRE || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK || e.getCause() == EntityDamageEvent.DamageCause.LAVA || e.getCause() == EntityDamageEvent.DamageCause.MELTING) {
-            if (!scenarioManager.getScen("Fireless").isEnabled()) {
+            if (!plugin.getScenarioManager().getScen("Fireless").isEnabled()) {
                 UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).forEach(uhcPlayer -> fancyMessage.text(SpecInfoData.translate(p, p.getHealth(), null, SpecInfoData.DAMAGE_BURN)).send(uhcPlayer.getPlayer()));
             }
         } else if (e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK || e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) {
@@ -62,6 +61,7 @@ public class SpectatorInfoListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onHit(EntityDamageByEntityEvent e) {
+        if(!isEnabled()) return;
         if (!GameState.gameHasStarted()) return;
         if (!(e.getEntity() instanceof Player)) return;
 
@@ -93,6 +93,7 @@ public class SpectatorInfoListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBreak(BlockBreakEvent e) {
+        if(!isEnabled()) return;
         Player p = e.getPlayer();
         if (brokenBlocks.containsKey(p.getUniqueId())) {
             if (brokenBlocks.get(p.getUniqueId()).contains(e.getBlock())) return;
@@ -148,5 +149,6 @@ public class SpectatorInfoListener implements Listener {
 
         }
     }
+
 
 }
