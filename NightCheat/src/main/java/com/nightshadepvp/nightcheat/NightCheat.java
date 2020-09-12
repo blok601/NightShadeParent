@@ -27,6 +27,7 @@ public final class NightCheat extends JavaPlugin {
         long totalTimeInMillis = System.currentTimeMillis() - now;
         long seconds = totalTimeInMillis / 1000;
         long millis = totalTimeInMillis % 1000;
+        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "WDL|CONTROL");
         Core.get().getLogManager().log(Logger.LogType.INFO, "[NightCheat] Enable finished in (" + seconds + "." + millis + "s)");
         Core.get().getLogManager().log(Logger.LogType.INFO, "[NightCheat] NightCheat v" + this.getDescription().getVersion() + " Enabled!");
 
@@ -35,6 +36,8 @@ public final class NightCheat extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        this.getServer().getMessenger().unregisterIncomingPluginChannel(this, "WDL|INIT");
+        this.getServer().getMessenger().unregisterOutgoingPluginChannel(this, "WDL|CONTROL");
     }
 
     public CheatManager getCheatManager() {

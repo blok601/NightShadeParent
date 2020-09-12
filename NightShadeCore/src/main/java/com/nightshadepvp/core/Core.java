@@ -138,13 +138,9 @@ public class Core extends MassivePlugin implements PluginMessageListener {
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "staffchat");
         Bukkit.getMessenger().registerIncomingPluginChannel(this, "staffchat", this);
 
-        this.getServer().getMessenger().registerIncomingPluginChannel(this, "WDL|INIT", this);
-        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "WDL|CONTROL");
-
         getConfig().options().copyDefaults(true);
         saveConfig();
         Events.get().register(new LiteBansListener());
-
         setupTwitter();
         PunishmentHandler.getInstance().setup();
         ServerType.setType(MConf.get().getServerType());
@@ -184,9 +180,7 @@ public class Core extends MassivePlugin implements PluginMessageListener {
     public void onDisable() {
         i = null;
         MConf.get().setAnnouncerMessages(this.announcer.getMessages());
-        //this.saveSpawn();
-        this.getServer().getMessenger().unregisterIncomingPluginChannel(this, "WDL|INIT");
-        this.getServer().getMessenger().unregisterOutgoingPluginChannel(this, "WDL|CONTROL");
+        //this.saveSpawn()
     }
 
 
@@ -247,11 +241,8 @@ public class Core extends MassivePlugin implements PluginMessageListener {
                     MConf.get().setMaintenance(false);
                     MConf.get().changed();
                     Bukkit.broadcastMessage(ChatUtils.format("&5Proxy&8 » &bMaintenance Mode &cdisabled!"));
-
                 }
             }
-        } else if (channel.equals("WDL|INIT")) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "kick " + player.getName() + " World Downloader Detected");
         }
     }
 
