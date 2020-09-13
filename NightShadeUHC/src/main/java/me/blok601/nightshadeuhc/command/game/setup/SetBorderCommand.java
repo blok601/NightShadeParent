@@ -47,6 +47,7 @@ public class SetBorderCommand implements UHCCommand {
                 }
             }
 
+
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wb " + world.getName() + " set " + radius + " " + radius + " 0 0");
             p.sendMessage(ChatUtils.message("&eThe border for &b" + world.getName() + " &eis now &b" + radius + " &ex&b " + radius));
 

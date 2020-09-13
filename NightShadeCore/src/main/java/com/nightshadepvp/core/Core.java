@@ -98,7 +98,6 @@ public class Core extends MassivePlugin implements PluginMessageListener {
         //this.loadSpawn();
 
 
-
         // Add our channel listeners
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "Lunar-Client");
         this.getServer().getMessenger().registerIncomingPluginChannel(this, "Lunar-Client", (channel, player, bytes) -> {
