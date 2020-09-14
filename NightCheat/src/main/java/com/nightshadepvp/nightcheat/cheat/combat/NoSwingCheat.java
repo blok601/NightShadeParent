@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerAnimationEvent;
 import org.bukkit.event.player.PlayerAnimationType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class NoSwingCheat extends Cheat {
 
@@ -33,12 +34,20 @@ public class NoSwingCheat extends Cheat {
                 final Entity entity = pa.getEntityModifier(event).read(0);
                 if(!(entity instanceof Player)) return;
                 EnumWrappers.EntityUseAction entityUse = pa.getEntityUseActions().read(0); //Note: Can often be null!
-                if(entityUse == EnumWrappers.EntityUseAction.ATTACK){
+                if(entityUse == EnumWrappers.EntityUseAction.ATTACK && attacker.getItemInHand() != null && attacker.getItemInHand().getType().toString().endsWith("SWORD")){
                     //They attacked when sending this packet
                     FightData fightData = FightData.getFightData(attacker);
                     fightData.setLastDamage(System.currentTimeMillis());
                     fightData.incrementHits();
                     debug("&fDamage packet from " + attacker.getName() + " received at " + System.currentTimeMillis());
+                    new BukkitRunnable(){
+                        @Override
+                        public void run() {
+                            if(!FightData.getFightData(attacker).hasSwungArm()){
+                                flag(attacker, "Damaged without swinging arm");
+                            }
+                        }
+                    }.runTaskLater(plugin, 20);
                 }
             }
         });

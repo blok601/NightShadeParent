@@ -13,6 +13,7 @@ public class FightData {
     private int swings;
     private boolean swungArm;
     private boolean fighting;
+    private int fightCooldownTaskID;
 
     public FightData() {
         this.lastDamage = -1;
@@ -20,6 +21,7 @@ public class FightData {
         this.swings = 0;
         swungArm = false;
         fighting = false;
+        fightCooldownTaskID = -1;
     }
 
     public long getLastDamage() {
@@ -71,6 +73,14 @@ public class FightData {
     }
 
     private static HashMap<UUID, FightData> fightDatas = Maps.newHashMap();
+
+    public int getFightCooldownTaskID() {
+        return fightCooldownTaskID;
+    }
+
+    public void setFightCooldownTaskID(int fightCooldownTaskID) {
+        this.fightCooldownTaskID = fightCooldownTaskID;
+    }
 
     public static HashMap<UUID, FightData> getFightDatas() {
         return fightDatas;
