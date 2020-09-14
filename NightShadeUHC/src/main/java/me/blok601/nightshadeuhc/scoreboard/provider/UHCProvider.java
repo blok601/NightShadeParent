@@ -12,6 +12,7 @@ import me.blok601.nightshadeuhc.scoreboard.SidebarEntry;
 import me.blok601.nightshadeuhc.scoreboard.SidebarProvider;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
@@ -30,7 +31,7 @@ public class UHCProvider implements SidebarProvider {
         UHCPlayer uhcPlayer = UHCPlayer.get(p);
         List<SidebarEntry> lines = new ArrayList<>();
 
-        lines.add(new SidebarEntry(ChatUtils.format("&f&m--------------------")));
+        lines.add(new SidebarEntry(ChatUtils.format("&f&m--------------------" + ChatColor.BLUE.toString())));
         lines.add(new SidebarEntry(ChatUtils.format("&fGame Clock: &b" + (GameManager.get().getTimer().isRunning() ? GameManager.get().getTimer().getTime() : "Waiting..."))));
         lines.add(new SidebarEntry(ChatUtils.format("&fKills: &b" + GameManager.get().getKills().getOrDefault(p.getUniqueId(), 0))));
         if (GameManager.get().isIsTeam()) {
@@ -68,7 +69,7 @@ public class UHCProvider implements SidebarProvider {
             //Have a world
             lines.add(new SidebarEntry(ChatUtils.format("&fBorder: &b" + ((int) GameManager.get().getBorderSize()))));
         }
-        lines.add(new SidebarEntry(ChatUtils.format("&f&m--------------------&r")));
+        lines.add(new SidebarEntry(ChatUtils.format("&f&m--------------------&r" + ChatColor.DARK_GREEN.toString())));
         if(uhcPlayer.isNoClean()){
             lines.add(new SidebarEntry(ChatUtils.format("&fNoClean: &b" + uhcPlayer.getNoCleanTimer() + "s")));
             lines.add(new SidebarEntry(ChatUtils.format("&f&m--------------------&r")));

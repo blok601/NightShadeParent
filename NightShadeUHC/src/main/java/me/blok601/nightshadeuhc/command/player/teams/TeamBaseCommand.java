@@ -13,6 +13,7 @@ import me.blok601.nightshadeuhc.entity.UHCPlayerColl;
 import me.blok601.nightshadeuhc.entity.object.CachedColor;
 import me.blok601.nightshadeuhc.entity.object.Team;
 import me.blok601.nightshadeuhc.event.TeamColorEvent;
+import me.blok601.nightshadeuhc.manager.GameManager;
 import me.blok601.nightshadeuhc.manager.TeamManager;
 import me.blok601.nightshadeuhc.scenario.Scenario;
 import me.blok601.nightshadeuhc.scenario.ScenarioManager;
@@ -169,8 +170,8 @@ public class TeamBaseCommand implements UHCCommand{
                         String name;
                         Predicate<UHCPlayer> IS_SPEC = UHCPlayer::isSpectator;
 
-
                         for (UHCPlayer uhcPlayer : Iterables.filter(UHCPlayerColl.get().getAllOnline(), Predicates.not(IS_SPEC))) {
+
 
                         }
 

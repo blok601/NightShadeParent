@@ -10,6 +10,7 @@ import me.blok601.nightshadeuhc.scoreboard.SidebarEntry;
 import me.blok601.nightshadeuhc.scoreboard.SidebarProvider;
 import me.blok601.nightshadeuhc.util.ChatUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class LobbyProvider implements SidebarProvider {
     @Override
     public List<SidebarEntry> getLines(Player p) {
         List<SidebarEntry> lines = new ArrayList<>();
-        lines.add(new SidebarEntry(ChatUtils.format("&f&m--------------------")));
+        lines.add(new SidebarEntry(ChatUtils.format("&f&m--------------------" + ChatColor.GOLD.toString())));
         if (GameManager.get().getHost() == null) {
             lines.add(new SidebarEntry(ChatUtils.format("&fHost: &bNone")));
         } else {
