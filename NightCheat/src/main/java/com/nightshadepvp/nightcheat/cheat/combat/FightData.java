@@ -1,7 +1,6 @@
 package com.nightshadepvp.nightcheat.cheat.combat;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -14,8 +13,10 @@ public class FightData {
     private boolean swungArm;
     private boolean fighting;
     private int fightCooldownTaskID;
+    private UUID uuid;
 
-    public FightData() {
+    public FightData(UUID uuid) {
+        this.uuid = uuid;
         this.lastDamage = -1;
         this.hits = 0;
         this.swings = 0;
@@ -52,6 +53,10 @@ public class FightData {
         this.hits += 1;
     }
 
+    public UUID getUuid() {
+        return uuid;
+    }
+
     public void setSwings(int swings) {
         this.swings = swings;
     }
@@ -72,8 +77,6 @@ public class FightData {
         this.fighting = fighting;
     }
 
-    private static HashMap<UUID, FightData> fightDatas = Maps.newHashMap();
-
     public int getFightCooldownTaskID() {
         return fightCooldownTaskID;
     }
@@ -82,24 +85,18 @@ public class FightData {
         this.fightCooldownTaskID = fightCooldownTaskID;
     }
 
-    public static HashMap<UUID, FightData> getFightDatas() {
+    private static HashSet<FightData> fightDatas = Sets.newHashSet();
+
+    public static HashSet<FightData> getFightDatas() {
         return fightDatas;
     }
 
     public static FightData getFightData(UUID uuid) {
-        return getFightDatas().getOrDefault(uuid, new FightData());
+        return getFightDatas().stream().filter(fightData -> fightData.getUuid().equals(uuid)).findFirst().orElse(null);
     }
 
     public static FightData getFightData(Player player) {
         return getFightData(player.getUniqueId());
     }
 
-    public static void cleanTask(){
-        Collection<Map.Entry<UUID, FightData>> toRemove = Lists.newArrayList();
-        for (Map.Entry<UUID, FightData> entry : getFightDatas().entrySet()){
-            if(!entry.getValue().isFighting()){
-
-            }
-        }
-    }
 }
