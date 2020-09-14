@@ -150,11 +150,9 @@ public class PlayerBoard {
                 //Update colors
                 for (me.blok601.nightshadeuhc.entity.object.Team t : TeamManager.getInstance().getTeams()) {
                     String name = t.getName();
-                    if (scoreboard.getTeam(name) != null) {
-                        scoreboard.getTeam(name).unregister();
+                    if (scoreboard.getTeam(name) == null) {
+                        scoreboard.registerNewTeam(name).setPrefix(t.getColor());
                     }
-
-                    scoreboard.registerNewTeam(name).setPrefix(t.getColor());
                     t.getOnlineMembers().forEach(s -> scoreboard.getTeam(name).addPlayer(s));
                 }
             }
