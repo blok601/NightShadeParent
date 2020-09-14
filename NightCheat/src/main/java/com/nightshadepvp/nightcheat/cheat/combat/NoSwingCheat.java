@@ -21,6 +21,9 @@ public class NoSwingCheat extends Cheat {
     public NoSwingCheat(NightCheat plugin) {
         super("NoSwing", CheatType.COMBAT);
         this.plugin = plugin;
+    }
+
+    private void addPacketListener(){
         protocolManager.addPacketListener(new PacketAdapter(plugin, ListenerPriority.NORMAL, PacketType.Play.Client.USE_ENTITY) {
             @Override
             public void onPacketReceiving(PacketEvent event) {
