@@ -6,6 +6,7 @@ import com.nightshadepvp.core.entity.NSPlayerColl;
 import com.nightshadepvp.core.utils.ChatUtils;
 import com.nightshadepvp.nightcheat.Advantage;
 import com.nightshadepvp.nightcheat.ViolationManager;
+import com.nightshadepvp.nightcheat.command.DebugCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
@@ -91,5 +92,10 @@ public abstract class Cheat implements Listener, Advantage {
     public void log(Player player, String message) {
         ChatUtils.broadcast("&8[&cNightCheat&8] &c" + player.getName() + " &7failed &c" + this.getName() + " &7(" + message + ") &8[&4" + this.getViolationManager().getPlayerViolation(player.getUniqueId()).getViolations(this) + "&8]", Rank.TRIAL);
         System.out.println("[NightCheat] " + player.getName() + " failed " + this.getName() + "[ " + this.getViolationManager().getPlayerViolation(player.getUniqueId()).getViolations(this) + "]");
+    }
+
+    @Override
+    public void debug(String message) {
+        DebugCommand.receivingDebug.forEach(player -> player.sendMessage(ChatUtils.format("&8[&cNightCheat&8][&2DEBUG&8] " + message)));
     }
 }

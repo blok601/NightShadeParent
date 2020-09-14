@@ -5,6 +5,7 @@ import com.comphenix.protocol.ProtocolManager;
 import com.nightshadepvp.core.Core;
 import com.nightshadepvp.core.Logger;
 import com.nightshadepvp.nightcheat.cheat.CheatManager;
+import com.nightshadepvp.nightcheat.command.DebugCommand;
 import com.nightshadepvp.nightcheat.exploit.ExploitManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -24,6 +25,7 @@ public final class NightCheat extends JavaPlugin {
         this.cheatManager = new CheatManager(this);
         this.exploitManager = new ExploitManager(this);
         this.getServer().getPluginManager().registerEvents(violationManager, this);
+        registerCommands();
         long totalTimeInMillis = System.currentTimeMillis() - now;
         long seconds = totalTimeInMillis / 1000;
         long millis = totalTimeInMillis % 1000;
@@ -38,6 +40,10 @@ public final class NightCheat extends JavaPlugin {
         // Plugin shutdown logic
         this.getServer().getMessenger().unregisterIncomingPluginChannel(this, "WDL|INIT");
         this.getServer().getMessenger().unregisterOutgoingPluginChannel(this, "WDL|CONTROL");
+    }
+
+    private void registerCommands(){
+        this.getCommand("nightcheatdebug").setExecutor(new DebugCommand());
     }
 
     public CheatManager getCheatManager() {

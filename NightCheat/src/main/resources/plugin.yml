@@ -5,3 +5,7 @@ authors: [Blok]
 depend: [Core, ProtocolLib]
 description: Exploit and minimal cheat prevention
 website: discord.nightshadepvp.com
+commands:
+  nightcheatdebug:
+    description: Receive debug messages
+    aliases: [ncdebug, debugnc]

@@ -8,4 +8,6 @@ public interface Advantage {
 
     void log(Player player, String message);
 
+    void debug(String message);
+
 }
