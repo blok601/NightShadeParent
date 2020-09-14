@@ -21,6 +21,7 @@ public class NoSwingCheat extends Cheat {
     public NoSwingCheat(NightCheat plugin) {
         super("NoSwing", CheatType.COMBAT);
         this.plugin = plugin;
+        addPacketListener();
     }
 
     private void addPacketListener(){
