@@ -104,4 +104,10 @@ public class FightData {
         return getFightData(player.getUniqueId());
     }
 
+    public static void removeFightData(Player player){
+        FightData fightData = getFightData(player);
+        if(fightData == null) return;
+        getFightDatas().remove(fightData);
+    }
+
 }

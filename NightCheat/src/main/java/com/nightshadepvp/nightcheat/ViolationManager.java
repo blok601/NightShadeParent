@@ -2,6 +2,7 @@ package com.nightshadepvp.nightcheat;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import com.nightshadepvp.nightcheat.cheat.combat.FightData;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -90,11 +91,13 @@ public class ViolationManager implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         this.violations.add(new PlayerViolation(event.getPlayer().getUniqueId(), Maps.newHashMap()));
+        FightData.getFightDatas().add(new FightData(event.getPlayer().getUniqueId()));
     }
 
     @EventHandler
     public void onLeave(PlayerQuitEvent event) {
         if (getPlayerViolation(event.getPlayer().getUniqueId()) == null) return;
         this.violations.remove(getPlayerViolation(event.getPlayer().getUniqueId()));
+        FightData.removeFightData(event.getPlayer());
     }
 }

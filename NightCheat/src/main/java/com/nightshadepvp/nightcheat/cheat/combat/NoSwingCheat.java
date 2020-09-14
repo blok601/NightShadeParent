@@ -37,7 +37,7 @@ public class NoSwingCheat extends Cheat {
                 if(entityUse == EnumWrappers.EntityUseAction.ATTACK && attacker.getItemInHand() != null && attacker.getItemInHand().getType().toString().endsWith("SWORD")){
                     //They attacked when sending this packet
                     FightData fightData = FightData.getFightData(attacker);
-                    fightData.setLastDamage(System.currentTimeMillis());
+                    //fightData.setLastDamage(System.currentTimeMillis());
                     fightData.incrementHits();
                     debug("&fDamage packet from " + attacker.getName() + " received at " + System.currentTimeMillis());
                     new BukkitRunnable(){
