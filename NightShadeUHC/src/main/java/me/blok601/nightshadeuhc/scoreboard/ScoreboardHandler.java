@@ -51,13 +51,10 @@ public class ScoreboardHandler implements Listener {
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-
         // Update this player for every other online player.
         for (PlayerBoard board : playerBoards.values()) {
             board.addUpdate(player);
         }
-
-        applyBoard(player).addUpdates(Bukkit.getOnlinePlayers());
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)

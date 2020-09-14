@@ -64,6 +64,7 @@ public class JoinListener implements Listener {
         gamePlayer.setReceiveHelpop(true);
         player.sendMessage(ChatUtils.message("&5Welcome &5back to the NightShadePvP Network!"));
 
+        UHC.getScoreboardManager().applyBoard(player).addUpdates(Bukkit.getOnlinePlayers());
         Scenario scen = scenarioManager.getScen("Secret Teams");
         if(scen != null && !scen.isEnabled()){
             new BukkitRunnable(){
