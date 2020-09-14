@@ -1,5 +1,6 @@
 package com.nightshadepvp.nightcheat.cheat;
 
+import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.nightshadepvp.core.Rank;
 import com.nightshadepvp.core.entity.NSPlayerColl;
@@ -19,7 +20,7 @@ public abstract class Cheat implements Listener, Advantage {
 
     protected CheatManager cheatManager;
     protected ViolationManager violationManager;
-    protected ProtocolManager protocolManager;
+    protected ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
 
     public Cheat(String name, CheatType cheatType) {
         this.name = name;
