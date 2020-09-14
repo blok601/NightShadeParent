@@ -64,7 +64,6 @@ public class JoinListener implements Listener {
         gamePlayer.setReceiveHelpop(true);
         player.sendMessage(ChatUtils.message("&5Welcome &5back to the NightShadePvP Network!"));
 
-        UHC.getScoreboardManager().applyBoard(player).addUpdates(Bukkit.getOnlinePlayers());
         Scenario scen = scenarioManager.getScen("Secret Teams");
         if(scen != null && !scen.isEnabled()){
             new BukkitRunnable(){
@@ -91,8 +90,7 @@ public class JoinListener implements Listener {
             }.runTaskAsynchronously(uhc);
         }
 
-        
-        if (gamePlayer.isSpectator()) return;
+
         if (GameState.getState() == GameState.INGAME || GameState.getState() == GameState.MEETUP) {
             if (LoggerManager.getInstance().hasLogger(player.getUniqueId())) {
                 LoggerManager.getInstance().getLogger(player.getUniqueId()).remove(false);
@@ -193,6 +191,7 @@ public class JoinListener implements Listener {
         } else {
             player.getEnderChest().clear();
             gamePlayer.setPlayerStatus(PlayerStatus.LOBBY);
+            UHC.getScoreboardManager().applyBoard(player).addUpdates(Bukkit.getOnlinePlayers());
             //UHC.get().getScoreboardManager().getPlayerScoreboards().put(player, new PlayerScoreboard(new LobbyProvider(uhc, gameManager, scenarioManager), player));
         }
     }
