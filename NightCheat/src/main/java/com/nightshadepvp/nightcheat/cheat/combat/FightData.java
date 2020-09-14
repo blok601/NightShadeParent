@@ -91,11 +91,16 @@ public class FightData {
         return fightDatas;
     }
 
-    public static FightData getFightData(UUID uuid) {
+    private static FightData getFightData(UUID uuid) {
         return getFightDatas().stream().filter(fightData -> fightData.getUuid().equals(uuid)).findFirst().orElse(null);
     }
 
     public static FightData getFightData(Player player) {
+        if(getFightData(player.getUniqueId()) == null){
+            FightData data = new FightData(player.getUniqueId());
+            getFightDatas().add(data);
+            return data;
+        }
         return getFightData(player.getUniqueId());
     }
 
