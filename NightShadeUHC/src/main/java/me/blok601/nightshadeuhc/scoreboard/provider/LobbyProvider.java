@@ -59,11 +59,12 @@ public class LobbyProvider implements SidebarProvider {
             lines.add(new SidebarEntry(ChatUtils.format("&fHost: &b" + GameManager.get().getHost().getName())));
         }
         if (GameManager.get().isIsTeam()) {
-            lines.add(new SidebarEntry(ChatUtils.format("&fTeam Size: &b" + (TeamManager.getInstance().isRandomTeams() ? "rTo" + TeamManager.getInstance().getTeamSize() : "cTo" + TeamManager.getInstance().getTeamSize()))));
+            lines.add(new SidebarEntry(ChatColor.LIGHT_PURPLE.toString(), ChatUtils.format("&fTeam Size: &b"), ChatColor.AQUA + "" + (TeamManager.getInstance().isRandomTeams() ? "rTo" + TeamManager.getInstance().getTeamSize() : "cTo" + TeamManager.getInstance().getTeamSize())));
         } else {
-            lines.add(new SidebarEntry(ChatUtils.format("&fTeam Size: &bFFA")));
+            lines.add(new SidebarEntry(ChatColor.GREEN.toString(), ChatUtils.format("&fTeam Size: &b"), ChatColor.AQUA + "FFA"));
+
         }
-        lines.add(new SidebarEntry(ChatUtils.format("&fPlayers: &b" + Bukkit.getServer().getOnlinePlayers().size())));
+        lines.add(new SidebarEntry(ChatColor.BLUE.toString(), ChatUtils.format("&fPlayers: &b"), ChatColor.AQUA + "" + Bukkit.getServer().getOnlinePlayers().size()));
         lines.add(new SidebarEntry(""));
         lines.add(new SidebarEntry(ChatUtils.format("&fScenarios:")));
         for (String s : scenNames()) {

@@ -24,6 +24,7 @@ public class UHCProvider implements SidebarProvider {
     /**
      * You can use up to 15 Scoreboard lines.
      * Max-length of your text is 32.
+     *
      * @return
      */
     @Override
@@ -32,15 +33,15 @@ public class UHCProvider implements SidebarProvider {
         List<SidebarEntry> lines = new ArrayList<>();
 
         lines.add(new SidebarEntry(ChatUtils.format("&f&m--------------------" + ChatColor.BLUE.toString())));
-        lines.add(new SidebarEntry(ChatUtils.format("&fGame Clock: &b" + (GameManager.get().getTimer().isRunning() ? GameManager.get().getTimer().getTime() : "Waiting..."))));
-        lines.add(new SidebarEntry(ChatUtils.format("&fKills: &b" + GameManager.get().getKills().getOrDefault(p.getUniqueId(), 0))));
+        lines.add(new SidebarEntry(ChatColor.BLACK.toString(), ChatUtils.format("&fGame Clock: &b"), ChatColor.AQUA + (GameManager.get().getTimer().isRunning() ? GameManager.get().getTimer().getTime() : "Waiting...")));
+        lines.add(new SidebarEntry(ChatColor.GREEN.toString(), ChatUtils.format("&fKills: &b"), ChatColor.AQUA + "" + GameManager.get().getKills().getOrDefault(p.getUniqueId(), 0)));
         if (GameManager.get().isIsTeam()) {
             //Team game
             Team team = TeamManager.getInstance().getTeam(p);
 
 
             if (team == null) {
-                lines.add(new SidebarEntry(ChatUtils.format("&fTeam Kills: &b0")));
+                lines.add(new SidebarEntry(ChatColor.YELLOW.toString(), ChatUtils.format("&fTeam Kills: &b"), ChatColor.AQUA + "0"));
             } else {
                 //They have a team now
                 int teamKills = 0;
@@ -49,29 +50,29 @@ public class UHCProvider implements SidebarProvider {
                         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(member);
                         if (offlinePlayer == null) continue;
                         teamKills += GameManager.get().getKills().getOrDefault(offlinePlayer.getUniqueId(), 0);
-                    }else{
+                    } else {
                         teamKills += GameManager.get().getKills().getOrDefault(Bukkit.getPlayer(member).getUniqueId(), 0);
                     }
                 }
-                lines.add(new SidebarEntry(ChatUtils.format("&fTeam Kills: &b" + teamKills)));
+                lines.add(new SidebarEntry(ChatColor.GRAY.toString(), ChatUtils.format("&fTeam Kills: &b"), ChatColor.AQUA + "" + teamKills));
             }
         }
-        if(GameState.gameHasStarted()){
-            lines.add(new SidebarEntry(ChatUtils.format("&fPlayers: &b") + (UHCPlayerColl.get().getAllPlaying().size() + UHC.loggedOutPlayers.size()) + "/" + GameManager.get().getMaxPlayers()));
-        }else{
-            lines.add(new SidebarEntry(ChatUtils.format("&fPlayers: &b" + (Bukkit.getOnlinePlayers().size() - UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).count()))));
+        if (GameState.gameHasStarted()) {
+            lines.add(new SidebarEntry(ChatColor.DARK_AQUA.toString(), ChatUtils.format("&fPlayers: &b"), ChatColor.AQUA + "" + (UHCPlayerColl.get().getAllPlaying().size() + UHC.loggedOutPlayers.size()) + "/" + GameManager.get().getMaxPlayers()));
+        } else {
+            lines.add(new SidebarEntry(ChatColor.DARK_RED.toString(), ChatUtils.format("&fPlayers: &b"), ChatColor.AQUA + "" + (Bukkit.getOnlinePlayers().size() - UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).count())));
         }
 
-        lines.add(new SidebarEntry(ChatUtils.format("&fSpectators: &b" + UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).count())));
+        lines.add(new SidebarEntry(ChatColor.DARK_PURPLE.toString(), ChatUtils.format("&fSpectators: &b"), ChatColor.AQUA + "" + UHCPlayerColl.get().getAllOnline().stream().filter(UHCPlayer::isSpectator).count()));
         if (GameManager.get().getWorld() == null) {
-            lines.add(new SidebarEntry(ChatUtils.format("&fBorder: &bWorld Not Set")));
+            lines.add(new SidebarEntry(ChatColor.BLUE.toString(), ChatUtils.format("&fBorder: &b"), ChatColor.AQUA + "World Not Set"));
         } else {
             //Have a world
-            lines.add(new SidebarEntry(ChatUtils.format("&fBorder: &b" + ((int) GameManager.get().getBorderSize()))));
+            lines.add(new SidebarEntry(ChatColor.GOLD.toString(), ChatUtils.format("&fBorder: &b"), ChatColor.AQUA + "" + ((int) GameManager.get().getBorderSize())));
         }
         lines.add(new SidebarEntry(ChatUtils.format("&f&m--------------------&r" + ChatColor.DARK_GREEN.toString())));
-        if(uhcPlayer.isNoClean()){
-            lines.add(new SidebarEntry(ChatUtils.format("&fNoClean: &b" + uhcPlayer.getNoCleanTimer() + "s")));
+        if (uhcPlayer.isNoClean()) {
+            lines.add(new SidebarEntry(ChatColor.WHITE.toString(), ChatUtils.format("&fNoClean: &b"), ChatColor.AQUA + "" + uhcPlayer.getNoCleanTimer() + "s"));
             lines.add(new SidebarEntry(ChatUtils.format("&f&m--------------------&r")));
         }
         lines.add(new SidebarEntry(ChatUtils.format("&bdiscord.nightshadepvp.com")));
